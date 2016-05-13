@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Account Management System">
+    <meta name="author" content="Vserv Business Solutions PVT LTD.">
+    <title>@ViewBag.Title | Vserv Solutions</title>
+    @Styles.Render("~/Styles/bootstrap")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/DataTables")
+    @Styles.Render("~/Content/base")
+    @Styles.Render("~/Content/base/font-awesome.min.css")
+
+    <!-- jQuery -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</head>
+
+<body>
+    @RenderBody()
+    @Scripts.Render("~/Scripts/base")
+    @Scripts.Render("~/Scripts/DataTables")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

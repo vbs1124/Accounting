@@ -1,0 +1,5 @@
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Common\bin\Debug\Vserv.Accounting.Common.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Common\bin\Debug\Vserv.Accounting.Common.pdb
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Common\obj\Debug\Vserv.Accounting.Common.csprojResolveAssemblyReference.cache
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Common\obj\Debug\Vserv.Accounting.Common.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Common\obj\Debug\Vserv.Accounting.Common.pdb

@@ -1,0 +1,26 @@
+﻿CREATE TABLE ApplicationLog
+(
+  [LogId] BIGINT NOT NULL PRIMARY KEY identity(1,1), 
+  [appdomain] varchar(256), 
+  [aspnetcache] varchar(max), 
+  [aspnetcontext] varchar(max), 
+  [aspnetrequest] varchar(max), 
+  [aspnetsession] varchar(max), 
+  [date] datetime NOT NULL, 
+  [exception] varchar(max),   
+  [identity] varchar(256),   
+  [level] varchar(30), 
+  [line] integer, 
+  [logger] varchar(100), 
+  [message] varchar(2000), 
+  [method] varchar(500), 
+  [ndc] varchar(500), 
+  [property] varchar(500), 
+  [stacktrace] varchar(max), 
+  [stacktracedetail] varchar(max), 
+  [timestamp] bigint, 
+  [thread] varchar(256), 
+  [type] varchar(256), 
+  [username] varchar(100), 
+  [utcdate] datetime NOT NULL
+)

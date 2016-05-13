@@ -1,0 +1,624 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VservAccountingDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="VservAccountingDBEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="InsertErrorLog">
+      <Parameter Name="appdomain" Mode="In" Type="String" />
+      <Parameter Name="exception" Mode="In" Type="String" />
+      <Parameter Name="identity" Mode="In" Type="String" />
+      <Parameter Name="level" Mode="In" Type="String" />
+      <Parameter Name="line" Mode="In" Type="Int32" />
+      <Parameter Name="logger" Mode="In" Type="String" />
+      <Parameter Name="message" Mode="In" Type="String" />
+      <Parameter Name="method" Mode="In" Type="String" />
+      <Parameter Name="ndc" Mode="In" Type="String" />
+      <Parameter Name="property" Mode="In" Type="String" />
+      <Parameter Name="stacktrace" Mode="In" Type="String" />
+      <Parameter Name="stacktracedetail" Mode="In" Type="String" />
+      <Parameter Name="timestamp" Mode="In" Type="Int64" />
+      <Parameter Name="thread" Mode="In" Type="String" />
+      <Parameter Name="type" Mode="In" Type="String" />
+      <Parameter Name="username" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertInfoLog">
+      <Parameter Name="appdomain" Mode="In" Type="String" />
+      <Parameter Name="identity" Mode="In" Type="String" />
+      <Parameter Name="level" Mode="In" Type="String" />
+      <Parameter Name="logger" Mode="In" Type="String" />
+      <Parameter Name="message" Mode="In" Type="String" />
+      <Parameter Name="method" Mode="In" Type="String" />
+      <Parameter Name="timestamp" Mode="In" Type="Int64" />
+      <Parameter Name="thread" Mode="In" Type="String" />
+      <Parameter Name="type" Mode="In" Type="String" />
+      <Parameter Name="username" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertMvcErrorLog">
+      <Parameter Name="appdomain" Mode="In" Type="String" />
+      <Parameter Name="aspnetcache" Mode="In" Type="String" />
+      <Parameter Name="aspnetcontext" Mode="In" Type="String" />
+      <Parameter Name="aspnetrequest" Mode="In" Type="String" />
+      <Parameter Name="aspnetsession" Mode="In" Type="String" />
+      <Parameter Name="exception" Mode="In" Type="String" />
+      <Parameter Name="identity" Mode="In" Type="String" />
+      <Parameter Name="level" Mode="In" Type="String" />
+      <Parameter Name="line" Mode="In" Type="Int32" />
+      <Parameter Name="logger" Mode="In" Type="String" />
+      <Parameter Name="message" Mode="In" Type="String" />
+      <Parameter Name="method" Mode="In" Type="String" />
+      <Parameter Name="ndc" Mode="In" Type="String" />
+      <Parameter Name="property" Mode="In" Type="String" />
+      <Parameter Name="stacktrace" Mode="In" Type="String" />
+      <Parameter Name="stacktracedetail" Mode="In" Type="String" />
+      <Parameter Name="timestamp" Mode="In" Type="Int64" />
+      <Parameter Name="thread" Mode="In" Type="String" />
+      <Parameter Name="type" Mode="In" Type="String" />
+      <Parameter Name="username" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="Addresses" EntityType="VservAccountingDBModel.Address" />
+    <EntitySet Name="AddressTypes" EntityType="VservAccountingDBModel.AddressType" />
+    <EntitySet Name="ApplicationLogs" EntityType="VservAccountingDBModel.ApplicationLog" />
+    <EntitySet Name="Cities" EntityType="VservAccountingDBModel.City" />
+    <EntitySet Name="Configs" EntityType="VservAccountingDBModel.Config" />
+    <EntitySet Name="Departments" EntityType="VservAccountingDBModel.Department" />
+    <EntitySet Name="Designations" EntityType="VservAccountingDBModel.Designation" />
+    <EntitySet Name="Employees" EntityType="VservAccountingDBModel.Employee" />
+    <EntitySet Name="EmployeeAddresses" EntityType="VservAccountingDBModel.EmployeeAddress" />
+    <EntitySet Name="EPFNumbers" EntityType="VservAccountingDBModel.EPFNumber" />
+    <EntitySet Name="EPFOffices" EntityType="VservAccountingDBModel.EPFOffice" />
+    <EntitySet Name="Memberships" EntityType="VservAccountingDBModel.Membership" />
+    <EntitySet Name="OAuthMemberships" EntityType="VservAccountingDBModel.OAuthMembership" />
+    <EntitySet Name="OfficeBranches" EntityType="VservAccountingDBModel.OfficeBranch" />
+    <EntitySet Name="Roles" EntityType="VservAccountingDBModel.Role" />
+    <EntitySet Name="Salutations" EntityType="VservAccountingDBModel.Salutation" />
+    <EntitySet Name="States" EntityType="VservAccountingDBModel.State" />
+    <EntitySet Name="UserProfiles" EntityType="VservAccountingDBModel.UserProfile" />
+    <EntitySet Name="ZipCodes" EntityType="VservAccountingDBModel.ZipCode" />
+    <AssociationSet Name="FK_Address_AddressType" Association="VservAccountingDBModel.FK_Address_AddressType">
+      <End Role="AddressType" EntitySet="AddressTypes" />
+      <End Role="Address" EntitySet="Addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Address_City" Association="VservAccountingDBModel.FK_Address_City">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Address" EntitySet="Addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Address_State" Association="VservAccountingDBModel.FK_Address_State">
+      <End Role="State" EntitySet="States" />
+      <End Role="Address" EntitySet="Addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Address_ZipCode" Association="VservAccountingDBModel.FK_Address_ZipCode">
+      <End Role="ZipCode" EntitySet="ZipCodes" />
+      <End Role="Address" EntitySet="Addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeAddress_Address" Association="VservAccountingDBModel.FK_EmployeeAddress_Address">
+      <End Role="Address" EntitySet="Addresses" />
+      <End Role="EmployeeAddress" EntitySet="EmployeeAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_City_State" Association="VservAccountingDBModel.FK_City_State">
+      <End Role="State" EntitySet="States" />
+      <End Role="City" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ZipCode_City" Association="VservAccountingDBModel.FK_ZipCode_City">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="ZipCode" EntitySet="ZipCodes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Department" Association="VservAccountingDBModel.FK_Employee_Department">
+      <End Role="Department" EntitySet="Departments" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Designation" Association="VservAccountingDBModel.FK_Employee_Designation">
+      <End Role="Designation" EntitySet="Designations" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_OfficeBranch" Association="VservAccountingDBModel.FK_Employee_OfficeBranch">
+      <End Role="OfficeBranch" EntitySet="OfficeBranches" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Salutation" Association="VservAccountingDBModel.FK_Employee_Salutation">
+      <End Role="Salutation" EntitySet="Salutations" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeAddress_Employee" Association="VservAccountingDBModel.FK_EmployeeAddress_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EmployeeAddress" EntitySet="EmployeeAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ZipCode_State" Association="VservAccountingDBModel.FK_ZipCode_State">
+      <End Role="State" EntitySet="States" />
+      <End Role="ZipCode" EntitySet="ZipCodes" />
+    </AssociationSet>
+    <AssociationSet Name="UsersInRoles" Association="VservAccountingDBModel.UsersInRoles">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address1" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Address2" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="StateId" Type="Int32" />
+    <Property Name="CityId" Type="Int32" />
+    <Property Name="ZipCodeId" Type="Int32" />
+    <Property Name="City" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Latitude" Type="Decimal" Precision="16" Scale="13" />
+    <Property Name="Longitude" Type="Decimal" Precision="16" Scale="13" />
+    <Property Name="IsCommunicationAddress" Type="Boolean" Nullable="false" />
+    <Property Name="AddressTypeId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedById" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedById" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="AddressType" Relationship="VservAccountingDBModel.FK_Address_AddressType" FromRole="Address" ToRole="AddressType" />
+    <NavigationProperty Name="City1" Relationship="VservAccountingDBModel.FK_Address_City" FromRole="Address" ToRole="City" />
+    <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_Address_State" FromRole="Address" ToRole="State" />
+    <NavigationProperty Name="ZipCode1" Relationship="VservAccountingDBModel.FK_Address_ZipCode" FromRole="Address" ToRole="ZipCode" />
+    <NavigationProperty Name="EmployeeAddresses" Relationship="VservAccountingDBModel.FK_EmployeeAddress_Address" FromRole="Address" ToRole="EmployeeAddress" />
+  </EntityType>
+  <EntityType Name="AddressType">
+    <Key>
+      <PropertyRef Name="AddressTypeId" />
+    </Key>
+    <Property Name="AddressTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedById" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedById" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Addresses" Relationship="VservAccountingDBModel.FK_Address_AddressType" FromRole="AddressType" ToRole="Address" />
+  </EntityType>
+  <EntityType Name="ApplicationLog">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="appdomain" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="aspnetcache" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="aspnetcontext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="aspnetrequest" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="aspnetsession" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="identity" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="level" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="line" Type="Int32" />
+    <Property Name="logger" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="message" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Name="method" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ndc" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="property" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="stacktrace" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="stacktracedetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="timestamp" Type="Int64" />
+    <Property Name="thread" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="type" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="utcdate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StateId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedById" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedById" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Addresses" Relationship="VservAccountingDBModel.FK_Address_City" FromRole="City" ToRole="Address" />
+    <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_City_State" FromRole="City" ToRole="State" />
+    <NavigationProperty Name="ZipCodes" Relationship="VservAccountingDBModel.FK_ZipCode_City" FromRole="City" ToRole="ZipCode" />
+  </EntityType>
+  <EntityType Name="Config">
+    <Key>
+      <PropertyRef Name="Key" />
+    </Key>
+    <Property Name="Key" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Value" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedById" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedById" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Department" FromRole="Department" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Designation">
+    <Key>
+      <PropertyRef Name="DesignationId" />
+    </Key>
+    <Property Name="DesignationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedById" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedById" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Designation" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+    </Key>
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="FatherName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="MotherName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="UniversalAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="PermanentAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="AADHAARNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="MobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="EmailAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="BirthDay" Type="DateTime" Precision="3" />
+    <Property Name="JoiningDate" Type="DateTime" Precision="3" />
+    <Property Name="RelievingDate" Type="DateTime" Precision="3" />
+    <Property Name="VBS_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DesignationId" Type="Int32" />
+    <Property Name="SalutationId" Type="Int32" />
+    <Property Name="GenderId" Type="Int32" />
+    <Property Name="OfficeBranchId" Type="Int32" />
+    <Property Name="DepartmentId" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreatedById" Type="Int32" />
+    <Property Name="UpdatedById" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Department" Relationship="VservAccountingDBModel.FK_Employee_Department" FromRole="Employee" ToRole="Department" />
+    <NavigationProperty Name="Designation" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Employee" ToRole="Designation" />
+    <NavigationProperty Name="OfficeBranch" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="Employee" ToRole="OfficeBranch" />
+    <NavigationProperty Name="Salutation" Relationship="VservAccountingDBModel.FK_Employee_Salutation" FromRole="Employee" ToRole="Salutation" />
+    <NavigationProperty Name="EmployeeAddresses" Relationship="VservAccountingDBModel.FK_EmployeeAddress_Employee" FromRole="Employee" ToRole="EmployeeAddress" />
+  </EntityType>
+  <EntityType Name="EmployeeAddress">
+    <Key>
+      <PropertyRef Name="EmployeeAddressId" />
+    </Key>
+    <Property Name="EmployeeAddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="AddressId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Address" Relationship="VservAccountingDBModel.FK_EmployeeAddress_Address" FromRole="EmployeeAddress" ToRole="Address" />
+    <NavigationProperty Name="Employee" Relationship="VservAccountingDBModel.FK_EmployeeAddress_Employee" FromRole="EmployeeAddress" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="EPFNumber">
+    <Key>
+      <PropertyRef Name="EPFNumberId" />
+    </Key>
+    <Property Name="EPFNumberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="EPFOfficeId" Type="Int32" Nullable="false" />
+    <Property Name="EstablishmentCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Extension" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedById" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedById" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="EPFOffice">
+    <Key>
+      <PropertyRef Name="EPFOfficeId" />
+    </Key>
+    <Property Name="EPFOfficeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EPFOfficeName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="EPFOfficeCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="StateId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedById" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedById" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Membership">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="LoweredEmail" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="PasswordQuestion" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="PasswordAnswer" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="ConfirmationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="IsApproved" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="IsConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+    <Property Name="LastPasswordChangedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastPasswordFailureDate" Type="DateTime" Precision="3" />
+    <Property Name="PasswordFailuresSinceLastSuccess" Type="Int32" Nullable="false" />
+    <Property Name="PasswordChangedDate" Type="DateTime" Precision="3" />
+    <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="PasswordVerificationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="PasswordVerificationTokenExpirationDate" Type="DateTime" Precision="3" />
+    <Property Name="FailedPasswordAttemptCount" Type="Int32" Nullable="false" />
+    <Property Name="FailedPasswordAttemptWindowStart" Type="DateTime" Precision="3" />
+    <Property Name="FailedPasswordAnswerAttemptCount" Type="Int32" Nullable="false" />
+    <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="DateTime" Precision="3" />
+    <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="OAuthMembership">
+    <Key>
+      <PropertyRef Name="Provider" />
+      <PropertyRef Name="ProviderUserId" />
+    </Key>
+    <Property Name="Provider" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderUserId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OfficeBranch">
+    <Key>
+      <PropertyRef Name="OfficeBranchId" />
+    </Key>
+    <Property Name="OfficeBranchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedById" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedById" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="OfficeBranch" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="LoweredRoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserProfiles" Relationship="VservAccountingDBModel.UsersInRoles" FromRole="Role" ToRole="UserProfile" />
+  </EntityType>
+  <EntityType Name="Salutation">
+    <Key>
+      <PropertyRef Name="SalutationId" />
+    </Key>
+    <Property Name="SalutationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedById" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedById" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Salutation" FromRole="Salutation" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedById" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedById" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Addresses" Relationship="VservAccountingDBModel.FK_Address_State" FromRole="State" ToRole="Address" />
+    <NavigationProperty Name="Cities" Relationship="VservAccountingDBModel.FK_City_State" FromRole="State" ToRole="City" />
+    <NavigationProperty Name="ZipCodes" Relationship="VservAccountingDBModel.FK_ZipCode_State" FromRole="State" ToRole="ZipCode" />
+  </EntityType>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="LoweredUserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="MobileAlias" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+    <Property Name="IsAnonymous" Type="Boolean" />
+    <Property Name="LastActivityDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Roles" Relationship="VservAccountingDBModel.UsersInRoles" FromRole="UserProfile" ToRole="Role" />
+  </EntityType>
+  <EntityType Name="ZipCode">
+    <Key>
+      <PropertyRef Name="ZipCodeId" />
+    </Key>
+    <Property Name="ZipCodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PinCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DivisionName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Taluk" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="StateId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedById" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedById" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Addresses" Relationship="VservAccountingDBModel.FK_Address_ZipCode" FromRole="ZipCode" ToRole="Address" />
+    <NavigationProperty Name="City" Relationship="VservAccountingDBModel.FK_ZipCode_City" FromRole="ZipCode" ToRole="City" />
+    <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_ZipCode_State" FromRole="ZipCode" ToRole="State" />
+  </EntityType>
+  <Association Name="FK_Address_AddressType">
+    <End Type="VservAccountingDBModel.AddressType" Role="AddressType" Multiplicity="1" />
+    <End Type="VservAccountingDBModel.Address" Role="Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AddressType">
+        <PropertyRef Name="AddressTypeId" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="AddressTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Address_City">
+    <End Type="VservAccountingDBModel.City" Role="City" Multiplicity="0..1" />
+    <End Type="VservAccountingDBModel.Address" Role="Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Address_State">
+    <End Type="VservAccountingDBModel.State" Role="State" Multiplicity="0..1" />
+    <End Type="VservAccountingDBModel.Address" Role="Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Address_ZipCode">
+    <End Type="VservAccountingDBModel.ZipCode" Role="ZipCode" Multiplicity="0..1" />
+    <End Type="VservAccountingDBModel.Address" Role="Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ZipCode">
+        <PropertyRef Name="ZipCodeId" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="ZipCodeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeAddress_Address">
+    <End Type="VservAccountingDBModel.Address" Role="Address" Multiplicity="1" />
+    <End Type="VservAccountingDBModel.EmployeeAddress" Role="EmployeeAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="EmployeeAddress">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_City_State">
+    <End Type="VservAccountingDBModel.State" Role="State" Multiplicity="1" />
+    <End Type="VservAccountingDBModel.City" Role="City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ZipCode_City">
+    <End Type="VservAccountingDBModel.City" Role="City" Multiplicity="1" />
+    <End Type="VservAccountingDBModel.ZipCode" Role="ZipCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="ZipCode">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Department">
+    <End Type="VservAccountingDBModel.Department" Role="Department" Multiplicity="0..1" />
+    <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Designation">
+    <End Type="VservAccountingDBModel.Designation" Role="Designation" Multiplicity="0..1" />
+    <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Designation">
+        <PropertyRef Name="DesignationId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="DesignationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_OfficeBranch">
+    <End Type="VservAccountingDBModel.OfficeBranch" Role="OfficeBranch" Multiplicity="0..1" />
+    <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OfficeBranch">
+        <PropertyRef Name="OfficeBranchId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="OfficeBranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Salutation">
+    <End Type="VservAccountingDBModel.Salutation" Role="Salutation" Multiplicity="0..1" />
+    <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Salutation">
+        <PropertyRef Name="SalutationId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="SalutationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeAddress_Employee">
+    <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="1" />
+    <End Type="VservAccountingDBModel.EmployeeAddress" Role="EmployeeAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="EmployeeAddress">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ZipCode_State">
+    <End Type="VservAccountingDBModel.State" Role="State" Multiplicity="1" />
+    <End Type="VservAccountingDBModel.ZipCode" Role="ZipCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="ZipCode">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsersInRoles">
+    <End Type="VservAccountingDBModel.Role" Role="Role" Multiplicity="*" />
+    <End Type="VservAccountingDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+  </Association>
+</Schema>

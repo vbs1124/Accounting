@@ -1,0 +1,9 @@
+C:\Users\akumar2\documents\visual studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Database\bin\Debug\Vserv.Accounting.Database.dacpac
+C:\Users\akumar2\documents\visual studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Database\bin\Debug\Vserv.Accounting.Database.dll
+C:\Users\akumar2\documents\visual studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Database\bin\Debug\Vserv.Accounting.Database.pdb
+C:\Users\akumar2\documents\visual studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Database\obj\Debug\Model.xml
+C:\Users\akumar2\documents\visual studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Database\obj\Debug\refactor.xml
+C:\Users\akumar2\documents\visual studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Database\obj\Debug\postdeploy.sql
+C:\Users\akumar2\documents\visual studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Database\obj\Debug\predeploy.sql
+C:\Users\akumar2\documents\visual studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Database\obj\Debug\Vserv.Accounting.Database.dll
+C:\Users\akumar2\documents\visual studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Database\obj\Debug\Vserv.Accounting.Database.pdb

@@ -1,0 +1,10 @@
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Data.Entity\bin\Debug\Vserv.Accounting.Data.Entity.dll.config
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Data.Entity\bin\Debug\Vserv.Accounting.Data.Entity.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Data.Entity\bin\Debug\Vserv.Accounting.Data.Entity.pdb
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Data.Entity\bin\Debug\EntityFramework.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Data.Entity\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Data.Entity\bin\Debug\EntityFramework.xml
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Data.Entity\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Data.Entity\obj\Debug\Vserv.Accounting.Data.Entity.csprojResolveAssemblyReference.cache
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Data.Entity\obj\Debug\Vserv.Accounting.Data.Entity.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Data.Entity\obj\Debug\Vserv.Accounting.Data.Entity.pdb

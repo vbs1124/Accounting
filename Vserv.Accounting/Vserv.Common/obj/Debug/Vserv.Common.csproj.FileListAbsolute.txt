@@ -1,0 +1,14 @@
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\bin\Debug\Vserv.Common.dll.config
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\bin\Debug\Vserv.Common.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\bin\Debug\Vserv.Common.pdb
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\bin\Debug\EntityFramework.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\bin\Debug\log4net.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\bin\Debug\Vserv.Common.Contracts.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\bin\Debug\Vserv.Common.Contracts.pdb
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\bin\Debug\EntityFramework.xml
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\bin\Debug\log4net.xml
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\obj\Debug\Vserv.Common.csprojResolveAssemblyReference.cache
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\obj\Debug\Vserv.Common.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Common\obj\Debug\Vserv.Common.pdb

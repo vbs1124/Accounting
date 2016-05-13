@@ -1,0 +1,13 @@
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Bootstrapper\bin\Debug\Vserv.Accounting.Business.Bootstrapper.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Bootstrapper\bin\Debug\Vserv.Accounting.Business.Bootstrapper.pdb
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Bootstrapper\bin\Debug\Vserv.Common.Contracts.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Bootstrapper\bin\Debug\Vserv.Common.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Bootstrapper\bin\Debug\EntityFramework.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Bootstrapper\bin\Debug\log4net.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Bootstrapper\bin\Debug\Vserv.Common.Contracts.pdb
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Bootstrapper\bin\Debug\Vserv.Common.pdb
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Bootstrapper\bin\Debug\EntityFramework.xml
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Bootstrapper\bin\Debug\log4net.xml
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Bootstrapper\obj\Debug\Vserv.Accounting.Business.Bootstrapper.csprojResolveAssemblyReference.cache
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Bootstrapper\obj\Debug\Vserv.Accounting.Business.Bootstrapper.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Bootstrapper\obj\Debug\Vserv.Accounting.Business.Bootstrapper.pdb

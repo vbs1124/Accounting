@@ -1,0 +1,5 @@
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Entities\bin\Debug\Vserv.Accounting.Business.Entities.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Entities\bin\Debug\Vserv.Accounting.Business.Entities.pdb
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Entities\obj\Debug\Vserv.Accounting.Business.Entities.csprojResolveAssemblyReference.cache
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Entities\obj\Debug\Vserv.Accounting.Business.Entities.dll
+C:\Users\akumar2\Documents\Visual Studio 2013\Projects\Vserv.Accounting\Vserv.Accounting.Business.Entities\obj\Debug\Vserv.Accounting.Business.Entities.pdb
