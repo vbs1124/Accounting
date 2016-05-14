@@ -41,6 +41,8 @@ namespace Vserv.Accounting.Web.Controllers
         [HttpPost]
         public ActionResult Add(EmployeeModel employeeModel)
         {
+            employeeModel.CreatedById = 1;
+            employeeModel.CreatedDate = DateTime.Now;
             EmployeeManager _employeeManager = new EmployeeManager();
 
             // Perform Save for Employee
@@ -68,7 +70,8 @@ namespace Vserv.Accounting.Web.Controllers
         public ActionResult Edit(EmployeeModel employeeModel)
         {
             EmployeeManager _employeeManager = new EmployeeManager();
-
+            employeeModel.UpdatedById = 1;
+            employeeModel.UpdatedDate = DateTime.Now;
             // Perform Save for Employee
             if (ModelState.IsValid)
             {
@@ -399,12 +402,12 @@ namespace Vserv.Accounting.Web.Controllers
             EmployeeManager _employeeManager = new EmployeeManager();
 
             //employeeModel.AddressTypes = ConvertTo(_employeeManager.GetAddressTypes());
-            employeeModel.Departments = ConvertTo(_employeeManager.GetDepartments());
-            employeeModel.Designations = ConvertTo(_employeeManager.GetDesignations());
-            employeeModel.OfficeBranches = ConvertTo(_employeeManager.GetOfficeBranches());
-            employeeModel.Salutations = ConvertTo(_employeeManager.GetSalutations());
+            employeeModel.Departments = ConvertTo(_employeeManager.GetDepartments().Where(condition => condition.IsActive).ToList());
+            employeeModel.Designations = ConvertTo(_employeeManager.GetDesignations().Where(condition => condition.IsActive.Value).ToList());
+            employeeModel.OfficeBranches = ConvertTo(_employeeManager.GetOfficeBranches().Where(condition => condition.IsActive).ToList());
+            employeeModel.Salutations = ConvertTo(_employeeManager.GetSalutations().Where(condition => condition.IsActive).ToList());
             employeeModel.Genders = GetGenders();
-            employeeModel.States = ConvertTo(_employeeManager.GetStates());
+            employeeModel.States = ConvertTo(_employeeManager.GetStates().Where(condition => condition.IsActive).ToList());
             //employeeModel.Cities = ConvertTo(_employeeManager.GetCities());
         }
 

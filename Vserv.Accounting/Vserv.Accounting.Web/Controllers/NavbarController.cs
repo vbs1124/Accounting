@@ -60,20 +60,40 @@ namespace Vserv.Accounting.Web.Controllers
                 isParent = false,
                 parentId = 2
             });
-            //menu.Add(new Navbar
-            //{
-            //    Id = 5,
-            //    nameOption = "Test Add",
-            //    controller = "Employee",
-            //    action = "TestAdd",
-            //    status = true,
-            //    isParent = false,
-            //    parentId = 2
-            //});
 
             menu.Add(new Navbar
             {
+                Id = 5,
+                nameOption = "Manage Designations",
+                imageClass = "fa fa-users fa-fw",
+                status = true,
+                isParent = true,
+                parentId = 0
+            });
+            menu.Add(new Navbar
+            {
                 Id = 6,
+                nameOption = "View Designations",
+                controller = "Designation",
+                action = "Index",
+                status = true,
+                isParent = false,
+                parentId = 5
+            });
+            menu.Add(new Navbar
+            {
+                Id = 7,
+                nameOption = "Add Designation",
+                controller = "Designation",
+                action = "Add",
+                status = true,
+                isParent = false,
+                parentId = 5
+            });
+
+            menu.Add(new Navbar
+            {
+                Id = 8,
                 nameOption = "Settings",
                 imageClass = "fa fa-gear fa-fw",
                 status = true,
@@ -83,23 +103,23 @@ namespace Vserv.Accounting.Web.Controllers
 
             menu.Add(new Navbar
             {
-                Id = 7,
+                Id = 9,
                 nameOption = "Change Password",
                 controller = "Account",
                 action = "ChangePassword",
                 status = true,
                 isParent = false,
-                parentId = 6
+                parentId = 8
             });
             menu.Add(new Navbar
             {
-                Id = 7,
+                Id = 10,
                 nameOption = "My Profile",
                 controller = "Account",
                 action = "profile",
                 status = true,
                 isParent = false,
-                parentId = 6
+                parentId = 8
             });
             return menu.ToList();
         }

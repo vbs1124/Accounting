@@ -1,5 +1,6 @@
 ﻿#region Namespaces
 
+using System;
 using System.Collections.Generic;
 using Vserv.Accounting.Data;
 //using Vserv.Accounting.Data.Contracts;
@@ -107,15 +108,6 @@ namespace Vserv.Accounting.Business.Managers
             }
         }
 
-        public List<Designation> GetDesignations()
-        {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
-            {
-                return EmployeeRepository.GetDesignations();
-            }
-        }
-
         public List<OfficeBranch> GetOfficeBranches()
         {
             CreateFactoryInstance();
@@ -133,6 +125,81 @@ namespace Vserv.Accounting.Business.Managers
                 return EmployeeRepository.GetSalutations();
             }
         }
+
+        public Boolean IsEmployeeIdAlreadyRegistered(string VBS_Id, int employeeId)
+        {
+            CreateFactoryInstance();
+            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            {
+                return EmployeeRepository.IsEmployeeIdAlreadyRegistered(VBS_Id, employeeId);
+            }
+        }
+
+        public Boolean IsEmailAlreadyRegistered(string emailAddress, int employeeId)
+        {
+            CreateFactoryInstance();
+            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            {
+                return EmployeeRepository.IsEmailAlreadyRegistered(emailAddress, employeeId);
+            }
+        }
+
+        public Boolean IsMobileNumberAlreadyRegistered(string mobileNumber, int employeeId)
+        {
+            CreateFactoryInstance();
+            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            {
+                return EmployeeRepository.IsMobileNumberAlreadyRegistered(mobileNumber, employeeId);
+            }
+        }
+
+        #region Designations
+
+        public List<Designation> GetDesignations()
+        {
+            CreateFactoryInstance();
+            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            {
+                return EmployeeRepository.GetDesignations();
+            }
+        }
+
+        public Designation GetDesignation(int designationId)
+        {
+            CreateFactoryInstance();
+            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            {
+                return EmployeeRepository.GetDesignation(designationId);
+            }
+        }
+
+        public void AddDesignation(Designation designation)
+        {
+            CreateFactoryInstance();
+            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            {
+                EmployeeRepository.AddDesignation(designation);
+            }
+        }
+
+        public void UpdateDesignation(Designation designation)
+        {
+            CreateFactoryInstance();
+            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            {
+                EmployeeRepository.UpdateDesignation(designation);
+            }
+        }
+
+        public Boolean IsDesignationExists(string name, int designationId)
+        {
+            CreateFactoryInstance();
+            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            {
+                return EmployeeRepository.IsDesignationExists(name, designationId);
+            }
+        }
+        #endregion Designations
 
         #region Address
 

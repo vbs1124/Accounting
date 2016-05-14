@@ -18,8 +18,6 @@
                                 <th>Father's Name</th>
                                 <th>UAN</th>
                                 <th>PAN</th>
-                                @*<th>AADHAAR Number</th>
-                                    <th>MobileNumber</th>*@
                                 <th>Email Address</th>
                                 <th>Joining Date</th>
                                 <th>Designation</th>
@@ -34,10 +32,8 @@
                                     <td>@item.FatherName</td>
                                     <td>@item.UniversalAccountNumber</td>
                                     <td>@item.PermanentAccountNumber</td>
-                                    @*<td>@item.AADHAARNumber</td>
-                                        <td>@item.MobileNumber</td>*@
                                     <td>@item.EmailAddress</td>
-                                    <td>@item.JoiningDate</td>
+                                    <td>@item.JoiningDate.Value.ToString("MM/dd/yyyy")</td>
                                     <td>@(item.Designation != null ? item.Designation.Name : String.Empty)</td>
                                 </tr>
                             }

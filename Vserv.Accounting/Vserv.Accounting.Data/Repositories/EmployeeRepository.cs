@@ -14,6 +14,8 @@ namespace Vserv.Accounting.Data
 
         #region Public Methods
 
+        #region Employees
+
         public List<Employee> GetEmployees()
         {
             using (var context = new VservAccountingDBEntities())
@@ -86,21 +88,33 @@ namespace Vserv.Accounting.Data
             }
         }
 
-        public List<AddressType> GetAddressTypes()
+        public Boolean IsEmployeeIdAlreadyRegistered(string VBS_Id, int employeeId)
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.AddressTypes.ToList();
+                return context.Employees.Any(employee => employee.EmployeeId != employeeId && employee.VBS_Id.Contains(VBS_Id));
             }
         }
 
-        public List<Department> GetDepartments()
+        public Boolean IsEmailAlreadyRegistered(string emailAddress, int employeeId)
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Departments.ToList();
+                return context.Employees.Any(employee => employee.EmployeeId != employeeId && employee.EmailAddress.Contains(emailAddress));
             }
         }
+
+        public Boolean IsMobileNumberAlreadyRegistered(string mobileNumber, int employeeId)
+        {
+            using (var context = new VservAccountingDBEntities())
+            {
+                return context.Employees.Any(employee => employee.EmployeeId != employeeId && employee.MobileNumber.Contains(mobileNumber));
+            }
+        }
+
+        #endregion Employees
+
+        #region Designations
 
         public List<Designation> GetDesignations()
         {
@@ -110,21 +124,45 @@ namespace Vserv.Accounting.Data
             }
         }
 
-        public List<OfficeBranch> GetOfficeBranches()
+        public void AddDesignation(Designation designation)
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.OfficeBranches.ToList();
+                context.Designations.Add(designation);
+                context.SaveChanges();
             }
         }
 
-        public List<Salutation> GetSalutations()
+        public void UpdateDesignation(Designation designation)
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Salutations.ToList();
+                Designation existingDesignation = context.Designations.FirstOrDefault(desg => desg.DesignationId == designation.DesignationId);
+                if (existingDesignation.IsNotNull())
+                {
+                    context.Entry(existingDesignation).CurrentValues.SetValues(designation);
+                    context.SaveChanges();
+                }
             }
         }
+
+        public Designation GetDesignation(int designationId)
+        {
+            using (var context = new VservAccountingDBEntities())
+            {
+                return context.Designations.FirstOrDefault(desg => desg.DesignationId == designationId);
+            }
+        }
+
+        public Boolean IsDesignationExists(string name, int designationId)
+        {
+            using (var context = new VservAccountingDBEntities())
+            {
+                return context.Designations.Any(desg => desg.DesignationId != designationId && desg.Name == name);
+            }
+        }
+
+        #endregion Designations
 
         #region Address
 
@@ -185,6 +223,42 @@ namespace Vserv.Accounting.Data
         }
 
         #endregion Address
+
+        #region Miscellaneous
+
+        public List<AddressType> GetAddressTypes()
+        {
+            using (var context = new VservAccountingDBEntities())
+            {
+                return context.AddressTypes.ToList();
+            }
+        }
+
+        public List<Department> GetDepartments()
+        {
+            using (var context = new VservAccountingDBEntities())
+            {
+                return context.Departments.ToList();
+            }
+        }
+
+        public List<OfficeBranch> GetOfficeBranches()
+        {
+            using (var context = new VservAccountingDBEntities())
+            {
+                return context.OfficeBranches.ToList();
+            }
+        }
+
+        public List<Salutation> GetSalutations()
+        {
+            using (var context = new VservAccountingDBEntities())
+            {
+                return context.Salutations.ToList();
+            }
+        }
+
+        #endregion Miscellaneous
 
         public void Dispose()
         {

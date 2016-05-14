@@ -16,12 +16,22 @@
 
     <!-- jQuery -->
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/moment")
     @Scripts.Render("~/bundles/bootstrap")
 </head>
 
 <body>
-    @RenderBody()
+    <div class="container">
+        <div class="row" style="padding-top:40px;">
+            <div class="col-md-4 col-md-offset-4 text-center">
+                <a href="@Url.Action("Index", "Home")">  <img src="~/Images/vserv-logo.gif" alt="Vserv Solutions" /></a>
+            </div>
+        </div>
+        @RenderBody()
+    </div>
+
     @Scripts.Render("~/Scripts/base")
+    @Scripts.Render("~/Scripts/app")
     @Scripts.Render("~/Scripts/DataTables")
     @RenderSection("scripts", required: false)
 </body>

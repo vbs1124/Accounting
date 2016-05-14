@@ -1,0 +1,12 @@
+﻿@model Vserv.Accounting.Web.Models.DesignationModel
+
+@{
+    ViewBag.Title = "Edit Designation";
+}
+
+@using (Html.BeginForm("Edit", "Designation"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.Partial("_DesignationPartial")
+}

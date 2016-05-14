@@ -1,37 +1,31 @@
 ﻿$(function () {
-    $("#dp-birth-date").datepicker({
-        autoclose: true,
-        defaultViewDate: "today",
-        clearBtn: true,
-        todayBtn: true,
-        todayHighlight: true,
-        format: "dd/mm/yyyy"
-    }); //Initialise any date pickers
+    //Initialise any date pickers
+    $("#dp-birth-date").datetimepicker({
+        format: "MM/DD/YYYY",
+        showTodayButton: true,
+        showClear: true,
+        showClose: true
+    });
 
-    $("#dp-relieving-date").datepicker({
-        autoclose: true,
-        defaultViewDate: "today",
-        clearBtn: true,
-        todayBtn: true,
-        todayHighlight: true,
-        format: "dd/mm/yyyy"
-    }); //Initialise any date pickers
+    $("#dp-relieving-date").datetimepicker({
+        format: "MM/DD/YYYY",
+        showTodayButton: true,
+        showClear: true,
+        showClose: true
+    });
 
-    $("#dp-joining-date").datepicker({
-        autoclose: true,
-        defaultViewDate: "today",
-        clearBtn: true,
-        todayBtn: true,
-        todayHighlight: true,
-        format: "dd/mm/yyyy"
-    }); //Initialise any date pickers
+    $("#dp-joining-date").datetimepicker({
+        format: "MM/DD/YYYY",
+        showTodayButton: true,
+        showClear: true,
+        showClose: true
+    });
 
-
-
-    //$("#dp-joining-date").on("dp.change", function (e) {
-    //    $('#dp-relieving-date').data("DateTimePicker").minDate(e.date);
-    //});
-    //$("#dp-relieving-date").on("dp.change", function (e) {
-    //    $('#dp-joining-date').data("DateTimePicker").maxDate(e.date);
-    //});
+    $("#dp-joining-date").on("dp.change", function (e) {
+        $('#dp-relieving-date').data("DateTimePicker").minDate(e.date);
+        $('#dp-relieving-date').data("DateTimePicker").clear();
+    });
+    $("#dp-relieving-date").on("dp.change", function (e) {
+        $('#dp-joining-date').data("DateTimePicker").maxDate(e.date);
+    });
 });

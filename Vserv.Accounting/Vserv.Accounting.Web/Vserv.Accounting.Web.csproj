@@ -199,6 +199,7 @@
     <Compile Include="Code\Unity\UnityControllerFactory.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DesignationController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NavbarController.cs" />
@@ -207,6 +208,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CityModel.cs" />
+    <Compile Include="Models\DesignationModel.cs" />
     <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -352,6 +354,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\logoVserv.gif" />
+    <Content Include="Images\vserv-logo.gif" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\base\flot-data.js" />
     <Content Include="Scripts\base\metisMenu.js" />
@@ -727,6 +730,11 @@
     <Content Include="Views\Employee\Banking.cshtml" />
     <Content Include="Views\Employee\Taxation.cshtml" />
     <Content Include="Views\Employee\Salary.cshtml" />
+    <Content Include="Views\Employee\_EmployeePartial.cshtml" />
+    <Content Include="Views\Designation\Index.cshtml" />
+    <Content Include="Views\Designation\Add.cshtml" />
+    <Content Include="Views\Designation\Edit.cshtml" />
+    <Content Include="Views\Designation\_DesignationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
