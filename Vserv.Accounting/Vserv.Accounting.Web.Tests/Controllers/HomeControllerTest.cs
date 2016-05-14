@@ -1,18 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿#region Namespaces
+using NUnit.Framework;
 using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Vserv.Accounting.Web;
-using Vserv.Accounting.Web.Controllers;
+using Vserv.Accounting.Web.Controllers; 
+#endregion
 
 namespace Vserv.Accounting.Web.Tests.Controllers
 {
-    [TestClass]
+    [TestFixture]
     public class HomeControllerTest
     {
-        [TestMethod]
+        [SetUp]
+        public void Init()
+        {
+        }
+
+        [Test]
         public void Index()
         {
             // Arrange

@@ -1,6 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
 using Vserv.Accounting.Business.Managers;
+using Vserv.Accounting.Web.Models;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Vserv.Accounting.Web.Code
 {
@@ -98,6 +102,38 @@ namespace Vserv.Accounting.Web.Code
                 if (isexists)
                 {
                     return new ValidationResult("Designation already exists.");
+                }
+            }
+
+            return ValidationResult.Success;
+        }
+    }
+
+    public class ValidPasswordComplexityAttribute : ValidationAttribute
+    {
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            if (value != null)
+            {
+                HashSet<char> specialCharacters = new HashSet<char>() { '@', '%', '$', '#' };
+                HashSet<char> excludedCharacters = new HashSet<char>() { '(', ')', '[', ']', '.', ';', ':', '\\' };
+                string password = value.ToString();
+                RegisterModel registerModel = (RegisterModel)(validationContext.ObjectInstance);
+
+                if (password.Length > 8 && !password.Any(char.IsWhiteSpace) && !password.Any(excludedCharacters.Contains) && !password.Contains(registerModel.UserName) && password.Any(char.IsLower) && password.Any(char.IsUpper) && password.Any(char.IsDigit) && password.Any(specialCharacters.Contains))
+                {
+                    return ValidationResult.Success;
+                }
+                else
+                {
+                    StringBuilder errorMessage = new StringBuilder();
+                    errorMessage.Append("Use at least 8 characters.");
+                    errorMessage.Append("Don't put a password similar to your User name.");
+                    errorMessage.Append("It should mandatorily contain digits, special characters(@, #, $ or %) and letters(lower and caps both).");
+                    errorMessage.Append("No spaces in-between password.");
+                    errorMessage.Append(@"The password cannot contain following characters ( ) [ ] . ; : \ ");
+                    errorMessage.Append("");
+                    return new ValidationResult(errorMessage.ToString());
                 }
             }
 

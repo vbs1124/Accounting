@@ -28,9 +28,10 @@ namespace Vserv.Accounting.Web.Models
         }
 
         [Required(ErrorMessage = "Password is Required.")]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+        [ValidPasswordComplexity]
         public string Password
         {
             get;
@@ -40,7 +41,7 @@ namespace Vserv.Accounting.Web.Models
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Confirm Password is Required.")]
         [Display(Name = "Confirm password")]
-        [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword
         {
             get;
