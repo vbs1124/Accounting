@@ -350,7 +350,7 @@ table.dataTable thead .sorting_desc_disabled {
 
 /* styles for validation helpers */
 .field-validation-error {
-    color: #e81123;
+    color: #a94442;
 }
 
 .field-validation-valid {
@@ -358,10 +358,10 @@ table.dataTable thead .sorting_desc_disabled {
 }
 
 input.input-validation-error {
-    border: 1px solid #e81123;
+    border: 1px solid #a94442;
 }
 textarea.input-validation-error {
-    border: 1px solid #e81123;
+    border: 1px solid #a94442;
 }
 
 input[type="checkbox"].input-validation-error {
@@ -369,9 +369,13 @@ input[type="checkbox"].input-validation-error {
 }
 
 .validation-summary-errors {
-    color: #e81123;
+    color: #a94442;
 }
 
 .validation-summary-valid {
     display: none;
+}
+
+.required-field {
+    color: #a94442;
 }

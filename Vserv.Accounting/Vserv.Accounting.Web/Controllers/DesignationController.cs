@@ -1,4 +1,5 @@
-﻿using System;
+﻿#region Namespaces
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,6 +8,7 @@ using Vserv.Accounting.Business.Managers;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Web.Models;
 using Vserv.Common.Extensions;
+#endregion
 
 namespace Vserv.Accounting.Web.Controllers
 {
@@ -96,7 +98,7 @@ namespace Vserv.Accounting.Web.Controllers
                 Name = designation.Name,
                 Description = designation.Description,
                 DisplayOrder = designation.DisplayOrder,
-                IsActive = designation.IsActive,
+                IsActive = designation.IsActive.IsNotNull() && designation.IsActive.HasValue ? true : false,
                 CreatedById = designation.CreatedById,
                 UpdatedById = designation.UpdatedById,
                 CreatedDate = designation.CreatedDate,
@@ -117,7 +119,7 @@ namespace Vserv.Accounting.Web.Controllers
                     Name = designation.Name,
                     Description = designation.Description,
                     DisplayOrder = designation.DisplayOrder,
-                    IsActive = designation.IsActive,
+                    IsActive = designation.IsActive.IsNotNull() && designation.IsActive.HasValue ? true : false,
                     CreatedById = designation.CreatedById,
                     UpdatedById = designation.UpdatedById,
                     CreatedDate = designation.CreatedDate,

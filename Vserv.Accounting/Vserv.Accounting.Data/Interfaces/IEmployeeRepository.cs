@@ -15,6 +15,7 @@ namespace Vserv.Accounting.Data
         Employee GetEmployee(int employeeId);
         Employee AddEmployee(Employee employee);
         Employee EditEmployee(Employee employee);
+        void DeleteEmployee(int employeeId);
         Boolean IsEmployeeIdAlreadyRegistered(string VBS_Id, int employeeId);
         Boolean IsEmailAlreadyRegistered(string emailAddress, int employeeId);
         Boolean IsMobileNumberAlreadyRegistered(string mobileNumber, int employeeId);

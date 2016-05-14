@@ -1,16 +1,17 @@
-﻿using System;
+﻿#region Namespaces
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Vserv.Accounting.Web.Models;
+using Vserv.Accounting.Web.Models; 
+#endregion
 
 namespace Vserv.Accounting.Web.Controllers
 {
     public class NavbarController : Controller
     {
-        //
-        // GET: /Navbar/
+        #region Namespaces
         public ActionResult Index()
         {
             return PartialView("_Navbar", navbarItems().ToList());
@@ -122,6 +123,7 @@ namespace Vserv.Accounting.Web.Controllers
                 parentId = 8
             });
             return menu.ToList();
-        }
+        } 
+        #endregion
     }
 }

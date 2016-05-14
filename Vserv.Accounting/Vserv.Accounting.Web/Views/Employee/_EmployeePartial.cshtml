@@ -14,7 +14,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.FirstName, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.FirstName, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @maxlength = "250" })
                                 @Html.ValidationMessageFor(m => m.FirstName)
@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.FatherName, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.FatherName, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control", @maxlength = "250" })
                                 @Html.ValidationMessageFor(m => m.FatherName)
@@ -49,21 +49,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.EmailAddress, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.EmailAddress, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", @maxlength = "250" })
                                 @Html.ValidationMessageFor(m => m.EmailAddress)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.MobileNumber, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.MobileNumber, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", @maxlength = "10" })
                                 @Html.ValidationMessageFor(m => m.MobileNumber)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.BirthDay, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.BirthDay, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 <div class='input-group date' id="dp-birth-date">
                                     @Html.TextBoxFor(m => m.BirthDay, new { @class = "form-control" })
@@ -94,21 +94,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.VBS_Id, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.VBS_Id, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @maxlength = "10" })
+                                @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @maxlength = "7" })
                                 @Html.ValidationMessageFor(m => m.VBS_Id)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.UniversalAccountNumber, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.UniversalAccountNumber, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 @Html.TextBoxFor(m => m.UniversalAccountNumber, new { @class = "form-control", @maxlength = "12" })
                                 @Html.ValidationMessageFor(m => m.UniversalAccountNumber)
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.PermanentAccountNumber, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.PermanentAccountNumber, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 @Html.TextBoxFor(m => m.PermanentAccountNumber, new { @class = "form-control", @maxlength = "15" })
                                 @Html.ValidationMessageFor(m => m.PermanentAccountNumber)
@@ -122,7 +122,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.JoiningDate, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.JoiningDate, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 <div class='input-group date' id="dp-joining-date">
                                     @Html.TextBoxFor(m => m.JoiningDate, new { @class = "form-control" })
@@ -163,7 +163,7 @@
                 <div class="col-lg-6">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.PermanentAddress.Address1, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.PermanentAddress.Address1, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 @Html.TextAreaFor(m => m.PermanentAddress.Address1, new { @class = "form-control", @maxlength = "250" })
                                 @Html.ValidationMessageFor(m => m.PermanentAddress.Address1)
@@ -181,7 +181,7 @@
                 <div class="col-lg-6">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.PermanentAddress.City, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.PermanentAddress.City, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 @Html.TextBoxFor(m => m.PermanentAddress.City, new { @class = "form-control", @maxlength = "100" })
                                 @Html.ValidationMessageFor(m => m.PermanentAddress.City)
@@ -195,7 +195,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.PermanentAddress.ZipCode, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.PermanentAddress.ZipCode, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 @Html.TextBoxFor(m => m.PermanentAddress.ZipCode, new { @class = "form-control", @maxlength = "6" })
                                 @Html.ValidationMessageFor(m => m.PermanentAddress.ZipCode)
@@ -212,7 +212,7 @@
                 <div class="col-lg-6">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.MailingAddress.Address1, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.MailingAddress.Address1, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 @Html.TextAreaFor(m => m.MailingAddress.Address1, new { @class = "form-control", @maxlength = "250" })
                                 @Html.ValidationMessageFor(m => m.MailingAddress.Address1)
@@ -230,7 +230,7 @@
                 <div class="col-lg-6">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.MailingAddress.City, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.MailingAddress.City, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 @Html.TextBoxFor(m => m.MailingAddress.City, new { @class = "form-control", @maxlength = "100" })
                                 @Html.ValidationMessageFor(m => m.MailingAddress.City)
@@ -244,7 +244,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.MailingAddress.ZipCode, new { @class = "col-lg-4 control-label" })
+                            @Html.LabelFor(m => m.MailingAddress.ZipCode, new { @class = "col-lg-4 control-label required-field" })
                             <div class="col-lg-8">
                                 @Html.TextBoxFor(m => m.MailingAddress.ZipCode, new { @class = "form-control", @maxlength = "6" })
                                 @Html.ValidationMessageFor(m => m.MailingAddress.ZipCode)
@@ -260,7 +260,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group pull-right">
-            <button type="reset" class="btn btn-default">Cancel</button>
+            <button type="reset" class="btn btn-default">Reset</button>
             <button type="submit" class="btn btn-success">Submit</button>
         </div>
     </div>

@@ -84,25 +84,11 @@ namespace Vserv.Accounting.Web.Controllers
             return View(employeeModel);
         }
 
-        public ActionResult TestAdd()
+        public ActionResult Delete(int employeeId)
         {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult TestAdd(Address address)
-        {
-
-            if (ModelState.IsValid)
-            {
-                EmployeeManager _employeeManager = new EmployeeManager();
-
-                address.CreatedById = 1;
-                address.AddressTypeId = 2;
-                address.CreatedDate = DateTime.Now;
-                _employeeManager.AddAddressInformation(address);
-            }
-            return View();
+            EmployeeManager _employeeManager = new EmployeeManager();
+            _employeeManager.DeleteEmployee(employeeId);
+            return RedirectToAction("List");
         }
 
         public ActionResult Banking()
@@ -245,7 +231,7 @@ namespace Vserv.Accounting.Web.Controllers
                     Name = item.Name,
                     Description = item.Description,
                     DisplayOrder = item.DisplayOrder,
-                    IsActive = item.IsActive,
+                    IsActive = item.IsActive.IsNotNull() && item.IsActive.HasValue ? true : false,
                     CreatedById = item.CreatedById,
                     UpdatedById = item.UpdatedById,
                     CreatedDate = item.CreatedDate,

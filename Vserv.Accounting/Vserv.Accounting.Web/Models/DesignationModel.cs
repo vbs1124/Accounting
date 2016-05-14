@@ -21,7 +21,7 @@ namespace Vserv.Accounting.Web.Models
         public string Description { get; set; }
         public int? DisplayOrder { get; set; }
 
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
         public int? CreatedById { get; set; }
         public Nullable<int> UpdatedById { get; set; }
         public DateTime? CreatedDate { get; set; }

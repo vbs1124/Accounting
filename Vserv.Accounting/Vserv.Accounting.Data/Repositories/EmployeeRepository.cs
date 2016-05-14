@@ -64,16 +64,6 @@ namespace Vserv.Accounting.Data
 
         }
 
-        public Address AddAddressInformation(Address address)
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                context.Addresses.Add(address);
-                context.SaveChanges();
-                return address;
-            }
-        }
-
         public Employee EditEmployee(Employee employee)
         {
             using (var context = new VservAccountingDBEntities())
@@ -85,6 +75,30 @@ namespace Vserv.Accounting.Data
                     context.SaveChanges();
                 }
                 return employee;
+            }
+        }
+
+        public void DeleteEmployee(int employeeId)
+        {
+            using (var context = new VservAccountingDBEntities())
+            {
+                Employee existingEmployee = context.Employees.Include("EmployeeAddresses.Address").FirstOrDefault(emp => emp.EmployeeId == employeeId);
+
+                if (existingEmployee.IsNotNull())
+                {
+                    var employeeAddresses = existingEmployee.EmployeeAddresses.ToList();
+                    foreach (var item in employeeAddresses)
+                    {
+                        context.EmployeeAddresses.Remove(item);
+                        if (item.Address.IsNotNull())
+                        {
+                            context.Addresses.Remove(item.Address);
+                        }
+                    }
+
+                    context.Employees.Remove(existingEmployee);
+                    context.SaveChanges();
+                }
             }
         }
 
@@ -219,6 +233,16 @@ namespace Vserv.Accounting.Data
             using (var context = new VservAccountingDBEntities())
             {
                 return context.ZipCodes.Where(zipcode => zipcode.CityId == cityId).ToList();
+            }
+        }
+
+        public Address AddAddressInformation(Address address)
+        {
+            using (var context = new VservAccountingDBEntities())
+            {
+                context.Addresses.Add(address);
+                context.SaveChanges();
+                return address;
             }
         }
 

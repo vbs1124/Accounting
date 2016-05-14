@@ -63,6 +63,15 @@ namespace Vserv.Accounting.Business.Managers
             }
         }
 
+        public void DeleteEmployee(int employeeId)
+        {
+            CreateFactoryInstance();
+            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            {
+                EmployeeRepository.DeleteEmployee(employeeId);
+            }
+        }
+
         public Employee AddEmployee(Employee employee)
         {
             try
