@@ -1,5 +1,6 @@
 ﻿#region Namespaces
 
+using System.ComponentModel.Composition;
 using System.Linq;
 using Vserv.Accounting.Data.Entity;
 
@@ -7,7 +8,9 @@ using Vserv.Accounting.Data.Entity;
 
 namespace Vserv.Accounting.Data
 {
-    public class UserProfileRepository : IUserProfileRepository
+    [Export(typeof(IUserProfileRepository))]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
+    public class UserProfileRepository : DataRepositoryBase<UserProfile>, IUserProfileRepository
     {
         #region Methods
 

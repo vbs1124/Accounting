@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Vserv.Accounting.Data;
 //using Vserv.Accounting.Data.Contracts;
 using Vserv.Accounting.Data.Entity;
+using Vserv.Common.Contracts;
 
 #endregion
 
@@ -13,12 +14,6 @@ namespace Vserv.Accounting.Business.Managers
     public class EmployeeManager : ManagerBase
     {
         #region Properties
-
-        public IEmployeeRepository EmployeeRepository
-        {
-            get;
-            set;
-        }
 
         #endregion Properties
 
@@ -29,242 +24,235 @@ namespace Vserv.Accounting.Business.Managers
 
         }
 
+        public EmployeeManager(IDataRepositoryFactory dataRepositoryFactory)
+        {
+            _dataRepositoryFactory = dataRepositoryFactory;
+        }
+
         #endregion Constructor
 
         #region Public Methods
 
         public List<Employee> GetEmployees()
         {
-            CreateFactoryInstance();
             return ExecuteFaultHandledOperation(() =>
             {
-                using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
-                {
-                    return EmployeeRepository.GetEmployees();
-                }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetEmployees();
             });
         }
 
         public Address AddAddressInformation(Address address)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.AddAddressInformation(address);
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.AddAddressInformation(address);
+            });
         }
 
         public Employee GetEmployee(int employeeId)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.GetEmployee(employeeId);
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetEmployee(employeeId);
+            });
         }
 
         public void DeleteEmployee(int employeeId)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
-            {
-                EmployeeRepository.DeleteEmployee(employeeId);
-            }
+            ExecuteFaultHandledOperation(() =>
+          {
+              var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+              _employeeRepository.DeleteEmployee(employeeId);
+          });
         }
 
         public Employee AddEmployee(Employee employee)
         {
-            try
+            return ExecuteFaultHandledOperation(() =>
             {
-                CreateFactoryInstance();
-                using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
-                {
-                    return EmployeeRepository.AddEmployee(employee);
-                }
-            }
-            catch
-            {
-
-                throw;
-            }
-
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.AddEmployee(employee);
+            });
         }
 
         public Employee EditEmployee(Employee employee)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.EditEmployee(employee);
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.EditEmployee(employee);
+            });
         }
 
         public List<AddressType> GetAddressTypes()
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.GetAddressTypes();
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetAddressTypes();
+            });
         }
 
         public List<Department> GetDepartments()
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.GetDepartments();
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetDepartments();
+            });
         }
 
         public List<OfficeBranch> GetOfficeBranches()
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.GetOfficeBranches();
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetOfficeBranches();
+            });
         }
 
         public List<Salutation> GetSalutations()
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.GetSalutations();
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetSalutations();
+            });
         }
 
         public Boolean IsEmployeeIdAlreadyRegistered(string VBS_Id, int employeeId)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.IsEmployeeIdAlreadyRegistered(VBS_Id, employeeId);
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.IsEmployeeIdAlreadyRegistered(VBS_Id, employeeId);
+            });
         }
 
         public Boolean IsEmailAlreadyRegistered(string emailAddress, int employeeId)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.IsEmailAlreadyRegistered(emailAddress, employeeId);
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.IsEmailAlreadyRegistered(emailAddress, employeeId);
+            });
         }
 
         public Boolean IsMobileNumberAlreadyRegistered(string mobileNumber, int employeeId)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.IsMobileNumberAlreadyRegistered(mobileNumber, employeeId);
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.IsMobileNumberAlreadyRegistered(mobileNumber, employeeId);
+            });
         }
 
         #region Designations
 
         public List<Designation> GetDesignations()
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.GetDesignations();
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetDesignations();
+            });
         }
 
         public Designation GetDesignation(int designationId)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.GetDesignation(designationId);
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetDesignation(designationId);
+            });
         }
 
         public void AddDesignation(Designation designation)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
-            {
-                EmployeeRepository.AddDesignation(designation);
-            }
+            ExecuteFaultHandledOperation(() =>
+          {
+              var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+              _employeeRepository.AddDesignation(designation);
+          });
         }
 
         public void UpdateDesignation(Designation designation)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
-            {
-                EmployeeRepository.UpdateDesignation(designation);
-            }
+            ExecuteFaultHandledOperation(() =>
+          {
+              var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+              _employeeRepository.UpdateDesignation(designation);
+          });
         }
 
         public Boolean IsDesignationExists(string name, int designationId)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.IsDesignationExists(name, designationId);
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.IsDesignationExists(name, designationId);
+            });
         }
+
         #endregion Designations
 
         #region Address
 
         public List<Address> GetAddresses(int employeeId)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.GetAddresses(employeeId);
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetAddresses(employeeId);
+            });
         }
 
         public List<City> GetCities()
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.GetCities();
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetCities();
+            });
         }
 
         public List<City> GetCities(int stateId, int? cityId)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.GetCities(stateId, cityId);
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetCities(stateId, cityId);
+            });
         }
 
         public List<State> GetStates()
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                var result = EmployeeRepository.GetStates();
-                return result;
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetStates();
+            });
         }
 
         public State GetState(int stateId)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.GetState(stateId);
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetState(stateId);
+            });
         }
 
         public List<ZipCode> GetZipCodes(int cityId)
         {
-            CreateFactoryInstance();
-            using (EmployeeRepository = VservHostFactory.GetEmployeeRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return EmployeeRepository.GetZipCodes(cityId);
-            }
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetZipCodes(cityId);
+            });
         }
 
         #endregion Address

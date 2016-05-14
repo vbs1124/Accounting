@@ -5,7 +5,7 @@ using Vserv.Common.Contracts;
 
 namespace Vserv.Accounting.Data
 {
-    public interface IEmployeeRepository : IDisposable
+    public interface IEmployeeRepository : IDataRepository<Employee>// IDisposable
     {
         #region Methods
 

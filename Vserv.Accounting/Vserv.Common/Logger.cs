@@ -1,5 +1,6 @@
 ﻿using log4net;
 using System;
+using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Linq;
 using Vserv.Common.Contracts;
@@ -7,6 +8,12 @@ using Vserv.Common.Contracts.Enums;
 
 namespace Vserv.Common
 {
+
+    /// <summary>
+    /// Custom logging class that abstracts the third party logging framework
+    /// </summary>
+    [Export(typeof(ILogger))]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
     public sealed class Logger : ILogger
     {
         private static ILog _logger;

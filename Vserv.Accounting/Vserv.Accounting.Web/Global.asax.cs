@@ -36,7 +36,6 @@ namespace Vserv.Accounting.Web
                 ContainerConfig.RegisterTypes(container);
             }
 
-
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

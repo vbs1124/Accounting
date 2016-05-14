@@ -4,7 +4,7 @@ using Vserv.Common.Contracts;
 
 namespace Vserv.Accounting.Data
 {
-    public interface IUserProfileRepository : IDisposable
+    public interface IUserProfileRepository : IDataRepository<UserProfile> //: IDisposable
     {
         UserProfile GetUserProfile(string userName);
 

@@ -1,6 +1,7 @@
 ﻿#region Namespaces
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Common.Extensions;
@@ -8,7 +9,9 @@ using Vserv.Common.Extensions;
 
 namespace Vserv.Accounting.Data
 {
-    public class EmployeeRepository : IEmployeeRepository
+    [Export(typeof(IEmployeeRepository))]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
+    public class EmployeeRepository : DataRepositoryBase<Employee>, IEmployeeRepository
     {
         #region Methods
 

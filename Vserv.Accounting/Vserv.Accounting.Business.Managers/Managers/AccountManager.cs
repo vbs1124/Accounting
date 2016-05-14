@@ -11,34 +11,23 @@ namespace Vserv.Accounting.Business.Managers
     public class AccountManager : ManagerBase
     {
         #region Properties
-        public IUserProfileRepository UserProfileRepository { get; set; }
         #endregion
 
         #region Constructor
-        public AccountManager()
-        {
-            
-        }
+
         #endregion
 
-        #region UserProfile
+        #region Methods
 
         public UserProfile GetUserProfile(string userName)
         {
-            CreateFactoryInstance();
-            using (UserProfileRepository = VservHostFactory.GetUserProfileRepositoryInstance())
+            return ExecuteFaultHandledOperation(() =>
             {
-                return UserProfileRepository.GetUserProfile(userName);
-            }
-
-            //return ExecuteFaultHandledOperation(() =>
-            //{
-            //    var _userProfileRepository = new UserProfileRepository();// _dataRepositoryFactory.GetDataRepository<IUserProfileRepository>();
-            //    var result = _userProfileRepository.GetUserProfile(userName);
-            //    return result;
-            //});
+                var _userProfileRepository = _dataRepositoryFactory.GetDataRepository<IUserProfileRepository>();
+                return _userProfileRepository.GetUserProfile(userName);
+            });
         }
 
-        #endregion
+        #endregion Methods
     }
 }

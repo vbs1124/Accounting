@@ -71,7 +71,6 @@
     <Compile Include="Managers\EmployeeManager.cs" />
     <Compile Include="Managers\HomeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnityContainerConfiguration\VservHostFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Vserv.Accounting.Business.Bootstrapper\Vserv.Accounting.Business.Bootstrapper.csproj">
