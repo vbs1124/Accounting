@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit Designation";
 }
 
-@using (Html.BeginForm("Edit", "Designation"))
+@using (Html.BeginForm("edit", "designation"))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -12,6 +12,6 @@
     @Html.HiddenFor(model => model.Code)
     @Html.HiddenFor(model => model.CreatedDate)
     @Html.HiddenFor(model => model.DisplayOrder)
-    @Html.HiddenFor(model => model.CreatedById)
+    @Html.HiddenFor(model => model.CreatedBy)
     @Html.Partial("_DesignationPartial")
 }

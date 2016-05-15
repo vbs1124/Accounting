@@ -41,7 +41,7 @@ namespace Vserv.Accounting.Web.Controllers
         [HttpPost]
         public ActionResult Add(EmployeeModel employeeModel)
         {
-            employeeModel.CreatedById = 1;
+            employeeModel.CreatedBy = User.Identity.Name;
             employeeModel.CreatedDate = DateTime.Now;
             EmployeeManager _employeeManager = new EmployeeManager();
 
@@ -70,7 +70,7 @@ namespace Vserv.Accounting.Web.Controllers
         public ActionResult Edit(EmployeeModel employeeModel)
         {
             EmployeeManager _employeeManager = new EmployeeManager();
-            employeeModel.UpdatedById = 1;
+            employeeModel.UpdatedBy = User.Identity.Name;
             employeeModel.UpdatedDate = DateTime.Now;
             // Perform Save for Employee
             if (ModelState.IsValid)
@@ -134,8 +134,8 @@ namespace Vserv.Accounting.Web.Controllers
                     Description = city.Description,
                     DisplayOrder = city.DisplayOrder,
                     IsActive = city.IsActive,
-                    CreatedById = city.CreatedById,
-                    UpdatedById = city.UpdatedById,
+                    CreatedBy = city.CreatedBy,
+                    UpdatedBy = city.UpdatedBy,
                     CreatedDate = city.CreatedDate,
                     UpdatedDate = city.UpdatedDate,
                     //Addresses = item.XXXXX,
@@ -160,8 +160,8 @@ namespace Vserv.Accounting.Web.Controllers
                     Description = item.Description,
                     DisplayOrder = item.DisplayOrder,
                     IsActive = item.IsActive,
-                    CreatedById = item.CreatedById,
-                    UpdatedById = item.UpdatedById,
+                    CreatedBy = item.CreatedBy,
+                    UpdatedBy = item.UpdatedBy,
                     CreatedDate = item.CreatedDate,
                     UpdatedDate = item.UpdatedDate,
                 }));
@@ -184,8 +184,8 @@ namespace Vserv.Accounting.Web.Controllers
                     Description = item.Description,
                     DisplayOrder = item.DisplayOrder,
                     IsActive = item.IsActive,
-                    CreatedById = item.CreatedById,
-                    UpdatedById = item.UpdatedById,
+                    CreatedBy = item.CreatedBy,
+                    UpdatedBy = item.UpdatedBy,
                     CreatedDate = item.CreatedDate,
                     UpdatedDate = item.UpdatedDate,
                 }));
@@ -208,8 +208,8 @@ namespace Vserv.Accounting.Web.Controllers
                     Description = item.Description,
                     DisplayOrder = item.DisplayOrder,
                     IsActive = item.IsActive,
-                    CreatedById = item.CreatedById,
-                    UpdatedById = item.UpdatedById,
+                    CreatedBy = item.CreatedBy,
+                    UpdatedBy = item.UpdatedBy,
                     CreatedDate = item.CreatedDate,
                     UpdatedDate = item.UpdatedDate
                 }));
@@ -231,9 +231,9 @@ namespace Vserv.Accounting.Web.Controllers
                     Name = item.Name,
                     Description = item.Description,
                     DisplayOrder = item.DisplayOrder,
-                    IsActive = item.IsActive.IsNotNull() && item.IsActive.HasValue ? true : false,
-                    CreatedById = item.CreatedById,
-                    UpdatedById = item.UpdatedById,
+                    IsActive = item.IsActive,
+                    CreatedBy = item.CreatedBy,
+                    UpdatedBy = item.UpdatedBy,
                     CreatedDate = item.CreatedDate,
                     UpdatedDate = item.UpdatedDate
                 }));
@@ -256,8 +256,8 @@ namespace Vserv.Accounting.Web.Controllers
                     Description = item.Description,
                     DisplayOrder = item.DisplayOrder,
                     IsActive = item.IsActive,
-                    CreatedById = item.CreatedById,
-                    UpdatedById = item.UpdatedById,
+                    CreatedBy = item.CreatedBy,
+                    UpdatedBy = item.UpdatedBy,
                     CreatedDate = item.CreatedDate,
                     UpdatedDate = item.UpdatedDate,
                 }));
@@ -280,8 +280,8 @@ namespace Vserv.Accounting.Web.Controllers
                     Description = item.Description,
                     DisplayOrder = item.DisplayOrder,
                     IsActive = item.IsActive,
-                    CreatedById = item.CreatedById,
-                    UpdatedById = item.UpdatedById,
+                    CreatedBy = item.CreatedBy,
+                    UpdatedBy = item.UpdatedBy,
                     CreatedDate = item.CreatedDate,
                     UpdatedDate = item.UpdatedDate,
                 }));
@@ -316,8 +316,8 @@ namespace Vserv.Accounting.Web.Controllers
                     IsCommunicationAddress = false,
                     AddressTypeId = Convert.ToInt32(AddressTypeEnum.PermanentAddress),
                     IsActive = true,
-                    CreatedById = 1,
-                    UpdatedById = null,
+                    CreatedBy = User.Identity.Name,
+                    UpdatedBy = null,
                     CreatedDate = DateTime.Now,
                     UpdatedDate = null
                 };
@@ -342,11 +342,10 @@ namespace Vserv.Accounting.Web.Controllers
                     IsCommunicationAddress = false,
                     AddressTypeId = Convert.ToInt32(AddressTypeEnum.MailingAddress),
                     IsActive = true,
-                    CreatedById = 1,
-                    UpdatedById = null,
+                    CreatedBy = User.Identity.Name,
+                    UpdatedBy = null,
                     CreatedDate = DateTime.Now,
                     UpdatedDate = null,
-
                 };
 
                 addresses.Add(new EmployeeAddress { Address = mailingAddress });
@@ -365,18 +364,17 @@ namespace Vserv.Accounting.Web.Controllers
                 AADHAARNumber = employeeModel.AADHAARNumber,
                 MobileNumber = employeeModel.MobileNumber,
                 EmailAddress = employeeModel.EmailAddress,
-                BirthDay = employeeModel.BirthDay,
-                JoiningDate = employeeModel.JoiningDate,
+                BirthDay = employeeModel.BirthDay.IsNotNull() && employeeModel.BirthDay.HasValue ? employeeModel.BirthDay.Value : DateTime.Now,
+                JoiningDate = employeeModel.JoiningDate.IsNotNull() && employeeModel.JoiningDate.HasValue ? employeeModel.JoiningDate.Value : DateTime.Now,
                 RelievingDate = employeeModel.RelievingDate,
                 VBS_Id = employeeModel.VBS_Id,
-                DesignationId = employeeModel.DesignationId,
-                SalutationId = employeeModel.SalutationId,
-                GenderId = employeeModel.GenderId,
-                OfficeBranchId = employeeModel.OfficeBranchId,
-                DepartmentId = employeeModel.DepartmentId,
+                DesignationId = employeeModel.DesignationId.Value,
+                SalutationId = employeeModel.SalutationId.Value,
+                GenderId = employeeModel.GenderId.Value,
+                OfficeBranchId = employeeModel.OfficeBranchId.Value,
                 IsActive = employeeModel.IsActive,
-                CreatedById = 1,
-                UpdatedById = employeeModel.UpdatedById,
+                CreatedBy = User.Identity.Name,
+                UpdatedBy = employeeModel.UpdatedBy,
                 CreatedDate = DateTime.Now,
                 UpdatedDate = employeeModel.UpdatedDate,
                 EmployeeAddresses = addresses
@@ -389,7 +387,7 @@ namespace Vserv.Accounting.Web.Controllers
 
             //employeeModel.AddressTypes = ConvertTo(_employeeManager.GetAddressTypes());
             employeeModel.Departments = ConvertTo(_employeeManager.GetDepartments().Where(condition => condition.IsActive).ToList());
-            employeeModel.Designations = ConvertTo(_employeeManager.GetDesignations().Where(condition => condition.IsActive.Value).ToList());
+            employeeModel.Designations = ConvertTo(_employeeManager.GetDesignations().Where(condition => condition.IsActive).ToList());
             employeeModel.OfficeBranches = ConvertTo(_employeeManager.GetOfficeBranches().Where(condition => condition.IsActive).ToList());
             employeeModel.Salutations = ConvertTo(_employeeManager.GetSalutations().Where(condition => condition.IsActive).ToList());
             employeeModel.Genders = GetGenders();
@@ -420,8 +418,8 @@ namespace Vserv.Accounting.Web.Controllers
                         IsCommunicationAddress = item.Address.IsCommunicationAddress,
                         AddressTypeId = item.Address.AddressTypeId,
                         IsActive = item.Address.IsActive,
-                        CreatedById = item.Address.CreatedById,
-                        UpdatedById = item.Address.UpdatedById,
+                        CreatedBy = item.Address.CreatedBy,
+                        UpdatedBy = item.Address.UpdatedBy,
                         CreatedDate = item.Address.CreatedDate,
                         UpdatedDate = item.Address.UpdatedDate,
                     };
@@ -443,8 +441,8 @@ namespace Vserv.Accounting.Web.Controllers
                         IsCommunicationAddress = item.Address.IsCommunicationAddress,
                         AddressTypeId = item.Address.AddressTypeId,
                         IsActive = item.Address.IsActive,
-                        CreatedById = item.Address.CreatedById,
-                        UpdatedById = item.Address.UpdatedById,
+                        CreatedBy = item.Address.CreatedBy,
+                        UpdatedBy = item.Address.UpdatedBy,
                         CreatedDate = item.Address.CreatedDate,
                         UpdatedDate = item.Address.UpdatedDate,
                     };
@@ -472,10 +470,9 @@ namespace Vserv.Accounting.Web.Controllers
                 SalutationId = employee.SalutationId,
                 GenderId = employee.GenderId,
                 OfficeBranchId = employee.OfficeBranchId,
-                DepartmentId = employee.DepartmentId,
-                IsActive = employee.IsActive.IsNotNull() && employee.IsActive.HasValue ? employee.IsActive.Value : false,
-                CreatedById = employee.CreatedById,
-                UpdatedById = employee.UpdatedById,
+                IsActive = employee.IsActive,
+                CreatedBy = employee.CreatedBy,
+                UpdatedBy = employee.UpdatedBy,
                 CreatedDate = employee.CreatedDate,
                 UpdatedDate = employee.UpdatedDate,
                 PermanentAddress = permanentAddress,

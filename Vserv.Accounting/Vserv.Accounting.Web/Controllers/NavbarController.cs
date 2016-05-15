@@ -24,8 +24,8 @@ namespace Vserv.Accounting.Web.Controllers
             {
                 Id = 1,
                 nameOption = "Dashboard",
-                controller = "Dashboard",
-                action = "Index",
+                controller = "dashboard",
+                action = "index",
                 imageClass = "fa fa-dashboard fa-fw",
                 status = true,
                 isParent = false,
@@ -45,8 +45,8 @@ namespace Vserv.Accounting.Web.Controllers
             {
                 Id = 3,
                 nameOption = "View Employees",
-                controller = "Employee",
-                action = "List",
+                controller = "employee",
+                action = "list",
                 status = true,
                 isParent = false,
                 parentId = 2
@@ -55,8 +55,8 @@ namespace Vserv.Accounting.Web.Controllers
             {
                 Id = 4,
                 nameOption = "Add Employee",
-                controller = "Employee",
-                action = "Add",
+                controller = "employee",
+                action = "add",
                 status = true,
                 isParent = false,
                 parentId = 2
@@ -75,8 +75,8 @@ namespace Vserv.Accounting.Web.Controllers
             {
                 Id = 6,
                 nameOption = "View Designations",
-                controller = "Designation",
-                action = "Index",
+                controller = "designation",
+                action = "index",
                 status = true,
                 isParent = false,
                 parentId = 5
@@ -85,8 +85,8 @@ namespace Vserv.Accounting.Web.Controllers
             {
                 Id = 7,
                 nameOption = "Add Designation",
-                controller = "Designation",
-                action = "Add",
+                controller = "designation",
+                action = "add",
                 status = true,
                 isParent = false,
                 parentId = 5
@@ -105,16 +105,6 @@ namespace Vserv.Accounting.Web.Controllers
             menu.Add(new Navbar
             {
                 Id = 9,
-                nameOption = "Change Password",
-                controller = "Account",
-                action = "ChangePassword",
-                status = true,
-                isParent = false,
-                parentId = 8
-            });
-            menu.Add(new Navbar
-            {
-                Id = 10,
                 nameOption = "My Profile",
                 controller = "Account",
                 action = "profile",
@@ -122,6 +112,18 @@ namespace Vserv.Accounting.Web.Controllers
                 isParent = false,
                 parentId = 8
             });
+
+            menu.Add(new Navbar
+            {
+                Id = 10,
+                nameOption = "Change Password",
+                controller = "Account",
+                action = "changepassword",
+                status = true,
+                isParent = false,
+                parentId = 8
+            });
+           
             return menu.ToList();
         } 
         #endregion

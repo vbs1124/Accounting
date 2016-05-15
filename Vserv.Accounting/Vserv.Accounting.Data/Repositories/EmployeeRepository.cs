@@ -24,7 +24,6 @@ namespace Vserv.Accounting.Data
             using (var context = new VservAccountingDBEntities())
             {
                 var result = context.Employees
-                    .Include("Department")
                     .Include("Designation")
                     .Include("OfficeBranch")
                     .Include("Salutation")
@@ -39,7 +38,7 @@ namespace Vserv.Accounting.Data
             using (var context = new VservAccountingDBEntities())
             {
                 Employee aaa = new Employee();
-                var result = context.Employees.Include("Department")
+                var result = context.Employees
                     .Include("Designation")
                     .Include("OfficeBranch")
                     .Include("Salutation")
@@ -71,9 +70,16 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                Employee existingEmployee = context.Employees.FirstOrDefault(emp => emp.EmployeeId == employee.EmployeeId);
+                Employee existingEmployee = context.Employees.Include("EmployeeAddresses.Address").FirstOrDefault(emp => emp.EmployeeId == employee.EmployeeId);
                 if (existingEmployee.IsNotNull())
                 {
+                    foreach (var item in existingEmployee.EmployeeAddresses)
+                    {
+                        var existingAddress = item.Address;
+                        var updatedAddress = employee.EmployeeAddresses.FirstOrDefault(condition => condition.Address.AddressId == existingAddress.AddressId).Address;
+                        context.Entry(existingAddress).CurrentValues.SetValues(updatedAddress);
+                    }
+
                     context.Entry(existingEmployee).CurrentValues.SetValues(employee);
                     context.SaveChanges();
                 }
@@ -286,11 +292,6 @@ namespace Vserv.Accounting.Data
         }
 
         #endregion Miscellaneous
-
-        public void Dispose()
-        {
-            //   base.Dispose(true);
-        }
 
         #endregion Public Methods
 

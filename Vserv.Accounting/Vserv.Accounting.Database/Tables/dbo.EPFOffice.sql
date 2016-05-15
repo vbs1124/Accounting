@@ -1,12 +1,11 @@
-﻿
-CREATE TABLE [dbo].[EPFOffice](
+﻿CREATE TABLE [dbo].[EPFOffice](
 	[EPFOfficeId] [int] IDENTITY(1,1) NOT NULL,
-	[EPFOfficeName] [nchar](10) NULL,
-	[EPFOfficeCode] [nchar](10) NULL,
-	[StateId] [nchar](10) NULL,
+	[EPFOfficeName] [nchar](10) NOT NULL,
+	[EPFOfficeCode] [nchar](10) NOT NULL,
+	[StateId] [nchar](10) NOT NULL,
 	[IsActive] [bit] NOT NULL,
-	[CreatedById] [int] NOT NULL,
-	[UpdatedById] [int] NULL,
+	[CreatedBy] [nvarchar](50) NOT NULL,
+	[UpdatedBy] [nvarchar](50) NULL,
 	[CreatedDate] [datetime] NOT NULL,
 	[UpdatedDate] [datetime] NULL,
  CONSTRAINT [PK_EPFOffice] PRIMARY KEY CLUSTERED 
@@ -22,5 +21,3 @@ GO
 
 ALTER TABLE [dbo].[EPFOffice] ADD  CONSTRAINT [DF_EPFOffice_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
 GO
-
-

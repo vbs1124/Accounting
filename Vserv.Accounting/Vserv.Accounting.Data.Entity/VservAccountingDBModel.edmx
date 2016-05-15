@@ -16,15 +16,15 @@
           <Property Name="StateId" Type="int" />
           <Property Name="CityId" Type="int" />
           <Property Name="ZipCodeId" Type="int" />
-          <Property Name="City" Type="nvarchar" MaxLength="255" />
-          <Property Name="ZipCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="250" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Latitude" Type="decimal" Precision="16" Scale="13" />
           <Property Name="Longitude" Type="decimal" Precision="16" Scale="13" />
           <Property Name="IsCommunicationAddress" Type="bit" Nullable="false" />
           <Property Name="AddressTypeId" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedById" Type="int" Nullable="false" />
-          <Property Name="UpdatedById" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -38,8 +38,8 @@
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedById" Type="int" Nullable="false" />
-          <Property Name="UpdatedById" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -48,28 +48,28 @@
             <PropertyRef Name="LogId" />
           </Key>
           <Property Name="LogId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="appdomain" Type="varchar" MaxLength="256" />
-          <Property Name="aspnetcache" Type="varchar(max)" />
-          <Property Name="aspnetcontext" Type="varchar(max)" />
-          <Property Name="aspnetrequest" Type="varchar(max)" />
-          <Property Name="aspnetsession" Type="varchar(max)" />
-          <Property Name="date" Type="datetime" Nullable="false" />
-          <Property Name="exception" Type="varchar(max)" />
-          <Property Name="identity" Type="varchar" MaxLength="256" />
-          <Property Name="level" Type="varchar" MaxLength="30" />
-          <Property Name="line" Type="int" />
-          <Property Name="logger" Type="varchar" MaxLength="100" />
-          <Property Name="message" Type="varchar" MaxLength="2000" />
-          <Property Name="method" Type="varchar" MaxLength="500" />
-          <Property Name="ndc" Type="varchar" MaxLength="500" />
-          <Property Name="property" Type="varchar" MaxLength="500" />
-          <Property Name="stacktrace" Type="varchar(max)" />
-          <Property Name="stacktracedetail" Type="varchar(max)" />
-          <Property Name="timestamp" Type="bigint" />
-          <Property Name="thread" Type="varchar" MaxLength="256" />
-          <Property Name="type" Type="varchar" MaxLength="256" />
-          <Property Name="username" Type="varchar" MaxLength="100" />
-          <Property Name="utcdate" Type="datetime" Nullable="false" />
+          <Property Name="AppDomain" Type="varchar" MaxLength="256" />
+          <Property Name="AspnetCache" Type="varchar(max)" />
+          <Property Name="AspnetContext" Type="varchar(max)" />
+          <Property Name="AspnetRequest" Type="varchar(max)" />
+          <Property Name="AspnetSession" Type="varchar(max)" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Exception" Type="varchar(max)" />
+          <Property Name="Identity" Type="varchar" MaxLength="256" />
+          <Property Name="Level" Type="varchar" MaxLength="30" />
+          <Property Name="Line" Type="int" />
+          <Property Name="Logger" Type="varchar" MaxLength="100" />
+          <Property Name="Message" Type="varchar" MaxLength="2000" />
+          <Property Name="Method" Type="varchar" MaxLength="500" />
+          <Property Name="NDC" Type="varchar" MaxLength="500" />
+          <Property Name="Property" Type="varchar" MaxLength="500" />
+          <Property Name="StackTrace" Type="varchar(max)" />
+          <Property Name="StackTraceDetail" Type="varchar(max)" />
+          <Property Name="TimeStamp" Type="bigint" />
+          <Property Name="Thread" Type="varchar" MaxLength="256" />
+          <Property Name="Type" Type="varchar" MaxLength="256" />
+          <Property Name="Username" Type="varchar" MaxLength="100" />
+          <Property Name="UTCDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -81,8 +81,8 @@
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedById" Type="int" Nullable="false" />
-          <Property Name="UpdatedById" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -103,8 +103,8 @@
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedById" Type="int" Nullable="false" />
-          <Property Name="UpdatedById" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -114,13 +114,13 @@
           </Key>
           <Property Name="DesignationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Code" Type="nchar" MaxLength="6" />
-          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="250" />
-          <Property Name="DisplayOrder" Type="int" />
-          <Property Name="IsActive" Type="bit" />
-          <Property Name="CreatedById" Type="int" />
-          <Property Name="UpdatedById" Type="int" />
-          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Employee">
@@ -128,29 +128,28 @@
             <PropertyRef Name="EmployeeId" />
           </Key>
           <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="250" />
+          <Property Name="FirstName" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="MiddleName" Type="varchar" MaxLength="250" />
           <Property Name="LastName" Type="varchar" MaxLength="250" />
-          <Property Name="FatherName" Type="varchar" MaxLength="250" />
+          <Property Name="FatherName" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="MotherName" Type="varchar" MaxLength="250" />
           <Property Name="UniversalAccountNumber" Type="varchar" MaxLength="20" />
           <Property Name="PermanentAccountNumber" Type="varchar" MaxLength="20" />
           <Property Name="AADHAARNumber" Type="varchar" MaxLength="20" />
-          <Property Name="MobileNumber" Type="varchar" MaxLength="20" />
-          <Property Name="EmailAddress" Type="varchar" MaxLength="250" />
-          <Property Name="BirthDay" Type="datetime" />
-          <Property Name="JoiningDate" Type="datetime" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="BirthDay" Type="datetime" Nullable="false" />
+          <Property Name="JoiningDate" Type="datetime" Nullable="false" />
           <Property Name="RelievingDate" Type="datetime" />
-          <Property Name="VBS_Id" Type="varchar" MaxLength="50" />
-          <Property Name="DesignationId" Type="int" />
-          <Property Name="SalutationId" Type="int" />
-          <Property Name="GenderId" Type="int" />
-          <Property Name="OfficeBranchId" Type="int" />
-          <Property Name="DepartmentId" Type="int" />
-          <Property Name="IsActive" Type="bit" />
-          <Property Name="CreatedById" Type="int" />
-          <Property Name="UpdatedById" Type="int" />
-          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="VBS_Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DesignationId" Type="int" Nullable="false" />
+          <Property Name="SalutationId" Type="int" Nullable="false" />
+          <Property Name="GenderId" Type="int" Nullable="false" />
+          <Property Name="OfficeBranchId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="EmployeeAddress">
@@ -172,8 +171,8 @@
           <Property Name="Extension" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="AccountNumber" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedById" Type="int" Nullable="false" />
-          <Property Name="UpdatedById" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -182,12 +181,12 @@
             <PropertyRef Name="EPFOfficeId" />
           </Key>
           <Property Name="EPFOfficeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EPFOfficeName" Type="nchar" MaxLength="10" />
-          <Property Name="EPFOfficeCode" Type="nchar" MaxLength="10" />
-          <Property Name="StateId" Type="nchar" MaxLength="10" />
+          <Property Name="EPFOfficeName" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="EPFOfficeCode" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="StateId" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedById" Type="int" Nullable="false" />
-          <Property Name="UpdatedById" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -237,8 +236,8 @@
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedById" Type="int" Nullable="false" />
-          <Property Name="UpdatedById" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -261,8 +260,8 @@
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedById" Type="int" Nullable="false" />
-          <Property Name="UpdatedById" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -271,13 +270,13 @@
             <PropertyRef Name="StateId" />
           </Key>
           <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Code" Type="nchar" MaxLength="6" Nullable="false" />
+          <Property Name="Code" Type="nchar" MaxLength="6" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedById" Type="int" Nullable="false" />
-          <Property Name="UpdatedById" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -312,8 +311,8 @@
           <Property Name="CityId" Type="int" Nullable="false" />
           <Property Name="StateId" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedById" Type="int" Nullable="false" />
-          <Property Name="UpdatedById" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -377,20 +376,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_Department">
-          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentId" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="DepartmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Employee_Designation">
-          <End Role="Designation" Type="Self.Designation" Multiplicity="0..1" />
+          <End Role="Designation" Type="Self.Designation" Multiplicity="1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Designation">
@@ -402,7 +389,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Employee_OfficeBranch">
-          <End Role="OfficeBranch" Type="Self.OfficeBranch" Multiplicity="0..1" />
+          <End Role="OfficeBranch" Type="Self.OfficeBranch" Multiplicity="1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="OfficeBranch">
@@ -414,7 +401,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Employee_Salutation">
-          <End Role="Salutation" Type="Self.Salutation" Multiplicity="0..1" />
+          <End Role="Salutation" Type="Self.Salutation" Multiplicity="1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Salutation">
@@ -590,10 +577,6 @@
             <End Role="State" EntitySet="State" />
             <End Role="City" EntitySet="City" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_Department" Association="Self.FK_Employee_Department">
-            <End Role="Department" EntitySet="Department" />
-            <End Role="Employee" EntitySet="Employee" />
-          </AssociationSet>
           <AssociationSet Name="FK_Employee_Designation" Association="Self.FK_Employee_Designation">
             <End Role="Designation" EntitySet="Designation" />
             <End Role="Employee" EntitySet="Employee" />
@@ -735,10 +718,6 @@
             <End Role="City" EntitySet="Cities" />
             <End Role="ZipCode" EntitySet="ZipCodes" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_Department" Association="VservAccountingDBModel.FK_Employee_Department">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
           <AssociationSet Name="FK_Employee_Designation" Association="VservAccountingDBModel.FK_Employee_Designation">
             <End Role="Designation" EntitySet="Designations" />
             <End Role="Employee" EntitySet="Employees" />
@@ -775,15 +754,15 @@
           <Property Name="StateId" Type="Int32" />
           <Property Name="CityId" Type="Int32" />
           <Property Name="ZipCodeId" Type="Int32" />
-          <Property Name="City" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ZipCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Latitude" Type="Decimal" Precision="16" Scale="13" />
           <Property Name="Longitude" Type="Decimal" Precision="16" Scale="13" />
           <Property Name="IsCommunicationAddress" Type="Boolean" Nullable="false" />
           <Property Name="AddressTypeId" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedById" Type="Int32" Nullable="false" />
-          <Property Name="UpdatedById" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="AddressType" Relationship="VservAccountingDBModel.FK_Address_AddressType" FromRole="Address" ToRole="AddressType" />
@@ -802,8 +781,8 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedById" Type="Int32" Nullable="false" />
-          <Property Name="UpdatedById" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Addresses" Relationship="VservAccountingDBModel.FK_Address_AddressType" FromRole="AddressType" ToRole="Address" />
@@ -813,28 +792,28 @@
             <PropertyRef Name="LogId" />
           </Key>
           <Property Name="LogId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="appdomain" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="aspnetcache" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="aspnetcontext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="aspnetrequest" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="aspnetsession" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="identity" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="level" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="line" Type="Int32" />
-          <Property Name="logger" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="message" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
-          <Property Name="method" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ndc" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="property" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="stacktrace" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="stacktracedetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="timestamp" Type="Int64" />
-          <Property Name="thread" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="type" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="utcdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AppDomain" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="AspnetCache" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AspnetContext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AspnetRequest" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AspnetSession" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Identity" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Level" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Line" Type="Int32" />
+          <Property Name="Logger" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="Method" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="NDC" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Property" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="StackTrace" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StackTraceDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TimeStamp" Type="Int64" />
+          <Property Name="Thread" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UTCDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -846,8 +825,8 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedById" Type="Int32" Nullable="false" />
-          <Property Name="UpdatedById" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Addresses" Relationship="VservAccountingDBModel.FK_Address_City" FromRole="City" ToRole="Address" />
@@ -871,11 +850,10 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedById" Type="Int32" Nullable="false" />
-          <Property Name="UpdatedById" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Department" FromRole="Department" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Designation">
           <Key>
@@ -883,13 +861,13 @@
           </Key>
           <Property Name="DesignationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="6" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="DisplayOrder" Type="Int32" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedById" Type="Int32" />
-          <Property Name="UpdatedById" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Designation" ToRole="Employee" />
         </EntityType>
@@ -898,31 +876,29 @@
             <PropertyRef Name="EmployeeId" />
           </Key>
           <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="MiddleName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="FatherName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FatherName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="MotherName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="UniversalAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="PermanentAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="AADHAARNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="MobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="EmailAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="BirthDay" Type="DateTime" Precision="3" />
-          <Property Name="JoiningDate" Type="DateTime" Precision="3" />
+          <Property Name="MobileNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="BirthDay" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="JoiningDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RelievingDate" Type="DateTime" Precision="3" />
-          <Property Name="VBS_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DesignationId" Type="Int32" />
-          <Property Name="SalutationId" Type="Int32" />
-          <Property Name="GenderId" Type="Int32" />
-          <Property Name="OfficeBranchId" Type="Int32" />
-          <Property Name="DepartmentId" Type="Int32" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedById" Type="Int32" />
-          <Property Name="UpdatedById" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="VBS_Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DesignationId" Type="Int32" Nullable="false" />
+          <Property Name="SalutationId" Type="Int32" Nullable="false" />
+          <Property Name="GenderId" Type="Int32" Nullable="false" />
+          <Property Name="OfficeBranchId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Department" Relationship="VservAccountingDBModel.FK_Employee_Department" FromRole="Employee" ToRole="Department" />
           <NavigationProperty Name="Designation" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Employee" ToRole="Designation" />
           <NavigationProperty Name="OfficeBranch" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="Employee" ToRole="OfficeBranch" />
           <NavigationProperty Name="Salutation" Relationship="VservAccountingDBModel.FK_Employee_Salutation" FromRole="Employee" ToRole="Salutation" />
@@ -949,8 +925,8 @@
           <Property Name="Extension" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedById" Type="Int32" Nullable="false" />
-          <Property Name="UpdatedById" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
@@ -959,12 +935,12 @@
             <PropertyRef Name="EPFOfficeId" />
           </Key>
           <Property Name="EPFOfficeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EPFOfficeName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="EPFOfficeCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="StateId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EPFOfficeName" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EPFOfficeCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="StateId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedById" Type="Int32" Nullable="false" />
-          <Property Name="UpdatedById" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
@@ -1014,8 +990,8 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedById" Type="Int32" Nullable="false" />
-          <Property Name="UpdatedById" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="OfficeBranch" ToRole="Employee" />
@@ -1040,8 +1016,8 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedById" Type="Int32" Nullable="false" />
-          <Property Name="UpdatedById" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Salutation" FromRole="Salutation" ToRole="Employee" />
@@ -1051,13 +1027,13 @@
             <PropertyRef Name="StateId" />
           </Key>
           <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="6" FixedLength="true" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedById" Type="Int32" Nullable="false" />
-          <Property Name="UpdatedById" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Addresses" Relationship="VservAccountingDBModel.FK_Address_State" FromRole="State" ToRole="Address" />
@@ -1088,8 +1064,8 @@
           <Property Name="CityId" Type="Int32" Nullable="false" />
           <Property Name="StateId" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedById" Type="Int32" Nullable="false" />
-          <Property Name="UpdatedById" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Addresses" Relationship="VservAccountingDBModel.FK_Address_ZipCode" FromRole="ZipCode" ToRole="Address" />
@@ -1180,20 +1156,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_Department">
-          <End Type="VservAccountingDBModel.Department" Role="Department" Multiplicity="0..1" />
-          <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentId" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="DepartmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Employee_Designation">
-          <End Type="VservAccountingDBModel.Designation" Role="Designation" Multiplicity="0..1" />
+          <End Type="VservAccountingDBModel.Designation" Role="Designation" Multiplicity="1" />
           <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Designation">
@@ -1205,7 +1169,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Employee_OfficeBranch">
-          <End Type="VservAccountingDBModel.OfficeBranch" Role="OfficeBranch" Multiplicity="0..1" />
+          <End Type="VservAccountingDBModel.OfficeBranch" Role="OfficeBranch" Multiplicity="1" />
           <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="OfficeBranch">
@@ -1217,7 +1181,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Employee_Salutation">
-          <End Type="VservAccountingDBModel.Salutation" Role="Salutation" Multiplicity="0..1" />
+          <End Type="VservAccountingDBModel.Salutation" Role="Salutation" Multiplicity="1" />
           <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Salutation">
@@ -1270,8 +1234,8 @@
               <MappingFragment StoreEntitySet="Address">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedById" ColumnName="UpdatedById" />
-                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="AddressTypeId" ColumnName="AddressTypeId" />
                 <ScalarProperty Name="IsCommunicationAddress" ColumnName="IsCommunicationAddress" />
@@ -1294,8 +1258,8 @@
               <MappingFragment StoreEntitySet="AddressType">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedById" ColumnName="UpdatedById" />
-                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1308,28 +1272,28 @@
           <EntitySetMapping Name="ApplicationLogs">
             <EntityTypeMapping TypeName="VservAccountingDBModel.ApplicationLog">
               <MappingFragment StoreEntitySet="ApplicationLog">
-                <ScalarProperty Name="utcdate" ColumnName="utcdate" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="type" ColumnName="type" />
-                <ScalarProperty Name="thread" ColumnName="thread" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="stacktracedetail" ColumnName="stacktracedetail" />
-                <ScalarProperty Name="stacktrace" ColumnName="stacktrace" />
-                <ScalarProperty Name="property" ColumnName="property" />
-                <ScalarProperty Name="ndc" ColumnName="ndc" />
-                <ScalarProperty Name="method" ColumnName="method" />
-                <ScalarProperty Name="message" ColumnName="message" />
-                <ScalarProperty Name="logger" ColumnName="logger" />
-                <ScalarProperty Name="line" ColumnName="line" />
-                <ScalarProperty Name="level" ColumnName="level" />
-                <ScalarProperty Name="identity" ColumnName="identity" />
-                <ScalarProperty Name="exception" ColumnName="exception" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="aspnetsession" ColumnName="aspnetsession" />
-                <ScalarProperty Name="aspnetrequest" ColumnName="aspnetrequest" />
-                <ScalarProperty Name="aspnetcontext" ColumnName="aspnetcontext" />
-                <ScalarProperty Name="aspnetcache" ColumnName="aspnetcache" />
-                <ScalarProperty Name="appdomain" ColumnName="appdomain" />
+                <ScalarProperty Name="UTCDate" ColumnName="UTCDate" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Thread" ColumnName="Thread" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="StackTraceDetail" ColumnName="StackTraceDetail" />
+                <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
+                <ScalarProperty Name="Property" ColumnName="Property" />
+                <ScalarProperty Name="NDC" ColumnName="NDC" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Logger" ColumnName="Logger" />
+                <ScalarProperty Name="Line" ColumnName="Line" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Identity" ColumnName="Identity" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="AspnetSession" ColumnName="AspnetSession" />
+                <ScalarProperty Name="AspnetRequest" ColumnName="AspnetRequest" />
+                <ScalarProperty Name="AspnetContext" ColumnName="AspnetContext" />
+                <ScalarProperty Name="AspnetCache" ColumnName="AspnetCache" />
+                <ScalarProperty Name="AppDomain" ColumnName="AppDomain" />
                 <ScalarProperty Name="LogId" ColumnName="LogId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1339,8 +1303,8 @@
               <MappingFragment StoreEntitySet="City">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedById" ColumnName="UpdatedById" />
-                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1363,8 +1327,8 @@
               <MappingFragment StoreEntitySet="Department">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedById" ColumnName="UpdatedById" />
-                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1379,8 +1343,8 @@
               <MappingFragment StoreEntitySet="Designation">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedById" ColumnName="UpdatedById" />
-                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1395,10 +1359,9 @@
               <MappingFragment StoreEntitySet="Employee">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedById" ColumnName="UpdatedById" />
-                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="OfficeBranchId" ColumnName="OfficeBranchId" />
                 <ScalarProperty Name="GenderId" ColumnName="GenderId" />
                 <ScalarProperty Name="SalutationId" ColumnName="SalutationId" />
@@ -1435,8 +1398,8 @@
               <MappingFragment StoreEntitySet="EPFNumber">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedById" ColumnName="UpdatedById" />
-                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
                 <ScalarProperty Name="Extension" ColumnName="Extension" />
@@ -1452,8 +1415,8 @@
               <MappingFragment StoreEntitySet="EPFOffice">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedById" ColumnName="UpdatedById" />
-                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="StateId" ColumnName="StateId" />
                 <ScalarProperty Name="EPFOfficeCode" ColumnName="EPFOfficeCode" />
@@ -1504,8 +1467,8 @@
               <MappingFragment StoreEntitySet="OfficeBranch">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedById" ColumnName="UpdatedById" />
-                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1530,8 +1493,8 @@
               <MappingFragment StoreEntitySet="Salutation">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedById" ColumnName="UpdatedById" />
-                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1546,8 +1509,8 @@
               <MappingFragment StoreEntitySet="State">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedById" ColumnName="UpdatedById" />
-                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1575,8 +1538,8 @@
               <MappingFragment StoreEntitySet="ZipCode">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedById" ColumnName="UpdatedById" />
-                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="StateId" ColumnName="StateId" />
                 <ScalarProperty Name="CityId" ColumnName="CityId" />

@@ -2,9 +2,10 @@
 @{
     ViewBag.Title = "Edit Employee";
 }
-@using (Html.BeginForm("Edit", "Employee"))
+@using (Html.BeginForm("edit", "employee"))
 {
     @Html.ValidationSummary(true)
-    
+    @Html.HiddenFor(emp => emp.PermanentAddress.AddressId)
+    @Html.HiddenFor(emp => emp.MailingAddress.AddressId)
     @Html.Partial("_EmployeePartial")
 }

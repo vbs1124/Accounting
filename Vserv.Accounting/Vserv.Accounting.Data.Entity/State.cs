@@ -27,8 +27,8 @@ namespace Vserv.Accounting.Data.Entity
         public string Description { get; set; }
         public int DisplayOrder { get; set; }
         public bool IsActive { get; set; }
-        public int CreatedById { get; set; }
-        public Nullable<int> UpdatedById { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     

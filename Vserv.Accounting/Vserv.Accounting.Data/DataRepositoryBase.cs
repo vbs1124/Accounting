@@ -1,4 +1,5 @@
-﻿using System;
+﻿#region Namespaces
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,14 +12,13 @@ using Vserv.Common.Data;
 using Vserv.Common.Contracts;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Business.Common;
-
+#endregion
 
 namespace Vserv.Accounting.Data
 {
     public abstract class DataRepositoryBase<T> : DataRepositoryBase<T, VservAccountingDBEntities>
         where T : class, new()
     {
-
         protected DbSet<T> _dbset;
         private bool _dispose;
         protected DataRepositoryBase()
@@ -30,7 +30,7 @@ namespace Vserv.Accounting.Data
         {
             _dbset = entityContext.Set<T>();
             var retVal = _dbset.Add(entity);
-            SetAuditValues(entityContext, entity, user);
+            //    SetAuditValues(entityContext, entity, user);
             return retVal;
         }
 
@@ -39,7 +39,7 @@ namespace Vserv.Accounting.Data
             _dbset = entityContext.Set<T>();
             _dbset.Attach(entity);
             entityContext.Entry(entity).State = EntityState.Modified;
-            SetAuditValues(entityContext, entity, user);
+            //  SetAuditValues(entityContext, entity, user);
         }
 
         protected override IEnumerable<T> GetEntities(VservAccountingDBEntities entityContext)
@@ -156,7 +156,6 @@ namespace Vserv.Accounting.Data
             }
         }
 
-
         protected override IEnumerable<T> GetFilteredEntities(VservAccountingDBEntities entityContext, Expression<Func<T, bool>> filter, string orderBy,
             string includeProperties, out int count)
         {
@@ -251,9 +250,9 @@ namespace Vserv.Accounting.Data
                 if (ent.State == System.Data.Entity.EntityState.Added)
                 {
                     e.CreatedDate = DateTime.UtcNow;
-                    e.UpdatedDate = DateTime.UtcNow;
+                    //e.UpdatedDate = DateTime.UtcNow;
                     e.CreatedBy = user;
-                    e.UpdatedBy = user;
+                    //e.UpdatedBy = user;
                 }
                 if (ent.State == System.Data.Entity.EntityState.Modified)
                 {

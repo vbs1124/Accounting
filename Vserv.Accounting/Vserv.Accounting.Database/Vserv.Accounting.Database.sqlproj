@@ -79,7 +79,6 @@
     <Build Include="Tables\dbo.OfficeBranch.sql" />
     <Build Include="Tables\dbo.EPFNumber.sql" />
     <Build Include="Tables\dbo.EPFOffice.sql" />
-    <Build Include="Tables\dbo.Gender.sql" />
     <Build Include="Tables\dbo.Salutation.sql" />
     <Build Include="Tables\dbo.Config.sql" />
     <Build Include="Tables\dbo.Membership.sql" />
@@ -91,11 +90,19 @@
     <Build Include="StoredProcedures\InsertInfoLog.sql" />
     <Build Include="StoredProcedures\InsertMvcErrorLog.sql" />
     <Build Include="Tables\dbo.ApplicationLog.sql" />
+    <None Include="Scripts\dbo.State.InsertScript.sql" />
+    <None Include="Scripts\dbo.ZipCode.InsertScript.sql" />
+    <Build Include="Tables\dbo.City.sql" />
+    <Build Include="Tables\dbo.State.sql" />
+    <Build Include="Tables\dbo.ZipCode.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeploymentScript.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\PreDeploymentScript.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\dbo.City.InsertScript.sql" />
   </ItemGroup>
 </Project>

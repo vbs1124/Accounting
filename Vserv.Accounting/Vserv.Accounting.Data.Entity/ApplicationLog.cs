@@ -15,27 +15,27 @@ namespace Vserv.Accounting.Data.Entity
     public partial class ApplicationLog
     {
         public long LogId { get; set; }
-        public string appdomain { get; set; }
-        public string aspnetcache { get; set; }
-        public string aspnetcontext { get; set; }
-        public string aspnetrequest { get; set; }
-        public string aspnetsession { get; set; }
-        public System.DateTime date { get; set; }
-        public string exception { get; set; }
-        public string identity { get; set; }
-        public string level { get; set; }
-        public Nullable<int> line { get; set; }
-        public string logger { get; set; }
-        public string message { get; set; }
-        public string method { get; set; }
-        public string ndc { get; set; }
-        public string property { get; set; }
-        public string stacktrace { get; set; }
-        public string stacktracedetail { get; set; }
-        public Nullable<long> timestamp { get; set; }
-        public string thread { get; set; }
-        public string type { get; set; }
-        public string username { get; set; }
-        public System.DateTime utcdate { get; set; }
+        public string AppDomain { get; set; }
+        public string AspnetCache { get; set; }
+        public string AspnetContext { get; set; }
+        public string AspnetRequest { get; set; }
+        public string AspnetSession { get; set; }
+        public System.DateTime Date { get; set; }
+        public string Exception { get; set; }
+        public string Identity { get; set; }
+        public string Level { get; set; }
+        public Nullable<int> Line { get; set; }
+        public string Logger { get; set; }
+        public string Message { get; set; }
+        public string Method { get; set; }
+        public string NDC { get; set; }
+        public string Property { get; set; }
+        public string StackTrace { get; set; }
+        public string StackTraceDetail { get; set; }
+        public Nullable<long> TimeStamp { get; set; }
+        public string Thread { get; set; }
+        public string Type { get; set; }
+        public string Username { get; set; }
+        public System.DateTime UTCDate { get; set; }
     }
 }

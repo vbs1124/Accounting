@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group pull-right">
-            <a href="@Url.Action("Add", "Designation")" class="btn btn-info">Add New Designation</a>
+            <a href="@Url.Action("add", "designation")" class="btn btn-info">Add New Designation</a>
         </div>
     </div>
 </div>
@@ -31,10 +31,10 @@
                             @foreach (var item in Model)
                             {
                                 <tr class="odd gradeX">
-                                    <td>@Html.ActionLink(item.Name, "Edit", "Designation", new { designationId = item.DesignationId }, null)</td>
+                                    <td>@Html.ActionLink(item.Name, "edit", "designation", new { designationId = item.DesignationId }, null)</td>
                                     <td>@item.Description</td>
                                     <td>@item.IsActive</td>
-                                    <td>@(item.CreatedDate.HasValue ? item.CreatedDate.Value.ToString("MM/dd/yyyy") : String.Empty)</td>
+                                    <td>@(item.CreatedDate.ToString("MM/dd/yyyy"))</td>
                                 </tr>
                             }
                         </tbody>

@@ -50,9 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataRepositoryFactory.cs" />
+    <Compile Include="Interfaces\IDesignationRepository.cs" />
     <Compile Include="Interfaces\IEmployeeRepository.cs" />
     <Compile Include="Interfaces\IHomeRepository.cs" />
     <Compile Include="Interfaces\IUserProfileRepository.cs" />
+    <Compile Include="Repositories\DesignationRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Repositories\HomeRepository.cs" />
     <Compile Include="Repositories\UserProfileRepository.cs" />

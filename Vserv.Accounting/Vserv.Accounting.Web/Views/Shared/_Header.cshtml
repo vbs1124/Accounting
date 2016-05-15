@@ -7,10 +7,10 @@
     </button>
     @*@Html.ActionLink("Vserv Solutions", "Index", "Dashboard", new object { }, new { @class = "navbar-brand" })*@
 
-    @using (Html.BeginForm("Index", "Dashboard", FormMethod.Post, new { id = "frm-dashboard" }))
+    @using (Html.BeginForm("index", "dashboard", FormMethod.Post, new { id = "frm-dashboard" }))
     {
         <a href="javascript:document.getElementById('frm-dashboard').submit()">
-            <img src="~/Images/logoVserv.gif" alt="Vserv Solutions" />
+            <img src="~/Images/vserv-logo.gif" height="50" alt="Vserv Solutions" />
         </a>
     }
 </div>
@@ -185,11 +185,11 @@
         </a>
         <ul class="dropdown-menu dropdown-user">
             <li>
-                <a href="@Url.Action("Profile","Account")"><i class="fa fa-user fa-fw"></i> @User.Identity.Name</a>
+                <a href="@Url.Action("profile","account")"><i class="fa fa-user fa-fw"></i> @User.Identity.Name</a>
             </li>
             <li class="divider"></li>
             <li>
-                @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "frm-logout" }))
+                @using (Html.BeginForm("logout", "account", FormMethod.Post, new { id = "frm-logout" }))
                 {
                     @Html.AntiForgeryToken()
                     <a href="javascript:document.getElementById('frm-logout').submit()"><i class="fa fa-sign-out fa-fw"></i>Log off</a>

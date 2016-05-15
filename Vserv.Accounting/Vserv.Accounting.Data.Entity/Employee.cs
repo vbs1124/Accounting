@@ -30,22 +30,20 @@ namespace Vserv.Accounting.Data.Entity
         public string AADHAARNumber { get; set; }
         public string MobileNumber { get; set; }
         public string EmailAddress { get; set; }
-        public Nullable<System.DateTime> BirthDay { get; set; }
-        public Nullable<System.DateTime> JoiningDate { get; set; }
+        public System.DateTime BirthDay { get; set; }
+        public System.DateTime JoiningDate { get; set; }
         public Nullable<System.DateTime> RelievingDate { get; set; }
         public string VBS_Id { get; set; }
-        public Nullable<int> DesignationId { get; set; }
-        public Nullable<int> SalutationId { get; set; }
-        public Nullable<int> GenderId { get; set; }
-        public Nullable<int> OfficeBranchId { get; set; }
-        public Nullable<int> DepartmentId { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public Nullable<int> CreatedById { get; set; }
-        public Nullable<int> UpdatedById { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public int DesignationId { get; set; }
+        public int SalutationId { get; set; }
+        public int GenderId { get; set; }
+        public int OfficeBranchId { get; set; }
+        public bool IsActive { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
-        public virtual Department Department { get; set; }
         public virtual Designation Designation { get; set; }
         public virtual OfficeBranch OfficeBranch { get; set; }
         public virtual Salutation Salutation { get; set; }

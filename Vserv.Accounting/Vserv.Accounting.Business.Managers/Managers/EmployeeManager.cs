@@ -170,22 +170,27 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
-        public void AddDesignation(Designation designation)
+        public void AddDesignation(Designation designation, string userName)
         {
             ExecuteFaultHandledOperation(() =>
-          {
-              var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-              _employeeRepository.AddDesignation(designation);
-          });
+            {
+                var _designationRepository = _dataRepositoryFactory.GetDataRepository<IDesignationRepository>();
+                designation.CreatedBy = userName;
+                designation.CreatedDate = DateTime.Now;
+                designation.DisplayOrder = 0;
+                _designationRepository.Add(designation, userName);
+            });
         }
 
-        public void UpdateDesignation(Designation designation)
+        public void UpdateDesignation(Designation designation, string userName)
         {
             ExecuteFaultHandledOperation(() =>
-          {
-              var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-              _employeeRepository.UpdateDesignation(designation);
-          });
+            {
+                designation.UpdatedBy = userName;
+                designation.UpdatedDate = DateTime.Now;
+                IDesignationRepository _designationRepository = _dataRepositoryFactory.GetDataRepository<IDesignationRepository>();
+                _designationRepository.Update(designation, userName);
+            });
         }
 
         public Boolean IsDesignationExists(string name, int designationId)

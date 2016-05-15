@@ -32,14 +32,10 @@ namespace Vserv.Accounting.Web.Controllers
         [HttpPost]
         public ActionResult Add(DesignationModel designation)
         {
-            designation.CreatedById = 1;
-            designation.CreatedDate = DateTime.Now;
-            designation.DisplayOrder = 0;
-
             if (ModelState.IsValid)
             {
                 EmployeeManager _employeeManager = new EmployeeManager();
-                _employeeManager.AddDesignation(ConvertTo(designation));
+                _employeeManager.AddDesignation(ConvertTo(designation), User.Identity.Name);
                 return RedirectToAction("Success", "Home", new { successMessage = "Designation added successfully." });
             }
 
@@ -56,12 +52,10 @@ namespace Vserv.Accounting.Web.Controllers
         [HttpPost]
         public ActionResult Edit(DesignationModel designation)
         {
-            designation.UpdatedById = 1;
-            designation.UpdatedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
                 EmployeeManager _employeeManager = new EmployeeManager();
-                _employeeManager.UpdateDesignation(ConvertTo(designation));
+                _employeeManager.UpdateDesignation(ConvertTo(designation), User.Identity.Name);
                 return RedirectToAction("Success", "Home", new { successMessage = "Designation updated successfully." });
             }
 
@@ -82,8 +76,8 @@ namespace Vserv.Accounting.Web.Controllers
                 Description = designation.Description,
                 DisplayOrder = designation.DisplayOrder,
                 IsActive = designation.IsActive,
-                CreatedById = designation.CreatedById,
-                UpdatedById = designation.UpdatedById,
+                CreatedBy = designation.CreatedBy,
+                UpdatedBy = designation.UpdatedBy,
                 CreatedDate = designation.CreatedDate,
                 UpdatedDate = designation.UpdatedDate
             };
@@ -98,9 +92,9 @@ namespace Vserv.Accounting.Web.Controllers
                 Name = designation.Name,
                 Description = designation.Description,
                 DisplayOrder = designation.DisplayOrder,
-                IsActive = designation.IsActive.IsNotNull() && designation.IsActive.HasValue ? true : false,
-                CreatedById = designation.CreatedById,
-                UpdatedById = designation.UpdatedById,
+                IsActive = designation.IsActive,
+                CreatedBy = designation.CreatedBy,
+                UpdatedBy = designation.UpdatedBy,
                 CreatedDate = designation.CreatedDate,
                 UpdatedDate = designation.UpdatedDate
             };
@@ -119,9 +113,9 @@ namespace Vserv.Accounting.Web.Controllers
                     Name = designation.Name,
                     Description = designation.Description,
                     DisplayOrder = designation.DisplayOrder,
-                    IsActive = designation.IsActive.IsNotNull() && designation.IsActive.HasValue ? true : false,
-                    CreatedById = designation.CreatedById,
-                    UpdatedById = designation.UpdatedById,
+                    IsActive = designation.IsActive,
+                    CreatedBy = designation.CreatedBy,
+                    UpdatedBy = designation.UpdatedBy,
                     CreatedDate = designation.CreatedDate,
                     UpdatedDate = designation.UpdatedDate
                 }));

@@ -12,12 +12,12 @@ Post-Deployment Script Template
 
 DECLARE @CurrentUTCDate DATETIME		= GETUTCDATE()
 DECLARE @CurrentDate	DATETIME		= GETDATE()
-DECLARE @UserID			INT				= 1
+DECLARE @UserID			NVARCHAR(100)	= 'PostDeployScript'
 
 SET NOCOUNT ON
 
+print '[dbo].[AddressType]'
 BEGIN
-	print '[dbo].[AddressType]'
 	DECLARE @AddressTypeTable TABLE(
 	[OfficeBranchId] [int] IDENTITY(1,1) NOT NULL,
 	[Code] [nchar](6) NOT NULL,
@@ -60,9 +60,8 @@ BEGIN
 	VALUES (s.[Code], s.[Name], s.[Description], s.[DisplayOrder], s.[IsActive], s.[CreatedById], s.[UpdatedById], s.[CreatedDate], s.[UpdatedDate]);
 END
 
+print '[dbo].[Department]'
 BEGIN 
-	print '[dbo].[Department]'
-
 	DECLARE @DepartmentTable TABLE(
 	[OfficeBranchId] [int] IDENTITY(1,1) NOT NULL,
 	[Code] [nchar](6) NOT NULL,
@@ -118,8 +117,8 @@ BEGIN
 
 END
 
-BEGIN 
-	print '[dbo].[Designation]'
+print '[dbo].[Designation]'
+BEGIN
 	DECLARE @DesignationTable TABLE(
 	[OfficeBranchId] [int] IDENTITY(1,1) NOT NULL,
 	[Code] [nchar](6) NOT NULL,
@@ -127,8 +126,8 @@ BEGIN
 	[Description] [varchar](250) NOT NULL,
 	[DisplayOrder] [int] NOT NULL,
 	[IsActive] [bit] NOT NULL,
-	[CreatedById] [int] NOT NULL,
-	[UpdatedById] [int] NULL,
+	[CreatedById] [nvarchar](50) NOT NULL,
+	[UpdatedById] [nvarchar](50) NULL,
 	[CreatedDate] [datetime] NOT NULL,
 	[UpdatedDate] [datetime] NULL)
 
@@ -412,8 +411,8 @@ BEGIN
 		  ,d.[Description] = s.[Description]
 		  ,d.[DisplayOrder] = s.[DisplayOrder]
 		  ,d.[IsActive] = s.[IsActive]
-		  ,d.[CreatedById] = s.[CreatedById]
-		  ,d.[UpdatedById] = s.[UpdatedById]
+		  ,d.[CreatedBy] = s.[CreatedById]
+		  ,d.[UpdatedBy] = s.[UpdatedById]
 		  ,d.[CreatedDate] = s.[CreatedDate]
 		  ,d.[UpdatedDate] = s.[UpdatedDate]
 	WHEN NOT MATCHED THEN 
@@ -421,9 +420,8 @@ BEGIN
 	VALUES (s.[Code], s.[Name], s.[Description], s.[DisplayOrder], s.[IsActive], s.[CreatedById], s.[UpdatedById], s.[CreatedDate], s.[UpdatedDate]);
 END
 
+print '[dbo].[OfficeBranch]'
 BEGIN 
-	print '[dbo].[OfficeBranch]'
-	
 	DECLARE @OfficeBranchTable TABLE(
 		[OfficeBranchId] [int] IDENTITY(1,1) NOT NULL,
 		[Code] [nchar](6) NOT NULL,
@@ -467,9 +465,8 @@ BEGIN
 	VALUES (s.[Code], s.[Name], s.[Description], s.[DisplayOrder], s.[IsActive], s.[CreatedById], s.[UpdatedById], s.[CreatedDate], s.[UpdatedDate]);
 END
 
+print '[dbo].[Salutation]'
 BEGIN 
-	print '[dbo].[Salutation]'
-
 	DECLARE @SalutationTable TABLE(
 		[SalutationId] [int] IDENTITY(1,1) NOT NULL,
 		[Code] [nchar](6) NOT NULL,

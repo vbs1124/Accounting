@@ -61,11 +61,11 @@ namespace Vserv.Accounting.Web.Models
 
         [Required(ErrorMessage = "Date of Birth is required.")]
         [Display(Name = "Date of Birth:")]
-        public Nullable<DateTime> BirthDay { get; set; }
+        public DateTime? BirthDay { get; set; }
 
         [Display(Name = "Joining Date:")]
         [Required(ErrorMessage = "Joining Date is required.")]
-        public Nullable<DateTime> JoiningDate { get; set; }
+        public DateTime? JoiningDate { get; set; }
 
         [Display(Name = "Relieving Date:")]
         public Nullable<DateTime> RelievingDate { get; set; }
@@ -92,16 +92,16 @@ namespace Vserv.Accounting.Web.Models
         public int? OfficeBranchId { get; set; }
 
         [Display(Name = "Department:")]
-        public int? DepartmentId { get; set; }
+        public int DepartmentId { get; set; }
 
         [Display(Name = "Active:")]
         public bool IsActive { get; set; }
 
-        [Display(Name = "CreatedById")]
-        public int? CreatedById { get; set; }
+        [Display(Name = "CreatedBy")]
+        public string CreatedBy { get; set; }
 
-        [Display(Name = "UpdatedById")]
-        public Nullable<int> UpdatedById { get; set; }
+        [Display(Name = "UpdatedBy")]
+        public string UpdatedBy { get; set; }
 
         [Display(Name = "Created Date")]
         public System.DateTime? CreatedDate { get; set; }
@@ -158,7 +158,8 @@ namespace Vserv.Accounting.Web.Models
         [Display(Name = "City:")]
         public string City { get; set; }
 
-        [Required(ErrorMessage = "Pin Code is required")]
+        [Required(ErrorMessage = "Pin Code is required.")]
+        [RegularExpression("^[1-9][0-9]{5}$", ErrorMessage = "Invalid Pin Code.")]
         [StringLength(6, MinimumLength = 6, ErrorMessage = "Pin Code should be 6 digits.")]
         [Display(Name = "Pin Code:")]
         public string ZipCode { get; set; }
@@ -175,7 +176,7 @@ namespace Vserv.Accounting.Web.Models
         [Display(Name = "Address Type:")]
         public int AddressTypeId { get; set; }
 
-        [Required(ErrorMessage = "State is required")]
+        [Required(ErrorMessage = "State is required.")]
         [Display(Name = "State:")]
         public int? StateId { get; set; }
 
@@ -185,11 +186,9 @@ namespace Vserv.Accounting.Web.Models
         [Display(Name = "Active:")]
         public bool IsActive { get; set; }
 
-        [Display(Name = "Created By Id")]
-        public int CreatedById { get; set; }
+        public string CreatedBy { get; set; }
 
-        [Display(Name = "Updated By Id")]
-        public Nullable<int> UpdatedById { get; set; }
+        public string UpdatedBy { get; set; }
 
         [Display(Name = "Created Date")]
         public System.DateTime CreatedDate { get; set; }
@@ -209,8 +208,8 @@ namespace Vserv.Accounting.Web.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }
-        public int CreatedById { get; set; }
-        public Nullable<int> UpdatedById { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
 
@@ -225,8 +224,8 @@ namespace Vserv.Accounting.Web.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }
-        public int CreatedById { get; set; }
-        public Nullable<int> UpdatedById { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     }
@@ -247,8 +246,8 @@ namespace Vserv.Accounting.Web.Models
         public string Extension { get; set; }
         public string AccountNumber { get; set; }
         public bool IsActive { get; set; }
-        public int CreatedById { get; set; }
-        public Nullable<int> UpdatedById { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     }
@@ -260,8 +259,8 @@ namespace Vserv.Accounting.Web.Models
         public string EPFOfficeCode { get; set; }
         public string StateId { get; set; }
         public bool IsActive { get; set; }
-        public int CreatedById { get; set; }
-        public Nullable<int> UpdatedById { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     }
@@ -276,8 +275,8 @@ namespace Vserv.Accounting.Web.Models
         public string Description { get; set; }
         public int DisplayOrder { get; set; }
         public bool IsActive { get; set; }
-        public int CreatedById { get; set; }
-        public Nullable<int> UpdatedById { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
 
@@ -292,8 +291,8 @@ namespace Vserv.Accounting.Web.Models
         public string Description { get; set; }
         public int DisplayOrder { get; set; }
         public bool IsActive { get; set; }
-        public int CreatedById { get; set; }
-        public Nullable<int> UpdatedById { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
 

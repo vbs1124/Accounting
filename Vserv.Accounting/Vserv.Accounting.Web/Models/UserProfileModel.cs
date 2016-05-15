@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Vserv.Accounting.Web.Code;
 
 namespace Vserv.Accounting.Web.Models
 {
@@ -69,14 +70,20 @@ namespace Vserv.Accounting.Web.Models
             set;
         }
 
-        [Display(Name = "New Password")]
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
+        [ValidChangePasswordComplexity]
         public string NewPassword
         {
             get;
             set;
         }
 
-        [Display(Name = "Confirm Password")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm new password")]
+        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword
         {
             get;

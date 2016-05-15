@@ -12,10 +12,10 @@ namespace Vserv.Accounting.Web.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction("index", "dashboard");
             }
 
-            return RedirectToAction("Index", "Account");
+            return RedirectToAction("index", "account");
         }
 
         public ActionResult Success(string successMessage)

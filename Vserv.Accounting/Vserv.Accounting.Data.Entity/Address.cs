@@ -33,8 +33,8 @@ namespace Vserv.Accounting.Data.Entity
         public bool IsCommunicationAddress { get; set; }
         public int AddressTypeId { get; set; }
         public bool IsActive { get; set; }
-        public int CreatedById { get; set; }
-        public Nullable<int> UpdatedById { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
