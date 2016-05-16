@@ -3,19 +3,19 @@
             xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
             xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
 
-  <mvcSiteMapNode title="Home" controller="Home" action="Index">
-    <mvcSiteMapNode title="Dashboard" controller="Dashboard" action="Index"/>
-    <mvcSiteMapNode title="Employees" controller="Employee" action="List">
-      <mvcSiteMapNode title="Add Employee" controller="Employee" action="Add"/>
-      <mvcSiteMapNode title="Edit Employee" controller="Employee" action="Edit"/>
+  <mvcSiteMapNode title="Home" controller="home" action="index">
+    <mvcSiteMapNode title="Dashboard" controller="dashboard" action="index"/>
+    <mvcSiteMapNode title="Employees" controller="employee" action="list">
+      <mvcSiteMapNode title="Add Employee" controller="employee" action="add"/>
+      <mvcSiteMapNode title="Edit Employee" controller="employee" action="edit"/>
     </mvcSiteMapNode>
-    <mvcSiteMapNode title="Designations" controller="Designation" action="Index">
-      <mvcSiteMapNode title="Add Designation" controller="Designation" action="Add"/>
-      <mvcSiteMapNode title="Edit Designation" controller="Designation" action="Edit"/>
+    <mvcSiteMapNode title="Designations" controller="designation" action="index">
+      <mvcSiteMapNode title="Add Designation" controller="designation" action="add"/>
+      <mvcSiteMapNode title="Edit Designation" controller="designation" action="edit"/>
     </mvcSiteMapNode>
-    <mvcSiteMapNode title="Profile" controller="Account" action="Profile">
-      <mvcSiteMapNode title="Account" controller="Account" action="Profile"/>
-      <mvcSiteMapNode title="Change Password" controller="Account" action="ChangePassword"/>
+    <mvcSiteMapNode title="Profile" controller="account" action="userprofile">
+      <mvcSiteMapNode title="Account" controller="account" action="userprofile"/>
+      <mvcSiteMapNode title="Change Password" controller="account" action="changepassword"/>
     </mvcSiteMapNode>
   </mvcSiteMapNode>
 </mvcSiteMap>

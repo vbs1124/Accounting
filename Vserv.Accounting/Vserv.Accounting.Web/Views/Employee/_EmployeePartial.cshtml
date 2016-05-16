@@ -4,155 +4,115 @@
         <fieldset>
             <legend>Basic Information</legend>
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.SalutationId, new { @class = "col-lg-4 control-label" })
-                            <div class="col-lg-8">
-                                @Html.DropDownListFor(m => m.SalutationId, new SelectList(Model.Salutations, "SalutationId", "Name"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.SalutationId)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.FirstName, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @maxlength = "250" })
-                                @Html.ValidationMessageFor(m => m.FirstName)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.MiddleName, new { @class = "col-lg-4 control-label" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", @maxlength = "250" })
-                                @Html.ValidationMessageFor(m => m.MiddleName)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.LastName, new { @class = "col-lg-4 control-label" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @maxlength = "250" })
-                                @Html.ValidationMessageFor(m => m.LastName)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.FatherName, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control", @maxlength = "250" })
-                                @Html.ValidationMessageFor(m => m.FatherName)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.GenderId, new { @class = "col-lg-4 control-label" })
-                            <div class="col-lg-8">
-                                @Html.DropDownListFor(m => m.GenderId, new SelectList(Model.Genders, "Value", "Text"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.GenderId)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.EmailAddress, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", @maxlength = "250" })
-                                @Html.ValidationMessageFor(m => m.EmailAddress)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.MobileNumber, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", @maxlength = "10" })
-                                @Html.ValidationMessageFor(m => m.MobileNumber)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.BirthDay, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                <div class='input-group date' id="dp-birth-date">
-                                    @Html.TextBoxFor(m => m.BirthDay, new { @class = "form-control" })
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                                @Html.ValidationMessageFor(m => m.BirthDay)
-                            </div>
-                        </div>
-
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.SalutationId, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.SalutationId, new SelectList(Model.Salutations, "SalutationId", "Name"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.SalutationId)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstName, new { @class = "control-label required-field" })
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @maxlength = "250" })
+                        @Html.ValidationMessageFor(m => m.FirstName)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MiddleName, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", @maxlength = "250" })
+                        @Html.ValidationMessageFor(m => m.MiddleName)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @maxlength = "250" })
+                        @Html.ValidationMessageFor(m => m.LastName)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FatherName, new { @class = "control-label required-field" })
+                        @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control", @maxlength = "250" })
+                        @Html.ValidationMessageFor(m => m.FatherName)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.GenderId, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.GenderId, new SelectList(Model.Genders, "Value", "Text"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.GenderId)
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.OfficeBranchId, new { @class = "col-lg-4 control-label" })
-                            <div class="col-lg-8">
-                                @Html.DropDownListFor(m => m.OfficeBranchId, new SelectList(Model.OfficeBranches, "OfficeBranchId", "Name"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.OfficeBranchId)
-                            </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmailAddress, new { @class = "control-label required-field" })
+                        @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", @maxlength = "250" })
+                        @Html.ValidationMessageFor(m => m.EmailAddress)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MobileNumber, new { @class = "control-label required-field" })
+                        @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", @maxlength = "10" })
+                        @Html.ValidationMessageFor(m => m.MobileNumber)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BirthDay, new { @class = "control-label required-field" })
+                        <div class='input-group date' id="dp-birth-date">
+                            @Html.TextBoxFor(m => m.BirthDay, new { @class = "form-control" })
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                            @Html.ValidationMessageFor(m => m.BirthDay)
                         </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.DesignationId, new { @class = "col-lg-4 control-label" })
-                            <div class="col-lg-8">
-                                @Html.DropDownListFor(m => m.DesignationId, new SelectList(Model.Designations, "DesignationId", "Name"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.DesignationId)
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OfficeBranchId, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.OfficeBranchId, new SelectList(Model.OfficeBranches, "OfficeBranchId", "Name"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.OfficeBranchId)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DesignationId, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.DesignationId, new SelectList(Model.Designations, "DesignationId", "Name"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.DesignationId)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.VBS_Id, new { @class = "control-label required-field" })
+                        @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @maxlength = "7" })
+                        @Html.ValidationMessageFor(m => m.VBS_Id)
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UniversalAccountNumber, new { @class = "control-label required-field" })
+                        @Html.TextBoxFor(m => m.UniversalAccountNumber, new { @class = "form-control", @maxlength = "12" })
+                        @Html.ValidationMessageFor(m => m.UniversalAccountNumber)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PermanentAccountNumber, new { @class = "control-label required-field" })
+                        @Html.TextBoxFor(m => m.PermanentAccountNumber, new { @class = "form-control", @maxlength = "15" })
+                        @Html.ValidationMessageFor(m => m.PermanentAccountNumber)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.AADHAARNumber, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.AADHAARNumber, new { @class = "form-control", @maxlength = "15" })
+                        @Html.ValidationMessageFor(m => m.AADHAARNumber)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.JoiningDate, new { @class = "control-label required-field" })
+                        <div class='input-group date' id="dp-joining-date">
+                            @Html.TextBoxFor(m => m.JoiningDate, new { @class = "form-control" })
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                            @Html.ValidationMessageFor(m => m.JoiningDate)
                         </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.VBS_Id, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @maxlength = "7" })
-                                @Html.ValidationMessageFor(m => m.VBS_Id)
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.RelievingDate, new { @class = "control-label" })
+                        <div class='input-group date' id="dp-relieving-date">
+                            @Html.TextBoxFor(m => m.RelievingDate, new { @class = "form-control" })
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                            @Html.ValidationMessageFor(m => m.RelievingDate)
                         </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.UniversalAccountNumber, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.UniversalAccountNumber, new { @class = "form-control", @maxlength = "12" })
-                                @Html.ValidationMessageFor(m => m.UniversalAccountNumber)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.PermanentAccountNumber, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.PermanentAccountNumber, new { @class = "form-control", @maxlength = "15" })
-                                @Html.ValidationMessageFor(m => m.PermanentAccountNumber)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.AADHAARNumber, new { @class = "col-lg-4 control-label" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.AADHAARNumber, new { @class = "form-control", @maxlength = "15" })
-                                @Html.ValidationMessageFor(m => m.AADHAARNumber)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.JoiningDate, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                <div class='input-group date' id="dp-joining-date">
-                                    @Html.TextBoxFor(m => m.JoiningDate, new { @class = "form-control" })
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-
-                                @Html.ValidationMessageFor(m => m.JoiningDate)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.RelievingDate, new { @class = "col-lg-4 control-label" })
-                            <div class="col-lg-8">
-                                <div class='input-group date' id="dp-relieving-date">
-                                    @Html.TextBoxFor(m => m.RelievingDate, new { @class = "form-control" })
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                                @Html.ValidationMessageFor(m => m.RelievingDate)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.IsActive, new { @class = "col-lg-4 control-label" })
-                            <div class="col-lg-8">
-                                @Html.CheckBoxFor(m => m.IsActive)
-                                @Html.ValidationMessageFor(m => m.IsActive)
-                            </div>
-                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.IsActive, new { @class = "control-label" })
+                        @Html.CheckBoxFor(m => m.IsActive)
+                        @Html.ValidationMessageFor(m => m.IsActive)
                     </div>
                 </div>
             </div>
@@ -160,96 +120,81 @@
         <fieldset>
             <legend>Permanent Address</legend>
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.PermanentAddress.Address1, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                @Html.TextAreaFor(m => m.PermanentAddress.Address1, new { @class = "form-control", @maxlength = "250" })
-                                @Html.ValidationMessageFor(m => m.PermanentAddress.Address1)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.PermanentAddress.Address2, new { @class = "col-lg-4 control-label" })
-                            <div class="col-lg-8">
-                                @Html.TextAreaFor(m => m.PermanentAddress.Address2, new { @class = "form-control", @maxlength = "250" })
-                                @Html.ValidationMessageFor(m => m.PermanentAddress.Address2)
-                            </div>
-                        </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PermanentAddress.Address1, new { @class = "control-label required-field" })
+                        @Html.TextAreaFor(m => m.PermanentAddress.Address1, new { @class = "form-control", @rows = 5, @maxlength = "250" })
+                        @Html.ValidationMessageFor(m => m.PermanentAddress.Address1)
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.PermanentAddress.City, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.PermanentAddress.City, new { @class = "form-control", @maxlength = "100" })
-                                @Html.ValidationMessageFor(m => m.PermanentAddress.City)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.PermanentAddress.StateId, new { @class = "col-lg-4 control-label" })
-                            <div class="col-lg-8">
-                                @Html.DropDownListFor(m => m.PermanentAddress.StateId, new SelectList(Model.States, "StateId", "Name"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.PermanentAddress.StateId)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.PermanentAddress.ZipCode, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.PermanentAddress.ZipCode, new { @class = "form-control", @maxlength = "6" })
-                                @Html.ValidationMessageFor(m => m.PermanentAddress.ZipCode)
-                            </div>
-                        </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PermanentAddress.Address2, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.PermanentAddress.Address2, new { @class = "form-control", @maxlength = "250" })
+                        @Html.ValidationMessageFor(m => m.PermanentAddress.Address2)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PermanentAddress.ZipCode, new { @class = "control-label required-field" })
+                        @Html.TextBoxFor(m => m.PermanentAddress.ZipCode, new { @class = "form-control", @maxlength = "6" })
+                        @Html.ValidationMessageFor(m => m.PermanentAddress.ZipCode)
                     </div>
                 </div>
-
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PermanentAddress.City, new { @class = "control-label required-field" })
+                        @Html.TextBoxFor(m => m.PermanentAddress.City, new { @class = "form-control", @maxlength = "100" })
+                        @Html.ValidationMessageFor(m => m.PermanentAddress.City)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PermanentAddress.StateId, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.PermanentAddress.StateId, new SelectList(Model.States, "StateId", "Name"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.PermanentAddress.StateId)
+                    </div>
+                </div>
             </div>
+
         </fieldset>
         <fieldset>
-            <legend>Mailing Address</legend>
+            <legend>
+                Mailing Address
+            </legend>
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.MailingAddress.Address1, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                @Html.TextAreaFor(m => m.MailingAddress.Address1, new { @class = "form-control", @maxlength = "250" })
-                                @Html.ValidationMessageFor(m => m.MailingAddress.Address1)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.MailingAddress.Address2, new { @class = "col-lg-4 control-label" })
-                            <div class="col-lg-8">
-                                @Html.TextAreaFor(m => m.MailingAddress.Address2, new { @class = "form-control", @maxlength = "250" })
-                                @Html.ValidationMessageFor(m => m.MailingAddress.Address2)
-                            </div>
-                        </div>
+                <div class="col-lg-6 text-success">
+                    <label>
+                        <input type="checkbox" id="chk-copy-permanent-address" onchange="onchange_copyPermanentAdds(this);"> Copy from Permanent Address
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MailingAddress.Address1, new { @class = "control-label required-field" })
+                        @Html.TextAreaFor(m => m.MailingAddress.Address1, new { @class = "form-control", @resize = "none", @rows = 5, @maxlength = "250" })
+                        @Html.ValidationMessageFor(m => m.MailingAddress.Address1)
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.MailingAddress.City, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.MailingAddress.City, new { @class = "form-control", @maxlength = "100" })
-                                @Html.ValidationMessageFor(m => m.MailingAddress.City)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.MailingAddress.StateId, new { @class = "col-lg-4 control-label" })
-                            <div class="col-lg-8">
-                                @Html.DropDownListFor(m => m.MailingAddress.StateId, new SelectList(Model.States, "StateId", "Name"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.MailingAddress.StateId)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.MailingAddress.ZipCode, new { @class = "col-lg-4 control-label required-field" })
-                            <div class="col-lg-8">
-                                @Html.TextBoxFor(m => m.MailingAddress.ZipCode, new { @class = "form-control", @maxlength = "6" })
-                                @Html.ValidationMessageFor(m => m.MailingAddress.ZipCode)
-                            </div>
-                        </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MailingAddress.Address2, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.MailingAddress.Address2, new { @class = "form-control", @maxlength = "250" })
+                        @Html.ValidationMessageFor(m => m.MailingAddress.Address2)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MailingAddress.ZipCode, new { @class = "control-label required-field" })
+                        @Html.TextBoxFor(m => m.MailingAddress.ZipCode, new { @class = "form-control", @maxlength = "6" })
+                        @Html.ValidationMessageFor(m => m.MailingAddress.ZipCode)
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MailingAddress.City, new { @class = "control-label required-field" })
+                        @Html.TextBoxFor(m => m.MailingAddress.City, new { @class = "form-control", @maxlength = "100" })
+                        @Html.ValidationMessageFor(m => m.MailingAddress.City)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.MailingAddress.StateId, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.MailingAddress.StateId, new SelectList(Model.States, "StateId", "Name"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.MailingAddress.StateId)
                     </div>
                 </div>
             </div>

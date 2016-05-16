@@ -146,12 +146,12 @@ namespace Vserv.Accounting.Web.Controllers
         #region User Profile
 
 
-        public ActionResult Profile()
+        public ActionResult UserProfile()
         {
             AccountManager _accountManager = new AccountManager();
             UserProfile userProfile = _accountManager.GetUserProfile(User.Identity.Name);
             UserProfileModel userProfileModel = ConvertTo(userProfile);
-            return View(userProfileModel);
+            return View("profile", userProfileModel);
         }
 
 

@@ -107,7 +107,7 @@ namespace Vserv.Accounting.Web.Controllers
                 Id = 9,
                 nameOption = "My Profile",
                 controller = "Account",
-                action = "profile",
+                action = "userprofile",
                 status = true,
                 isParent = false,
                 parentId = 8
