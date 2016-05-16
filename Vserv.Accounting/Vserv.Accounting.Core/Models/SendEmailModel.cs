@@ -6,6 +6,9 @@ namespace Vserv.Accounting.Core.Models
         /// <summary>
         /// EmailAddress
         /// </summary>
+        /// <value>
+        /// The email address.
+        /// </value>
         public string EmailAddress
         {
             get;
@@ -14,7 +17,10 @@ namespace Vserv.Accounting.Core.Models
 
         /// <summary>
         /// Subject
-        /// </summary> 
+        /// </summary>
+        /// <value>
+        /// The subject.
+        /// </value>
         public string Subject
         {
             get;
@@ -23,12 +29,18 @@ namespace Vserv.Accounting.Core.Models
 
         /// <summary>
         /// WebsiteURL
-        /// </summary> 
+        /// </summary>
+        /// <value>
+        /// The website URL.
+        /// </value>
         public string WebsiteURL { get; set; }
 
         /// <summary>
         /// WebsiteTitle
         /// </summary>
+        /// <value>
+        /// The website title.
+        /// </value>
         public string WebsiteTitle
         {
             get;
@@ -37,7 +49,10 @@ namespace Vserv.Accounting.Core.Models
 
         /// <summary>
         /// WebsiteUrlName
-        /// </summary> 
+        /// </summary>
+        /// <value>
+        /// The name of the website URL.
+        /// </value>
         public string WebsiteUrlName
         {
             get;

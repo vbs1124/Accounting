@@ -13,16 +13,28 @@ using Vserv.Common.Extensions;
 
 namespace Vserv.Accounting.Web.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.Web.Mvc.Controller" />
     [Authorize]
     public class EmployeeController : Controller
     {
         #region Action Methods
 
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Lists this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult List()
         {
             EmployeeManager _employeeManager = new EmployeeManager();
@@ -30,6 +42,10 @@ namespace Vserv.Accounting.Web.Controllers
             return View(employees);
         }
 
+        /// <summary>
+        /// Adds this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Add()
         {
             EmployeeManager _employeeManager = new EmployeeManager();
@@ -38,6 +54,11 @@ namespace Vserv.Accounting.Web.Controllers
             return View(employeeModel);
         }
 
+        /// <summary>
+        /// Adds the specified employee model.
+        /// </summary>
+        /// <param name="employeeModel">The employee model.</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Add(EmployeeModel employeeModel)
         {
@@ -57,6 +78,11 @@ namespace Vserv.Accounting.Web.Controllers
             return View(employeeModel);
         }
 
+        /// <summary>
+        /// Edits the specified employee identifier.
+        /// </summary>
+        /// <param name="employeeId">The employee identifier.</param>
+        /// <returns></returns>
         public ActionResult Edit(int employeeId)
         {
             EmployeeManager _employeeManager = new EmployeeManager();
@@ -66,6 +92,11 @@ namespace Vserv.Accounting.Web.Controllers
             return View(employeeModel);
         }
 
+        /// <summary>
+        /// Edits the specified employee model.
+        /// </summary>
+        /// <param name="employeeModel">The employee model.</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Edit(EmployeeModel employeeModel)
         {
@@ -84,6 +115,11 @@ namespace Vserv.Accounting.Web.Controllers
             return View(employeeModel);
         }
 
+        /// <summary>
+        /// Deletes the specified employee identifier.
+        /// </summary>
+        /// <param name="employeeId">The employee identifier.</param>
+        /// <returns></returns>
         public ActionResult Delete(int employeeId)
         {
             EmployeeManager _employeeManager = new EmployeeManager();
@@ -91,16 +127,28 @@ namespace Vserv.Accounting.Web.Controllers
             return RedirectToAction("List");
         }
 
+        /// <summary>
+        /// Bankings this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Banking()
         {
             return View();
         }
 
+        /// <summary>
+        /// Taxations this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Taxation()
         {
             return View();
         }
 
+        /// <summary>
+        /// Salaries this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Salary()
         {
             return View();
@@ -110,6 +158,10 @@ namespace Vserv.Accounting.Web.Controllers
 
         #region Private Methods
 
+        /// <summary>
+        /// Gets the genders.
+        /// </summary>
+        /// <returns></returns>
         private List<SelectListItem> GetGenders()
         {
             var genders = new List<SelectListItem>();
@@ -120,6 +172,11 @@ namespace Vserv.Accounting.Web.Controllers
             return genders;
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="cities">The cities.</param>
+        /// <returns></returns>
         private List<CityModel> ConvertTo(List<City> cities)
         {
             var result = new List<CityModel>();
@@ -147,6 +204,11 @@ namespace Vserv.Accounting.Web.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="states">The states.</param>
+        /// <returns></returns>
         private List<StateModel> ConvertTo(List<State> states)
         {
             List<StateModel> stateModelList = new List<StateModel>();
@@ -170,6 +232,11 @@ namespace Vserv.Accounting.Web.Controllers
             return stateModelList;
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="salutations">The salutations.</param>
+        /// <returns></returns>
         private List<SalutationModel> ConvertTo(List<Salutation> salutations)
         {
             var result = new List<SalutationModel>();
@@ -194,6 +261,11 @@ namespace Vserv.Accounting.Web.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="officeBranches">The office branches.</param>
+        /// <returns></returns>
         private List<OfficeBranchModel> ConvertTo(List<OfficeBranch> officeBranches)
         {
             var result = new List<OfficeBranchModel>();
@@ -218,6 +290,11 @@ namespace Vserv.Accounting.Web.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="designations">The designations.</param>
+        /// <returns></returns>
         private List<DesignationModel> ConvertTo(List<Designation> designations)
         {
             var result = new List<DesignationModel>();
@@ -242,6 +319,11 @@ namespace Vserv.Accounting.Web.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="departments">The departments.</param>
+        /// <returns></returns>
         private List<DepartmentModel> ConvertTo(List<Department> departments)
         {
             var result = new List<DepartmentModel>();
@@ -266,6 +348,11 @@ namespace Vserv.Accounting.Web.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="addressTypes">The address types.</param>
+        /// <returns></returns>
         private List<AddressTypeModel> ConvertTo(List<AddressType> addressTypes)
         {
             var result = new List<AddressTypeModel>();
@@ -290,6 +377,11 @@ namespace Vserv.Accounting.Web.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="employeeModel">The employee model.</param>
+        /// <returns></returns>
         private Employee ConvertTo(EmployeeModel employeeModel)
         {
             if (employeeModel.IsNull())
@@ -381,6 +473,10 @@ namespace Vserv.Accounting.Web.Controllers
             };
         }
 
+        /// <summary>
+        /// Sets the dropdown values.
+        /// </summary>
+        /// <param name="employeeModel">The employee model.</param>
         private void SetDropdownValues(EmployeeModel employeeModel)
         {
             EmployeeManager _employeeManager = new EmployeeManager();
@@ -395,6 +491,11 @@ namespace Vserv.Accounting.Web.Controllers
             //employeeModel.Cities = ConvertTo(_employeeManager.GetCities());
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="employee">The employee.</param>
+        /// <returns></returns>
         private EmployeeModel ConvertTo(Employee employee)
         {
             AddressModel permanentAddress = null;

@@ -12,11 +12,19 @@ using Vserv.Common.Extensions;
 
 namespace Vserv.Accounting.Web.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.Web.Mvc.Controller" />
     [Authorize]
     public class DesignationController : Controller
     {
         #region Action Methods
 
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             EmployeeManager _employeeManager = new EmployeeManager();
@@ -24,11 +32,20 @@ namespace Vserv.Accounting.Web.Controllers
             return View(designations);
         }
 
+        /// <summary>
+        /// Adds this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Add()
         {
             return View();
         }
 
+        /// <summary>
+        /// Adds the specified designation.
+        /// </summary>
+        /// <param name="designation">The designation.</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Add(DesignationModel designation)
         {
@@ -42,6 +59,11 @@ namespace Vserv.Accounting.Web.Controllers
             return View(designation);
         }
 
+        /// <summary>
+        /// Edits the specified designation identifier.
+        /// </summary>
+        /// <param name="designationId">The designation identifier.</param>
+        /// <returns></returns>
         public ActionResult Edit(int designationId)
         {
             EmployeeManager _employeeManager = new EmployeeManager();
@@ -49,6 +71,11 @@ namespace Vserv.Accounting.Web.Controllers
             return View(ConvertTo(designation));
         }
 
+        /// <summary>
+        /// Edits the specified designation.
+        /// </summary>
+        /// <param name="designation">The designation.</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Edit(DesignationModel designation)
         {
@@ -66,6 +93,11 @@ namespace Vserv.Accounting.Web.Controllers
 
         #region Private Methods
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="designation">The designation.</param>
+        /// <returns></returns>
         private Designation ConvertTo(DesignationModel designation)
         {
             return new Designation
@@ -83,6 +115,11 @@ namespace Vserv.Accounting.Web.Controllers
             };
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="designation">The designation.</param>
+        /// <returns></returns>
         private DesignationModel ConvertTo(Designation designation)
         {
             return new DesignationModel
@@ -100,6 +137,11 @@ namespace Vserv.Accounting.Web.Controllers
             };
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="designations">The designations.</param>
+        /// <returns></returns>
         private List<DesignationModel> ConvertTo(List<Designation> designations)
         {
             List<DesignationModel> designationModels = new List<DesignationModel>();

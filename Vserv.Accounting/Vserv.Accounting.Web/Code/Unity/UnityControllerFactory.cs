@@ -10,6 +10,13 @@ namespace Vserv.Accounting.Web.Code.Unity
 {
     public class UnityControllerFactory : DefaultControllerFactory
     {
+        /// <summary>
+        /// Creates the controller.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="controllerName">Name of the controller.</param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public override IController CreateController(RequestContext context, string controllerName)
         {
             try
@@ -31,6 +38,17 @@ namespace Vserv.Accounting.Web.Code.Unity
             }
         }
 
+        /// <summary>
+        /// Gets the container.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">context</exception>
+        /// <exception cref="InvalidOperationException">
+        /// You must extend the HttpApplication in your web project and implement the IContainerAccessor to properly expose your container instance
+        /// or
+        /// The container seems to be unavailable in your HttpApplication subclass
+        /// </exception>
         protected virtual IUnityContainer GetContainer(RequestContext context)
         {
             if (context == null)

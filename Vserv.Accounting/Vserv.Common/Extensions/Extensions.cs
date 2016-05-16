@@ -18,7 +18,9 @@ namespace Vserv.Common.Extensions
         /// Converts an object to an int.
         /// </summary>
         /// <param name="item">The object to be converted.</param>
-        /// <returns>A converted integer.</returns>
+        /// <returns>
+        /// A converted integer.
+        /// </returns>
         public static int ToIntValue(this object item)
         {
             return (item != null) ? ToIntValue(item.ToStringValue()) : int.MinValue;
@@ -28,7 +30,9 @@ namespace Vserv.Common.Extensions
         /// Converts a string to an int.
         /// </summary>
         /// <param name="item">The string to be converted.</param>
-        /// <returns>A converted integer.</returns>
+        /// <returns>
+        /// A converted integer.
+        /// </returns>
         public static int ToIntValue(this string item)
         {
             int x;
@@ -49,7 +53,9 @@ namespace Vserv.Common.Extensions
         /// Converts an object to an double.
         /// </summary>
         /// <param name="item">The object to be converted.</param>
-        /// <returns>A converted double.</returns>
+        /// <returns>
+        /// A converted double.
+        /// </returns>
         public static double ToDoubleValue(this object item)
         {
             return (item != null) ? ToDoubleValue(item.ToStringValue()) : double.MinValue;
@@ -59,7 +65,9 @@ namespace Vserv.Common.Extensions
         /// Converts a string to an double.
         /// </summary>
         /// <param name="item">The string to be converted.</param>
-        /// <returns>A converted double.</returns>
+        /// <returns>
+        /// A converted double.
+        /// </returns>
         public static double ToDoubleValue(this string item)
         {
             double x;
@@ -79,7 +87,9 @@ namespace Vserv.Common.Extensions
         /// Toes the date time value.
         /// </summary>
         /// <param name="item">The datetime item.</param>
-        /// <returns>A converted DateTime</returns>
+        /// <returns>
+        /// A converted DateTime
+        /// </returns>
         public static DateTime ToDateTimeValue(this DateTime? item)
         {
             return item.HasValue ? item.Value : DateTime.MinValue;
@@ -89,7 +99,9 @@ namespace Vserv.Common.Extensions
         /// Converts an object to a DateTime.
         /// </summary>
         /// <param name="item">The object to be converted..</param>
-        /// <returns>A converted DateTime</returns>
+        /// <returns>
+        /// A converted DateTime
+        /// </returns>
         public static DateTime ToDateTimeValue(this object item)
         {
             return (item != null) ? ToDateTimeValue(item.ToStringValue()) : DateTime.MinValue;
@@ -99,7 +111,9 @@ namespace Vserv.Common.Extensions
         /// Converts an string to a DateTime.
         /// </summary>
         /// <param name="item">The string to be converted.</param>
-        /// <returns>A converted DateTime</returns>
+        /// <returns>
+        /// A converted DateTime
+        /// </returns>
         public static DateTime ToDateTimeValue(this string item)
         {
             DateTime x;
@@ -116,18 +130,24 @@ namespace Vserv.Common.Extensions
 
         #region String
 
-
+        /// <summary>
+        /// Ints to string with left pad.
+        /// </summary>
+        /// <param name="number">The number.</param>
+        /// <param name="totalWidth">The total width.</param>
+        /// <returns></returns>
         public static string IntToStringWithLeftPad(this int number, int totalWidth)
         {
             return number.ToString().PadLeft(totalWidth, '0');
         }
 
-
         /// <summary>
         /// Trims a string.
         /// </summary>
         /// <param name="item">The object to be converted.</param>
-        /// <returns>A trimmed string.</returns>
+        /// <returns>
+        /// A trimmed string.
+        /// </returns>
         public static string ToStringValue(this object item)
         {
             return (item != null) ? item.ToString().ToStringValue() : string.Empty;
@@ -137,7 +157,9 @@ namespace Vserv.Common.Extensions
         /// Trims a string.
         /// </summary>
         /// <param name="item">The string to be converted.</param>
-        /// <returns>A trimmed string.</returns>
+        /// <returns>
+        /// A trimmed string.
+        /// </returns>
         public static string ToStringValue(this string item)
         {
             return (item != null) ? item.ToString().Trim() : string.Empty;
@@ -147,7 +169,9 @@ namespace Vserv.Common.Extensions
         /// Toes the pascal case.
         /// </summary>
         /// <param name="item">The string to be converted.</param>
-        /// <returns>Pascal case string</returns>
+        /// <returns>
+        /// Pascal case string
+        /// </returns>
         public static string ToPascalCase(this string item)
         {
             System.Globalization.TextInfo ti = new System.Globalization.CultureInfo("en-US", false).TextInfo;
@@ -161,7 +185,7 @@ namespace Vserv.Common.Extensions
         /// <param name="value">The string for which to check.</param>
         /// <param name="comparison">The comparison type.</param>
         /// <returns>
-        ///     True if this string contains the specified System.String object otherwise, false.
+        /// True if this string contains the specified System.String object otherwise, false.
         /// </returns>
         public static bool Contains(this string item, string value, StringComparison comparison)
         {
@@ -202,7 +226,9 @@ namespace Vserv.Common.Extensions
         /// <param name="value">The value.</param>
         /// <param name="length">The length.</param>
         /// <param name="appendDots">If set to <c>true</c> [append dots].</param>
-        /// <returns>Returns a truncated string</returns>
+        /// <returns>
+        /// Returns a truncated string
+        /// </returns>
         public static string Truncate(this string value, int length, bool appendDots)
         {
             if (string.IsNullOrEmpty(value))
@@ -223,8 +249,9 @@ namespace Vserv.Common.Extensions
         /// Removes the whitespace.
         /// </summary>
         /// <param name="inputString">The input String.</param>
-        /// <returns>A System.String</returns>
-        /// <remarks></remarks>
+        /// <returns>
+        /// A System.String
+        /// </returns>
         [DebuggerStepThrough]
         public static String RemoveWhitespace(this String inputString)
         {
@@ -242,8 +269,9 @@ namespace Vserv.Common.Extensions
         /// Trims the whitespace.
         /// </summary>
         /// <param name="inputString">The input String.</param>
-        /// <returns>A System.String</returns>
-        /// <remarks></remarks>
+        /// <returns>
+        /// A System.String
+        /// </returns>
         [DebuggerStepThrough]
         public static String TrimWhiteSpace(this String inputString)
         {
@@ -254,8 +282,9 @@ namespace Vserv.Common.Extensions
         /// Trims the start whitespace.
         /// </summary>
         /// <param name="inputString">The input String.</param>
-        /// <returns>A System.String</returns>
-        /// <remarks></remarks>
+        /// <returns>
+        /// A System.String
+        /// </returns>
         [DebuggerStepThrough]
         public static String TrimStartWhiteSpace(this String inputString)
         {
@@ -266,8 +295,9 @@ namespace Vserv.Common.Extensions
         /// Trims the end whitespace.
         /// </summary>
         /// <param name="inputString">The input String.</param>
-        /// <returns>A System.String</returns>
-        /// <remarks></remarks>
+        /// <returns>
+        /// A System.String
+        /// </returns>
         [DebuggerStepThrough]
         public static String TrimEndWhiteSpace(this String inputString)
         {
@@ -277,9 +307,10 @@ namespace Vserv.Common.Extensions
         /// <summary>
         /// Removes extra spaces between words
         /// </summary>
-        /// <param name="str"></param>
-        /// <returns>A System.String</returns>
-        /// <remarks></remarks>
+        /// <param name="str">The string.</param>
+        /// <returns>
+        /// A System.String
+        /// </returns>
         public static String RemoveExtraSpaces(this String str)
         {
             Regex regulEx = new Regex(@"[\s]+");
@@ -287,6 +318,11 @@ namespace Vserv.Common.Extensions
             return result;
         }
 
+        /// <summary>
+        /// Splits the camel case.
+        /// </summary>
+        /// <param name="str">The string.</param>
+        /// <returns></returns>
         public static String SplitCamelCase(this String str)
         {
             return Regex.Replace(Regex.Replace(str, @"(\P{Ll})(\P{Ll}\p{Ll})", "$1 $2"), @"(\p{Ll})(\P{Ll})", "$1 $2");
@@ -299,7 +335,9 @@ namespace Vserv.Common.Extensions
         /// Converts an object to an int.
         /// </summary>
         /// <param name="item">The object to be converted.</param>
-        /// <returns>A converted integer.</returns>
+        /// <returns>
+        /// A converted integer.
+        /// </returns>
         public static bool ToBooleanValue(this object item)
         {
             return (item != null) ? ToBooleanValue(item.ToStringValue()) : false;
@@ -309,7 +347,9 @@ namespace Vserv.Common.Extensions
         /// Converts a string to an int.
         /// </summary>
         /// <param name="item">The string to be converted.</param>
-        /// <returns>A converted integer.</returns>
+        /// <returns>
+        /// A converted integer.
+        /// </returns>
         public static bool ToBooleanValue(this string item)
         {
             bool x;
@@ -329,7 +369,9 @@ namespace Vserv.Common.Extensions
         /// Converts an object to an Guid.
         /// </summary>
         /// <param name="item">The object to be converted.</param>
-        /// <returns>A converted Guid.</returns>
+        /// <returns>
+        /// A converted Guid.
+        /// </returns>
         public static Guid ToGuidValue(this object item)
         {
             return (item != null) ? ToGuidValue(item.ToStringValue()) : Guid.Empty;
@@ -339,7 +381,9 @@ namespace Vserv.Common.Extensions
         /// Converts a string to an Guid.
         /// </summary>
         /// <param name="item">The string to be converted.</param>
-        /// <returns>A converted Guid.</returns>
+        /// <returns>
+        /// A converted Guid.
+        /// </returns>
         public static Guid ToGuidValue(this string item)
         {
             Guid x;
@@ -383,13 +427,21 @@ namespace Vserv.Common.Extensions
         /// </summary>
         /// <typeparam name="T">Generic type</typeparam>
         /// <param name="source">The source.</param>
-        /// <returns>Randomized list</returns>
+        /// <returns>
+        /// Randomized list
+        /// </returns>
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
         {
             Random rand = new Random();
             return source.OrderBy(x => rand.Next());
         }
-
+        /// <summary>
+        /// To the delimited string.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="values">The values.</param>
+        /// <param name="delimiter">The delimiter.</param>
+        /// <returns></returns>
         public static string ToDelimitedString<T>(this IEnumerable<T> values, string delimiter)
         {
             var result = new StringBuilder();
@@ -411,7 +463,12 @@ namespace Vserv.Common.Extensions
 
             return result.ToString();
         }
-
+        /// <summary>
+        /// Fors the each.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="enumerable">The enumerable.</param>
+        /// <param name="action">The action.</param>
         public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
         {
             foreach (T item in enumerable)
@@ -419,12 +476,22 @@ namespace Vserv.Common.Extensions
                 action(item);
             }
         }
-
+        /// <summary>
+        /// To the hash set.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="enumerable">The enumerable.</param>
+        /// <returns></returns>
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> enumerable)
         {
             return new HashSet<T>(enumerable);
         }
-
+        /// <summary>
+        /// Gets the attribute.
+        /// </summary>
+        /// <typeparam name="TAttribute">The type of the attribute.</typeparam>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         public static TAttribute GetAttribute<TAttribute>(this Enum value) where TAttribute : Attribute
         {
             var type = value.GetType();
@@ -445,7 +512,7 @@ namespace Vserv.Common.Extensions
         /// <param name="roles">The authorized roles delimited by the specified character.</param>
         /// <param name="delimiter">The delimiter.</param>
         /// <returns>
-        ///      <c>true</c> if the user is in one of the roles otherwise, <c>false</c>.
+        ///   <c>true</c> if the user is in one of the roles otherwise, <c>false</c>.
         /// </returns>
         public static bool IsInRoles(this IPrincipal user, string roles, char delimiter)
         {
@@ -476,8 +543,9 @@ namespace Vserv.Common.Extensions
         /// Checks if an object is null
         /// </summary>
         /// <param name="o">Object to check</param>
-        /// <returns>True if null, False is not null.</returns>
-        /// <remarks></remarks>
+        /// <returns>
+        /// True if null, False is not null.
+        /// </returns>
         [DebuggerStepThrough]
         public static Boolean IsNull(this object o)
         {
@@ -488,8 +556,9 @@ namespace Vserv.Common.Extensions
         /// Checks if an object is not null
         /// </summary>
         /// <param name="o">Object to evaluate</param>
-        /// <returns>True if NOT null, false if null</returns>
-        /// <remarks></remarks>
+        /// <returns>
+        /// True if NOT null, false if null
+        /// </returns>
         [DebuggerStepThrough]
         public static Boolean IsNotNull(this object o)
         {
@@ -500,7 +569,9 @@ namespace Vserv.Common.Extensions
         /// Returns if a collection is null or Empty i.e does not contain any items in it.
         /// </summary>
         /// <param name="item">A collection</param>
-        /// <returns>Boolean Value</returns>
+        /// <returns>
+        /// Boolean Value
+        /// </returns>
         public static Boolean IsNullOrEmptyCollection(this System.Collections.ICollection item)
         {
             if (item != null && item.Count > 0)
@@ -516,8 +587,9 @@ namespace Vserv.Common.Extensions
         /// <param name="inputString">The input String.</param>
         /// <param name="trimStart">if set to <c>true</c> [trim start].</param>
         /// <param name="trimEnd">if set to <c>true</c> [trim end].</param>
-        /// <returns>A System.String</returns>
-        /// <remarks></remarks>
+        /// <returns>
+        /// A System.String
+        /// </returns>
         private static String TrimHelper(this String inputString, Boolean trimStart = false, Boolean trimEnd = false)
         {
             // End will point to the first non-trimmed character on the right
@@ -560,8 +632,9 @@ namespace Vserv.Common.Extensions
         /// </summary>
         /// <param name="character">The character.</param>
         /// <param name="isUnicode">if set to <c>true</c> [is unicode].</param>
-        /// <returns><c>true</c> if [is white space] [the specified character]; otherwise, <c>false</c>.</returns>
-        /// <remarks></remarks>
+        /// <returns>
+        ///   <c>true</c> if [is white space] [the specified character]; otherwise, <c>false</c>.
+        /// </returns>
         private static Boolean IsWhiteSpace(this char character, Boolean isUnicode = false)
         {
             if (isUnicode)

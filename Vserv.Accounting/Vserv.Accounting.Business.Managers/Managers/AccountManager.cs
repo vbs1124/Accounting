@@ -19,6 +19,11 @@ namespace Vserv.Accounting.Business.Managers
 
         #region Methods
 
+        /// <summary>
+        /// Gets the user profile.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
         public UserProfile GetUserProfile(string userName)
         {
             return ExecuteFaultHandledOperation(() =>

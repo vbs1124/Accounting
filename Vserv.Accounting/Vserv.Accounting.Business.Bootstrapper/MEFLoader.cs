@@ -8,8 +8,15 @@ using Vserv.Accounting.Data;
 
 namespace Vserv.Accounting.Business.Bootstrapper
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class MEFLoader
     {
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
+        /// <returns></returns>
         public static CompositionContainer Initialize()
         {
             AggregateCatalog catalog = new AggregateCatalog();

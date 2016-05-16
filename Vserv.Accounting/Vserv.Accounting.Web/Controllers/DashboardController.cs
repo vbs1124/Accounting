@@ -7,12 +7,20 @@ using Vserv.Accounting.Web.Models;
 
 namespace Vserv.Accounting.Web.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.Web.Mvc.Controller" />
     [Authorize]
     public class DashboardController : Controller
     {
         #region Action Methods
         //
         // GET: /Dashboard/
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();

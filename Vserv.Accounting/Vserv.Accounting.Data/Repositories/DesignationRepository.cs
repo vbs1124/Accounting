@@ -19,6 +19,10 @@ namespace Vserv.Accounting.Data
 
         #region Designations
 
+        /// <summary>
+        /// Gets the designations.
+        /// </summary>
+        /// <returns></returns>
         public List<Designation> GetDesignations()
         {
             using (var context = new VservAccountingDBEntities())
@@ -27,6 +31,10 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Adds the designation.
+        /// </summary>
+        /// <param name="designation">The designation.</param>
         public void AddDesignation(Designation designation)
         {
             using (var context = new VservAccountingDBEntities())
@@ -36,6 +44,10 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Updates the designation.
+        /// </summary>
+        /// <param name="designation">The designation.</param>
         public void UpdateDesignation(Designation designation)
         {
             using (var context = new VservAccountingDBEntities())
@@ -49,6 +61,11 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the designation.
+        /// </summary>
+        /// <param name="designationId">The designation identifier.</param>
+        /// <returns></returns>
         public Designation GetDesignation(int designationId)
         {
             using (var context = new VservAccountingDBEntities())
@@ -57,6 +74,12 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Determines whether [is designation exists] [the specified name].
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="designationId">The designation identifier.</param>
+        /// <returns></returns>
         public Boolean IsDesignationExists(string name, int designationId)
         {
             using (var context = new VservAccountingDBEntities())

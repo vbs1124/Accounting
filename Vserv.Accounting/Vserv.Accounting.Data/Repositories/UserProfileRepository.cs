@@ -8,6 +8,11 @@ using Vserv.Accounting.Data.Entity;
 
 namespace Vserv.Accounting.Data
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="Vserv.Accounting.Data.DataRepositoryBase{Vserv.Accounting.Data.Entity.UserProfile}" />
+    /// <seealso cref="Vserv.Accounting.Data.IUserProfileRepository" />
     [Export(typeof(IUserProfileRepository))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class UserProfileRepository : DataRepositoryBase<UserProfile>, IUserProfileRepository
@@ -16,6 +21,11 @@ namespace Vserv.Accounting.Data
 
         #region Public Methods
 
+        /// <summary>
+        /// Gets the user profile.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
         public UserProfile GetUserProfile(string userName)
         {
             using (var context = new VservAccountingDBEntities())
@@ -25,6 +35,11 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the user profile.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public UserProfile GetUserProfile(int userId)
         {
             using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
@@ -33,6 +48,10 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Saves the specified user profile.
+        /// </summary>
+        /// <param name="userProfile">The user profile.</param>
         public void Save(UserProfile userProfile)
         {
             try
@@ -52,6 +71,12 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the o authentication membership.
+        /// </summary>
+        /// <param name="provider">The provider.</param>
+        /// <param name="providerUserId">The provider user identifier.</param>
+        /// <returns></returns>
         public OAuthMembership GetOAuthMembership(string provider, string providerUserId)
         {
             using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
@@ -60,6 +85,12 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Saves the o authentication membership.
+        /// </summary>
+        /// <param name="provider">The provider.</param>
+        /// <param name="providerUserId">The provider user identifier.</param>
+        /// <param name="userId">The user identifier.</param>
         public void SaveOAuthMembership(string provider, string providerUserId, int userId)
         {
             using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
@@ -77,6 +108,11 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the membership.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         public Membership GetMembership(int userId)
         {
             using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
@@ -85,6 +121,12 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the membership by confirm token.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <param name="withUserProfile">if set to <c>true</c> [with user profile].</param>
+        /// <returns></returns>
         public Membership GetMembershipByConfirmToken(string token, bool withUserProfile)
         {
             using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
@@ -99,6 +141,12 @@ namespace Vserv.Accounting.Data
 
         }
 
+        /// <summary>
+        /// Gets the membership by verification token.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <param name="withUserProfile">if set to <c>true</c> [with user profile].</param>
+        /// <returns></returns>
         public Membership GetMembershipByVerificationToken(string token, bool withUserProfile)
         {
             using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
@@ -112,6 +160,11 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Saves the specified membership.
+        /// </summary>
+        /// <param name="membership">The membership.</param>
+        /// <param name="add">if set to <c>true</c> [add].</param>
         public void Save(Membership membership, bool add)
         {
             try
@@ -131,6 +184,11 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the roles.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
         public string[] GetRoles(string userName)
         {
             using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
@@ -144,6 +202,10 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Changes the password.
+        /// </summary>
+        /// <param name="membership">The membership.</param>
         public void ChangePassword(Membership membership)
         {
             using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
@@ -151,16 +213,23 @@ namespace Vserv.Accounting.Data
                 _vservAccountingDBEntities.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
         public void Dispose()
         {
-        //    Dispose(true);
+            //    Dispose(true);
         }
 
         #endregion Public Methods
 
         #region Private Methods
 
+        /// <summary>
+        /// Converts to user profile dc.
+        /// </summary>
+        /// <param name="userProfile">The user profile.</param>
+        /// <returns></returns>
         private UserProfile ConvertToUserProfileDC(UserProfile userProfile)
         {
             return new UserProfile

@@ -8,18 +8,43 @@ using System.Text;
 
 namespace Vserv.Accounting.Web.Code
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public struct RegularExpressions
     {
+        /// <summary>
+        /// The email address
+        /// </summary>
         public static string EmailAddress = @"^[a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$";
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.DataAnnotations.RegularExpressionAttribute" />
     public class ValidEmailAddressAttribute : RegularExpressionAttribute
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValidEmailAddressAttribute"/> class.
+        /// </summary>
         public ValidEmailAddressAttribute() : base(RegularExpressions.EmailAddress) { }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.DataAnnotations.ValidationAttribute" />
     public class ValidEmployeeIdAttribute : ValidationAttribute
     {
+        /// <summary>
+        /// Returns true if ... is valid.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="validationContext">The context information about the validation operation.</param>
+        /// <returns>
+        /// An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> class.
+        /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value != null)
@@ -49,8 +74,20 @@ namespace Vserv.Accounting.Web.Code
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.DataAnnotations.ValidationAttribute" />
     public class EmailAddressExistsAttribute : ValidationAttribute
     {
+        /// <summary>
+        /// Returns true if ... is valid.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="validationContext">The context information about the validation operation.</param>
+        /// <returns>
+        /// An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> class.
+        /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value != null)
@@ -69,8 +106,20 @@ namespace Vserv.Accounting.Web.Code
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.DataAnnotations.ValidationAttribute" />
     public class MobileNumberExistsAttribute : ValidationAttribute
     {
+        /// <summary>
+        /// Returns true if ... is valid.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="validationContext">The context information about the validation operation.</param>
+        /// <returns>
+        /// An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> class.
+        /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value != null)
@@ -89,8 +138,20 @@ namespace Vserv.Accounting.Web.Code
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.DataAnnotations.ValidationAttribute" />
     public class DesignationExistsAttribute : ValidationAttribute
     {
+        /// <summary>
+        /// Returns true if ... is valid.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="validationContext">The context information about the validation operation.</param>
+        /// <returns>
+        /// An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> class.
+        /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value != null)
@@ -109,8 +170,20 @@ namespace Vserv.Accounting.Web.Code
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.DataAnnotations.ValidationAttribute" />
     public class ValidPasswordComplexityAttribute : ValidationAttribute
     {
+        /// <summary>
+        /// Returns true if ... is valid.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="validationContext">The context information about the validation operation.</param>
+        /// <returns>
+        /// An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> class.
+        /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value != null)
@@ -141,8 +214,20 @@ namespace Vserv.Accounting.Web.Code
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.DataAnnotations.ValidationAttribute" />
     public class ValidChangePasswordComplexityAttribute : ValidationAttribute
     {
+        /// <summary>
+        /// Returns true if ... is valid.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="validationContext">The context information about the validation operation.</param>
+        /// <returns>
+        /// An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> class.
+        /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value != null)

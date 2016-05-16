@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Vserv.Accounting.Web.Models; 
+using Vserv.Accounting.Web.Models;
 #endregion
 
 namespace Vserv.Accounting.Web.Controllers
@@ -12,11 +12,19 @@ namespace Vserv.Accounting.Web.Controllers
     public class NavbarController : Controller
     {
         #region Namespaces
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return PartialView("_Navbar", navbarItems().ToList());
         }
 
+        /// <summary>
+        /// Navbars the items.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Navbar> navbarItems()
         {
             var menu = new List<Navbar>();
@@ -123,9 +131,9 @@ namespace Vserv.Accounting.Web.Controllers
                 isParent = false,
                 parentId = 8
             });
-           
+
             return menu.ToList();
-        } 
+        }
         #endregion
     }
 }

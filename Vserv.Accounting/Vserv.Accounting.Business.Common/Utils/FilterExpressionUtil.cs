@@ -8,8 +8,16 @@ using Vserv.Accounting.Common.Enums;
 
 namespace Vserv.Accounting.Business.Common
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class FilterExpressionUtil
     {
+        /// <summary>
+        /// Gets the lambda filter.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
         public static LambdaExpression GetLambdaFilter(Filter filter)
         {
             Type entityType = filter.EntityType;
@@ -21,6 +29,11 @@ namespace Vserv.Accounting.Business.Common
             return Expression.Lambda(func.MakeGenericType(entityType, typeof(bool)), op, item);
         }
 
+        /// <summary>
+        /// Gets the lambda filters.
+        /// </summary>
+        /// <param name="filterset">The filterset.</param>
+        /// <returns></returns>
         public static Expression GetLambdaFilters(FilterSet filterset)
         {
             if (filterset.Filters.Count > 1 && filterset.Filters.ElementAt(0).FirstOrDefault() != null)
@@ -60,6 +73,12 @@ namespace Vserv.Accounting.Business.Common
             }
         }
 
+        /// <summary>
+        /// Gets the inner filter.
+        /// </summary>
+        /// <param name="filters">The filters.</param>
+        /// <param name="p">The p.</param>
+        /// <returns></returns>
         static Expression GetInnerFilter(ICollection<Filter> filters, Expression p)
         {
             if (filters.Count > 0)
@@ -116,6 +135,11 @@ namespace Vserv.Accounting.Business.Common
             }
         }
 
+        /// <summary>
+        /// Gets the type of the collection.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
         static Type GetCollectionType(Filter filter)
         {
             Type entityType = filter.EntityType;
@@ -139,6 +163,12 @@ namespace Vserv.Accounting.Business.Common
             return null;
         }
 
+        /// <summary>
+        /// Gets the name of the collection property.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
         static string GetCollectionPropertyName(Filter filter, Expression item)
         {
             Type entityType = filter.CollectionEntityType;
@@ -169,6 +199,11 @@ namespace Vserv.Accounting.Business.Common
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Gets the lambda filters.
+        /// </summary>
+        /// <param name="filters">The filters.</param>
+        /// <returns></returns>
         public static Expression GetLambdaFilters(ICollection<Filter> filters)
         {
             if (filters.Count > 0)
@@ -234,6 +269,13 @@ namespace Vserv.Accounting.Business.Common
             }
         }
 
+        /// <summary>
+        /// Gets the expression.
+        /// </summary>
+        /// <param name="prop">The property.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
         static Expression GetExpression(Expression prop, Expression value, Filter filter)
         {
             Expression IgnoreCase = Expression.Constant(true);
@@ -292,22 +334,58 @@ namespace Vserv.Accounting.Business.Common
             }
         }
 
+        /// <summary>
+        /// Orders the by.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source">The source.</param>
+        /// <param name="property">The property.</param>
+        /// <returns></returns>
         public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> source, string property)
         {
             return ApplyOrder<T>(source, property, "OrderBy");
         }
+        /// <summary>
+        /// Orders the by descending.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source">The source.</param>
+        /// <param name="property">The property.</param>
+        /// <returns></returns>
         public static IOrderedQueryable<T> OrderByDescending<T>(this IQueryable<T> source, string property)
         {
             return ApplyOrder<T>(source, property, "OrderByDescending");
         }
+        /// <summary>
+        /// Thens the by.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source">The source.</param>
+        /// <param name="property">The property.</param>
+        /// <returns></returns>
         public static IOrderedQueryable<T> ThenBy<T>(this IOrderedQueryable<T> source, string property)
         {
             return ApplyOrder<T>(source, property, "ThenBy");
         }
+        /// <summary>
+        /// Thens the by descending.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source">The source.</param>
+        /// <param name="property">The property.</param>
+        /// <returns></returns>
         public static IOrderedQueryable<T> ThenByDescending<T>(this IOrderedQueryable<T> source, string property)
         {
             return ApplyOrder<T>(source, property, "ThenByDescending");
         }
+        /// <summary>
+        /// Applies the order.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source">The source.</param>
+        /// <param name="property">The property.</param>
+        /// <param name="methodName">Name of the method.</param>
+        /// <returns></returns>
         static IOrderedQueryable<T> ApplyOrder<T>(IQueryable<T> source, string property, string methodName)
         {
             string[] props = property.Split('.');
@@ -333,6 +411,12 @@ namespace Vserv.Accounting.Business.Common
             return (IOrderedQueryable<T>)result;
         }
 
+        /// <summary>
+        /// Gets the property expression1.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
         static Expression GetPropertyExpression1(Filter filter, Expression item)
         {
             Type entityType = filter.EntityType;
@@ -357,6 +441,12 @@ namespace Vserv.Accounting.Business.Common
             return expr;
         }
 
+        /// <summary>
+        /// Gets the property expression.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
         static Expression GetPropertyExpression(Filter filter, Expression item)
         {
             Type entityType = filter.EntityType;
@@ -385,6 +475,11 @@ namespace Vserv.Accounting.Business.Common
             return expr;
         }
 
+        /// <summary>
+        /// Determines whether [is nullabel type] [the specified t].
+        /// </summary>
+        /// <param name="t">The t.</param>
+        /// <returns></returns>
         static bool IsNullabelType(Type t)
         {
             return t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>);

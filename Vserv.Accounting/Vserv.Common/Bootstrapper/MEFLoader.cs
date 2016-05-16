@@ -8,8 +8,16 @@ using System.Threading.Tasks;
 
 namespace Vserv.Common.Bootstrapper
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class MEFLoader
     {
+        /// <summary>
+        /// Initializes the specified catalog parts.
+        /// </summary>
+        /// <param name="catalogParts">The catalog parts.</param>
+        /// <returns></returns>
         public static CompositionContainer Initialize(ICollection<ComposablePartCatalog> catalogParts)
         {
             AggregateCatalog catalog = new AggregateCatalog();

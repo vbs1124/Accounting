@@ -9,12 +9,31 @@ using Vserv.Accounting.Data.Entity;
 
 namespace Vserv.Accounting.Core.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="Vserv.Accounting.Core.Services.IUsersService" />
     public class UsersService : IUsersService
     {
+        /// <summary>
+        /// The _database context
+        /// </summary>
         private readonly IDatabaseContext _databaseContext;
+        /// <summary>
+        /// The _config service
+        /// </summary>
         private readonly IConfigService _configService;
+        /// <summary>
+        /// The _email service
+        /// </summary>
         private readonly IEmailService _emailService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsersService"/> class.
+        /// </summary>
+        /// <param name="databaseContext">The database context.</param>
+        /// <param name="configService">The configuration service.</param>
+        /// <param name="emailService">The email service.</param>
         public UsersService(IDatabaseContext databaseContext, IConfigService configService, IEmailService emailService)
         {
             this._databaseContext = databaseContext;
@@ -22,16 +41,30 @@ namespace Vserv.Accounting.Core.Services
             this._emailService = emailService;
         }
 
+        /// <summary>
+        /// Gets the user profile.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
         UserProfile IUsersService.GetUserProfile(string userName)
         {
             return this._databaseContext.UserProfiles.FirstOrDefault(x => x.UserName.Equals(userName));
         }
 
+        /// <summary>
+        /// Gets the user profile.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         UserProfile IUsersService.GetUserProfile(int userId)
         {
             return this._databaseContext.UserProfiles.FirstOrDefault(x => x.UserId.Equals(userId));
         }
 
+        /// <summary>
+        /// Saves the specified user profile.
+        /// </summary>
+        /// <param name="userProfile">The user profile.</param>
         void IUsersService.Save(UserProfile userProfile)
         {
             try
@@ -48,11 +81,23 @@ namespace Vserv.Accounting.Core.Services
             }
         }
 
+        /// <summary>
+        /// Gets the o authentication membership.
+        /// </summary>
+        /// <param name="provider">The provider.</param>
+        /// <param name="providerUserId">The provider user identifier.</param>
+        /// <returns></returns>
         OAuthMembership IUsersService.GetOAuthMembership(string provider, string providerUserId)
         {
             return this._databaseContext.OAuthMemberships.FirstOrDefault(x => x.Provider.Equals(provider) && x.ProviderUserId.Equals(providerUserId));
         }
 
+        /// <summary>
+        /// Saves the o authentication membership.
+        /// </summary>
+        /// <param name="provider">The provider.</param>
+        /// <param name="providerUserId">The provider user identifier.</param>
+        /// <param name="userId">The user identifier.</param>
         void IUsersService.SaveOAuthMembership(string provider, string providerUserId, int userId)
         {
             var oAuthMembership = this._databaseContext.OAuthMemberships.FirstOrDefault(x => x.Provider.Equals(provider) && x.ProviderUserId.Equals(providerUserId));
@@ -65,11 +110,22 @@ namespace Vserv.Accounting.Core.Services
             this._databaseContext.SaveChanges();
         }
 
+        /// <summary>
+        /// Gets the membership.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
         Vserv.Accounting.Data.Entity.Membership IUsersService.GetMembership(int userId)
         {
             return this._databaseContext.Memberships.FirstOrDefault(x => x.UserId == userId);
         }
 
+        /// <summary>
+        /// Gets the membership by confirm token.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <param name="withUserProfile">if set to <c>true</c> [with user profile].</param>
+        /// <returns></returns>
         Vserv.Accounting.Data.Entity.Membership IUsersService.GetMembershipByConfirmToken(string token, bool withUserProfile)
         {
             var membership = this._databaseContext.Memberships.FirstOrDefault(x => x.ConfirmationToken.Equals(token.ToLower()));
@@ -80,6 +136,12 @@ namespace Vserv.Accounting.Core.Services
             return membership;
         }
 
+        /// <summary>
+        /// Gets the membership by verification token.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <param name="withUserProfile">if set to <c>true</c> [with user profile].</param>
+        /// <returns></returns>
         Vserv.Accounting.Data.Entity.Membership IUsersService.GetMembershipByVerificationToken(string token, bool withUserProfile)
         {
             var membership = this._databaseContext.Memberships.FirstOrDefault(x => x.PasswordVerificationToken.Equals(token.ToLower()));
@@ -90,6 +152,11 @@ namespace Vserv.Accounting.Core.Services
             return membership;
         }
 
+        /// <summary>
+        /// Saves the specified membership.
+        /// </summary>
+        /// <param name="membership">The membership.</param>
+        /// <param name="add">if set to <c>true</c> [add].</param>
         void IUsersService.Save(Vserv.Accounting.Data.Entity.Membership membership, bool add)
         {
             try
@@ -108,6 +175,12 @@ namespace Vserv.Accounting.Core.Services
         }
 
         // to do: transfer it to service
+        /// <summary>
+        /// Sends the account activation mail.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <exception cref="MembershipCreateUserException">
+        /// </exception>
         void IUsersService.SendAccountActivationMail(string email)
         {
             var userProfile = (this as IUsersService).GetUserProfile(email);
@@ -139,6 +212,11 @@ namespace Vserv.Accounting.Core.Services
             );
         }
 
+        /// <summary>
+        /// Gets the roles.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
         string[] IUsersService.GetRoles(string userName)
         {
             var userProfile = this._databaseContext.UserProfiles.FirstOrDefault(x => x.UserName.Equals(userName));
@@ -149,6 +227,15 @@ namespace Vserv.Accounting.Core.Services
             return new string[] { };
         }
 
+        /// <summary>
+        /// Sents the change password email.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <exception cref="MembershipCreateUserException">
+        /// User not found.
+        /// or
+        /// User not found.
+        /// </exception>
         void IUsersService.SentChangePasswordEmail(string email)
         {
             var userProfile = (this as IUsersService).GetUserProfile(email);
@@ -182,7 +269,15 @@ namespace Vserv.Accounting.Core.Services
             );
         }
 
+        /// <summary>
+        /// The salt
+        /// </summary>
         private string salt = "HJIO6589";
+        /// <summary>
+        /// Gets the hash.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <returns></returns>
         string IUsersService.GetHash(string text)
         {
             var buffer = Encoding.UTF8.GetBytes(String.Concat(text, salt));
@@ -191,6 +286,12 @@ namespace Vserv.Accounting.Core.Services
             return hash;
         }
 
+        /// <summary>
+        /// Changes the password.
+        /// </summary>
+        /// <param name="membership">The membership.</param>
+        /// <param name="newPassword">The new password.</param>
+        /// <exception cref="Exception">User not found.</exception>
         void IUsersService.ChangePassword(Vserv.Accounting.Data.Entity.Membership membership, string newPassword)
         {
             if (membership == null)

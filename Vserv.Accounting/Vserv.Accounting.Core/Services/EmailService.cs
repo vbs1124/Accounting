@@ -12,10 +12,21 @@ using Vserv.Accounting.Core.Resources;
 
 namespace Vserv.Accounting.Core.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="Vserv.Accounting.Core.Services.IEmailService" />
     public class EmailService : IEmailService
     {
+        /// <summary>
+        /// The _SMTP client
+        /// </summary>
         private SmtpClient _smtpClient;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EmailService"/> class.
+        /// </summary>
+        /// <param name="smtpClient">The SMTP client.</param>
         public EmailService(SmtpClient smtpClient)
         {
             this._smtpClient = smtpClient;
@@ -27,6 +38,13 @@ namespace Vserv.Accounting.Core.Services
         /// <param name="emailAddress">Recipient email address</param>
         /// <param name="subject">Email subject</param>
         /// <param name="message">Email message</param>
+        /// <exception cref="ArgumentException">
+        /// emailAddress
+        /// or
+        /// subject
+        /// or
+        /// message
+        /// </exception>
         void IEmailService.SendEmail(string emailAddress, string subject, string message)
         {
             #region Validation
@@ -83,10 +101,11 @@ namespace Vserv.Accounting.Core.Services
         /// <summary>
         /// Send email message with a template
         /// </summary>
-        /// <param name="emailAddress">ecipient email address</param>
-        /// <param name="subject">Email subject</param>
+        /// <param name="sendEmailModel">The send email model.</param>
         /// <param name="templateName">Template name. Ex.: "Contact"</param>
         /// <param name="data">Data object for the template. Ex.: new { Name = "John" }</param>
+        /// <exception cref="ArgumentException">templateName</exception>
+        /// <exception cref="ApplicationException">Missing Website URL property.</exception>
         void IEmailService.SendEmail(SendEmailModel sendEmailModel, string templateName, object data)
         {
             if (String.IsNullOrWhiteSpace(templateName))

@@ -1,6 +1,9 @@
 ﻿
 namespace Vserv.Accounting.Common.Enums
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public enum FilterOperator
     {
         Equals,

@@ -11,14 +11,29 @@ using WebMatrix.WebData;
 
 namespace Vserv.Accounting.Web.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.Web.Mvc.Controller" />
     public class AccountController : Controller
     {
         #region Variables
+        /// <summary>
+        /// The users service
+        /// </summary>
         private readonly IUsersService usersService;
+        /// <summary>
+        /// The email service
+        /// </summary>
         private readonly IEmailService emailService;
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountController"/> class.
+        /// </summary>
+        /// <param name="usersService">The users service.</param>
+        /// <param name="emailService">The email service.</param>
         public AccountController(IUsersService usersService, IEmailService emailService)
         {
             this.usersService = usersService;
@@ -30,6 +45,10 @@ namespace Vserv.Accounting.Web.Controllers
 
         //
         // GET: /Account/Login/
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
@@ -37,6 +56,12 @@ namespace Vserv.Accounting.Web.Controllers
 
         //
         // POST: /Account/Login
+        /// <summary>
+        /// Indexes the specified model.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <param name="returnUrl">The return URL.</param>
+        /// <returns></returns>
         [HttpPost, AllowAnonymous, ValidateAntiForgeryToken]
         public ActionResult Index(LoginModel model, string returnUrl)
         {
@@ -54,6 +79,10 @@ namespace Vserv.Accounting.Web.Controllers
 
         #region Register
 
+        /// <summary>
+        /// Registers this instance.
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult Register()
         {
@@ -62,6 +91,11 @@ namespace Vserv.Accounting.Web.Controllers
 
         //
         // POST: /Account/Register
+        /// <summary>
+        /// Registers the specified model.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         [HttpPost, AllowAnonymous, ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
@@ -90,12 +124,20 @@ namespace Vserv.Accounting.Web.Controllers
 
         #region Change Password
 
-        //ChangePassword
+        /// <summary>
+        /// Changes the password.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ChangePassword()
         {
             return View();
         }
 
+        /// <summary>
+        /// Changes the password.
+        /// </summary>
+        /// <param name="userProfileModel">The user profile model.</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult ChangePassword(UserProfileModel userProfileModel)
         {
@@ -144,8 +186,10 @@ namespace Vserv.Accounting.Web.Controllers
         #endregion
 
         #region User Profile
-
-
+        /// <summary>
+        /// Users the profile.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult UserProfile()
         {
             AccountManager _accountManager = new AccountManager();
@@ -154,18 +198,25 @@ namespace Vserv.Accounting.Web.Controllers
             return View("profile", userProfileModel);
         }
 
-
         #endregion
 
         #region Logout
 
         // [HttpPost, ValidateAntiForgeryToken]
+        /// <summary>
+        /// Logouts this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Logout()
         {
             WebSecurity.Logout();
             return RedirectToAction("Index", "Account");
         }
 
+        /// <summary>
+        /// Bads the link.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult BadLink()
         {
             return View();
@@ -174,6 +225,10 @@ namespace Vserv.Accounting.Web.Controllers
         //
         // GET: /Account/ChangePassword/Success
 
+        /// <summary>
+        /// Successes the change password.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult SuccessChangePassword()
         {
             return View();
@@ -183,6 +238,11 @@ namespace Vserv.Accounting.Web.Controllers
 
         #region Helpers
 
+        /// <summary>
+        /// Errors the code to string.
+        /// </summary>
+        /// <param name="createStatus">The create status.</param>
+        /// <returns></returns>
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
         {
             // See http://go.microsoft.com/fwlink/?LinkID=177550 for
@@ -221,6 +281,11 @@ namespace Vserv.Accounting.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="userProfile">The user profile.</param>
+        /// <returns></returns>
         private UserProfileModel ConvertTo(UserProfile userProfile)
         {
             return new UserProfileModel

@@ -16,16 +16,37 @@ using Vserv.Accounting.Business.Common;
 
 namespace Vserv.Accounting.Data
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <seealso cref="Vserv.Common.Data.DataRepositoryBase{T,Vserv.Accounting.Data.Entity.VservAccountingDBEntities}" />
     public abstract class DataRepositoryBase<T> : DataRepositoryBase<T, VservAccountingDBEntities>
         where T : class, new()
     {
+        /// <summary>
+        /// The _dbset
+        /// </summary>
         protected DbSet<T> _dbset;
+        /// <summary>
+        /// The _dispose
+        /// </summary>
         private bool _dispose;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataRepositoryBase{T}" /> class.
+        /// </summary>
         protected DataRepositoryBase()
         {
 
         }
 
+        /// <summary>
+        /// Adds the entity.
+        /// </summary>
+        /// <param name="entityContext">The entity context.</param>
+        /// <param name="entity">The entity.</param>
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
         protected override T AddEntity(VservAccountingDBEntities entityContext, T entity, string user)
         {
             _dbset = entityContext.Set<T>();
@@ -34,6 +55,12 @@ namespace Vserv.Accounting.Data
             return retVal;
         }
 
+        /// <summary>
+        /// Updates the entity.
+        /// </summary>
+        /// <param name="entityContext">The entity context.</param>
+        /// <param name="entity">The entity.</param>
+        /// <param name="user">The user.</param>
         protected override void UpdateEntity(VservAccountingDBEntities entityContext, T entity, string user)
         {
             _dbset = entityContext.Set<T>();
@@ -42,6 +69,11 @@ namespace Vserv.Accounting.Data
             //  SetAuditValues(entityContext, entity, user);
         }
 
+        /// <summary>
+        /// Gets the entities.
+        /// </summary>
+        /// <param name="entityContext">The entity context.</param>
+        /// <returns></returns>
         protected override IEnumerable<T> GetEntities(VservAccountingDBEntities entityContext)
         {
             _dbset = entityContext.Set<T>();
@@ -49,6 +81,12 @@ namespace Vserv.Accounting.Data
                    select e;
         }
 
+        /// <summary>
+        /// Gets the entity.
+        /// </summary>
+        /// <param name="entityContext">The entity context.</param>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         protected override T GetEntity(VservAccountingDBEntities entityContext, int id)
         {
             _dbset = entityContext.Set<T>();
@@ -156,6 +194,15 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the filtered entities.
+        /// </summary>
+        /// <param name="entityContext">The entity context.</param>
+        /// <param name="filter">The filter.</param>
+        /// <param name="orderBy">The order by.</param>
+        /// <param name="includeProperties">The include properties.</param>
+        /// <param name="count">The count.</param>
+        /// <returns></returns>
         protected override IEnumerable<T> GetFilteredEntities(VservAccountingDBEntities entityContext, Expression<Func<T, bool>> filter, string orderBy,
             string includeProperties, out int count)
         {
@@ -216,7 +263,9 @@ namespace Vserv.Accounting.Data
         /// <param name="context">The DbContext</param>
         /// <param name="key">Lambda expression for finding the Entity</param>
         /// <param name="includeProperties">Comma seperated list of child Entities to include, i.e. "Franchise, FranchiseOperation"</param>
-        /// <returns>Returns Entity of Type T</returns>
+        /// <returns>
+        /// Returns Entity of Type T
+        /// </returns>
         protected override T GetLoadedEntity(VservAccountingDBEntities context, Expression<Func<T, bool>> key, string includeProperties)
         {
             DbQuery<T> query = context.Set<T>();
@@ -262,6 +311,10 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="isDisposed"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool isDisposed)
         {
             this._dispose = isDisposed;

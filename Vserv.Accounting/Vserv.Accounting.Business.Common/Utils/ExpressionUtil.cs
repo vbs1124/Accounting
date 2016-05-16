@@ -8,10 +8,17 @@ using Vserv.Accounting.Common.Enums;
 
 namespace Vserv.Accounting.Business.Common
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ExpressionUtil
     {
-
+        /// <summary>
+        /// Gets the lambda expression.
+        /// </summary>
+        /// <param name="rootNode">The root node.</param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException">Empty collection supplied.</exception>
         public static Expression GetLambdaExpression(FilterExpressionNode rootNode)
         {
             if ((rootNode.FilterExpressionNodes != null && rootNode.FilterExpressionNodes.Count > 0) || (rootNode.Filters != null && rootNode.Filters.Count > 0))
@@ -32,6 +39,12 @@ namespace Vserv.Accounting.Business.Common
             }
         }
 
+        /// <summary>
+        /// Gets the expression.
+        /// </summary>
+        /// <param name="rootNode">The root node.</param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException">A filter or filter node must be supplied.</exception>
         public static Expression GetExpression(FilterExpressionNode rootNode)
         {
             //check to ensure we have values to work with
@@ -59,19 +72,21 @@ namespace Vserv.Accounting.Business.Common
                         if (filterExpression == null)
                         {
                             filterExpression = GetExpression(filterNode);
-                        }else{
+                        }
+                        else
+                        {
                             //apply root node logic to current state of expression and next evlaution of GetExpression
-                         if (rootNode.Logic == FilterLogic.And)
+                            if (rootNode.Logic == FilterLogic.And)
                                 filterExpression = Expression.AndAlso(filterExpression, GetExpression(filterNode));
                             else
-                             filterExpression = Expression.Or(filterExpression, GetExpression(filterNode));
+                                filterExpression = Expression.Or(filterExpression, GetExpression(filterNode));
                         }
                     }
                     //if the given root node has only filters add them to the epression
                     if (rootNode.Filters != null && rootNode.Filters.Count > 0)
                     {
                         if (rootNode.Logic == FilterLogic.And)
-                            filterExpression = Expression.AndAlso(filterExpression,GetInnerFilter(rootNode.Filters, item, rootNode.Logic));
+                            filterExpression = Expression.AndAlso(filterExpression, GetInnerFilter(rootNode.Filters, item, rootNode.Logic));
                         else
                             filterExpression = Expression.Or(filterExpression, GetInnerFilter(rootNode.Filters, item, rootNode.Logic));
                     }
@@ -84,26 +99,36 @@ namespace Vserv.Accounting.Business.Common
             }
         }
 
-       
-
+        /// <summary>
+        /// Gets the type of the expression.
+        /// </summary>
+        /// <param name="root">The root.</param>
+        /// <returns></returns>
         public static Type GetExpressionType(FilterExpressionNode root)
         {
             Type type = null;
             while (type == null)
             {
-                if(root.Filters != null && root.Filters.Count > 0)
+                if (root.Filters != null && root.Filters.Count > 0)
                     type = root.Filters.ElementAt(0).EntityType;
                 else
                     foreach (var node in root.FilterExpressionNodes)
-	                {
+                    {
                         type = GetExpressionType(node);
                         if (type != null)
                             break;
-	                }    
+                    }
             }
             return type;
         }
 
+        /// <summary>
+        /// Gets the expression.
+        /// </summary>
+        /// <param name="prop">The property.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
         static Expression GetExpression(Expression prop, Expression value, Filter filter)
         {
             switch (filter.Operator)
@@ -152,6 +177,12 @@ namespace Vserv.Accounting.Business.Common
                     return Expression.Equal(prop, value);
             }
         }
+        /// <summary>
+        /// Gets the property expression.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
         static Expression GetPropertyExpression(Filter filter, Expression item)
         {
             Type entityType = filter.EntityType;
@@ -180,11 +211,23 @@ namespace Vserv.Accounting.Business.Common
             return expr;
         }
 
+        /// <summary>
+        /// Determines whether [is nullabel type] [the specified t].
+        /// </summary>
+        /// <param name="t">The t.</param>
+        /// <returns></returns>
         static bool IsNullabelType(Type t)
         {
             return t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
+        /// <summary>
+        /// Gets the inner filter.
+        /// </summary>
+        /// <param name="filters">The filters.</param>
+        /// <param name="p">The p.</param>
+        /// <param name="op">The op.</param>
+        /// <returns></returns>
         static Expression GetInnerFilter(ICollection<Filter> filters, Expression p, FilterLogic op)
         {
             if (filters.Count > 0)
@@ -226,13 +269,13 @@ namespace Vserv.Accounting.Business.Common
                     if (rightSide == null)
                     {
                         rightSide = comparison;
-                        if(op == FilterLogic.And)
+                        if (op == FilterLogic.And)
                             filterExpression = Expression.AndAlso(leftSide, rightSide);
                         else
                             filterExpression = Expression.Or(leftSide, rightSide);
                         continue;
                     }
-                    if(op == FilterLogic.And)
+                    if (op == FilterLogic.And)
                         filterExpression = Expression.AndAlso(filterExpression, comparison);
                     else
                         filterExpression = Expression.Or(filterExpression, comparison);
@@ -245,6 +288,12 @@ namespace Vserv.Accounting.Business.Common
             }
         }
 
+        /// <summary>
+        /// Gets the name of the collection property.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
         static string GetCollectionPropertyName(Filter filter, Expression item)
         {
             Type entityType = filter.EntityType;
@@ -275,6 +324,11 @@ namespace Vserv.Accounting.Business.Common
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Gets the lambda filters.
+        /// </summary>
+        /// <param name="filters">The filters.</param>
+        /// <returns></returns>
         public static Expression GetLambdaFilters(ICollection<Filter> filters)
         {
             if (filters.Count > 0)
@@ -340,6 +394,11 @@ namespace Vserv.Accounting.Business.Common
             }
         }
 
+        /// <summary>
+        /// Gets the lambda filter.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
         public static LambdaExpression GetLambdaFilter(Filter filter)
         {
             Type entityType = filter.EntityType;

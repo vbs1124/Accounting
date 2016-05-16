@@ -15,17 +15,29 @@ using Vserv.Common.Extensions;
 
 namespace Vserv.Accounting.Business.Managers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ManagerBase
     {
         #region Variables
+        /// <summary>
+        /// The _data repository factory
+        /// </summary>
         [Import]
         protected IDataRepositoryFactory _dataRepositoryFactory;
 
+        /// <summary>
+        /// The _logger
+        /// </summary>
         [Import]
         protected ILogger _logger;
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ManagerBase"/> class.
+        /// </summary>
         public ManagerBase()
         {
             if (DependencyHelper.Container.IsNull())
@@ -37,6 +49,13 @@ namespace Vserv.Accounting.Business.Managers
             _logger.LoggerType = GetType();
         }
 
+        /// <summary>
+        /// Executes the fault handled operation.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="codeToExecute">The code to execute.</param>
+        /// <returns></returns>
+        /// <exception cref="FaultException"></exception>
         protected T ExecuteFaultHandledOperation<T>(Func<T> codeToExecute)
         {
             try
@@ -75,6 +94,11 @@ namespace Vserv.Accounting.Business.Managers
             }
         }
 
+        /// <summary>
+        /// Executes the fault handled operation.
+        /// </summary>
+        /// <param name="codeToExecute">The code to execute.</param>
+        /// <exception cref="FaultException"></exception>
         protected void ExecuteFaultHandledOperation(Action codeToExecute)
         {
             try

@@ -9,6 +9,11 @@ using Vserv.Common.Extensions;
 
 namespace Vserv.Accounting.Data
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="Vserv.Accounting.Data.DataRepositoryBase{Vserv.Accounting.Data.Entity.Employee}" />
+    /// <seealso cref="Vserv.Accounting.Data.IEmployeeRepository" />
     [Export(typeof(IEmployeeRepository))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class EmployeeRepository : DataRepositoryBase<Employee>, IEmployeeRepository
@@ -19,6 +24,10 @@ namespace Vserv.Accounting.Data
 
         #region Employees
 
+        /// <summary>
+        /// Gets the employees.
+        /// </summary>
+        /// <returns></returns>
         public List<Employee> GetEmployees()
         {
             using (var context = new VservAccountingDBEntities())
@@ -32,6 +41,11 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the employee.
+        /// </summary>
+        /// <param name="employeeId">The employee identifier.</param>
+        /// <returns></returns>
         public Employee GetEmployee(int employeeId)
         {
 
@@ -47,6 +61,11 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Adds the employee.
+        /// </summary>
+        /// <param name="employee">The employee.</param>
+        /// <returns></returns>
         public Employee AddEmployee(Employee employee)
         {
             try
@@ -66,6 +85,11 @@ namespace Vserv.Accounting.Data
 
         }
 
+        /// <summary>
+        /// Edits the employee.
+        /// </summary>
+        /// <param name="employee">The employee.</param>
+        /// <returns></returns>
         public Employee EditEmployee(Employee employee)
         {
             using (var context = new VservAccountingDBEntities())
@@ -87,6 +111,10 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Deletes the employee.
+        /// </summary>
+        /// <param name="employeeId">The employee identifier.</param>
         public void DeleteEmployee(int employeeId)
         {
             using (var context = new VservAccountingDBEntities())
@@ -111,6 +139,12 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Determines whether [is employee identifier already registered] [the specified vb s_ identifier].
+        /// </summary>
+        /// <param name="VBS_Id">The vb s_ identifier.</param>
+        /// <param name="employeeId">The employee identifier.</param>
+        /// <returns></returns>
         public Boolean IsEmployeeIdAlreadyRegistered(string VBS_Id, int employeeId)
         {
             using (var context = new VservAccountingDBEntities())
@@ -119,6 +153,12 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Determines whether [is email already registered] [the specified email address].
+        /// </summary>
+        /// <param name="emailAddress">The email address.</param>
+        /// <param name="employeeId">The employee identifier.</param>
+        /// <returns></returns>
         public Boolean IsEmailAlreadyRegistered(string emailAddress, int employeeId)
         {
             using (var context = new VservAccountingDBEntities())
@@ -127,6 +167,12 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Determines whether [is mobile number already registered] [the specified mobile number].
+        /// </summary>
+        /// <param name="mobileNumber">The mobile number.</param>
+        /// <param name="employeeId">The employee identifier.</param>
+        /// <returns></returns>
         public Boolean IsMobileNumberAlreadyRegistered(string mobileNumber, int employeeId)
         {
             using (var context = new VservAccountingDBEntities())
@@ -139,6 +185,10 @@ namespace Vserv.Accounting.Data
 
         #region Designations
 
+        /// <summary>
+        /// Gets the designations.
+        /// </summary>
+        /// <returns></returns>
         public List<Designation> GetDesignations()
         {
             using (var context = new VservAccountingDBEntities())
@@ -147,6 +197,10 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Adds the designation.
+        /// </summary>
+        /// <param name="designation">The designation.</param>
         public void AddDesignation(Designation designation)
         {
             using (var context = new VservAccountingDBEntities())
@@ -156,6 +210,10 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Updates the designation.
+        /// </summary>
+        /// <param name="designation">The designation.</param>
         public void UpdateDesignation(Designation designation)
         {
             using (var context = new VservAccountingDBEntities())
@@ -169,6 +227,11 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the designation.
+        /// </summary>
+        /// <param name="designationId">The designation identifier.</param>
+        /// <returns></returns>
         public Designation GetDesignation(int designationId)
         {
             using (var context = new VservAccountingDBEntities())
@@ -177,6 +240,12 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Determines whether [is designation exists] [the specified name].
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="designationId">The designation identifier.</param>
+        /// <returns></returns>
         public Boolean IsDesignationExists(string name, int designationId)
         {
             using (var context = new VservAccountingDBEntities())
@@ -189,6 +258,11 @@ namespace Vserv.Accounting.Data
 
         #region Address
 
+        /// <summary>
+        /// Gets the addresses.
+        /// </summary>
+        /// <param name="employeeId">The employee identifier.</param>
+        /// <returns></returns>
         public List<Address> GetAddresses(int employeeId)
         {
             using (var context = new VservAccountingDBEntities())
@@ -199,6 +273,10 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the cities.
+        /// </summary>
+        /// <returns></returns>
         public List<City> GetCities()
         {
             using (var context = new VservAccountingDBEntities())
@@ -207,6 +285,12 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the cities.
+        /// </summary>
+        /// <param name="stateId">The state identifier.</param>
+        /// <param name="cityId">The city identifier.</param>
+        /// <returns></returns>
         public List<City> GetCities(int stateId, int? cityId)
         {
             using (var context = new VservAccountingDBEntities())
@@ -220,6 +304,10 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the states.
+        /// </summary>
+        /// <returns></returns>
         public List<State> GetStates()
         {
             using (var context = new VservAccountingDBEntities())
@@ -229,6 +317,11 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the state.
+        /// </summary>
+        /// <param name="stateId">The state identifier.</param>
+        /// <returns></returns>
         public State GetState(int stateId)
         {
             using (var context = new VservAccountingDBEntities())
@@ -237,6 +330,11 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the zip codes.
+        /// </summary>
+        /// <param name="cityId">The city identifier.</param>
+        /// <returns></returns>
         public List<ZipCode> GetZipCodes(int cityId)
         {
             using (var context = new VservAccountingDBEntities())
@@ -245,6 +343,11 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Adds the address information.
+        /// </summary>
+        /// <param name="address">The address.</param>
+        /// <returns></returns>
         public Address AddAddressInformation(Address address)
         {
             using (var context = new VservAccountingDBEntities())
@@ -259,6 +362,10 @@ namespace Vserv.Accounting.Data
 
         #region Miscellaneous
 
+        /// <summary>
+        /// Gets the address types.
+        /// </summary>
+        /// <returns></returns>
         public List<AddressType> GetAddressTypes()
         {
             using (var context = new VservAccountingDBEntities())
@@ -267,6 +374,10 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the departments.
+        /// </summary>
+        /// <returns></returns>
         public List<Department> GetDepartments()
         {
             using (var context = new VservAccountingDBEntities())
@@ -275,6 +386,10 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the office branches.
+        /// </summary>
+        /// <returns></returns>
         public List<OfficeBranch> GetOfficeBranches()
         {
             using (var context = new VservAccountingDBEntities())
@@ -283,6 +398,10 @@ namespace Vserv.Accounting.Data
             }
         }
 
+        /// <summary>
+        /// Gets the salutations.
+        /// </summary>
+        /// <returns></returns>
         public List<Salutation> GetSalutations()
         {
             using (var context = new VservAccountingDBEntities())
