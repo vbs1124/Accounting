@@ -23,7 +23,10 @@ namespace Vserv.Accounting.Web.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            return View();
+            HomeManager _homeManager = new HomeManager();
+            DashboardModel dashboardModel = new DashboardModel();
+            dashboardModel.EmployeeCount = _homeManager.GetEmployeeCount();
+            return View(dashboardModel);
         }
         #endregion
     }

@@ -4,6 +4,7 @@
 }
 @using (Html.BeginForm("add", "employee"))
 {
-    @Html.ValidationSummary(true,"Please fill the required fields.")
     @Html.Partial("_EmployeePartial")
 }
+
+@Html.Action("DesignationWindow", "Designation")

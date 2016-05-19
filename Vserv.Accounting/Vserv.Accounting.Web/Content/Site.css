@@ -1,5 +1,5 @@
 ﻿body {
-    background-color: #f8f8f8;
+    background-color: #F2F2F2;
     font-size: 14px;
 }
 
@@ -368,9 +368,9 @@ input[type="checkbox"].input-validation-error {
     border: 0 none;
 }
 
-.validation-summary-errors {
+/*.validation-summary-errors {
     color: #a94442;
-}
+}*/
 
 .validation-summary-valid {
     display: none;

@@ -22,8 +22,6 @@ namespace Vserv.Accounting.Data
 
         #region Public Methods
 
-        #region Employees
-
         /// <summary>
         /// Gets the employees.
         /// </summary>
@@ -181,236 +179,17 @@ namespace Vserv.Accounting.Data
             }
         }
 
-        #endregion Employees
-
-        #region Designations
-
         /// <summary>
-        /// Gets the designations.
+        /// Retrieves the Employee count.
         /// </summary>
         /// <returns></returns>
-        public List<Designation> GetDesignations()
+        public int GetEmployeeCount()
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Designations.ToList();
+                return context.Employees.Count();
             }
         }
-
-        /// <summary>
-        /// Adds the designation.
-        /// </summary>
-        /// <param name="designation">The designation.</param>
-        public void AddDesignation(Designation designation)
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                context.Designations.Add(designation);
-                context.SaveChanges();
-            }
-        }
-
-        /// <summary>
-        /// Updates the designation.
-        /// </summary>
-        /// <param name="designation">The designation.</param>
-        public void UpdateDesignation(Designation designation)
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                Designation existingDesignation = context.Designations.FirstOrDefault(desg => desg.DesignationId == designation.DesignationId);
-                if (existingDesignation.IsNotNull())
-                {
-                    context.Entry(existingDesignation).CurrentValues.SetValues(designation);
-                    context.SaveChanges();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets the designation.
-        /// </summary>
-        /// <param name="designationId">The designation identifier.</param>
-        /// <returns></returns>
-        public Designation GetDesignation(int designationId)
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                return context.Designations.FirstOrDefault(desg => desg.DesignationId == designationId);
-            }
-        }
-
-        /// <summary>
-        /// Determines whether [is designation exists] [the specified name].
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="designationId">The designation identifier.</param>
-        /// <returns></returns>
-        public Boolean IsDesignationExists(string name, int designationId)
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                return context.Designations.Any(desg => desg.DesignationId != designationId && desg.Name == name);
-            }
-        }
-
-        #endregion Designations
-
-        #region Address
-
-        /// <summary>
-        /// Gets the addresses.
-        /// </summary>
-        /// <param name="employeeId">The employee identifier.</param>
-        /// <returns></returns>
-        public List<Address> GetAddresses(int employeeId)
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                return null;
-                //var result = context.EmployeeAddresses.Where(condition => condition.EmployeeId == employeeId).ToList().Select(ss => ss.AddressId).ToList();
-                //return context.Addresses.Where(address => result.Contains(address.AddressId)).ToList();
-            }
-        }
-
-        /// <summary>
-        /// Gets the cities.
-        /// </summary>
-        /// <returns></returns>
-        public List<City> GetCities()
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                return context.Cities.ToList();
-            }
-        }
-
-        /// <summary>
-        /// Gets the cities.
-        /// </summary>
-        /// <param name="stateId">The state identifier.</param>
-        /// <param name="cityId">The city identifier.</param>
-        /// <returns></returns>
-        public List<City> GetCities(int stateId, int? cityId)
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                if (cityId.IsNotNull() && cityId.HasValue)
-                {
-                    return context.Cities.Where(city => city.CityId == cityId.Value).ToList();
-                }
-
-                return context.Cities.Where(city => city.StateId == stateId).ToList();
-            }
-        }
-
-        /// <summary>
-        /// Gets the states.
-        /// </summary>
-        /// <returns></returns>
-        public List<State> GetStates()
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                var result = context.States.ToList();
-                return result;
-            }
-        }
-
-        /// <summary>
-        /// Gets the state.
-        /// </summary>
-        /// <param name="stateId">The state identifier.</param>
-        /// <returns></returns>
-        public State GetState(int stateId)
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                return context.States.FirstOrDefault(state => state.StateId == stateId);
-            }
-        }
-
-        /// <summary>
-        /// Gets the zip codes.
-        /// </summary>
-        /// <param name="cityId">The city identifier.</param>
-        /// <returns></returns>
-        public List<ZipCode> GetZipCodes(int cityId)
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                return context.ZipCodes.Where(zipcode => zipcode.CityId == cityId).ToList();
-            }
-        }
-
-        /// <summary>
-        /// Adds the address information.
-        /// </summary>
-        /// <param name="address">The address.</param>
-        /// <returns></returns>
-        public Address AddAddressInformation(Address address)
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                context.Addresses.Add(address);
-                context.SaveChanges();
-                return address;
-            }
-        }
-
-        #endregion Address
-
-        #region Miscellaneous
-
-        /// <summary>
-        /// Gets the address types.
-        /// </summary>
-        /// <returns></returns>
-        public List<AddressType> GetAddressTypes()
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                return context.AddressTypes.ToList();
-            }
-        }
-
-        /// <summary>
-        /// Gets the departments.
-        /// </summary>
-        /// <returns></returns>
-        public List<Department> GetDepartments()
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                return context.Departments.ToList();
-            }
-        }
-
-        /// <summary>
-        /// Gets the office branches.
-        /// </summary>
-        /// <returns></returns>
-        public List<OfficeBranch> GetOfficeBranches()
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                return context.OfficeBranches.ToList();
-            }
-        }
-
-        /// <summary>
-        /// Gets the salutations.
-        /// </summary>
-        /// <returns></returns>
-        public List<Salutation> GetSalutations()
-        {
-            using (var context = new VservAccountingDBEntities())
-            {
-                return context.Salutations.ToList();
-            }
-        }
-
-        #endregion Miscellaneous
 
         #endregion Public Methods
 

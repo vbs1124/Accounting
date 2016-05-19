@@ -8,18 +8,30 @@
     <meta name="author" content="Vserv Business Solutions PVT LTD.">
     <title>@ViewBag.Title | Vserv Solutions</title>
     @Styles.Render("~/Styles/bootstrap")
+    @Styles.Render("~/Content/toastr")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/DataTables")
     @Styles.Render("~/Content/base")
     @Styles.Render("~/Content/base/font-awesome.min.css")
-
+    
     <!-- jQuery -->
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/toastr")
     @Scripts.Render("~/Scripts/moment")
     @Scripts.Render("~/bundles/bootstrap")
-</head>
 
+    <script type="text/javascript">
+    // singleton WorkCenter object
+    window.VservApp = {};
+
+    window.VservApp = new function () {
+        var self = this;
+        var rootPath = null;
+    }
+    VservApp.rootPath = '@Url.Content("~")';
+    </script>
+</head>
 <body>
     <div id="wrapper">
         <!-- Navigation -->
@@ -29,19 +41,21 @@
         </nav>
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 breadcrumb">
                     @Html.MvcSiteMap().SiteMapPath()
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">@ViewBag.Title</h1>
+                    <h3 class="page-header">@ViewBag.Title</h3>
                     @RenderBody()
                     @Scripts.Render("~/Scripts/base")
                     @Scripts.Render("~/Scripts/app")
+                   
                     @Scripts.Render("~/Scripts/DataTables")
-
+                    @Scripts.Render("~/bundles/jqueryval")
                     @Scripts.Render("~/Scripts/views/employee")
+                    @Scripts.Render("~/Scripts/views/designation")
                     @RenderSection("scripts", required: false)
                 </div>
                 <!-- /.col-lg-12 -->

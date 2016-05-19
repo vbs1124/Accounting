@@ -27,66 +27,67 @@ namespace Vserv.Accounting.Web.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
-            List<DesignationModel> designations = ConvertTo(_employeeManager.GetDesignations());
-            return View(designations);
-        }
-
-        /// <summary>
-        /// Adds this instance.
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Add()
-        {
+            //EmployeeManager _employeeManager = new EmployeeManager();
+            //List<DesignationModel> designations = ConvertTo(_employeeManager.GetDesignations());
             return View();
         }
 
-        /// <summary>
-        /// Adds the specified designation.
-        /// </summary>
-        /// <param name="designation">The designation.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult Add(DesignationModel designation)
-        {
-            if (ModelState.IsValid)
-            {
-                EmployeeManager _employeeManager = new EmployeeManager();
-                _employeeManager.AddDesignation(ConvertTo(designation), User.Identity.Name);
-                return RedirectToAction("Success", "Home", new { successMessage = "Designation added successfully." });
-            }
-
-            return View(designation);
-        }
-
-        /// <summary>
-        /// Edits the specified designation identifier.
-        /// </summary>
-        /// <param name="designationId">The designation identifier.</param>
-        /// <returns></returns>
-        public ActionResult Edit(int designationId)
+        [HttpGet]
+        public ActionResult GetDesignations()
         {
             EmployeeManager _employeeManager = new EmployeeManager();
-            Designation designation = _employeeManager.GetDesignation(designationId);
-            return View(ConvertTo(designation));
+            var designations = _employeeManager.GetDesignations();
+            var result = ConvertToSelectListItem(designations.Where(condition => condition.IsActive).ToList());
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>
-        /// Edits the specified designation.
-        /// </summary>
-        /// <param name="designation">The designation.</param>
-        /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(DesignationModel designation)
+        public ActionResult Add(string designationName)
         {
-            if (ModelState.IsValid)
+            EmployeeManager _employeeManager = new EmployeeManager();
+            Designation designation = new Data.Entity.Designation
             {
-                EmployeeManager _employeeManager = new EmployeeManager();
-                _employeeManager.UpdateDesignation(ConvertTo(designation), User.Identity.Name);
-                return RedirectToAction("Success", "Home", new { successMessage = "Designation updated successfully." });
+                //Code = "",
+                Name = designationName,
+                Description = designationName,
+                DisplayOrder = 0,
+                IsActive = true,
+                CreatedBy = User.Identity.Name,
+                CreatedDate = DateTime.Now,
+            };
+
+            _employeeManager.AddDesignation(designation, User.Identity.Name);
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(string designationName, int designationId)
+        {
+            EmployeeManager _employeeManager = new EmployeeManager();
+
+            var existinDesignation = _employeeManager.GetDesignation(designationId);
+            if (existinDesignation.IsNotNull() && !String.IsNullOrWhiteSpace(designationName.Trim()))
+            {
+                existinDesignation.Name = designationName;
+                _employeeManager.UpdateDesignation(existinDesignation, User.Identity.Name);
+                return Json(true, JsonRequestBehavior.AllowGet);
             }
 
-            return View(designation);
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult DesignationWindow()
+        {
+            EmployeeManager _employeeManager = new EmployeeManager();
+            var designations = _employeeManager.GetDesignations();
+
+            if (designations.IsNotNull())
+            {
+                ViewBag.Designations = ConvertTo(designations.Where(condition => condition.IsActive).ToList());
+            }
+
+            return PartialView("_DesignationWindow");
         }
 
         #endregion
@@ -137,32 +138,36 @@ namespace Vserv.Accounting.Web.Controllers
             };
         }
 
-        /// <summary>
-        /// Converts to.
-        /// </summary>
-        /// <param name="designations">The designations.</param>
-        /// <returns></returns>
-        private List<DesignationModel> ConvertTo(List<Designation> designations)
+        private List<SelectListItem> ConvertTo(List<Designation> designations)
         {
-            List<DesignationModel> designationModels = new List<DesignationModel>();
+            var result = new List<SelectListItem>();
 
             if (designations.IsNotNull())
             {
-                designations.ForEach(designation => designationModels.Add(new DesignationModel
+                designations.ForEach(item => result.Add(new SelectListItem
                 {
-                    DesignationId = designation.DesignationId,
-                    Code = designation.Code,
-                    Name = designation.Name,
-                    Description = designation.Description,
-                    DisplayOrder = designation.DisplayOrder,
-                    IsActive = designation.IsActive,
-                    CreatedBy = designation.CreatedBy,
-                    UpdatedBy = designation.UpdatedBy,
-                    CreatedDate = designation.CreatedDate,
-                    UpdatedDate = designation.UpdatedDate
+                    Text = item.Name,
+                    Value = item.DesignationId.ToString()
                 }));
             }
-            return designationModels;
+
+            return result;
+        }
+
+        private List<SelectListItem> ConvertToSelectListItem(List<Designation> designations)
+        {
+            var result = new List<SelectListItem>();
+
+            if (designations.IsNotNull())
+            {
+                designations.ForEach(item => result.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.DesignationId.ToString()
+                }));
+            }
+
+            return result;
         }
 
         #endregion

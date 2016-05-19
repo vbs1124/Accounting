@@ -70,35 +70,35 @@ namespace Vserv.Accounting.Web.Controllers
                 parentId = 2
             });
 
-            menu.Add(new Navbar
-            {
-                Id = 5,
-                nameOption = "Manage Designations",
-                imageClass = "fa fa-users fa-fw",
-                status = true,
-                isParent = true,
-                parentId = 0
-            });
-            menu.Add(new Navbar
-            {
-                Id = 6,
-                nameOption = "View Designations",
-                controller = "designation",
-                action = "index",
-                status = true,
-                isParent = false,
-                parentId = 5
-            });
-            menu.Add(new Navbar
-            {
-                Id = 7,
-                nameOption = "Add Designation",
-                controller = "designation",
-                action = "add",
-                status = true,
-                isParent = false,
-                parentId = 5
-            });
+            //menu.Add(new Navbar
+            //{
+            //    Id = 5,
+            //    nameOption = "Manage Designations",
+            //    imageClass = "fa fa-users fa-fw",
+            //    status = true,
+            //    isParent = true,
+            //    parentId = 0
+            //});
+            //menu.Add(new Navbar
+            //{
+            //    Id = 6,
+            //    nameOption = "View Designations",
+            //    controller = "designation",
+            //    action = "index",
+            //    status = true,
+            //    isParent = false,
+            //    parentId = 5
+            //});
+            //menu.Add(new Navbar
+            //{
+            //    Id = 7,
+            //    nameOption = "Add Designation",
+            //    controller = "designation",
+            //    action = "add",
+            //    status = true,
+            //    isParent = false,
+            //    parentId = 5
+            //});
 
             menu.Add(new Navbar
             {

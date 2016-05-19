@@ -7,7 +7,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         @Html.LabelFor(m => m.SalutationId, new { @class = "control-label" })
-                        @Html.DropDownListFor(m => m.SalutationId, new SelectList(Model.Salutations, "SalutationId", "Name"), new { @class = "form-control" })
+                        @Html.DropDownListFor(m => m.SalutationId, new SelectList(ViewBag.Salutations, "Value", "Text"), new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.SalutationId)
                     </div>
                     <div class="form-group">
@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.GenderId, new { @class = "control-label" })
-                        @Html.DropDownListFor(m => m.GenderId, new SelectList(Model.Genders, "Value", "Text"), new { @class = "form-control" })
+                        @Html.DropDownListFor(m => m.GenderId, new SelectList(ViewBag.Genders, "Value", "Text"), new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.GenderId)
                     </div>
                 </div>
@@ -54,22 +54,26 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
-                            @Html.ValidationMessageFor(m => m.BirthDay)
                         </div>
+                        @Html.ValidationMessageFor(m => m.BirthDay)
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.OfficeBranchId, new { @class = "control-label" })
-                        @Html.DropDownListFor(m => m.OfficeBranchId, new SelectList(Model.OfficeBranches, "OfficeBranchId", "Name"), new { @class = "form-control" })
+                        @Html.DropDownListFor(m => m.OfficeBranchId, new SelectList(ViewBag.OfficeBranches, "Value", "Text"), new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.OfficeBranchId)
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.DesignationId, new { @class = "control-label" })
-                        @Html.DropDownListFor(m => m.DesignationId, new SelectList(Model.Designations, "DesignationId", "Name"), new { @class = "form-control" })
+                        <a href="#"><i class="fa fa-plus-circle" title="Add Designation" data-toggle="modal" data-target="#modal-add-designation" aria-hidden="true"></i></a>                        
+                        @Html.DropDownListFor(m => m.DesignationId, new SelectList(ViewBag.Designations, "Value", "Text"), new { @class = "form-control", id = "cmbDesignation" })
                         @Html.ValidationMessageFor(m => m.DesignationId)
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.VBS_Id, new { @class = "control-label required-field" })
-                        @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @maxlength = "7" })
+                        <div class="input-group">
+                            <span class="input-group-addon">vbs</span>
+                            @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @maxlength = "4" })
+                        </div>
                         @Html.ValidationMessageFor(m => m.VBS_Id)
                     </div>
                 </div>
@@ -96,8 +100,8 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
-                            @Html.ValidationMessageFor(m => m.JoiningDate)
                         </div>
+                        @Html.ValidationMessageFor(m => m.JoiningDate)
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.RelievingDate, new { @class = "control-label" })
@@ -111,8 +115,11 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.IsActive, new { @class = "control-label" })
-                        @Html.CheckBoxFor(m => m.IsActive)
-                        @Html.ValidationMessageFor(m => m.IsActive)
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.IsActive)
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -147,7 +154,7 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.PermanentAddress.StateId, new { @class = "control-label" })
-                        @Html.DropDownListFor(m => m.PermanentAddress.StateId, new SelectList(Model.States, "StateId", "Name"), new { @class = "form-control" })
+                        @Html.DropDownListFor(m => m.PermanentAddress.StateId, new SelectList(ViewBag.States, "Value", "Text"), new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.PermanentAddress.StateId)
                     </div>
                 </div>
@@ -193,7 +200,7 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.MailingAddress.StateId, new { @class = "control-label" })
-                        @Html.DropDownListFor(m => m.MailingAddress.StateId, new SelectList(Model.States, "StateId", "Name"), new { @class = "form-control" })
+                        @Html.DropDownListFor(m => m.MailingAddress.StateId, new SelectList(ViewBag.States, "Value", "Text"), new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.MailingAddress.StateId)
                     </div>
                 </div>

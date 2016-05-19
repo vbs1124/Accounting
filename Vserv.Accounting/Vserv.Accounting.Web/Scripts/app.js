@@ -1,11 +1,72 @@
-﻿$(function () {
-
+﻿/// <reference path="toastr.js" />
+$(function () {
     $('#side-menu').metisMenu();
     $('#dataTables-employees').DataTable({
         responsive: true,
         select: true,
         processing: true
     });
+    (function (vbs) {
+        var viewModelHelper = function () {
+            var self = this;
+            self.isLoading = function (isLoaderEnabled) {
+
+            }
+            self.apiGet = function (uri, data, success, failure, always) {
+                self.isLoading(true);
+                self.errorMessage = "";
+                $.get(WorkCenter.rootPath + uri, data)
+                    .done(success)
+                    .fail(function (result) {
+                        if (failure == null) {
+                            if (result.status != 400) {
+                                self.errorMessage = result.status + ':' + result.statusText + ' - ' + result.responseText;
+                            }
+                            else {
+                                self.errorMessage = JSON.parse(result.responseText);
+                            }
+                        }
+                        else
+                            failure(result);
+                    })
+                    .always(function () {
+                        if (always == null) {
+                            self.isLoading(true);
+                        }
+                        else {
+                            always();
+                        }
+                    });
+            };
+
+            self.apiPost = function (uri, data, success, failure, always) {
+                self.isLoading(true);
+                $.post(WorkCenter.rootPath + uri, data)
+                    .done(success)
+                    .fail(function (result) {
+                        if (failure == null) {
+                            if (result.status != 400)
+                                self.errorMessage = result.status + ':' + result.statusText + ' - ' + result.responseText;
+                            else
+                                self.errorMessage = JSON.parse(result.responseText);
+                        }
+                        else
+                            failure(result);
+                    })
+                    .always(function () {
+                        if (always == null)
+                            self.isLoading(false);
+                        else
+                            always();
+                    });
+            };
+        }
+
+        vbs.viewModelHelper = viewModelHelper;
+    }(window.VservApp));
+
+    //toastr.options.timeOut = 500; // 1.5s
+    toastr.options = { "positionClass": "toast-top-full-width" };
 });
 
 //Loads the correct sidebar on window load,

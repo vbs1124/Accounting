@@ -66,8 +66,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.AddAddressInformation(address);
+                IAddressRepository _repository = _dataRepositoryFactory.GetDataRepository<IAddressRepository>();
+                return _repository.AddAddressInformation(address);
             });
         }
 
@@ -134,21 +134,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetAddressTypes();
-            });
-        }
-
-        /// <summary>
-        /// Gets the departments.
-        /// </summary>
-        /// <returns></returns>
-        public List<Department> GetDepartments()
-        {
-            return ExecuteFaultHandledOperation(() =>
-            {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetDepartments();
+                IAddressTypeRepository _repository = _dataRepositoryFactory.GetDataRepository<IAddressTypeRepository>();
+                return _repository.GetAddressTypes();
             });
         }
 
@@ -160,8 +147,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetOfficeBranches();
+                IOfficeBranchRepository _repository = _dataRepositoryFactory.GetDataRepository<IOfficeBranchRepository>();
+                return _repository.GetOfficeBranches();
             });
         }
 
@@ -173,8 +160,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetSalutations();
+                var _repository = _dataRepositoryFactory.GetDataRepository<ISalutationRepository>();
+                return _repository.GetSalutations();
             });
         }
 
@@ -223,6 +210,15 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
+        public int GetEmployeeCount()
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetEmployeeCount();
+            });
+        }
+
         #region Designations
 
         /// <summary>
@@ -233,8 +229,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetDesignations();
+                var _repository = _dataRepositoryFactory.GetDataRepository<IDesignationRepository>();
+                return _repository.GetDesignations();
             });
         }
 
@@ -247,8 +243,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetDesignation(designationId);
+                var _repository = _dataRepositoryFactory.GetDataRepository<IDesignationRepository>();
+                return _repository.GetDesignation(designationId);
             });
         }
 
@@ -265,6 +261,7 @@ namespace Vserv.Accounting.Business.Managers
                 designation.CreatedBy = userName;
                 designation.CreatedDate = DateTime.Now;
                 designation.DisplayOrder = 0;
+                designation.IsActive = true; // By default mark the designation as active.
                 _designationRepository.Add(designation, userName);
             });
         }
@@ -295,8 +292,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.IsDesignationExists(name, designationId);
+                var _repository = _dataRepositoryFactory.GetDataRepository<IDesignationRepository>();
+                return _repository.IsDesignationExists(name, designationId);
             });
         }
 
@@ -313,8 +310,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetAddresses(employeeId);
+                var _repository = _dataRepositoryFactory.GetDataRepository<IAddressRepository>();
+                return _repository.GetAddresses(employeeId);
             });
         }
 
@@ -326,8 +323,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetCities();
+                var _repository = _dataRepositoryFactory.GetDataRepository<ICityRepository>();
+                return _repository.GetCities();
             });
         }
 
@@ -341,8 +338,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetCities(stateId, cityId);
+                var _repository = _dataRepositoryFactory.GetDataRepository<ICityRepository>();
+                return _repository.GetCities(stateId, cityId);
             });
         }
 
@@ -354,8 +351,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetStates();
+                var _repository = _dataRepositoryFactory.GetDataRepository<IStateRepository>();
+                return _repository.GetStates();
             });
         }
 
@@ -368,8 +365,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetState(stateId);
+                var _repository = _dataRepositoryFactory.GetDataRepository<IStateRepository>();
+                return _repository.GetState(stateId);
             });
         }
 
@@ -382,8 +379,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetZipCodes(cityId);
+                var _repository = _dataRepositoryFactory.GetDataRepository<IZipCodeRepository>();
+                return _repository.GetZipCodes(cityId);
             });
         }
 

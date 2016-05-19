@@ -1,6 +1,8 @@
-﻿using System;
+﻿#region Namespaces
+using System;
 using Vserv.Accounting.Data.Entity;
-using Vserv.Common.Contracts;
+using Vserv.Common.Contracts; 
+#endregion
 
 namespace Vserv.Accounting.Data
 {
@@ -8,7 +10,7 @@ namespace Vserv.Accounting.Data
     /// 
     /// </summary>
     /// <seealso cref="Vserv.Common.Contracts.IDataRepository{Vserv.Accounting.Data.Entity.UserProfile}" />
-    public interface IUserProfileRepository : IDataRepository<UserProfile> //: IDisposable
+    public interface IUserProfileRepository : IDataRepository<UserProfile>
     {
         /// <summary>
         /// Gets the user profile.

@@ -1,7 +1,9 @@
-﻿using System;
+﻿#region Namespaces
+using System;
 using System.Collections.Generic;
 using Vserv.Accounting.Data.Entity;
-using Vserv.Common.Contracts;
+using Vserv.Common.Contracts; 
+#endregion
 
 namespace Vserv.Accounting.Data
 {
@@ -12,8 +14,6 @@ namespace Vserv.Accounting.Data
     public interface IDesignationRepository : IDataRepository<Designation>
     {
         #region Methods
-
-        #region Designations
 
         /// <summary>
         /// Gets the designations.
@@ -44,8 +44,6 @@ namespace Vserv.Accounting.Data
         /// <returns></returns>
         Boolean IsDesignationExists(string name, int designationId);
 
-        #endregion Designations
-
-        #endregion
+        #endregion Methods
     }
 }

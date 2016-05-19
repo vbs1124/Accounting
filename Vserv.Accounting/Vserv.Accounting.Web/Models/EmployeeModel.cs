@@ -165,7 +165,8 @@ namespace Vserv.Accounting.Web.Models
         /// </value>
         [Display(Name = "Employee Id")]
         [Required(ErrorMessage = "Employee Id is required.")]
-        [ValidEmployeeId]
+        [RegularExpression("^[1-9]*$", ErrorMessage = "Employee Id should be numeric.")]
+        [StringLength(4, MinimumLength = 4, ErrorMessage = "Employee Id should be 4 digits.")]
         public string VBS_Id { get; set; }
 
         /// <summary>
@@ -223,7 +224,7 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         ///   <c>true</c> if this instance is active; otherwise, <c>false</c>.
         /// </value>
-        [Display(Name = "Active")]
+        [Display(Name = "Active Employee?")]
         public bool IsActive { get; set; }
 
         /// <summary>
@@ -269,6 +270,7 @@ namespace Vserv.Accounting.Web.Models
         /// The designation.
         /// </value>
         public virtual DesignationModel Designation { get; set; }
+
         /// <summary>
         /// Gets or sets the office branch.
         /// </summary>
@@ -276,6 +278,7 @@ namespace Vserv.Accounting.Web.Models
         /// The office branch.
         /// </value>
         public virtual OfficeBranchModel OfficeBranch { get; set; }
+
         /// <summary>
         /// Gets or sets the salutation.
         /// </summary>
@@ -294,20 +297,12 @@ namespace Vserv.Accounting.Web.Models
         public List<AddressTypeModel> AddressTypes { get; set; }
 
         /// <summary>
-        /// Gets or sets the departments.
-        /// </summary>
-        /// <value>
-        /// The departments.
-        /// </value>
-        public List<DepartmentModel> Departments { get; set; }
-
-        /// <summary>
         /// Gets or sets the designations.
         /// </summary>
         /// <value>
         /// The designations.
         /// </value>
-        public List<DesignationModel> Designations { get; set; }
+        public List<SelectListItem> Designations { get; set; }
 
         /// <summary>
         /// Gets or sets the office branches.
@@ -315,7 +310,7 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The office branches.
         /// </value>
-        public List<OfficeBranchModel> OfficeBranches { get; set; }
+        public List<SelectListItem> OfficeBranches { get; set; }
 
         /// <summary>
         /// Gets or sets the salutations.
@@ -323,7 +318,7 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The salutations.
         /// </value>
-        public List<SalutationModel> Salutations { get; set; }
+        public List<SelectListItem> Salutations { get; set; }
 
         /// <summary>
         /// Gets or sets the genders.
@@ -339,7 +334,7 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The states.
         /// </value>
-        public List<StateModel> States { get; set; }
+        public List<SelectListItem> States { get; set; }
 
         /// <summary>
         /// Gets or sets the cities.

@@ -36,7 +36,8 @@ namespace Vserv.Accounting.Web
 
             bundles.Add(new ScriptBundle("~/Scripts/toastr").Include("~/Scripts/toastr.js"));
             bundles.Add(new ScriptBundle("~/Scripts/moment").Include("~/Scripts/moment.js"));
-            bundles.Add(new ScriptBundle("~/Scripts/views/employee").Include("~/Scripts/Views/employee.add.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/views/employee").Include("~/Scripts/Views/employee.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/views/designation").Include("~/Scripts/Views/designation.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/DataTables")
                 .Include("~/Scripts/DataTables/jquery.dataTables.js")

@@ -9,6 +9,7 @@ using Vserv.Accounting.Common.Enums;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Web.Models;
 using Vserv.Common.Extensions;
+using System.Collections;
 #endregion
 
 namespace Vserv.Accounting.Web.Controllers
@@ -50,7 +51,7 @@ namespace Vserv.Accounting.Web.Controllers
         {
             EmployeeManager _employeeManager = new EmployeeManager();
             EmployeeModel employeeModel = new EmployeeModel();
-            SetDropdownValues(employeeModel);
+            SetDropdownValues();
             return View(employeeModel);
         }
 
@@ -74,7 +75,7 @@ namespace Vserv.Accounting.Web.Controllers
                 return RedirectToAction("Success", "Home", new { successMessage = "Employee added successfully." });
             }
             ModelState.AddModelError("emp_errors", "Please fill the required fields...");
-            SetDropdownValues(employeeModel);
+            SetDropdownValues();
             return View(employeeModel);
         }
 
@@ -88,7 +89,7 @@ namespace Vserv.Accounting.Web.Controllers
             EmployeeManager _employeeManager = new EmployeeManager();
             var employee = _employeeManager.GetEmployee(employeeId);
             EmployeeModel employeeModel = ConvertTo(employee);
-            SetDropdownValues(employeeModel);
+            SetDropdownValues();
             return View(employeeModel);
         }
 
@@ -111,7 +112,7 @@ namespace Vserv.Accounting.Web.Controllers
                 return RedirectToAction("Success", "Home", new { successMessage = "Employee updated successfully." });
             }
 
-            SetDropdownValues(employeeModel);
+            SetDropdownValues();
             return View(employeeModel);
         }
 
@@ -154,6 +155,95 @@ namespace Vserv.Accounting.Web.Controllers
             return View();
         }
 
+        #region dropdownlist
+
+        /// <summary>
+        /// Get a list of designations.
+        /// </summary>
+        /// <returns></returns>
+        public List<DesignationModel> GetDesignations()
+        {
+            EmployeeManager _employeeManager = new EmployeeManager();
+            var designations = _employeeManager.GetDesignations();
+            List<DesignationModel> designationModels = new List<DesignationModel>();
+
+            if (designations.IsNotNull())
+            {
+                designationModels = ConvertToDesignationModel(designations.Where(condition => condition.IsActive).ToList());
+            }
+
+            return designationModels;
+        }
+
+        private List<DesignationModel> ConvertToDesignationModel(List<Designation> list)
+        {
+            List<DesignationModel> designationModels = new List<DesignationModel>();
+
+            list.ForEach(desg => designationModels.Add(new DesignationModel
+            {
+                DesignationId = desg.DesignationId,
+                Code = desg.Code,
+                Name = desg.Name,
+                Description = desg.Description,
+                DisplayOrder = desg.DisplayOrder,
+                IsActive = desg.IsActive,
+                CreatedBy = desg.CreatedBy,
+                UpdatedBy = desg.UpdatedBy,
+                CreatedDate = desg.CreatedDate,
+                UpdatedDate = desg.UpdatedDate
+            }));
+
+            return designationModels;
+        }
+
+        public JsonResult GetOfficeBranches()
+        {
+            EmployeeManager _employeeManager = new EmployeeManager();
+            var officeBranches = _employeeManager.GetOfficeBranches();
+            IEnumerable<SelectListItem> officeBranchesSelectListItems = null;
+
+            if (officeBranches.IsNotNull())
+            {
+                officeBranchesSelectListItems = ConvertTo(officeBranches.Where(condition => condition.IsActive).ToList());
+            }
+
+            return Json(new SelectList(officeBranchesSelectListItems, "Value", "Text", "1"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetSalutations()
+        {
+            EmployeeManager _employeeManager = new EmployeeManager();
+            var officeBranches = _employeeManager.GetSalutations();
+            IEnumerable<SelectListItem> officeBranchesSelectListItems = null;
+
+            var salutations = _employeeManager.GetSalutations();
+
+            if (salutations.IsNotNull())
+            {
+                officeBranchesSelectListItems = ConvertTo(salutations.Where(condition => condition.IsActive).ToList());
+            }
+
+            return Json(new SelectList(officeBranchesSelectListItems, "Value", "Text", "1"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetStates()
+        {
+            EmployeeManager _employeeManager = new EmployeeManager();
+            var officeBranches = _employeeManager.GetSalutations();
+            IEnumerable<SelectListItem> statesSelectListItems = null;
+
+            var states = _employeeManager.GetStates();
+
+            if (states.IsNotNull())
+            {
+                statesSelectListItems = ConvertTo(states.Where(condition => condition.IsActive).ToList());
+            }
+
+            return Json(new SelectList(statesSelectListItems, "Value", "Text", "1"), JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #endregion
 
         #region Private Methods
@@ -195,9 +285,6 @@ namespace Vserv.Accounting.Web.Controllers
                     UpdatedBy = city.UpdatedBy,
                     CreatedDate = city.CreatedDate,
                     UpdatedDate = city.UpdatedDate,
-                    //Addresses = item.XXXXX,
-                    //State = item.XXXXX,
-                    //ZipCodes = item.XXXXX
                 }));
             }
 
@@ -209,23 +296,15 @@ namespace Vserv.Accounting.Web.Controllers
         /// </summary>
         /// <param name="states">The states.</param>
         /// <returns></returns>
-        private List<StateModel> ConvertTo(List<State> states)
+        private List<SelectListItem> ConvertTo(List<State> states)
         {
-            List<StateModel> stateModelList = new List<StateModel>();
+            List<SelectListItem> stateModelList = new List<SelectListItem>();
             if (states.IsNotNull())
             {
-                states.ForEach(item => stateModelList.Add(new StateModel
+                states.ForEach(item => stateModelList.Add(new SelectListItem
                 {
-                    StateId = item.StateId,
-                    Code = item.Code,
-                    Name = item.Name,
-                    Description = item.Description,
-                    DisplayOrder = item.DisplayOrder,
-                    IsActive = item.IsActive,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedBy = item.UpdatedBy,
-                    CreatedDate = item.CreatedDate,
-                    UpdatedDate = item.UpdatedDate,
+                    Text = item.Name,
+                    Value = item.StateId.ToString(),
                 }));
             }
 
@@ -237,24 +316,16 @@ namespace Vserv.Accounting.Web.Controllers
         /// </summary>
         /// <param name="salutations">The salutations.</param>
         /// <returns></returns>
-        private List<SalutationModel> ConvertTo(List<Salutation> salutations)
+        private List<SelectListItem> ConvertTo(List<Salutation> salutations)
         {
-            var result = new List<SalutationModel>();
+            var result = new List<SelectListItem>();
 
             if (salutations.IsNotNull())
             {
-                salutations.ForEach(item => result.Add(new SalutationModel
+                salutations.ForEach(item => result.Add(new SelectListItem
                 {
-                    SalutationId = item.SalutationId,
-                    Code = item.Code,
-                    Name = item.Name,
-                    Description = item.Description,
-                    DisplayOrder = item.DisplayOrder,
-                    IsActive = item.IsActive,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedBy = item.UpdatedBy,
-                    CreatedDate = item.CreatedDate,
-                    UpdatedDate = item.UpdatedDate,
+                    Text = item.Name,
+                    Value = item.SalutationId.ToString(),
                 }));
             }
 
@@ -266,53 +337,16 @@ namespace Vserv.Accounting.Web.Controllers
         /// </summary>
         /// <param name="officeBranches">The office branches.</param>
         /// <returns></returns>
-        private List<OfficeBranchModel> ConvertTo(List<OfficeBranch> officeBranches)
+        private List<SelectListItem> ConvertTo(List<OfficeBranch> officeBranches)
         {
-            var result = new List<OfficeBranchModel>();
+            var result = new List<SelectListItem>();
 
             if (officeBranches.IsNotNull())
             {
-                officeBranches.ForEach(item => result.Add(new OfficeBranchModel
+                officeBranches.ForEach(item => result.Add(new SelectListItem
                 {
-                    OfficeBranchId = item.OfficeBranchId,
-                    Code = item.Code,
-                    Name = item.Name,
-                    Description = item.Description,
-                    DisplayOrder = item.DisplayOrder,
-                    IsActive = item.IsActive,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedBy = item.UpdatedBy,
-                    CreatedDate = item.CreatedDate,
-                    UpdatedDate = item.UpdatedDate
-                }));
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Converts to.
-        /// </summary>
-        /// <param name="designations">The designations.</param>
-        /// <returns></returns>
-        private List<DesignationModel> ConvertTo(List<Designation> designations)
-        {
-            var result = new List<DesignationModel>();
-
-            if (designations.IsNotNull())
-            {
-                designations.ForEach(item => result.Add(new DesignationModel
-                {
-                    DesignationId = item.DesignationId,
-                    Code = item.Code,
-                    Name = item.Name,
-                    Description = item.Description,
-                    DisplayOrder = item.DisplayOrder,
-                    IsActive = item.IsActive,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedBy = item.UpdatedBy,
-                    CreatedDate = item.CreatedDate,
-                    UpdatedDate = item.UpdatedDate
+                    Text = item.Name,
+                    Value = item.OfficeBranchId.ToString(),
                 }));
             }
 
@@ -459,7 +493,7 @@ namespace Vserv.Accounting.Web.Controllers
                 BirthDay = employeeModel.BirthDay.IsNotNull() && employeeModel.BirthDay.HasValue ? employeeModel.BirthDay.Value : DateTime.Now,
                 JoiningDate = employeeModel.JoiningDate.IsNotNull() && employeeModel.JoiningDate.HasValue ? employeeModel.JoiningDate.Value : DateTime.Now,
                 RelievingDate = employeeModel.RelievingDate,
-                VBS_Id = employeeModel.VBS_Id,
+                VBS_Id = String.Format("vbs{0}", employeeModel.VBS_Id),
                 DesignationId = employeeModel.DesignationId.Value,
                 SalutationId = employeeModel.SalutationId.Value,
                 GenderId = employeeModel.GenderId.Value,
@@ -477,18 +511,38 @@ namespace Vserv.Accounting.Web.Controllers
         /// Sets the dropdown values.
         /// </summary>
         /// <param name="employeeModel">The employee model.</param>
-        private void SetDropdownValues(EmployeeModel employeeModel)
+        private void SetDropdownValues()
         {
             EmployeeManager _employeeManager = new EmployeeManager();
 
-            //employeeModel.AddressTypes = ConvertTo(_employeeManager.GetAddressTypes());
-            employeeModel.Departments = ConvertTo(_employeeManager.GetDepartments().Where(condition => condition.IsActive).ToList());
-            employeeModel.Designations = ConvertTo(_employeeManager.GetDesignations().Where(condition => condition.IsActive).ToList());
-            employeeModel.OfficeBranches = ConvertTo(_employeeManager.GetOfficeBranches().Where(condition => condition.IsActive).ToList());
-            employeeModel.Salutations = ConvertTo(_employeeManager.GetSalutations().Where(condition => condition.IsActive).ToList());
-            employeeModel.Genders = GetGenders();
-            employeeModel.States = ConvertTo(_employeeManager.GetStates().Where(condition => condition.IsActive).ToList());
-            //employeeModel.Cities = ConvertTo(_employeeManager.GetCities());
+            ViewBag.Genders = GetGenders();
+
+            var designations = _employeeManager.GetDesignations();
+
+            if (designations.IsNotNull())
+            {
+                ViewBag.Designations = ConvertTo(designations.Where(condition => condition.IsActive).ToList());
+            }
+
+            var officeBranches = _employeeManager.GetOfficeBranches();
+
+            if (officeBranches.IsNotNull())
+            {
+                ViewBag.OfficeBranches = ConvertTo(officeBranches.Where(condition => condition.IsActive).ToList());
+            }
+            var salutations = _employeeManager.GetSalutations();
+
+            if (salutations.IsNotNull())
+            {
+                ViewBag.Salutations = ConvertTo(salutations.Where(condition => condition.IsActive).ToList());
+            }
+
+            var states = _employeeManager.GetStates();
+
+            if (states.IsNotNull())
+            {
+                ViewBag.States = ConvertTo(states.Where(condition => condition.IsActive).ToList());
+            }
         }
 
         /// <summary>
@@ -566,7 +620,7 @@ namespace Vserv.Accounting.Web.Controllers
                 BirthDay = employee.BirthDay,
                 JoiningDate = employee.JoiningDate,
                 RelievingDate = employee.RelievingDate,
-                VBS_Id = employee.VBS_Id,
+                VBS_Id = employee.VBS_Id.Replace("vbs", ""),
                 DesignationId = employee.DesignationId,
                 SalutationId = employee.SalutationId,
                 GenderId = employee.GenderId,
@@ -579,6 +633,22 @@ namespace Vserv.Accounting.Web.Controllers
                 PermanentAddress = permanentAddress,
                 MailingAddress = mailingAddress
             };
+        }
+
+        private List<SelectListItem> ConvertTo(List<Designation> designations)
+        {
+            var result = new List<SelectListItem>();
+
+            if (designations.IsNotNull())
+            {
+                designations.ForEach(item => result.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.DesignationId.ToString()
+                }));
+            }
+
+            return result;
         }
 
         #endregion Private Methods
