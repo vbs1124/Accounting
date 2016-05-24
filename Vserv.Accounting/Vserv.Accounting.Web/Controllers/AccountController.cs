@@ -1,5 +1,6 @@
 ﻿#region Namespaces
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Security;
 using Vserv.Accounting.Business.Managers;
@@ -7,6 +8,10 @@ using Vserv.Accounting.Core.Services;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Web.Models;
 using WebMatrix.WebData;
+using System.Linq;
+using Vserv.Accounting.Common;
+using Vserv.Common.Extensions;
+
 #endregion
 
 namespace Vserv.Accounting.Web.Controllers
@@ -86,6 +91,7 @@ namespace Vserv.Accounting.Web.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            SetSecurityQuestions();
             return View();
         }
 
@@ -116,10 +122,19 @@ namespace Vserv.Accounting.Web.Controllers
                 }
             }
 
+            SetSecurityQuestions();
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
+        private void SetSecurityQuestions()
+        {
+            AccountManager _manager = new AccountManager();
+            List<SecurityQuestion> securityQuestions = _manager.GetSecurityQuestions();
+            ViewBag.SecurityQuestionCollection1 = securityQuestions.Where(question => question.CollectionId == CommonConstants.INT_ONE);
+            ViewBag.SecurityQuestionCollection2 = securityQuestions.Where(question => question.CollectionId == CommonConstants.INT_TWO);
+            ViewBag.SecurityQuestionCollection3 = securityQuestions.Where(question => question.CollectionId == CommonConstants.INT_THREE);
+        }
         #endregion Register
 
         #region Change Password
@@ -185,7 +200,118 @@ namespace Vserv.Accounting.Web.Controllers
 
         #endregion
 
+        #region Forgot Password
+
+        [HttpGet]
+        public ActionResult ForgotPassword()
+        {
+            ForgotPasswordModel forgotPasswordModel = new ForgotPasswordModel();
+            return View(forgotPasswordModel);
+        }
+
+        [HttpPost]
+        public ActionResult ForgotPassword(ForgotPasswordModel forgotPasswordModel)
+        {
+            // Fetch Security Quesiton once user enters a valid username.
+            if (ModelState.IsValidField("UserName") && String.IsNullOrWhiteSpace(forgotPasswordModel.SecurityQuestion))
+            {
+                AccountManager _manager = new AccountManager();
+                UserSecurityQuestion randomSecurityQuestion = _manager.GetRandomSecurityQuestion(forgotPasswordModel.UserName);
+
+                if (randomSecurityQuestion.IsNotNull() && randomSecurityQuestion.SecurityQuestion.IsNotNull())
+                {
+                    forgotPasswordModel.SecurityQuestion = randomSecurityQuestion.SecurityQuestion.Question;
+                    forgotPasswordModel.SecurityQuestionId = randomSecurityQuestion.SecurityQuestionId;
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                AccountManager _manager = new AccountManager();
+                forgotPasswordModel.UserName = forgotPasswordModel.UserName.Trim().ToLower();
+                forgotPasswordModel.EmailAddress = forgotPasswordModel.EmailAddress.Trim().ToLower();
+
+                bool isRegisteredUser = _manager.IsRegisteredUser(ConvertTo(forgotPasswordModel));
+                if (isRegisteredUser)
+                {
+                    UserProfileModel userProfileModel = new UserProfileModel
+                    {
+                        UserName = forgotPasswordModel.UserName
+                    };
+
+                    return RedirectToAction("ResetPassword", userProfileModel);
+                }
+                else
+                {
+                    ModelState.AddModelError("UserRecoveryFailure", "No account found satisfying provided details.");
+                }
+            }
+
+            return View(forgotPasswordModel);
+        }
+
+        public ActionResult ResetPassword(UserProfileModel userProfileModel)
+        {
+            AccountManager _accountManager = new Business.Managers.AccountManager();
+            UserProfile userProfile = _accountManager.GetUserProfile(userProfileModel.UserName);
+            var membership = this.usersService.GetMembership(userProfile.UserId);
+            if (membership == null)
+            {
+                return RedirectToAction("BadLink");
+            }
+
+            // passwords
+            if (String.IsNullOrEmpty(userProfileModel.NewPassword))
+            {
+                ModelState.AddModelError("newPassword", "New Password is required.");
+                return View();
+            }
+            if (userProfileModel.NewPassword.Length < 4)
+            {
+                ModelState.AddModelError("newPassword", "New Password is too short.");
+                return View();
+            }
+            if (String.IsNullOrEmpty(userProfileModel.ConfirmPassword))
+            {
+                ModelState.AddModelError("confirmPassword", "Confirm password is required.");
+                return View();
+            }
+            if (userProfileModel.NewPassword != userProfileModel.ConfirmPassword)
+            {
+                ModelState.AddModelError("confirmPassword", "Passwords are mismatched.");
+                return View();
+            }
+
+            try
+            {
+                this.usersService.ChangePassword(membership, userProfileModel.NewPassword);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("_FORM", "Error is occurred. " + ex.Message);
+            }
+
+            return RedirectToAction("Success", "Home", new { successMessage = "Your password has been changed successfully." });
+        }
+
+        [NonAction]
+        private ForgotPassword ConvertTo(ForgotPasswordModel forgotPasswordModel)
+        {
+            return new ForgotPassword
+            {
+                UserName = forgotPasswordModel.UserName,
+                EmailAddress = forgotPasswordModel.EmailAddress,
+                SecurityQuestion = forgotPasswordModel.SecurityQuestion,
+                SecurityQuestionAnswer = forgotPasswordModel.SecurityQuestionAnswer,
+                MobileNumber = forgotPasswordModel.MobileNumber,
+                SecurityQuestionId = forgotPasswordModel.SecurityQuestionId,
+            };
+        }
+
+        #endregion Forgot Password
+
         #region User Profile
+
         /// <summary>
         /// Users the profile.
         /// </summary>
@@ -196,6 +322,13 @@ namespace Vserv.Accounting.Web.Controllers
             UserProfile userProfile = _accountManager.GetUserProfile(User.Identity.Name);
             UserProfileModel userProfileModel = ConvertTo(userProfile);
             return View("profile", userProfileModel);
+        }
+
+        public ActionResult SecurityQuestions()
+        {
+            AccountManager _accountManager = new AccountManager();
+            var securityQuestions = _accountManager.GetSecurityQuestions();
+            return View(securityQuestions);
         }
 
         #endregion
@@ -297,6 +430,8 @@ namespace Vserv.Accounting.Web.Controllers
                 LastActivityDate = userProfile.LastActivityDate,
             };
         }
+
+
 
         #endregion
     }

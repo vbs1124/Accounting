@@ -16,8 +16,11 @@ namespace Vserv.Accounting.Data.Entity
     {
         public State()
         {
-            this.Addresses = new HashSet<Address>();
             this.Cities = new HashSet<City>();
+            this.Employees = new HashSet<Employee>();
+            this.Employees1 = new HashSet<Employee>();
+            this.EmployeeArchives = new HashSet<EmployeeArchive>();
+            this.EmployeeArchives1 = new HashSet<EmployeeArchive>();
             this.ZipCodes = new HashSet<ZipCode>();
         }
     
@@ -32,8 +35,11 @@ namespace Vserv.Accounting.Data.Entity
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
-        public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection<City> Cities { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Employee> Employees1 { get; set; }
+        public virtual ICollection<EmployeeArchive> EmployeeArchives { get; set; }
+        public virtual ICollection<EmployeeArchive> EmployeeArchives1 { get; set; }
         public virtual ICollection<ZipCode> ZipCodes { get; set; }
     }
 }

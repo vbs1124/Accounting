@@ -5,29 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="VservAccountingDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="AddressId" />
-          </Key>
-          <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Address1" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="Address2" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="CountryId" Type="int" />
-          <Property Name="StateId" Type="int" />
-          <Property Name="CityId" Type="int" />
-          <Property Name="ZipCodeId" Type="int" />
-          <Property Name="City" Type="varchar" MaxLength="250" />
-          <Property Name="ZipCode" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Latitude" Type="decimal" Precision="16" Scale="13" />
-          <Property Name="Longitude" Type="decimal" Precision="16" Scale="13" />
-          <Property Name="IsCommunicationAddress" Type="bit" Nullable="false" />
-          <Property Name="AddressTypeId" Type="int" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedDate" Type="datetime" />
-        </EntityType>
         <EntityType Name="AddressType">
           <Key>
             <PropertyRef Name="AddressTypeId" />
@@ -70,6 +47,19 @@
           <Property Name="Type" Type="varchar" MaxLength="256" />
           <Property Name="Username" Type="varchar" MaxLength="100" />
           <Property Name="UTCDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bank">
+          <Key>
+            <PropertyRef Name="BankId" />
+          </Key>
+          <Property Name="BankId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -128,37 +118,101 @@
             <PropertyRef Name="EmployeeId" />
           </Key>
           <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="250" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="250" />
+          <Property Name="LastName" Type="varchar" MaxLength="250" />
+          <Property Name="FatherName" Type="varchar" MaxLength="250" />
+          <Property Name="MotherName" Type="varchar" MaxLength="250" />
+          <Property Name="PermanentAccountNumber" Type="varchar" MaxLength="20" />
+          <Property Name="UniversalAccountNumber" Type="varchar" MaxLength="20" />
+          <Property Name="EPFNumber" Type="varchar" MaxLength="20" />
+          <Property Name="AADHAARNumber" Type="varchar" MaxLength="20" />
+          <Property Name="ESINumber" Type="varchar" MaxLength="20" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="20" />
+          <Property Name="OfficialEmailAddress" Type="varchar" MaxLength="250" />
+          <Property Name="PersonalEmailAddress" Type="varchar" MaxLength="250" />
+          <Property Name="BirthDay" Type="datetime" Nullable="false" />
+          <Property Name="JoiningDate" Type="datetime" Nullable="false" />
+          <Property Name="RelievingDate" Type="datetime" />
+          <Property Name="ResignationDate" Type="datetime" />
+          <Property Name="VBS_Id" Type="char" MaxLength="7" />
+          <Property Name="DesignationId" Type="int" Nullable="false" />
+          <Property Name="SalutationId" Type="int" Nullable="false" />
+          <Property Name="GenderId" Type="int" Nullable="false" />
+          <Property Name="OfficeBranchId" Type="int" Nullable="false" />
+          <Property Name="PermanentAddress1" Type="varchar" MaxLength="250" />
+          <Property Name="PermanentAddress2" Type="varchar" MaxLength="250" />
+          <Property Name="PermanentCity" Type="varchar" MaxLength="250" />
+          <Property Name="PermanentZipCode" Type="varchar" MaxLength="250" />
+          <Property Name="PermanentStateId" Type="int" />
+          <Property Name="PermanentCountryId" Type="int" />
+          <Property Name="MailingAddress1" Type="varchar" MaxLength="250" />
+          <Property Name="MailingAddress2" Type="varchar" MaxLength="250" />
+          <Property Name="MailingCity" Type="varchar" MaxLength="250" />
+          <Property Name="MailingZipCode" Type="varchar" MaxLength="250" />
+          <Property Name="MailingStateId" Type="int" />
+          <Property Name="MailingCountryId" Type="int" />
+          <Property Name="IsMetro" Type="bit" Nullable="false" />
+          <Property Name="BankAccountNumber" Type="varchar" MaxLength="250" />
+          <Property Name="BankId" Type="int" />
+          <Property Name="BankIFSCCode" Type="varchar" MaxLength="20" />
+          <Property Name="BankMICRCode" Type="varchar" MaxLength="20" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EmployeeArchive">
+          <Key>
+            <PropertyRef Name="EmployeeArchiveId" />
+          </Key>
+          <Property Name="EmployeeArchiveId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="MiddleName" Type="varchar" MaxLength="250" />
           <Property Name="LastName" Type="varchar" MaxLength="250" />
           <Property Name="FatherName" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="MotherName" Type="varchar" MaxLength="250" />
-          <Property Name="UniversalAccountNumber" Type="varchar" MaxLength="20" />
           <Property Name="PermanentAccountNumber" Type="varchar" MaxLength="20" />
+          <Property Name="UniversalAccountNumber" Type="varchar" MaxLength="20" />
+          <Property Name="EPFNumber" Type="varchar" MaxLength="20" />
           <Property Name="AADHAARNumber" Type="varchar" MaxLength="20" />
+          <Property Name="ESINumber" Type="varchar" MaxLength="20" />
           <Property Name="MobileNumber" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="EmailAddress" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="OfficialEmailAddress" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="PersonalEmailAddress" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="BirthDay" Type="datetime" Nullable="false" />
           <Property Name="JoiningDate" Type="datetime" Nullable="false" />
           <Property Name="RelievingDate" Type="datetime" />
-          <Property Name="VBS_Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ResignationDate" Type="datetime" />
+          <Property Name="VBS_Id" Type="char" MaxLength="7" Nullable="false" />
           <Property Name="DesignationId" Type="int" Nullable="false" />
           <Property Name="SalutationId" Type="int" Nullable="false" />
           <Property Name="GenderId" Type="int" Nullable="false" />
           <Property Name="OfficeBranchId" Type="int" Nullable="false" />
+          <Property Name="PermanentAddress1" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="PermanentAddress2" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="PermanentCity" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="PermanentZipCode" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="PermanentStateId" Type="int" />
+          <Property Name="PermanentCountryId" Type="int" />
+          <Property Name="MailingAddress1" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="MailingAddress2" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="MailingCity" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="MailingZipCode" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="MailingStateId" Type="int" />
+          <Property Name="MailingCountryId" Type="int" />
+          <Property Name="IsMetro" Type="bit" Nullable="false" />
+          <Property Name="BankAccountNumber" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="BankId" Type="int" />
+          <Property Name="BankIFSCCode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="BankMICRCode" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
-        </EntityType>
-        <EntityType Name="EmployeeAddress">
-          <Key>
-            <PropertyRef Name="EmployeeAddressId" />
-          </Key>
-          <Property Name="EmployeeAddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EmployeeId" Type="int" Nullable="false" />
-          <Property Name="AddressId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="EPFNumber">
           <Key>
@@ -184,6 +238,40 @@
           <Property Name="EPFOfficeName" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="EPFOfficeCode" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="StateId" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Feature">
+          <Key>
+            <PropertyRef Name="FeatureId" />
+          </Key>
+          <Property Name="FeatureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameOption" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Controller" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Action" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Area" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ImageClass" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Activeli" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="IsParent" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="GenderId" />
+          </Key>
+          <Property Name="GenderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
@@ -265,6 +353,19 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="SecurityQuestion">
+          <Key>
+            <PropertyRef Name="SecurityQuestionId" />
+          </Key>
+          <Property Name="SecurityQuestionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CollectionId" Type="int" />
+          <Property Name="Question" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="State">
           <Key>
             <PropertyRef Name="StateId" />
@@ -292,6 +393,20 @@
           <Property Name="IsAnonymous" Type="bit" />
           <Property Name="LastActivityDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="UserSecurityQuestion">
+          <Key>
+            <PropertyRef Name="UserSecurityQuestionId" />
+          </Key>
+          <Property Name="UserSecurityQuestionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SecurityQuestionId" Type="int" Nullable="false" />
+          <Property Name="Answer" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="UsersInRoles">
           <Key>
             <PropertyRef Name="UserId" />
@@ -316,54 +431,6 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
-        <Association Name="FK_Address_AddressType">
-          <End Role="AddressType" Type="Self.AddressType" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AddressType">
-              <PropertyRef Name="AddressTypeId" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="AddressTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Address_City">
-          <End Role="City" Type="Self.City" Multiplicity="0..1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="City">
-              <PropertyRef Name="CityId" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="CityId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Address_State">
-          <End Role="State" Type="Self.State" Multiplicity="0..1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="State">
-              <PropertyRef Name="StateId" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="StateId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Address_ZipCode">
-          <End Role="ZipCode" Type="Self.ZipCode" Multiplicity="0..1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ZipCode">
-              <PropertyRef Name="ZipCodeId" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="ZipCodeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_City_State">
           <End Role="State" Type="Self.State" Multiplicity="1" />
           <End Role="City" Type="Self.City" Multiplicity="*" />
@@ -373,6 +440,18 @@
             </Principal>
             <Dependent Role="City">
               <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Bank">
+          <End Role="Bank" Type="Self.Bank" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bank">
+              <PropertyRef Name="BankId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="BankId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -388,6 +467,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Employee_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GenderId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="GenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_MailingState">
+          <End Role="State" Type="Self.State" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="MailingStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_OfficeBranch">
           <End Role="OfficeBranch" Type="Self.OfficeBranch" Multiplicity="1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -397,6 +500,18 @@
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="OfficeBranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_PermanentState">
+          <End Role="State" Type="Self.State" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="PermanentStateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -412,27 +527,99 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EmployeeAddress_Address">
-          <End Role="Address" Type="Self.Address" Multiplicity="1" />
-          <End Role="EmployeeAddress" Type="Self.EmployeeAddress" Multiplicity="*" />
+        <Association Name="FK_EmployeeArchive_Bank">
+          <End Role="Bank" Type="Self.Bank" Multiplicity="0..1" />
+          <End Role="EmployeeArchive" Type="Self.EmployeeArchive" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="AddressId" />
+            <Principal Role="Bank">
+              <PropertyRef Name="BankId" />
             </Principal>
-            <Dependent Role="EmployeeAddress">
-              <PropertyRef Name="AddressId" />
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="BankId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EmployeeAddress_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="EmployeeAddress" Type="Self.EmployeeAddress" Multiplicity="*" />
+        <Association Name="FK_EmployeeArchive_Designation">
+          <End Role="Designation" Type="Self.Designation" Multiplicity="1" />
+          <End Role="EmployeeArchive" Type="Self.EmployeeArchive" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
+            <Principal Role="Designation">
+              <PropertyRef Name="DesignationId" />
             </Principal>
-            <Dependent Role="EmployeeAddress">
-              <PropertyRef Name="EmployeeId" />
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="DesignationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeArchive_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="EmployeeArchive" Type="Self.EmployeeArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GenderId" />
+            </Principal>
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="GenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeArchive_MailingState">
+          <End Role="State" Type="Self.State" Multiplicity="0..1" />
+          <End Role="EmployeeArchive" Type="Self.EmployeeArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="MailingStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeArchive_OfficeBranch">
+          <End Role="OfficeBranch" Type="Self.OfficeBranch" Multiplicity="1" />
+          <End Role="EmployeeArchive" Type="Self.EmployeeArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OfficeBranch">
+              <PropertyRef Name="OfficeBranchId" />
+            </Principal>
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="OfficeBranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeArchive_PermanentState">
+          <End Role="State" Type="Self.State" Multiplicity="0..1" />
+          <End Role="EmployeeArchive" Type="Self.EmployeeArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="PermanentStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeArchive_Salutation">
+          <End Role="Salutation" Type="Self.Salutation" Multiplicity="1" />
+          <End Role="EmployeeArchive" Type="Self.EmployeeArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salutation">
+              <PropertyRef Name="SalutationId" />
+            </Principal>
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="SalutationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feature_Feature">
+          <End Role="Feature" Type="Self.Feature" Multiplicity="1" />
+          <End Role="Feature1" Type="Self.Feature" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Feature">
+              <PropertyRef Name="FeatureId" />
+            </Principal>
+            <Dependent Role="Feature1">
+              <PropertyRef Name="FeatureId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -456,6 +643,30 @@
               <PropertyRef Name="UserId" />
             </Principal>
             <Dependent Role="UsersInRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSecurityQuestion_SecurityQuestion">
+          <End Role="SecurityQuestion" Type="Self.SecurityQuestion" Multiplicity="1" />
+          <End Role="UserSecurityQuestion" Type="Self.UserSecurityQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SecurityQuestion">
+              <PropertyRef Name="SecurityQuestionId" />
+            </Principal>
+            <Dependent Role="UserSecurityQuestion">
+              <PropertyRef Name="SecurityQuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSecurityQuestion_UserProfile">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="UserSecurityQuestion" Type="Self.UserSecurityQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserSecurityQuestion">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -484,6 +695,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ArchiveEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeID" Type="int" Mode="In" />
+          <Parameter Name="UpdatedByUserName" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="InsertErrorLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="appdomain" Type="varchar" Mode="In" />
           <Parameter Name="exception" Type="varchar(max)" Mode="In" />
@@ -536,66 +751,101 @@
           <Parameter Name="type" Type="varchar" Mode="In" />
           <Parameter Name="username" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ValidateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="SecurityQuestionId" Type="int" Mode="In" />
+          <Parameter Name="Answer" Type="varchar" Mode="In" />
+          <Parameter Name="EmailAddress" Type="varchar" Mode="In" />
+          <Parameter Name="MobileNumber" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="VservAccountingDBModelStoreContainer">
-          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AddressType" EntityType="Self.AddressType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApplicationLog" EntityType="Self.ApplicationLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bank" EntityType="Self.Bank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Config" EntityType="Self.Config" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EmployeeAddress" EntityType="Self.EmployeeAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeArchive" EntityType="Self.EmployeeArchive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EPFNumber" EntityType="Self.EPFNumber" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EPFOffice" EntityType="Self.EPFOffice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feature" EntityType="Self.Feature" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Membership" EntityType="Self.Membership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OAuthMembership" EntityType="Self.OAuthMembership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfficeBranch" EntityType="Self.OfficeBranch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Salutation" EntityType="Self.Salutation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SecurityQuestion" EntityType="Self.SecurityQuestion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserSecurityQuestion" EntityType="Self.UserSecurityQuestion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersInRoles" EntityType="Self.UsersInRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ZipCode" EntityType="Self.ZipCode" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Address_AddressType" Association="Self.FK_Address_AddressType">
-            <End Role="AddressType" EntitySet="AddressType" />
-            <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Address_City" Association="Self.FK_Address_City">
-            <End Role="City" EntitySet="City" />
-            <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Address_State" Association="Self.FK_Address_State">
-            <End Role="State" EntitySet="State" />
-            <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Address_ZipCode" Association="Self.FK_Address_ZipCode">
-            <End Role="ZipCode" EntitySet="ZipCode" />
-            <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
           <AssociationSet Name="FK_City_State" Association="Self.FK_City_State">
             <End Role="State" EntitySet="State" />
             <End Role="City" EntitySet="City" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_Bank" Association="Self.FK_Employee_Bank">
+            <End Role="Bank" EntitySet="Bank" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_Designation" Association="Self.FK_Employee_Designation">
             <End Role="Designation" EntitySet="Designation" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Gender" Association="Self.FK_Employee_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_MailingState" Association="Self.FK_Employee_MailingState">
+            <End Role="State" EntitySet="State" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_OfficeBranch" Association="Self.FK_Employee_OfficeBranch">
             <End Role="OfficeBranch" EntitySet="OfficeBranch" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_PermanentState" Association="Self.FK_Employee_PermanentState">
+            <End Role="State" EntitySet="State" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_Salutation" Association="Self.FK_Employee_Salutation">
             <End Role="Salutation" EntitySet="Salutation" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmployeeAddress_Address" Association="Self.FK_EmployeeAddress_Address">
-            <End Role="Address" EntitySet="Address" />
-            <End Role="EmployeeAddress" EntitySet="EmployeeAddress" />
+          <AssociationSet Name="FK_EmployeeArchive_Bank" Association="Self.FK_EmployeeArchive_Bank">
+            <End Role="Bank" EntitySet="Bank" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchive" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmployeeAddress_Employee" Association="Self.FK_EmployeeAddress_Employee">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="EmployeeAddress" EntitySet="EmployeeAddress" />
+          <AssociationSet Name="FK_EmployeeArchive_Designation" Association="Self.FK_EmployeeArchive_Designation">
+            <End Role="Designation" EntitySet="Designation" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchive" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeArchive_Gender" Association="Self.FK_EmployeeArchive_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchive" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeArchive_MailingState" Association="Self.FK_EmployeeArchive_MailingState">
+            <End Role="State" EntitySet="State" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchive" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeArchive_OfficeBranch" Association="Self.FK_EmployeeArchive_OfficeBranch">
+            <End Role="OfficeBranch" EntitySet="OfficeBranch" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchive" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeArchive_PermanentState" Association="Self.FK_EmployeeArchive_PermanentState">
+            <End Role="State" EntitySet="State" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchive" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeArchive_Salutation" Association="Self.FK_EmployeeArchive_Salutation">
+            <End Role="Salutation" EntitySet="Salutation" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchive" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feature_Feature" Association="Self.FK_Feature_Feature">
+            <End Role="Feature" EntitySet="Feature" />
+            <End Role="Feature1" EntitySet="Feature" />
           </AssociationSet>
           <AssociationSet Name="fk_RoleId" Association="Self.fk_RoleId">
             <End Role="Roles" EntitySet="Roles" />
@@ -604,6 +854,14 @@
           <AssociationSet Name="fk_UserId" Association="Self.fk_UserId">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="UsersInRoles" EntitySet="UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSecurityQuestion_SecurityQuestion" Association="Self.FK_UserSecurityQuestion_SecurityQuestion">
+            <End Role="SecurityQuestion" EntitySet="SecurityQuestion" />
+            <End Role="UserSecurityQuestion" EntitySet="UserSecurityQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSecurityQuestion_UserProfile" Association="Self.FK_UserSecurityQuestion_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="UserSecurityQuestion" EntitySet="UserSecurityQuestion" />
           </AssociationSet>
           <AssociationSet Name="FK_ZipCode_City" Association="Self.FK_ZipCode_City">
             <End Role="City" EntitySet="City" />
@@ -671,44 +929,47 @@
             <Parameter Name="type" Mode="In" Type="String" />
             <Parameter Name="username" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Addresses" EntityType="VservAccountingDBModel.Address" />
+          <FunctionImport Name="ArchiveEmployee">
+            <Parameter Name="EmployeeID" Mode="In" Type="Int32" />
+            <Parameter Name="UpdatedByUserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ValidateUser" ReturnType="Collection(Boolean)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="SecurityQuestionId" Mode="In" Type="Int32" />
+            <Parameter Name="Answer" Mode="In" Type="String" />
+            <Parameter Name="EmailAddress" Mode="In" Type="String" />
+            <Parameter Name="MobileNumber" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="AddressTypes" EntityType="VservAccountingDBModel.AddressType" />
           <EntitySet Name="ApplicationLogs" EntityType="VservAccountingDBModel.ApplicationLog" />
+          <EntitySet Name="Banks" EntityType="VservAccountingDBModel.Bank" />
           <EntitySet Name="Cities" EntityType="VservAccountingDBModel.City" />
           <EntitySet Name="Configs" EntityType="VservAccountingDBModel.Config" />
           <EntitySet Name="Departments" EntityType="VservAccountingDBModel.Department" />
           <EntitySet Name="Designations" EntityType="VservAccountingDBModel.Designation" />
           <EntitySet Name="Employees" EntityType="VservAccountingDBModel.Employee" />
-          <EntitySet Name="EmployeeAddresses" EntityType="VservAccountingDBModel.EmployeeAddress" />
+          <EntitySet Name="EmployeeArchives" EntityType="VservAccountingDBModel.EmployeeArchive" />
           <EntitySet Name="EPFNumbers" EntityType="VservAccountingDBModel.EPFNumber" />
           <EntitySet Name="EPFOffices" EntityType="VservAccountingDBModel.EPFOffice" />
+          <EntitySet Name="Features" EntityType="VservAccountingDBModel.Feature" />
+          <EntitySet Name="Genders" EntityType="VservAccountingDBModel.Gender" />
           <EntitySet Name="Memberships" EntityType="VservAccountingDBModel.Membership" />
           <EntitySet Name="OAuthMemberships" EntityType="VservAccountingDBModel.OAuthMembership" />
           <EntitySet Name="OfficeBranches" EntityType="VservAccountingDBModel.OfficeBranch" />
           <EntitySet Name="Roles" EntityType="VservAccountingDBModel.Role" />
           <EntitySet Name="Salutations" EntityType="VservAccountingDBModel.Salutation" />
+          <EntitySet Name="SecurityQuestions" EntityType="VservAccountingDBModel.SecurityQuestion" />
           <EntitySet Name="States" EntityType="VservAccountingDBModel.State" />
           <EntitySet Name="UserProfiles" EntityType="VservAccountingDBModel.UserProfile" />
+          <EntitySet Name="UserSecurityQuestions" EntityType="VservAccountingDBModel.UserSecurityQuestion" />
           <EntitySet Name="ZipCodes" EntityType="VservAccountingDBModel.ZipCode" />
-          <AssociationSet Name="FK_Address_AddressType" Association="VservAccountingDBModel.FK_Address_AddressType">
-            <End Role="AddressType" EntitySet="AddressTypes" />
-            <End Role="Address" EntitySet="Addresses" />
+          <AssociationSet Name="FK_Employee_Bank" Association="VservAccountingDBModel.FK_Employee_Bank">
+            <End Role="Bank" EntitySet="Banks" />
+            <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
-          <AssociationSet Name="FK_Address_City" Association="VservAccountingDBModel.FK_Address_City">
-            <End Role="City" EntitySet="Cities" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Address_State" Association="VservAccountingDBModel.FK_Address_State">
-            <End Role="State" EntitySet="States" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Address_ZipCode" Association="VservAccountingDBModel.FK_Address_ZipCode">
-            <End Role="ZipCode" EntitySet="ZipCodes" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmployeeAddress_Address" Association="VservAccountingDBModel.FK_EmployeeAddress_Address">
-            <End Role="Address" EntitySet="Addresses" />
-            <End Role="EmployeeAddress" EntitySet="EmployeeAddresses" />
+          <AssociationSet Name="FK_EmployeeArchive_Bank" Association="VservAccountingDBModel.FK_EmployeeArchive_Bank">
+            <End Role="Bank" EntitySet="Banks" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchives" />
           </AssociationSet>
           <AssociationSet Name="FK_City_State" Association="VservAccountingDBModel.FK_City_State">
             <End Role="State" EntitySet="States" />
@@ -722,55 +983,79 @@
             <End Role="Designation" EntitySet="Designations" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmployeeArchive_Designation" Association="VservAccountingDBModel.FK_EmployeeArchive_Designation">
+            <End Role="Designation" EntitySet="Designations" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Gender" Association="VservAccountingDBModel.FK_Employee_Gender">
+            <End Role="Gender" EntitySet="Genders" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_MailingState" Association="VservAccountingDBModel.FK_Employee_MailingState">
+            <End Role="State" EntitySet="States" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_OfficeBranch" Association="VservAccountingDBModel.FK_Employee_OfficeBranch">
             <End Role="OfficeBranch" EntitySet="OfficeBranches" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_PermanentState" Association="VservAccountingDBModel.FK_Employee_PermanentState">
+            <End Role="State" EntitySet="States" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_Salutation" Association="VservAccountingDBModel.FK_Employee_Salutation">
             <End Role="Salutation" EntitySet="Salutations" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmployeeAddress_Employee" Association="VservAccountingDBModel.FK_EmployeeAddress_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="EmployeeAddress" EntitySet="EmployeeAddresses" />
+          <AssociationSet Name="FK_EmployeeArchive_Gender" Association="VservAccountingDBModel.FK_EmployeeArchive_Gender">
+            <End Role="Gender" EntitySet="Genders" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeArchive_MailingState" Association="VservAccountingDBModel.FK_EmployeeArchive_MailingState">
+            <End Role="State" EntitySet="States" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeArchive_OfficeBranch" Association="VservAccountingDBModel.FK_EmployeeArchive_OfficeBranch">
+            <End Role="OfficeBranch" EntitySet="OfficeBranches" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeArchive_PermanentState" Association="VservAccountingDBModel.FK_EmployeeArchive_PermanentState">
+            <End Role="State" EntitySet="States" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeArchive_Salutation" Association="VservAccountingDBModel.FK_EmployeeArchive_Salutation">
+            <End Role="Salutation" EntitySet="Salutations" />
+            <End Role="EmployeeArchive" EntitySet="EmployeeArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feature_Feature" Association="VservAccountingDBModel.FK_Feature_Feature">
+            <End Role="Feature" EntitySet="Features" />
+            <End Role="Feature1" EntitySet="Features" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSecurityQuestion_SecurityQuestion" Association="VservAccountingDBModel.FK_UserSecurityQuestion_SecurityQuestion">
+            <End Role="SecurityQuestion" EntitySet="SecurityQuestions" />
+            <End Role="UserSecurityQuestion" EntitySet="UserSecurityQuestions" />
           </AssociationSet>
           <AssociationSet Name="FK_ZipCode_State" Association="VservAccountingDBModel.FK_ZipCode_State">
             <End Role="State" EntitySet="States" />
             <End Role="ZipCode" EntitySet="ZipCodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSecurityQuestion_UserProfile" Association="VservAccountingDBModel.FK_UserSecurityQuestion_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="UserSecurityQuestion" EntitySet="UserSecurityQuestions" />
           </AssociationSet>
           <AssociationSet Name="UsersInRoles" Association="VservAccountingDBModel.UsersInRoles">
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
           </EntityContainer>
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="AddressId" />
-          </Key>
-          <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Address1" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Address2" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="CountryId" Type="Int32" />
-          <Property Name="StateId" Type="Int32" />
-          <Property Name="CityId" Type="Int32" />
-          <Property Name="ZipCodeId" Type="Int32" />
-          <Property Name="City" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="ZipCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Latitude" Type="Decimal" Precision="16" Scale="13" />
-          <Property Name="Longitude" Type="Decimal" Precision="16" Scale="13" />
-          <Property Name="IsCommunicationAddress" Type="Boolean" Nullable="false" />
-          <Property Name="AddressTypeId" Type="Int32" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AddressType" Relationship="VservAccountingDBModel.FK_Address_AddressType" FromRole="Address" ToRole="AddressType" />
-          <NavigationProperty Name="City1" Relationship="VservAccountingDBModel.FK_Address_City" FromRole="Address" ToRole="City" />
-          <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_Address_State" FromRole="Address" ToRole="State" />
-          <NavigationProperty Name="ZipCode1" Relationship="VservAccountingDBModel.FK_Address_ZipCode" FromRole="Address" ToRole="ZipCode" />
-          <NavigationProperty Name="EmployeeAddresses" Relationship="VservAccountingDBModel.FK_EmployeeAddress_Address" FromRole="Address" ToRole="EmployeeAddress" />
-        </EntityType>
+        <ComplexType Name="ArchiveEmployee_Result">
+          <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
+          <Property Type="Int32" Name="ErrorSeverity" Nullable="true" />
+          <Property Type="Int32" Name="ErrorState" Nullable="true" />
+          <Property Type="String" Name="ErrorProcedure" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="ErrorLine" Nullable="true" />
+          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="4000" />
+        </ComplexType>
         <EntityType Name="AddressType">
           <Key>
             <PropertyRef Name="AddressTypeId" />
@@ -785,7 +1070,6 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Addresses" Relationship="VservAccountingDBModel.FK_Address_AddressType" FromRole="AddressType" ToRole="Address" />
         </EntityType>
         <EntityType Name="ApplicationLog">
           <Key>
@@ -815,6 +1099,21 @@
           <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="UTCDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="Bank">
+          <Key>
+            <PropertyRef Name="BankId" />
+          </Key>
+          <Property Name="BankId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Bank" FromRole="Bank" ToRole="Employee" />
+          <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Bank" FromRole="Bank" ToRole="EmployeeArchive" />
+        </EntityType>
         <EntityType Name="City">
           <Key>
             <PropertyRef Name="CityId" />
@@ -829,7 +1128,6 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Addresses" Relationship="VservAccountingDBModel.FK_Address_City" FromRole="City" ToRole="Address" />
           <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_City_State" FromRole="City" ToRole="State" />
           <NavigationProperty Name="ZipCodes" Relationship="VservAccountingDBModel.FK_ZipCode_City" FromRole="City" ToRole="ZipCode" />
         </EntityType>
@@ -870,49 +1168,122 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Designation" ToRole="Employee" />
+          <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Designation" FromRole="Designation" ToRole="EmployeeArchive" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeId" />
           </Key>
           <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FatherName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MotherName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UniversalAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EPFNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AADHAARNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ESINumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OfficialEmailAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PersonalEmailAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="BirthDay" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="JoiningDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RelievingDate" Type="DateTime" Precision="3" />
+          <Property Name="ResignationDate" Type="DateTime" Precision="3" />
+          <Property Name="VBS_Id" Type="String" MaxLength="7" FixedLength="true" Unicode="false" />
+          <Property Name="DesignationId" Type="Int32" Nullable="false" />
+          <Property Name="SalutationId" Type="Int32" Nullable="false" />
+          <Property Name="GenderId" Type="Int32" Nullable="false" />
+          <Property Name="OfficeBranchId" Type="Int32" Nullable="false" />
+          <Property Name="PermanentAddress1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAddress2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentCity" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentZipCode" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentStateId" Type="Int32" />
+          <Property Name="PermanentCountryId" Type="Int32" />
+          <Property Name="MailingAddress1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MailingAddress2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MailingCity" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MailingZipCode" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MailingStateId" Type="Int32" />
+          <Property Name="MailingCountryId" Type="Int32" />
+          <Property Name="IsMetro" Type="Boolean" Nullable="false" />
+          <Property Name="BankAccountNumber" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="BankId" Type="Int32" />
+          <Property Name="BankIFSCCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BankMICRCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Bank" Relationship="VservAccountingDBModel.FK_Employee_Bank" FromRole="Employee" ToRole="Bank" />
+          <NavigationProperty Name="Designation" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Employee" ToRole="Designation" />
+          <NavigationProperty Name="Gender" Relationship="VservAccountingDBModel.FK_Employee_Gender" FromRole="Employee" ToRole="Gender" />
+          <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_Employee_MailingState" FromRole="Employee" ToRole="State" />
+          <NavigationProperty Name="OfficeBranch" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="Employee" ToRole="OfficeBranch" />
+          <NavigationProperty Name="State1" Relationship="VservAccountingDBModel.FK_Employee_PermanentState" FromRole="Employee" ToRole="State" />
+          <NavigationProperty Name="Salutation" Relationship="VservAccountingDBModel.FK_Employee_Salutation" FromRole="Employee" ToRole="Salutation" />
+        </EntityType>
+        <EntityType Name="EmployeeArchive">
+          <Key>
+            <PropertyRef Name="EmployeeArchiveId" />
+          </Key>
+          <Property Name="EmployeeArchiveId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="MiddleName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="FatherName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="MotherName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="UniversalAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="PermanentAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UniversalAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EPFNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="AADHAARNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ESINumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="MobileNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="OfficialEmailAddress" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PersonalEmailAddress" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="BirthDay" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="JoiningDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RelievingDate" Type="DateTime" Precision="3" />
-          <Property Name="VBS_Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ResignationDate" Type="DateTime" Precision="3" />
+          <Property Name="VBS_Id" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="false" />
           <Property Name="DesignationId" Type="Int32" Nullable="false" />
           <Property Name="SalutationId" Type="Int32" Nullable="false" />
           <Property Name="GenderId" Type="Int32" Nullable="false" />
           <Property Name="OfficeBranchId" Type="Int32" Nullable="false" />
+          <Property Name="PermanentAddress1" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAddress2" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentCity" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentZipCode" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentStateId" Type="Int32" />
+          <Property Name="PermanentCountryId" Type="Int32" />
+          <Property Name="MailingAddress1" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MailingAddress2" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MailingCity" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MailingZipCode" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MailingStateId" Type="Int32" />
+          <Property Name="MailingCountryId" Type="Int32" />
+          <Property Name="IsMetro" Type="Boolean" Nullable="false" />
+          <Property Name="BankAccountNumber" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="BankId" Type="Int32" />
+          <Property Name="BankIFSCCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BankMICRCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Designation" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Employee" ToRole="Designation" />
-          <NavigationProperty Name="OfficeBranch" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="Employee" ToRole="OfficeBranch" />
-          <NavigationProperty Name="Salutation" Relationship="VservAccountingDBModel.FK_Employee_Salutation" FromRole="Employee" ToRole="Salutation" />
-          <NavigationProperty Name="EmployeeAddresses" Relationship="VservAccountingDBModel.FK_EmployeeAddress_Employee" FromRole="Employee" ToRole="EmployeeAddress" />
-        </EntityType>
-        <EntityType Name="EmployeeAddress">
-          <Key>
-            <PropertyRef Name="EmployeeAddressId" />
-          </Key>
-          <Property Name="EmployeeAddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
-          <Property Name="AddressId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Address" Relationship="VservAccountingDBModel.FK_EmployeeAddress_Address" FromRole="EmployeeAddress" ToRole="Address" />
-          <NavigationProperty Name="Employee" Relationship="VservAccountingDBModel.FK_EmployeeAddress_Employee" FromRole="EmployeeAddress" ToRole="Employee" />
+          <NavigationProperty Name="Bank" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Bank" FromRole="EmployeeArchive" ToRole="Bank" />
+          <NavigationProperty Name="Designation" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Designation" FromRole="EmployeeArchive" ToRole="Designation" />
+          <NavigationProperty Name="Gender" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Gender" FromRole="EmployeeArchive" ToRole="Gender" />
+          <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_EmployeeArchive_MailingState" FromRole="EmployeeArchive" ToRole="State" />
+          <NavigationProperty Name="OfficeBranch" Relationship="VservAccountingDBModel.FK_EmployeeArchive_OfficeBranch" FromRole="EmployeeArchive" ToRole="OfficeBranch" />
+          <NavigationProperty Name="State1" Relationship="VservAccountingDBModel.FK_EmployeeArchive_PermanentState" FromRole="EmployeeArchive" ToRole="State" />
+          <NavigationProperty Name="Salutation" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Salutation" FromRole="EmployeeArchive" ToRole="Salutation" />
         </EntityType>
         <EntityType Name="EPFNumber">
           <Key>
@@ -943,6 +1314,44 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Feature">
+          <Key>
+            <PropertyRef Name="FeatureId" />
+          </Key>
+          <Property Name="FeatureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameOption" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Controller" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Action" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Area" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ImageClass" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Activeli" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="IsParent" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Feature1" Relationship="VservAccountingDBModel.FK_Feature_Feature" FromRole="Feature" ToRole="Feature1" />
+          <NavigationProperty Name="Feature2" Relationship="VservAccountingDBModel.FK_Feature_Feature" FromRole="Feature1" ToRole="Feature" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="GenderId" />
+          </Key>
+          <Property Name="GenderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Gender" FromRole="Gender" ToRole="Employee" />
+          <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Gender" FromRole="Gender" ToRole="EmployeeArchive" />
         </EntityType>
         <EntityType Name="Membership">
           <Key>
@@ -995,6 +1404,7 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="OfficeBranch" ToRole="Employee" />
+          <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_OfficeBranch" FromRole="OfficeBranch" ToRole="EmployeeArchive" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -1021,6 +1431,21 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Salutation" FromRole="Salutation" ToRole="Employee" />
+          <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Salutation" FromRole="Salutation" ToRole="EmployeeArchive" />
+        </EntityType>
+        <EntityType Name="SecurityQuestion">
+          <Key>
+            <PropertyRef Name="SecurityQuestionId" />
+          </Key>
+          <Property Name="SecurityQuestionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CollectionId" Type="Int32" />
+          <Property Name="Question" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserSecurityQuestions" Relationship="VservAccountingDBModel.FK_UserSecurityQuestion_SecurityQuestion" FromRole="SecurityQuestion" ToRole="UserSecurityQuestion" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -1036,8 +1461,11 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Addresses" Relationship="VservAccountingDBModel.FK_Address_State" FromRole="State" ToRole="Address" />
           <NavigationProperty Name="Cities" Relationship="VservAccountingDBModel.FK_City_State" FromRole="State" ToRole="City" />
+          <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_MailingState" FromRole="State" ToRole="Employee" />
+          <NavigationProperty Name="Employees1" Relationship="VservAccountingDBModel.FK_Employee_PermanentState" FromRole="State" ToRole="Employee" />
+          <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_MailingState" FromRole="State" ToRole="EmployeeArchive" />
+          <NavigationProperty Name="EmployeeArchives1" Relationship="VservAccountingDBModel.FK_EmployeeArchive_PermanentState" FromRole="State" ToRole="EmployeeArchive" />
           <NavigationProperty Name="ZipCodes" Relationship="VservAccountingDBModel.FK_ZipCode_State" FromRole="State" ToRole="ZipCode" />
         </EntityType>
         <EntityType Name="UserProfile">
@@ -1051,7 +1479,24 @@
           <Property Name="MobileAlias" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="IsAnonymous" Type="Boolean" />
           <Property Name="LastActivityDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserSecurityQuestions" Relationship="VservAccountingDBModel.FK_UserSecurityQuestion_UserProfile" FromRole="UserProfile" ToRole="UserSecurityQuestion" />
           <NavigationProperty Name="Roles" Relationship="VservAccountingDBModel.UsersInRoles" FromRole="UserProfile" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="UserSecurityQuestion">
+          <Key>
+            <PropertyRef Name="UserSecurityQuestionId" />
+          </Key>
+          <Property Name="UserSecurityQuestionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="SecurityQuestionId" Type="Int32" Nullable="false" />
+          <Property Name="Answer" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="SecurityQuestion" Relationship="VservAccountingDBModel.FK_UserSecurityQuestion_SecurityQuestion" FromRole="UserSecurityQuestion" ToRole="SecurityQuestion" />
+          <NavigationProperty Name="UserProfile" Relationship="VservAccountingDBModel.FK_UserSecurityQuestion_UserProfile" FromRole="UserSecurityQuestion" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="ZipCode">
           <Key>
@@ -1068,67 +1513,30 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Addresses" Relationship="VservAccountingDBModel.FK_Address_ZipCode" FromRole="ZipCode" ToRole="Address" />
           <NavigationProperty Name="City" Relationship="VservAccountingDBModel.FK_ZipCode_City" FromRole="ZipCode" ToRole="City" />
           <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_ZipCode_State" FromRole="ZipCode" ToRole="State" />
         </EntityType>
-        <Association Name="FK_Address_AddressType">
-          <End Type="VservAccountingDBModel.AddressType" Role="AddressType" Multiplicity="1" />
-          <End Type="VservAccountingDBModel.Address" Role="Address" Multiplicity="*" />
+        <Association Name="FK_Employee_Bank">
+          <End Type="VservAccountingDBModel.Bank" Role="Bank" Multiplicity="0..1" />
+          <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AddressType">
-              <PropertyRef Name="AddressTypeId" />
+            <Principal Role="Bank">
+              <PropertyRef Name="BankId" />
             </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="AddressTypeId" />
+            <Dependent Role="Employee">
+              <PropertyRef Name="BankId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Address_City">
-          <End Type="VservAccountingDBModel.City" Role="City" Multiplicity="0..1" />
-          <End Type="VservAccountingDBModel.Address" Role="Address" Multiplicity="*" />
+        <Association Name="FK_EmployeeArchive_Bank">
+          <End Type="VservAccountingDBModel.Bank" Role="Bank" Multiplicity="0..1" />
+          <End Type="VservAccountingDBModel.EmployeeArchive" Role="EmployeeArchive" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="City">
-              <PropertyRef Name="CityId" />
+            <Principal Role="Bank">
+              <PropertyRef Name="BankId" />
             </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="CityId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Address_State">
-          <End Type="VservAccountingDBModel.State" Role="State" Multiplicity="0..1" />
-          <End Type="VservAccountingDBModel.Address" Role="Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="State">
-              <PropertyRef Name="StateId" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="StateId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Address_ZipCode">
-          <End Type="VservAccountingDBModel.ZipCode" Role="ZipCode" Multiplicity="0..1" />
-          <End Type="VservAccountingDBModel.Address" Role="Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ZipCode">
-              <PropertyRef Name="ZipCodeId" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="ZipCodeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmployeeAddress_Address">
-          <End Type="VservAccountingDBModel.Address" Role="Address" Multiplicity="1" />
-          <End Type="VservAccountingDBModel.EmployeeAddress" Role="EmployeeAddress" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="AddressId" />
-            </Principal>
-            <Dependent Role="EmployeeAddress">
-              <PropertyRef Name="AddressId" />
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="BankId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1168,6 +1576,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmployeeArchive_Designation">
+          <End Type="VservAccountingDBModel.Designation" Role="Designation" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmployeeArchive" Role="EmployeeArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Designation">
+              <PropertyRef Name="DesignationId" />
+            </Principal>
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="DesignationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Gender">
+          <End Type="VservAccountingDBModel.Gender" Role="Gender" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GenderId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="GenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_MailingState">
+          <End Type="VservAccountingDBModel.State" Role="State" Multiplicity="0..1" />
+          <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="MailingStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_OfficeBranch">
           <End Type="VservAccountingDBModel.OfficeBranch" Role="OfficeBranch" Multiplicity="1" />
           <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
@@ -1177,6 +1621,18 @@
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="OfficeBranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_PermanentState">
+          <End Type="VservAccountingDBModel.State" Role="State" Multiplicity="0..1" />
+          <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="PermanentStateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1192,15 +1648,87 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EmployeeAddress_Employee">
-          <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="VservAccountingDBModel.EmployeeAddress" Role="EmployeeAddress" Multiplicity="*" />
+        <Association Name="FK_EmployeeArchive_Gender">
+          <End Type="VservAccountingDBModel.Gender" Role="Gender" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmployeeArchive" Role="EmployeeArchive" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
+            <Principal Role="Gender">
+              <PropertyRef Name="GenderId" />
             </Principal>
-            <Dependent Role="EmployeeAddress">
-              <PropertyRef Name="EmployeeId" />
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="GenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeArchive_MailingState">
+          <End Type="VservAccountingDBModel.State" Role="State" Multiplicity="0..1" />
+          <End Type="VservAccountingDBModel.EmployeeArchive" Role="EmployeeArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="MailingStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeArchive_OfficeBranch">
+          <End Type="VservAccountingDBModel.OfficeBranch" Role="OfficeBranch" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmployeeArchive" Role="EmployeeArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OfficeBranch">
+              <PropertyRef Name="OfficeBranchId" />
+            </Principal>
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="OfficeBranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeArchive_PermanentState">
+          <End Type="VservAccountingDBModel.State" Role="State" Multiplicity="0..1" />
+          <End Type="VservAccountingDBModel.EmployeeArchive" Role="EmployeeArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="PermanentStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeArchive_Salutation">
+          <End Type="VservAccountingDBModel.Salutation" Role="Salutation" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmployeeArchive" Role="EmployeeArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salutation">
+              <PropertyRef Name="SalutationId" />
+            </Principal>
+            <Dependent Role="EmployeeArchive">
+              <PropertyRef Name="SalutationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feature_Feature">
+          <End Type="VservAccountingDBModel.Feature" Role="Feature" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.Feature" Role="Feature1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Feature">
+              <PropertyRef Name="FeatureId" />
+            </Principal>
+            <Dependent Role="Feature1">
+              <PropertyRef Name="FeatureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSecurityQuestion_SecurityQuestion">
+          <End Type="VservAccountingDBModel.SecurityQuestion" Role="SecurityQuestion" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.UserSecurityQuestion" Role="UserSecurityQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SecurityQuestion">
+              <PropertyRef Name="SecurityQuestionId" />
+            </Principal>
+            <Dependent Role="UserSecurityQuestion">
+              <PropertyRef Name="SecurityQuestionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1213,6 +1741,18 @@
             </Principal>
             <Dependent Role="ZipCode">
               <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSecurityQuestion_UserProfile">
+          <End Type="VservAccountingDBModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.UserSecurityQuestion" Role="UserSecurityQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserSecurityQuestion">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1229,30 +1769,8 @@
           <FunctionImportMapping FunctionImportName="InsertErrorLog" FunctionName="VservAccountingDBModel.Store.InsertErrorLog" />
           <FunctionImportMapping FunctionImportName="InsertInfoLog" FunctionName="VservAccountingDBModel.Store.InsertInfoLog" />
           <FunctionImportMapping FunctionImportName="InsertMvcErrorLog" FunctionName="VservAccountingDBModel.Store.InsertMvcErrorLog" />
-          <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="VservAccountingDBModel.Address">
-              <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="AddressTypeId" ColumnName="AddressTypeId" />
-                <ScalarProperty Name="IsCommunicationAddress" ColumnName="IsCommunicationAddress" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="ZipCodeId" ColumnName="ZipCodeId" />
-                <ScalarProperty Name="CityId" ColumnName="CityId" />
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ArchiveEmployee" FunctionName="VservAccountingDBModel.Store.ArchiveEmployee" />
+          <FunctionImportMapping FunctionImportName="ValidateUser" FunctionName="VservAccountingDBModel.Store.ValidateUser" />
           <EntitySetMapping Name="AddressTypes">
             <EntityTypeMapping TypeName="VservAccountingDBModel.AddressType">
               <MappingFragment StoreEntitySet="AddressType">
@@ -1295,6 +1813,20 @@
                 <ScalarProperty Name="AspnetCache" ColumnName="AspnetCache" />
                 <ScalarProperty Name="AppDomain" ColumnName="AppDomain" />
                 <ScalarProperty Name="LogId" ColumnName="LogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Banks">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.Bank">
+              <MappingFragment StoreEntitySet="Bank">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1362,19 +1894,40 @@
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BankMICRCode" ColumnName="BankMICRCode" />
+                <ScalarProperty Name="BankIFSCCode" ColumnName="BankIFSCCode" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="BankAccountNumber" ColumnName="BankAccountNumber" />
+                <ScalarProperty Name="IsMetro" ColumnName="IsMetro" />
+                <ScalarProperty Name="MailingCountryId" ColumnName="MailingCountryId" />
+                <ScalarProperty Name="MailingStateId" ColumnName="MailingStateId" />
+                <ScalarProperty Name="MailingZipCode" ColumnName="MailingZipCode" />
+                <ScalarProperty Name="MailingCity" ColumnName="MailingCity" />
+                <ScalarProperty Name="MailingAddress2" ColumnName="MailingAddress2" />
+                <ScalarProperty Name="MailingAddress1" ColumnName="MailingAddress1" />
+                <ScalarProperty Name="PermanentCountryId" ColumnName="PermanentCountryId" />
+                <ScalarProperty Name="PermanentStateId" ColumnName="PermanentStateId" />
+                <ScalarProperty Name="PermanentZipCode" ColumnName="PermanentZipCode" />
+                <ScalarProperty Name="PermanentCity" ColumnName="PermanentCity" />
+                <ScalarProperty Name="PermanentAddress2" ColumnName="PermanentAddress2" />
+                <ScalarProperty Name="PermanentAddress1" ColumnName="PermanentAddress1" />
                 <ScalarProperty Name="OfficeBranchId" ColumnName="OfficeBranchId" />
                 <ScalarProperty Name="GenderId" ColumnName="GenderId" />
                 <ScalarProperty Name="SalutationId" ColumnName="SalutationId" />
                 <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
                 <ScalarProperty Name="VBS_Id" ColumnName="VBS_Id" />
+                <ScalarProperty Name="ResignationDate" ColumnName="ResignationDate" />
                 <ScalarProperty Name="RelievingDate" ColumnName="RelievingDate" />
                 <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
                 <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="PersonalEmailAddress" ColumnName="PersonalEmailAddress" />
+                <ScalarProperty Name="OfficialEmailAddress" ColumnName="OfficialEmailAddress" />
                 <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="ESINumber" ColumnName="ESINumber" />
                 <ScalarProperty Name="AADHAARNumber" ColumnName="AADHAARNumber" />
-                <ScalarProperty Name="PermanentAccountNumber" ColumnName="PermanentAccountNumber" />
+                <ScalarProperty Name="EPFNumber" ColumnName="EPFNumber" />
                 <ScalarProperty Name="UniversalAccountNumber" ColumnName="UniversalAccountNumber" />
+                <ScalarProperty Name="PermanentAccountNumber" ColumnName="PermanentAccountNumber" />
                 <ScalarProperty Name="MotherName" ColumnName="MotherName" />
                 <ScalarProperty Name="FatherName" ColumnName="FatherName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -1384,12 +1937,55 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EmployeeAddresses">
-            <EntityTypeMapping TypeName="VservAccountingDBModel.EmployeeAddress">
-              <MappingFragment StoreEntitySet="EmployeeAddress">
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+          <EntitySetMapping Name="EmployeeArchives">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.EmployeeArchive">
+              <MappingFragment StoreEntitySet="EmployeeArchive">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BankMICRCode" ColumnName="BankMICRCode" />
+                <ScalarProperty Name="BankIFSCCode" ColumnName="BankIFSCCode" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="BankAccountNumber" ColumnName="BankAccountNumber" />
+                <ScalarProperty Name="IsMetro" ColumnName="IsMetro" />
+                <ScalarProperty Name="MailingCountryId" ColumnName="MailingCountryId" />
+                <ScalarProperty Name="MailingStateId" ColumnName="MailingStateId" />
+                <ScalarProperty Name="MailingZipCode" ColumnName="MailingZipCode" />
+                <ScalarProperty Name="MailingCity" ColumnName="MailingCity" />
+                <ScalarProperty Name="MailingAddress2" ColumnName="MailingAddress2" />
+                <ScalarProperty Name="MailingAddress1" ColumnName="MailingAddress1" />
+                <ScalarProperty Name="PermanentCountryId" ColumnName="PermanentCountryId" />
+                <ScalarProperty Name="PermanentStateId" ColumnName="PermanentStateId" />
+                <ScalarProperty Name="PermanentZipCode" ColumnName="PermanentZipCode" />
+                <ScalarProperty Name="PermanentCity" ColumnName="PermanentCity" />
+                <ScalarProperty Name="PermanentAddress2" ColumnName="PermanentAddress2" />
+                <ScalarProperty Name="PermanentAddress1" ColumnName="PermanentAddress1" />
+                <ScalarProperty Name="OfficeBranchId" ColumnName="OfficeBranchId" />
+                <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+                <ScalarProperty Name="SalutationId" ColumnName="SalutationId" />
+                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
+                <ScalarProperty Name="VBS_Id" ColumnName="VBS_Id" />
+                <ScalarProperty Name="ResignationDate" ColumnName="ResignationDate" />
+                <ScalarProperty Name="RelievingDate" ColumnName="RelievingDate" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="PersonalEmailAddress" ColumnName="PersonalEmailAddress" />
+                <ScalarProperty Name="OfficialEmailAddress" ColumnName="OfficialEmailAddress" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="ESINumber" ColumnName="ESINumber" />
+                <ScalarProperty Name="AADHAARNumber" ColumnName="AADHAARNumber" />
+                <ScalarProperty Name="EPFNumber" ColumnName="EPFNumber" />
+                <ScalarProperty Name="UniversalAccountNumber" ColumnName="UniversalAccountNumber" />
+                <ScalarProperty Name="PermanentAccountNumber" ColumnName="PermanentAccountNumber" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="EmployeeAddressId" ColumnName="EmployeeAddressId" />
+                <ScalarProperty Name="EmployeeArchiveId" ColumnName="EmployeeArchiveId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1422,6 +2018,42 @@
                 <ScalarProperty Name="EPFOfficeCode" ColumnName="EPFOfficeCode" />
                 <ScalarProperty Name="EPFOfficeName" ColumnName="EPFOfficeName" />
                 <ScalarProperty Name="EPFOfficeId" ColumnName="EPFOfficeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Features">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.Feature">
+              <MappingFragment StoreEntitySet="Feature">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsParent" ColumnName="IsParent" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Activeli" ColumnName="Activeli" />
+                <ScalarProperty Name="ImageClass" ColumnName="ImageClass" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="NameOption" ColumnName="NameOption" />
+                <ScalarProperty Name="FeatureId" ColumnName="FeatureId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genders">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.Gender">
+              <MappingFragment StoreEntitySet="Gender">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GenderId" ColumnName="GenderId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1504,6 +2136,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SecurityQuestions">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.SecurityQuestion">
+              <MappingFragment StoreEntitySet="SecurityQuestion">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="CollectionId" ColumnName="CollectionId" />
+                <ScalarProperty Name="SecurityQuestionId" ColumnName="SecurityQuestionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="States">
             <EntityTypeMapping TypeName="VservAccountingDBModel.State">
               <MappingFragment StoreEntitySet="State">
@@ -1530,6 +2176,21 @@
                 <ScalarProperty Name="LoweredUserName" ColumnName="LoweredUserName" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSecurityQuestions">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.UserSecurityQuestion">
+              <MappingFragment StoreEntitySet="UserSecurityQuestion">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="SecurityQuestionId" ColumnName="SecurityQuestionId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserSecurityQuestionId" ColumnName="UserSecurityQuestionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

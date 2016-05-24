@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using Vserv.Accounting.Common.Enums;
+using Vserv.Accounting.Common;
 
 namespace Vserv.Accounting.Business.Common
 {

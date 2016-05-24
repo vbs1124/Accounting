@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Vserv.Accounting.Business.Managers;
-using Vserv.Accounting.Common.Enums;
+using Vserv.Accounting.Common;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Web.Models;
 using Vserv.Common.Extensions;
@@ -104,10 +104,15 @@ namespace Vserv.Accounting.Web.Controllers
             EmployeeManager _employeeManager = new EmployeeManager();
             employeeModel.UpdatedBy = User.Identity.Name;
             employeeModel.UpdatedDate = DateTime.Now;
+
             // Perform Save for Employee
             if (ModelState.IsValid)
             {
                 Employee employee = ConvertTo(employeeModel);
+
+                // Archive Existing Employee information before going for an update.
+                _employeeManager.ArchiveEmployee(employeeModel.EmployeeId, User.Identity.Name);
+
                 _employeeManager.EditEmployee(employee);
                 return RedirectToAction("Success", "Home", new { successMessage = "Employee updated successfully." });
             }
@@ -153,6 +158,20 @@ namespace Vserv.Accounting.Web.Controllers
         public ActionResult Salary()
         {
             return View();
+        }
+
+        public ActionResult EmployeeHistory(int employeeId)
+        {
+            EmployeeManager _employeeManager = new Business.Managers.EmployeeManager();
+            List<EmployeeArchive> employees = _employeeManager.GetEmployeeHistory(employeeId);
+            return PartialView("_employeehistory", employees);
+        }
+
+        public ActionResult EmployeeCompareResult(int employeeArchiveId)
+        {
+            EmployeeManager _employeeManager = new Business.Managers.EmployeeManager();
+            CompareEmployeeModel compareEmployeeModel = _employeeManager.GetMatchingEmployeeInformation(employeeArchiveId);
+            return View("_employeecompare", compareEmployeeModel);
         }
 
         #region dropdownlist
@@ -255,9 +274,9 @@ namespace Vserv.Accounting.Web.Controllers
         private List<SelectListItem> GetGenders()
         {
             var genders = new List<SelectListItem>();
-            genders.Add(new SelectListItem { Text = "Unknown", Value = "0" });
-            genders.Add(new SelectListItem { Text = "Male", Value = "1" });
-            genders.Add(new SelectListItem { Text = "Female", Value = "2" });
+            genders.Add(new SelectListItem { Text = "Unknown", Value = "1" });
+            genders.Add(new SelectListItem { Text = "Male", Value = "2" });
+            genders.Add(new SelectListItem { Text = "Female", Value = "3" });
 
             return genders;
         }
@@ -422,60 +441,6 @@ namespace Vserv.Accounting.Web.Controllers
             {
                 return new Employee();
             }
-            List<EmployeeAddress> addresses = new List<EmployeeAddress>();
-
-            if (employeeModel.PermanentAddress.IsNotNull())
-            {
-                Address permanentAddress = new Address
-                {
-                    AddressId = employeeModel.PermanentAddress.AddressId,
-                    Address1 = employeeModel.PermanentAddress.Address1,
-                    Address2 = employeeModel.PermanentAddress.Address2,
-                    CountryId = null,
-                    StateId = employeeModel.PermanentAddress.StateId,
-                    CityId = null,
-                    ZipCodeId = null,
-                    City = employeeModel.PermanentAddress.City,
-                    ZipCode = employeeModel.PermanentAddress.ZipCode,
-                    Latitude = employeeModel.PermanentAddress.Latitude,
-                    Longitude = employeeModel.PermanentAddress.Longitude,
-                    IsCommunicationAddress = false,
-                    AddressTypeId = Convert.ToInt32(AddressTypeEnum.PermanentAddress),
-                    IsActive = true,
-                    CreatedBy = User.Identity.Name,
-                    UpdatedBy = null,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = null
-                };
-                addresses.Add(new EmployeeAddress { Address = permanentAddress });
-            }
-
-            if (employeeModel.MailingAddress.IsNotNull())
-            {
-                Address mailingAddress = new Address
-                {
-                    AddressId = employeeModel.MailingAddress.AddressId,
-                    Address1 = employeeModel.MailingAddress.Address1,
-                    Address2 = employeeModel.MailingAddress.Address2,
-                    CountryId = null,
-                    StateId = employeeModel.MailingAddress.StateId,
-                    CityId = null,
-                    ZipCodeId = null,
-                    City = employeeModel.MailingAddress.City,
-                    ZipCode = employeeModel.MailingAddress.ZipCode,
-                    Latitude = employeeModel.MailingAddress.Latitude,
-                    Longitude = employeeModel.MailingAddress.Longitude,
-                    IsCommunicationAddress = false,
-                    AddressTypeId = Convert.ToInt32(AddressTypeEnum.MailingAddress),
-                    IsActive = true,
-                    CreatedBy = User.Identity.Name,
-                    UpdatedBy = null,
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = null,
-                };
-
-                addresses.Add(new EmployeeAddress { Address = mailingAddress });
-            }
 
             return new Employee
             {
@@ -489,11 +454,11 @@ namespace Vserv.Accounting.Web.Controllers
                 PermanentAccountNumber = employeeModel.PermanentAccountNumber,
                 AADHAARNumber = employeeModel.AADHAARNumber,
                 MobileNumber = employeeModel.MobileNumber,
-                EmailAddress = employeeModel.EmailAddress,
                 BirthDay = employeeModel.BirthDay.IsNotNull() && employeeModel.BirthDay.HasValue ? employeeModel.BirthDay.Value : DateTime.Now,
                 JoiningDate = employeeModel.JoiningDate.IsNotNull() && employeeModel.JoiningDate.HasValue ? employeeModel.JoiningDate.Value : DateTime.Now,
+                ResignationDate = employeeModel.ResignationDate,
                 RelievingDate = employeeModel.RelievingDate,
-                VBS_Id = String.Format("vbs{0}", employeeModel.VBS_Id),
+                VBS_Id = String.Format("vbs{0}", employeeModel.VBS_Id.Trim()),
                 DesignationId = employeeModel.DesignationId.Value,
                 SalutationId = employeeModel.SalutationId.Value,
                 GenderId = employeeModel.GenderId.Value,
@@ -503,7 +468,27 @@ namespace Vserv.Accounting.Web.Controllers
                 UpdatedBy = employeeModel.UpdatedBy,
                 CreatedDate = DateTime.Now,
                 UpdatedDate = employeeModel.UpdatedDate,
-                EmployeeAddresses = addresses
+                EPFNumber = employeeModel.EPFNumber,
+                ESINumber = employeeModel.ESINumber,
+                OfficialEmailAddress = employeeModel.OfficialEmailAddress,
+                PersonalEmailAddress = employeeModel.PersonalEmailAddress,
+                PermanentAddress1 = employeeModel.PermanentAddress1,
+                PermanentAddress2 = employeeModel.PermanentAddress2,
+                PermanentCity = employeeModel.PermanentCity,
+                PermanentZipCode = employeeModel.PermanentZipCode,
+                PermanentStateId = employeeModel.PermanentStateId,
+                PermanentCountryId = employeeModel.PermanentCountryId,
+                MailingAddress1 = employeeModel.MailingAddress1,
+                MailingAddress2 = employeeModel.MailingAddress2,
+                MailingCity = employeeModel.MailingCity,
+                MailingZipCode = employeeModel.MailingZipCode,
+                MailingStateId = employeeModel.MailingStateId,
+                MailingCountryId = employeeModel.MailingCountryId,
+                IsMetro = employeeModel.IsMetro,
+                BankAccountNumber = employeeModel.BankAccountNumber,
+                BankId = employeeModel.BankId,
+                BankIFSCCode = employeeModel.BankIFSCCode,
+                BankMICRCode = employeeModel.BankMICRCode,
             };
         }
 
@@ -521,28 +506,51 @@ namespace Vserv.Accounting.Web.Controllers
 
             if (designations.IsNotNull())
             {
-                ViewBag.Designations = ConvertTo(designations.Where(condition => condition.IsActive).ToList());
+                ViewBag.Designations = ConvertTo(designations);
             }
 
             var officeBranches = _employeeManager.GetOfficeBranches();
 
             if (officeBranches.IsNotNull())
             {
-                ViewBag.OfficeBranches = ConvertTo(officeBranches.Where(condition => condition.IsActive).ToList());
+                ViewBag.OfficeBranches = ConvertTo(officeBranches);
             }
             var salutations = _employeeManager.GetSalutations();
 
             if (salutations.IsNotNull())
             {
-                ViewBag.Salutations = ConvertTo(salutations.Where(condition => condition.IsActive).ToList());
+                ViewBag.Salutations = ConvertTo(salutations);
             }
 
             var states = _employeeManager.GetStates();
 
             if (states.IsNotNull())
             {
-                ViewBag.States = ConvertTo(states.Where(condition => condition.IsActive).ToList());
+                ViewBag.States = ConvertTo(states);
             }
+
+            var banks = _employeeManager.GetBanks();
+
+            if (states.IsNotNull())
+            {
+                ViewBag.Banks = ConvertTo(banks.Where(condition => condition.IsActive).ToList());
+            }
+        }
+
+        private List<SelectListItem> ConvertTo(List<Bank> banks)
+        {
+            var result = new List<SelectListItem>();
+
+            if (banks.IsNotNull())
+            {
+                banks.ForEach(item => result.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.BankId.ToString()
+                }));
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -550,88 +558,59 @@ namespace Vserv.Accounting.Web.Controllers
         /// </summary>
         /// <param name="employee">The employee.</param>
         /// <returns></returns>
-        private EmployeeModel ConvertTo(Employee employee)
+        private EmployeeModel ConvertTo(Employee employeeModel)
         {
-            AddressModel permanentAddress = null;
-            AddressModel mailingAddress = null;
-
-            foreach (var item in employee.EmployeeAddresses)
+            if (employeeModel.IsNull())
             {
-                if (item.Address.IsNotNull() && item.Address.AddressTypeId.Equals(Convert.ToInt32(AddressTypeEnum.PermanentAddress)))
-                {
-                    permanentAddress = new AddressModel
-                    {
-                        AddressId = item.Address.AddressId,
-                        Address1 = item.Address.Address1,
-                        Address2 = item.Address.Address2,
-                        CountryId = item.Address.CountryId,
-                        StateId = item.Address.StateId,
-                        City = item.Address.City,
-                        ZipCode = item.Address.ZipCode,
-                        Latitude = item.Address.Latitude,
-                        Longitude = item.Address.Longitude,
-                        IsCommunicationAddress = item.Address.IsCommunicationAddress,
-                        AddressTypeId = item.Address.AddressTypeId,
-                        IsActive = item.Address.IsActive,
-                        CreatedBy = item.Address.CreatedBy,
-                        UpdatedBy = item.Address.UpdatedBy,
-                        CreatedDate = item.Address.CreatedDate,
-                        UpdatedDate = item.Address.UpdatedDate,
-                    };
-                }
-
-                if (item.Address.IsNotNull() && item.Address.AddressTypeId.Equals(Convert.ToInt32(AddressTypeEnum.MailingAddress)))
-                {
-                    mailingAddress = new AddressModel
-                    {
-                        AddressId = item.Address.AddressId,
-                        Address1 = item.Address.Address1,
-                        Address2 = item.Address.Address2,
-                        CountryId = item.Address.CountryId,
-                        StateId = item.Address.StateId,
-                        City = item.Address.City,
-                        ZipCode = item.Address.ZipCode,
-                        Latitude = item.Address.Latitude,
-                        Longitude = item.Address.Longitude,
-                        IsCommunicationAddress = item.Address.IsCommunicationAddress,
-                        AddressTypeId = item.Address.AddressTypeId,
-                        IsActive = item.Address.IsActive,
-                        CreatedBy = item.Address.CreatedBy,
-                        UpdatedBy = item.Address.UpdatedBy,
-                        CreatedDate = item.Address.CreatedDate,
-                        UpdatedDate = item.Address.UpdatedDate,
-                    };
-                }
+                return new EmployeeModel();
             }
-
             return new EmployeeModel
             {
-                EmployeeId = employee.EmployeeId,
-                FirstName = employee.FirstName,
-                MiddleName = employee.MiddleName,
-                LastName = employee.LastName,
-                FatherName = employee.FatherName,
-                MotherName = employee.MotherName,
-                UniversalAccountNumber = employee.UniversalAccountNumber,
-                PermanentAccountNumber = employee.PermanentAccountNumber,
-                AADHAARNumber = employee.AADHAARNumber,
-                MobileNumber = employee.MobileNumber,
-                EmailAddress = employee.EmailAddress,
-                BirthDay = employee.BirthDay,
-                JoiningDate = employee.JoiningDate,
-                RelievingDate = employee.RelievingDate,
-                VBS_Id = employee.VBS_Id.Replace("vbs", ""),
-                DesignationId = employee.DesignationId,
-                SalutationId = employee.SalutationId,
-                GenderId = employee.GenderId,
-                OfficeBranchId = employee.OfficeBranchId,
-                IsActive = employee.IsActive,
-                CreatedBy = employee.CreatedBy,
-                UpdatedBy = employee.UpdatedBy,
-                CreatedDate = employee.CreatedDate,
-                UpdatedDate = employee.UpdatedDate,
-                PermanentAddress = permanentAddress,
-                MailingAddress = mailingAddress
+                EmployeeId = employeeModel.EmployeeId,
+                FirstName = employeeModel.FirstName,
+                MiddleName = employeeModel.MiddleName,
+                LastName = employeeModel.LastName,
+                FatherName = employeeModel.FatherName,
+                MotherName = employeeModel.MotherName,
+                UniversalAccountNumber = employeeModel.UniversalAccountNumber,
+                PermanentAccountNumber = employeeModel.PermanentAccountNumber,
+                AADHAARNumber = employeeModel.AADHAARNumber,
+                MobileNumber = employeeModel.MobileNumber,
+                BirthDay = employeeModel.BirthDay,
+                JoiningDate = employeeModel.JoiningDate,
+                ResignationDate = employeeModel.ResignationDate,
+                RelievingDate = employeeModel.RelievingDate,
+                VBS_Id = employeeModel.VBS_Id.Remove(0, 3),
+                DesignationId = employeeModel.DesignationId,
+                SalutationId = employeeModel.SalutationId,
+                GenderId = employeeModel.GenderId,
+                OfficeBranchId = employeeModel.OfficeBranchId,
+                IsActive = employeeModel.IsActive,
+                CreatedBy = employeeModel.CreatedBy,
+                UpdatedBy = employeeModel.UpdatedBy,
+                CreatedDate = employeeModel.CreatedDate,
+                UpdatedDate = employeeModel.UpdatedDate,
+                EPFNumber = employeeModel.EPFNumber,
+                ESINumber = employeeModel.ESINumber,
+                OfficialEmailAddress = employeeModel.OfficialEmailAddress,
+                PersonalEmailAddress = employeeModel.PersonalEmailAddress,
+                PermanentAddress1 = employeeModel.PermanentAddress1,
+                PermanentAddress2 = employeeModel.PermanentAddress2,
+                PermanentCity = employeeModel.PermanentCity,
+                PermanentZipCode = employeeModel.PermanentZipCode,
+                PermanentStateId = employeeModel.PermanentStateId,
+                PermanentCountryId = employeeModel.PermanentCountryId,
+                MailingAddress1 = employeeModel.MailingAddress1,
+                MailingAddress2 = employeeModel.MailingAddress2,
+                MailingCity = employeeModel.MailingCity,
+                MailingZipCode = employeeModel.MailingZipCode,
+                MailingStateId = employeeModel.MailingStateId,
+                MailingCountryId = employeeModel.MailingCountryId,
+                IsMetro = employeeModel.IsMetro,
+                BankAccountNumber = employeeModel.BankAccountNumber,
+                BankId = employeeModel.BankId,
+                BankIFSCCode = employeeModel.BankIFSCCode,
+                BankMICRCode = employeeModel.BankMICRCode,
             };
         }
 

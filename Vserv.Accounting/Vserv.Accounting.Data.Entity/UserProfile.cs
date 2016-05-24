@@ -16,6 +16,7 @@ namespace Vserv.Accounting.Data.Entity
     {
         public UserProfile()
         {
+            this.UserSecurityQuestions = new HashSet<UserSecurityQuestion>();
             this.Roles = new HashSet<Role>();
         }
     
@@ -27,6 +28,7 @@ namespace Vserv.Accounting.Data.Entity
         public Nullable<bool> IsAnonymous { get; set; }
         public Nullable<System.DateTime> LastActivityDate { get; set; }
     
+        public virtual ICollection<UserSecurityQuestion> UserSecurityQuestions { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
     }
 }

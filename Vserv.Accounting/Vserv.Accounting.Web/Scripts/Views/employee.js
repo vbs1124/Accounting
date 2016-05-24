@@ -1,4 +1,23 @@
 ﻿$(function () {
+
+    $('#dataTables-security-questions').DataTable({
+        responsive: true,
+        select: true,
+        processing: true
+    });
+
+    $('#dataTables-employees').DataTable({
+        responsive: true,
+        select: true,
+        processing: true
+    });
+
+    $('#dataTables-employee-history').DataTable({
+        responsive: true,
+        select: true,
+        processing: true
+    });
+
     //Initialise any date pickers
     $("#dp-birth-date").datetimepicker({
         format: "MM/DD/YYYY",
@@ -9,6 +28,13 @@
     });
 
     $("#dp-relieving-date").datetimepicker({
+        format: "MM/DD/YYYY",
+        showTodayButton: true,
+        showClear: true,
+        showClose: true
+    });
+
+    $("#dp-resignation-date").datetimepicker({
         format: "MM/DD/YYYY",
         showTodayButton: true,
         showClear: true,
@@ -30,6 +56,7 @@
 
     $("#dp-relieving-date").on("dp.change", function (e) {
         $('#dp-joining-date').data("DateTimePicker").maxDate(e.date);
+        $('#dp-resignation-date').data("DateTimePicker").maxDate(e.date);
     });
 
     // Reset form controls once the modal is closed.
@@ -47,15 +74,15 @@
 
 function onchange_copyPermanentAdds(event, args) {
     if (event.checked) {
-        $("#MailingAddress_Address1").val($("#PermanentAddress_Address1").val());
-        $("#MailingAddress_Address2").val($("#PermanentAddress_Address2").val());
-        $("#MailingAddress_City").val($("#PermanentAddress_City").val());
-        $("#MailingAddress_ZipCode").val($("#PermanentAddress_ZipCode").val());
-        $("#MailingAddress_StateId").val($("#PermanentAddress_StateId").val());
+        $("#MailingAddress1").val($("#PermanentAddress1").val());
+        $("#MailingAddress2").val($("#PermanentAddress2").val());
+        $("#MailingZipCode").val($("#PermanentZipCode").val());
+        $("#MailingCity").val($("#PermanentCity").val());
+        $("#MailingStateId").val($("#PermanentStateId").val());
     } else {
-        $("#MailingAddress_Address1").val("");
-        $("#MailingAddress_Address2").val("");
-        $("#MailingAddress_City").val("");
-        $("#MailingAddress_ZipCode").val("");
+        $("#MailingAddress1").val("");
+        $("#MailingAddress2").val("");
+        $("#MailingZipCode").val("");
+        $("#MailingCity").val("");
     }
 }

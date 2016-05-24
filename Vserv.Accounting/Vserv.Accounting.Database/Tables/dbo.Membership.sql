@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[Membership](
+﻿
+CREATE TABLE [dbo].[Membership](
 	[UserId] [int] NOT NULL,
 	[Email] [nvarchar](256) NOT NULL,
 	[LoweredEmail] [nvarchar](256) NOT NULL,
@@ -43,3 +44,5 @@ GO
 
 ALTER TABLE [dbo].[Membership] ADD  CONSTRAINT [DF_Membership_Comment]  DEFAULT ('') FOR [Comment]
 GO
+
+

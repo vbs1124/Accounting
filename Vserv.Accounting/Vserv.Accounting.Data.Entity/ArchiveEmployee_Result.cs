@@ -10,15 +10,14 @@
 namespace Vserv.Accounting.Data.Entity
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class EmployeeAddress
+    public partial class ArchiveEmployee_Result
     {
-        public int EmployeeAddressId { get; set; }
-        public int EmployeeId { get; set; }
-        public int AddressId { get; set; }
-    
-        public virtual Address Address { get; set; }
-        public virtual Employee Employee { get; set; }
+        public Nullable<int> ErrorNumber { get; set; }
+        public Nullable<int> ErrorSeverity { get; set; }
+        public Nullable<int> ErrorState { get; set; }
+        public string ErrorProcedure { get; set; }
+        public Nullable<int> ErrorLine { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

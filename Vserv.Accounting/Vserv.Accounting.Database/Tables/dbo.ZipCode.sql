@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[ZipCode](
+﻿
+CREATE TABLE [dbo].[ZipCode](
 	[ZipCodeId] [int] IDENTITY(1,1) NOT NULL,
 	[PinCode] [varchar](50) NOT NULL,
 	[DivisionName] [varchar](255) NOT NULL,
@@ -6,8 +7,8 @@
 	[CityId] [int] NOT NULL,
 	[StateId] [int] NOT NULL,
 	[IsActive] [bit] NOT NULL,
-	[CreatedBy] [nvarchar](50) NOT NULL,
-	[UpdatedBy] [nvarchar](50) NULL,
+	[CreatedBy] [varchar](50) NOT NULL,
+	[UpdatedBy] [varchar](50) NULL,
 	[CreatedDate] [datetime] NOT NULL,
 	[UpdatedDate] [datetime] NULL,
  CONSTRAINT [PK_ZipCode] PRIMARY KEY CLUSTERED 

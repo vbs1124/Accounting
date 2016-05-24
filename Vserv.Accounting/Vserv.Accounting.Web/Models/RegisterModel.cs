@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Vserv.Accounting.Web.Code;
+using Vserv.Accounting.Data.Entity;
 
 namespace Vserv.Accounting.Web.Models
 {
@@ -190,5 +191,11 @@ namespace Vserv.Accounting.Web.Models
         {
             get { return String.IsNullOrWhiteSpace(Email) ? String.Empty : Email.Trim().ToLower(); }
         }
+
+        public UserSecurityQuestion UserSecurityQuestion1 { get; set; }
+
+        public UserSecurityQuestion UserSecurityQuestion2 { get; set; }
+
+        public UserSecurityQuestion UserSecurityQuestion3 { get; set; }
     }
 }

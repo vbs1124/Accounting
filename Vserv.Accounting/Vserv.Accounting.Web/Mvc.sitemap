@@ -7,7 +7,9 @@
     <mvcSiteMapNode title="Dashboard" controller="dashboard" action="index"/>
     <mvcSiteMapNode title="Employees" controller="employee" action="list">
       <mvcSiteMapNode title="Add Employee" controller="employee" action="add"/>
-      <mvcSiteMapNode title="Edit Employee" controller="employee" action="edit"/>
+      <mvcSiteMapNode title="Edit Employee" controller="employee" action="edit" >
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Compare Employees" controller="employee" action="EmployeeCompareResult"/>
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Designations" controller="designation" action="index">
       <mvcSiteMapNode title="Add Designation" controller="designation" action="add"/>

@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[UserProfile](
+﻿
+CREATE TABLE [dbo].[UserProfile](
 	[UserId] [int] IDENTITY(1,1) NOT NULL,
 	[UserName] [nvarchar](256) NOT NULL,
 	[LoweredUserName] [nvarchar](256) NOT NULL,

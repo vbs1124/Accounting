@@ -58,20 +58,6 @@ namespace Vserv.Accounting.Business.Managers
         }
 
         /// <summary>
-        /// Adds the address information.
-        /// </summary>
-        /// <param name="address">The address.</param>
-        /// <returns></returns>
-        public Address AddAddressInformation(Address address)
-        {
-            return ExecuteFaultHandledOperation(() =>
-            {
-                IAddressRepository _repository = _dataRepositoryFactory.GetDataRepository<IAddressRepository>();
-                return _repository.AddAddressInformation(address);
-            });
-        }
-
-        /// <summary>
         /// Gets the employee.
         /// </summary>
         /// <param name="employeeId">The employee identifier.</param>
@@ -210,12 +196,65 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int GetEmployeeCount()
         {
             return ExecuteFaultHandledOperation(() =>
             {
                 var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
                 return _employeeRepository.GetEmployeeCount();
+            });
+        }
+
+        /// <summary>
+        /// Retrieves the list of all Active Banks.
+        /// </summary>
+        /// <returns></returns>
+        public List<Bank> GetBanks()
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                IBankRepository _bankRepository = _dataRepositoryFactory.GetDataRepository<IBankRepository>();
+                return _bankRepository.GetBanks();
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employeeId"></param>
+        public void ArchiveEmployee(int employeeId, string updatedByUserName)
+        {
+            ExecuteFaultHandledOperation(() =>
+          {
+              var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+              _employeeRepository.ArchiveEmployee(employeeId, updatedByUserName);
+          });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        public List<EmployeeArchive> GetEmployeeHistory(int employeeId)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetEmployeeHistory(employeeId);
+            });
+        }
+
+        public CompareEmployeeModel GetMatchingEmployeeInformation(int employeeArchiveId)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetMatchingEmployeeInformation(employeeArchiveId);
             });
         }
 
@@ -300,20 +339,6 @@ namespace Vserv.Accounting.Business.Managers
         #endregion Designations
 
         #region Address
-
-        /// <summary>
-        /// Gets the addresses.
-        /// </summary>
-        /// <param name="employeeId">The employee identifier.</param>
-        /// <returns></returns>
-        public List<Address> GetAddresses(int employeeId)
-        {
-            return ExecuteFaultHandledOperation(() =>
-            {
-                var _repository = _dataRepositoryFactory.GetDataRepository<IAddressRepository>();
-                return _repository.GetAddresses(employeeId);
-            });
-        }
 
         /// <summary>
         /// Gets the cities.

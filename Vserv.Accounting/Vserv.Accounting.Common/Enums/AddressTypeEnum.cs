@@ -1,5 +1,5 @@
 ﻿
-namespace Vserv.Accounting.Common.Enums
+namespace Vserv.Accounting.Common
 {
     /// <summary>
     /// 

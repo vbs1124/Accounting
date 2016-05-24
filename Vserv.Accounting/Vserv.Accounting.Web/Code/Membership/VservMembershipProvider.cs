@@ -497,6 +497,39 @@ namespace Vserv.Accounting.Web.Code.Membership
             };
 
             this.usersService.Save(membership, add: true);
+
+            List<UserSecurityQuestion> userSecurityQuestions = new List<UserSecurityQuestion>();
+            UserSecurityQuestion userSecurityQuestion = null;
+
+            // Save Security Questions for each user.
+            if (values.ContainsKey(Common.CommonConstants.USER_SECURITY_QUESTION_1))
+            {
+                userSecurityQuestion = (UserSecurityQuestion)values[Common.CommonConstants.USER_SECURITY_QUESTION_1];
+                userSecurityQuestion.CreatedBy = userName;
+                userSecurityQuestion.CreatedDate = DateTime.Now;
+                userSecurityQuestion.IsActive = true;
+                userSecurityQuestions.Add(userSecurityQuestion);
+            }
+
+            if (values.ContainsKey(Common.CommonConstants.USER_SECURITY_QUESTION_2))
+            {
+                userSecurityQuestion = (UserSecurityQuestion)values[Common.CommonConstants.USER_SECURITY_QUESTION_2];
+                userSecurityQuestion.CreatedBy = userName;
+                userSecurityQuestion.CreatedDate = DateTime.Now;
+                userSecurityQuestion.IsActive = true;
+                userSecurityQuestions.Add(userSecurityQuestion);
+            }
+
+            if (values.ContainsKey(Common.CommonConstants.USER_SECURITY_QUESTION_3))
+            {
+                userSecurityQuestion = (UserSecurityQuestion)values[Common.CommonConstants.USER_SECURITY_QUESTION_3];
+                userSecurityQuestion.CreatedBy = userName;
+                userSecurityQuestion.CreatedDate = DateTime.Now;
+                userSecurityQuestion.IsActive = true;
+                userSecurityQuestions.Add(userSecurityQuestion);
+            }
+
+            this.usersService.Save(userSecurityQuestions, userName, add: true);
             return membership.ConfirmationToken;
         }
 

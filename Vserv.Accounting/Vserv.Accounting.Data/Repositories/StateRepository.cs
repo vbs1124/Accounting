@@ -21,7 +21,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                var result = context.States.ToList();
+                var result = context.States.Where(condition => condition.IsActive).ToList();
                 return result;
             }
         }

@@ -5,8 +5,8 @@
 	[Description] [varchar](250) NULL,
 	[DisplayOrder] [int] NOT NULL,
 	[IsActive] [bit] NOT NULL,
-	[CreatedBy] [nvarchar](50) NOT NULL,
-	[UpdatedBy] [nvarchar](50) NULL,
+	[CreatedBy] [varchar](50) NOT NULL,
+	[UpdatedBy] [varchar](50) NULL,
 	[CreatedDate] [datetime] NOT NULL,
 	[UpdatedDate] [datetime] NULL,
  CONSTRAINT [PK_Designation] PRIMARY KEY CLUSTERED 
@@ -16,6 +16,7 @@
 ) ON [PRIMARY]
 
 GO
+
 ALTER TABLE [dbo].[Designation] ADD  CONSTRAINT [DF_Designation_DisplayOrder]  DEFAULT ((0)) FOR [DisplayOrder]
 GO
 

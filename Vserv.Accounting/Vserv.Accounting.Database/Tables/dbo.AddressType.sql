@@ -5,8 +5,8 @@
 	[Description] [varchar](250) NOT NULL,
 	[DisplayOrder] [int] NOT NULL,
 	[IsActive] [bit] NOT NULL,
-	[CreatedBy] [nvarchar](50) NOT NULL,
-	[UpdatedBy] [nvarchar](50) NULL,
+	[CreatedBy] [varchar](50) NOT NULL,
+	[UpdatedBy] [varchar](50) NULL,
 	[CreatedDate] [datetime] NOT NULL,
 	[UpdatedDate] [datetime] NULL,
  CONSTRAINT [PK_AddressType] PRIMARY KEY CLUSTERED 

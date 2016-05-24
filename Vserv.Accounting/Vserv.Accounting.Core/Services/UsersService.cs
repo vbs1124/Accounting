@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -303,6 +304,33 @@ namespace Vserv.Accounting.Core.Services
             membership.PasswordSalt = (this as IUsersService).GetHash(newPassword);
 
             this._databaseContext.SaveChanges();
+        }
+
+
+        void IUsersService.Save(List<UserSecurityQuestion> userSecurityQuestions, string userName, bool add)
+        {
+            try
+            {
+                if (add)
+                {
+                    // Get UserId by username..
+                    userName = userName.Trim().ToLower();
+                    int userId = _databaseContext.UserProfiles.FirstOrDefault(user => user.LoweredUserName == userName).UserId;
+
+                    foreach (var item in userSecurityQuestions)
+                    {
+                        item.UserId = userId;
+                        this._databaseContext.Add(item);
+                    }
+                }
+
+                this._databaseContext.SaveChanges();
+            }
+            catch
+            {
+
+                throw;
+            }
         }
     }
 }

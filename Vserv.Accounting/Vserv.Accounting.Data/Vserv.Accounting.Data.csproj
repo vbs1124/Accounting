@@ -50,19 +50,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataRepositoryFactory.cs" />
-    <Compile Include="Interfaces\IAddressRepository.cs" />
     <Compile Include="Interfaces\IAddressTypeRepository.cs" />
-    <Compile Include="Interfaces\ICityRepository.cs" />
+    <Compile Include="Interfaces\IBankRepository.cs" />
+    <Compile Include="Interfaces\ICityRepository - Copy.cs" />
+    <Compile Include="Interfaces\ISecurityQuestionRepository.cs" />
     <Compile Include="Interfaces\IDesignationRepository.cs" />
     <Compile Include="Interfaces\IEmployeeRepository.cs" />
+    <Compile Include="Interfaces\IFeatureRepository.cs" />
     <Compile Include="Interfaces\IHomeRepository.cs" />
     <Compile Include="Interfaces\IOfficeBranchRepository.cs" />
     <Compile Include="Interfaces\ISalutationRepository.cs" />
     <Compile Include="Interfaces\IStateRepository.cs" />
     <Compile Include="Interfaces\IUserProfileRepository.cs" />
     <Compile Include="Interfaces\IZipCodeRepository.cs" />
-    <Compile Include="Repositories\AddressRepository.cs" />
     <Compile Include="Repositories\AddressTypeRepository.cs" />
+    <Compile Include="Repositories\BankRepository.cs" />
+    <Compile Include="Repositories\SecurityQuestionRepository.cs" />
+    <Compile Include="Repositories\FeatureRepository.cs" />
     <Compile Include="Repositories\CityRepository.cs" />
     <Compile Include="Repositories\DesignationRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />

@@ -14,11 +14,6 @@ namespace Vserv.Accounting.Data.Entity
     
     public partial class AddressType
     {
-        public AddressType()
-        {
-            this.Addresses = new HashSet<Address>();
-        }
-    
         public int AddressTypeId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
@@ -29,7 +24,5 @@ namespace Vserv.Accounting.Data.Entity
         public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-    
-        public virtual ICollection<Address> Addresses { get; set; }
     }
 }

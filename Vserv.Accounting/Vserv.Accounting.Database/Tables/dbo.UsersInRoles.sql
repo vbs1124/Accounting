@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[UsersInRoles](
+﻿
+CREATE TABLE [dbo].[UsersInRoles](
 	[UserId] [int] NOT NULL,
 	[RoleId] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 

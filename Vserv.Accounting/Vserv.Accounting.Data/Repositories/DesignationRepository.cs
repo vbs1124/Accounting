@@ -27,7 +27,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Designations.ToList();
+                return context.Designations.Where(condition => condition.IsActive).ToList();
             }
         }
 

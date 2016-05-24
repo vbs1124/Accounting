@@ -1,11 +1,7 @@
 ﻿/// <reference path="toastr.js" />
 $(function () {
     $('#side-menu').metisMenu();
-    $('#dataTables-employees').DataTable({
-        responsive: true,
-        select: true,
-        processing: true
-    });
+ 
     (function (vbs) {
         var viewModelHelper = function () {
             var self = this;

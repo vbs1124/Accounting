@@ -21,6 +21,12 @@
 }
 
 $(function () {
+    $('#dataTables-designation').DataTable({
+        responsive: true,
+        select: true,
+        processing: true
+    });
+
     $("#cmbPopupDesgName").prop("disabled", true);
 
     $('#cmbPopupDesgName').on('change', function () {

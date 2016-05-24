@@ -1,10 +1,17 @@
 ﻿@model Vserv.Accounting.Web.Models.EmployeeModel
 @{
-    ViewBag.Title = "Add Employee";
-}
-@using (Html.BeginForm("add", "employee"))
-{
-    @Html.Partial("_EmployeePartial")
+    ViewBag.Title = "Add a New Employee";
 }
 
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#add-employee" data-toggle="tab">@ViewBag.Title</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade active in padding-top10" id="add-employee">
+        @using (Html.BeginForm("add", "employee"))
+        {
+            @Html.Partial("_EmployeePartial")
+        }
+    </div>
+</div>
 @Html.Action("DesignationWindow", "Designation")

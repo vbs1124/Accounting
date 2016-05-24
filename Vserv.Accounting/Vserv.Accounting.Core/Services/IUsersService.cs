@@ -1,4 +1,5 @@
-﻿using Vserv.Accounting.Data.Entity;
+﻿using System.Collections.Generic;
+using Vserv.Accounting.Data.Entity;
 
 namespace Vserv.Accounting.Core.Services
 {
@@ -111,5 +112,12 @@ namespace Vserv.Accounting.Core.Services
         /// <param name="text">The text.</param>
         /// <returns></returns>
         string GetHash(string text);
+
+        /// <summary>
+        /// Save the security Questions against each user.
+        /// </summary>
+        /// <param name="userSecurityQuestions"></param>
+        /// <param name="add"></param>
+        void Save(List<UserSecurityQuestion> userSecurityQuestions, string userName, bool add);
     }
 }

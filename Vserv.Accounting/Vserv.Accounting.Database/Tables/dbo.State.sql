@@ -1,12 +1,13 @@
-﻿CREATE TABLE [dbo].[State](
+﻿
+CREATE TABLE [dbo].[State](
 	[StateId] [int] IDENTITY(1,1) NOT NULL,
 	[Code] [nchar](6) NULL,
 	[Name] [varchar](100) NOT NULL,
 	[Description] [varchar](250) NOT NULL,
 	[DisplayOrder] [int] NOT NULL,
 	[IsActive] [bit] NOT NULL,
-	[CreatedBy] [nvarchar](50) NOT NULL,
-	[UpdatedBy] [nvarchar](50) NULL,
+	[CreatedBy] [varchar](50) NOT NULL,
+	[UpdatedBy] [varchar](50) NULL,
 	[CreatedDate] [datetime] NOT NULL,
 	[UpdatedDate] [datetime] NULL,
  CONSTRAINT [PK_State] PRIMARY KEY CLUSTERED 

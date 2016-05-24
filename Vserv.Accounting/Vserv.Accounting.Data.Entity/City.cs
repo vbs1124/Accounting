@@ -16,7 +16,6 @@ namespace Vserv.Accounting.Data.Entity
     {
         public City()
         {
-            this.Addresses = new HashSet<Address>();
             this.ZipCodes = new HashSet<ZipCode>();
         }
     
@@ -31,7 +30,6 @@ namespace Vserv.Accounting.Data.Entity
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
-        public virtual ICollection<Address> Addresses { get; set; }
         public virtual State State { get; set; }
         public virtual ICollection<ZipCode> ZipCodes { get; set; }
     }

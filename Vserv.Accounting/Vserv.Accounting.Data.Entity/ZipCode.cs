@@ -14,11 +14,6 @@ namespace Vserv.Accounting.Data.Entity
     
     public partial class ZipCode
     {
-        public ZipCode()
-        {
-            this.Addresses = new HashSet<Address>();
-        }
-    
         public int ZipCodeId { get; set; }
         public string PinCode { get; set; }
         public string DivisionName { get; set; }
@@ -31,7 +26,6 @@ namespace Vserv.Accounting.Data.Entity
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
-        public virtual ICollection<Address> Addresses { get; set; }
         public virtual City City { get; set; }
         public virtual State State { get; set; }
     }

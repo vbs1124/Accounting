@@ -5,6 +5,7 @@ using Vserv.Accounting.Web.Models;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using Vserv.Accounting.Data.Entity;
 
 namespace Vserv.Accounting.Web.Code
 {
@@ -98,7 +99,7 @@ namespace Vserv.Accounting.Web.Code
 
                 if (isexists)
                 {
-                    return new ValidationResult("Employee Id already registered.");
+                    return new ValidationResult("Official Email address already registered.");
                 }
             }
 
@@ -251,6 +252,38 @@ namespace Vserv.Accounting.Web.Code
                     errorMessage.Append(@"The password cannot contain following characters ( ) [ ] . ; : \ ");
                     errorMessage.Append("");
                     return new ValidationResult(errorMessage.ToString());
+                }
+            }
+
+            return ValidationResult.Success;
+        }
+    }
+
+    public class IsRegisteredUserAttribute : ValidationAttribute
+    {
+        /// <summary>
+        /// Returns true if ... is valid.
+        /// </summary>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="validationContext">The context information about the validation operation.</param>
+        /// <returns>
+        /// An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> class.
+        /// </returns>
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            if (value == null)
+            {
+                return new ValidationResult("User Name is Required.");
+            }
+            else
+            {
+                string userName = value.ToString();
+                AccountManager _manager = new AccountManager();
+                UserProfile userProfile = _manager.GetUserProfile(userName);
+
+                if (userProfile == null)
+                {
+                    return new ValidationResult("No account found with that User Name.");
                 }
             }
 

@@ -24,6 +24,8 @@ namespace Vserv.Accounting.Data.Entity
 
         void Add(Membership membership);
 
+        void Add(UserSecurityQuestion userSecurityQuestion);
+
         void SaveChanges();
 
     }

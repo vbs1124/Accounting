@@ -41,7 +41,7 @@ namespace Vserv.Accounting.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Vserv.Common.Bootstrapper.Log4NetLoader.Initialize(Server.MapPath(Vserv.Common.Utils.ApplicationConfiguration.GetApplicationConfiguration(Vserv.Accounting.Common.Constants.CommonConstants.Log4NetConfigKeyName)));
+            Vserv.Common.Bootstrapper.Log4NetLoader.Initialize(Server.MapPath(Vserv.Common.Utils.ApplicationConfiguration.GetApplicationConfiguration(Vserv.Accounting.Common.CommonConstants.Log4NetConfigKeyName)));
         }
     }
 }

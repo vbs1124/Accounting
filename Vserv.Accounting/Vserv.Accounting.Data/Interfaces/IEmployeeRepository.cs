@@ -78,6 +78,21 @@ namespace Vserv.Accounting.Data
         /// <returns></returns>
         int GetEmployeeCount();
 
+        /// <summary>
+        /// Archive Employee information to maintain audit trail.
+        /// </summary>
+        /// <param name="employeeId"></param>
+        void ArchiveEmployee(int employeeId, string updatedByUserName);
+
+        /// <summary>
+        /// Retrieves Employee History based on EmployeeId.
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        List<EmployeeArchive> GetEmployeeHistory(int employeeId);
+
+        CompareEmployeeModel GetMatchingEmployeeInformation(int employeeArchiveId);
+
         #endregion
     }
 }

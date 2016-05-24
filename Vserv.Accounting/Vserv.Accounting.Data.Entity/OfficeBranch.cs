@@ -17,6 +17,7 @@ namespace Vserv.Accounting.Data.Entity
         public OfficeBranch()
         {
             this.Employees = new HashSet<Employee>();
+            this.EmployeeArchives = new HashSet<EmployeeArchive>();
         }
     
         public int OfficeBranchId { get; set; }
@@ -31,5 +32,6 @@ namespace Vserv.Accounting.Data.Entity
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
         public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<EmployeeArchive> EmployeeArchives { get; set; }
     }
 }

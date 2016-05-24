@@ -22,7 +22,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Salutations.ToList();
+                return context.Salutations.Where(condition => condition.IsActive).ToList();
             }
         } 
         #endregion

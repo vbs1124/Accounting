@@ -52,13 +52,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Address.cs">
-      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="AddressType.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ApplicationLog.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ArchiveEmployee_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Bank.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="City.cs">
@@ -76,7 +79,7 @@
     <Compile Include="Employee.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EmployeeAddress.cs">
+    <Compile Include="EmployeeArchive.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EPFNumber.cs">
@@ -85,9 +88,17 @@
     <Compile Include="EPFOffice.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Feature.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Gender.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Membership.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CompareEmployeeModel.cs" />
+    <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\Membership.cs" />
     <Compile Include="OAuthMembership.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
@@ -101,10 +112,16 @@
     <Compile Include="Salutation.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SecurityQuestion.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="State.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserProfile.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserSecurityQuestion.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="VservAccountingDBEntities.cs" />

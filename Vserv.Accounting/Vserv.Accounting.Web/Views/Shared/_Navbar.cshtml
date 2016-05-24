@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Vserv.Accounting.Web.Models.Navbar>
+﻿@model IEnumerable<Vserv.Accounting.Data.Entity.Feature>
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
@@ -14,26 +14,26 @@
             </li>
             @foreach (var item in Model)
                 {
-                    if (item.isParent == false && item.parentId == 0)
+                    if (item.IsParent == false && item.ParentId == 0)
                     {
-                <li><a href="@Url.Action(item.action, item.controller)"><i class="@item.imageClass"></i> @item.nameOption</a></li>
+                <li><a href="@Url.Action(item.Action, item.Controller)"><i class="@item.ImageClass"></i> @item.NameOption</a></li>
                     }
                     else
                     {
-                        if (item.isParent == true)
+                        if (item.IsParent == true)
                         {
                 <li>
-                    <a href="#"><i class="@item.imageClass"></i> @item.nameOption<span class="fa arrow"></span></a>
+                    <a href="#"><i class="@item.ImageClass"></i> @item.NameOption<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        @foreach (var child in Model.Where(p => p.parentId == item.Id))
+                        @foreach (var child in Model.Where(p => p.ParentId == item.FeatureId))
                                     {
-                                        if (child.controller == null)
+                                        if (child.Controller == null)
                                         {
-                                    <li><a href="#">@child.nameOption</a></li>
+                                    <li><a href="#">@child.NameOption</a></li>
                                         }
                                         else
                                         {
-                                    <li><a href="@Url.Action(child.action, child.controller)">@child.nameOption</a></li>
+                                    <li><a href="@Url.Action(child.Action, child.Controller)">@child.NameOption</a></li>
                                         }
                                     }
                     </ul>

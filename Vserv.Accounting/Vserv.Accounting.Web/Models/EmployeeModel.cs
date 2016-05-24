@@ -116,19 +116,6 @@ namespace Vserv.Accounting.Web.Models
         public string MobileNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets the email address.
-        /// </summary>
-        /// <value>
-        /// The email address.
-        /// </value>
-        [Required(ErrorMessage = "Email address is required.")]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email address")]
-        [ValidEmailAddress(ErrorMessage = "Invalid Email address.")]
-        [EmailAddressExists]
-        public string EmailAddress { get; set; }
-
-        /// <summary>
         /// Gets or sets the birth day.
         /// </summary>
         /// <value>
@@ -263,110 +250,120 @@ namespace Vserv.Accounting.Web.Models
         [Display(Name = "Updated Date")]
         public Nullable<DateTime> UpdatedDate { get; set; }
 
-        /// <summary>
-        /// Gets or sets the designation.
-        /// </summary>
-        /// <value>
-        /// The designation.
-        /// </value>
+        [Display(Name = "EPF Number")]
+        public string EPFNumber { get; set; }
+
+        [Display(Name = "ESI Number")]
+        public string ESINumber { get; set; }
+
+        [Required(ErrorMessage = "Official Email address is required.")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Official Email address")]
+        [ValidEmailAddress(ErrorMessage = "Invalid Official Email address.")]
+        [EmailAddressExists]
+        public string OfficialEmailAddress { get; set; }
+
+        [Required(ErrorMessage = "Personal Email address is required.")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Personal Email address")]
+        [ValidEmailAddress(ErrorMessage = "Invalid Personal Email address.")]
+        public string PersonalEmailAddress { get; set; }
+
+        [Display(Name = "Resignation Date")]
+        public Nullable<System.DateTime> ResignationDate { get; set; }
+
+        [Required(ErrorMessage = "Address 1 is required.")]
+        [StringLength(250, MinimumLength = 3, ErrorMessage = "Address 1 is too short.")]
+        [Display(Name = "Address 1")]
+        public string PermanentAddress1 { get; set; }
+
+        [Display(Name = "Address 2")]
+        public string PermanentAddress2 { get; set; }
+
+        [Required(ErrorMessage = "City is required.")]
+        [MaxLength(250, ErrorMessage = "City is too long.")]
+        [Display(Name = "City")]
+        public string PermanentCity { get; set; }
+
+        [Required(ErrorMessage = "Pin Code is required.")]
+        [RegularExpression("^[1-9][0-9]{5}$", ErrorMessage = "Invalid Pin Code.")]
+        [StringLength(6, MinimumLength = 6, ErrorMessage = "Pin Code should be 6 digits.")]
+        [Display(Name = "Pin Code")]
+        public string PermanentZipCode { get; set; }
+
+        [Required(ErrorMessage = "State is required.")]
+        [Display(Name = "State")]
+        public Nullable<int> PermanentStateId { get; set; }
+
+        [Display(Name = "Country")]
+        public Nullable<int> PermanentCountryId { get; set; }
+
+        [Required(ErrorMessage = "Address 1 is required.")]
+        [StringLength(250, MinimumLength = 3, ErrorMessage = "Address 1 is too short.")]
+        [Display(Name = "Address 1")]
+        public string MailingAddress1 { get; set; }
+
+        [Display(Name = "Address 2")]
+        public string MailingAddress2 { get; set; }
+
+        [Required(ErrorMessage = "City is required.")]
+        [MaxLength(250, ErrorMessage = "City is too long.")]
+        [Display(Name = "City")]
+        public string MailingCity { get; set; }
+
+        [Required(ErrorMessage = "Pin Code is required.")]
+        [RegularExpression("^[1-9][0-9]{5}$", ErrorMessage = "Invalid Pin Code.")]
+        [StringLength(6, MinimumLength = 6, ErrorMessage = "Pin Code should be 6 digits.")]
+        [Display(Name = "Pin Code")]
+        public string MailingZipCode { get; set; }
+
+        [Required(ErrorMessage = "State is required.")]
+        [Display(Name = "State")]
+        public Nullable<int> MailingStateId { get; set; }
+
+        [Display(Name = "Country")]
+        public Nullable<int> MailingCountryId { get; set; }
+
+        [Display(Name = "Metro/Non Metro")]
+        public bool IsMetro { get; set; }
+
+        [Display(Name = "Bank Account Number")]
+        public string BankAccountNumber { get; set; }
+
+        [Display(Name = "Bank Name")]
+        public Nullable<int> BankId { get; set; }
+
+        [Display(Name = "IFSC Code")]
+        public string BankIFSCCode { get; set; }
+
+        [Display(Name = "MICR Code")]
+        public string BankMICRCode { get; set; }
+
+        [Display(Name = "Bank")]
+        public virtual BankModel Bank { get; set; }
+
+        [Display(Name = "Designation")]
         public virtual DesignationModel Designation { get; set; }
 
-        /// <summary>
-        /// Gets or sets the office branch.
-        /// </summary>
-        /// <value>
-        /// The office branch.
-        /// </value>
+        [Display(Name = "OfficeBranch")]
         public virtual OfficeBranchModel OfficeBranch { get; set; }
 
-        /// <summary>
-        /// Gets or sets the salutation.
-        /// </summary>
-        /// <value>
-        /// The salutation.
-        /// </value>
+        [Display(Name = "Salutation")]
         public virtual SalutationModel Salutation { get; set; }
+    }
 
-        // Lookup Datas
-        /// <summary>
-        /// Gets or sets the address types.
-        /// </summary>
-        /// <value>
-        /// The address types.
-        /// </value>
-        public List<AddressTypeModel> AddressTypes { get; set; }
+    public partial class BankModel
+    {
+        public int BankId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
 
-        /// <summary>
-        /// Gets or sets the designations.
-        /// </summary>
-        /// <value>
-        /// The designations.
-        /// </value>
-        public List<SelectListItem> Designations { get; set; }
-
-        /// <summary>
-        /// Gets or sets the office branches.
-        /// </summary>
-        /// <value>
-        /// The office branches.
-        /// </value>
-        public List<SelectListItem> OfficeBranches { get; set; }
-
-        /// <summary>
-        /// Gets or sets the salutations.
-        /// </summary>
-        /// <value>
-        /// The salutations.
-        /// </value>
-        public List<SelectListItem> Salutations { get; set; }
-
-        /// <summary>
-        /// Gets or sets the genders.
-        /// </summary>
-        /// <value>
-        /// The genders.
-        /// </value>
-        public List<SelectListItem> Genders { get; set; }
-
-        /// <summary>
-        /// Gets or sets the states.
-        /// </summary>
-        /// <value>
-        /// The states.
-        /// </value>
-        public List<SelectListItem> States { get; set; }
-
-        /// <summary>
-        /// Gets or sets the cities.
-        /// </summary>
-        /// <value>
-        /// The cities.
-        /// </value>
-        public List<CityModel> Cities { get; set; }
-
-        /// <summary>
-        /// Gets or sets the zip codes.
-        /// </summary>
-        /// <value>
-        /// The zip codes.
-        /// </value>
-        public List<ZipCodeModel> ZipCodes { get; set; }
-
-        /// <summary>
-        /// Gets or sets the permanent address.
-        /// </summary>
-        /// <value>
-        /// The permanent address.
-        /// </value>
-        public AddressModel PermanentAddress { get; set; }
-
-        /// <summary>
-        /// Gets or sets the mailing address.
-        /// </summary>
-        /// <value>
-        /// The mailing address.
-        /// </value>
-        public AddressModel MailingAddress { get; set; }
+        public virtual ICollection<EmployeeModel> Employees { get; set; }
     }
 
     public partial class AddressModel
@@ -694,34 +691,6 @@ namespace Vserv.Accounting.Web.Models
         /// The updated date.
         /// </value>
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public partial class EmployeeAddressModel
-    {
-        /// <summary>
-        /// Gets or sets the employee address identifier.
-        /// </summary>
-        /// <value>
-        /// The employee address identifier.
-        /// </value>
-        public int EmployeeAddressId { get; set; }
-        /// <summary>
-        /// Gets or sets the employee identifier.
-        /// </summary>
-        /// <value>
-        /// The employee identifier.
-        /// </value>
-        public int EmployeeId { get; set; }
-        /// <summary>
-        /// Gets or sets the address identifier.
-        /// </summary>
-        /// <value>
-        /// The address identifier.
-        /// </value>
-        public int AddressId { get; set; }
     }
 
     /// <summary>

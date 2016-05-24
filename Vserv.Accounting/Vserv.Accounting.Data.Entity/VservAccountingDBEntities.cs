@@ -34,6 +34,11 @@ namespace Vserv.Accounting.Data.Entity
             this.Set<Membership>().Add(membership);
         }
 
+        void IDatabaseContext.Add(UserSecurityQuestion userSecurityQuestion)
+        {
+            this.Set<UserSecurityQuestion>().Add(userSecurityQuestion);
+        }
+
         IDbSet<Membership> IDatabaseContext.Memberships
         {
             get { return this.Memberships; }

@@ -70,10 +70,7 @@
     <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\dbo.Address.sql" />
-    <Build Include="Tables\dbo.EmployeeAddress.sql" />
     <Build Include="Tables\dbo.AddressType.sql" />
-    <Build Include="Tables\dbo.Department.sql" />
     <Build Include="Tables\dbo.Designation.sql" />
     <Build Include="Tables\dbo.Employee.sql" />
     <Build Include="Tables\dbo.OfficeBranch.sql" />
@@ -95,6 +92,14 @@
     <Build Include="Tables\dbo.City.sql" />
     <Build Include="Tables\dbo.State.sql" />
     <Build Include="Tables\dbo.ZipCode.sql" />
+    <Build Include="StoredProcedures\ArchiveEmployee.sql" />
+    <Build Include="StoredProcedures\ValidateUser.sql" />
+    <Build Include="Tables\Bank.sql" />
+    <Build Include="Tables\dbo.EmployeeArchive.sql" />
+    <Build Include="Tables\dbo.Feature.sql" />
+    <Build Include="Tables\dbo.Gender.sql" />
+    <Build Include="Tables\dbo.SecurityQuestion.sql" />
+    <Build Include="Tables\dbo.UserSecurityQuestion.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeploymentScript.sql" />

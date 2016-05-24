@@ -2,11 +2,23 @@
 @{
     ViewBag.Title = "Edit Employee";
 }
-@using (Html.BeginForm("edit", "employee"))
-{
-    @Html.HiddenFor(emp => emp.PermanentAddress.AddressId)
-    @Html.HiddenFor(emp => emp.MailingAddress.AddressId)
-    @Html.Partial("_EmployeePartial")
-}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#edit-employee" data-toggle="tab">@ViewBag.Title</a></li>
+    <li class=""><a href="#employee-history" data-toggle="tab" aria-expanded="false">View History</a></li>
+</ul>
+<div class="tab-content">
+
+    <div class="tab-pane fade active in padding-top10" id="edit-employee">
+        @using (Html.BeginForm("edit", "employee"))
+        {
+            @Html.HiddenFor(emp => emp.EmployeeId)
+            @Html.Partial("_EmployeePartial")
+        }
+    </div>
+    <div class="tab-pane fade padding-top10" id="employee-history">
+        @Html.Action("employeehistory", "employee")
+    </div>
+</div>
 
 @Html.Action("DesignationWindow", "Designation")

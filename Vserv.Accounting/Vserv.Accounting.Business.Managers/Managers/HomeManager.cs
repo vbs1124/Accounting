@@ -1,7 +1,9 @@
 ﻿#region Namespaces
 //using Vserv.Accounting.Data.Contracts;
 #endregion
+using System.Collections.Generic;
 using Vserv.Accounting.Data;
+using Vserv.Accounting.Data.Entity;
 
 namespace Vserv.Accounting.Business.Managers
 {
@@ -13,6 +15,10 @@ namespace Vserv.Accounting.Business.Managers
 
         #region Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int GetEmployeeCount()
         {
             return ExecuteFaultHandledOperation(() =>
@@ -21,6 +27,22 @@ namespace Vserv.Accounting.Business.Managers
                 return _employeeRepository.GetEmployeeCount();
             });
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="excludeInactiveFeatures"></param>
+        /// <returns></returns>
+        public List<Feature> GetFeatures(bool excludeInactiveFeatures)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                IFeatureRepository _featureRepository = _dataRepositoryFactory.GetDataRepository<IFeatureRepository>();
+                return _featureRepository.GetFeatures(excludeInactiveFeatures);
+            });
+
+        }
+
         #endregion
 
         #region Constructor

@@ -9,7 +9,7 @@ namespace Vserv.Accounting.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             // **************Section For ScriptBundle START **************
-
+            bundles.UseCdn = true;
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -48,6 +48,9 @@ namespace Vserv.Accounting.Web
        .Include("~/Scripts/base/morris.js")
        .Include("~/Scripts/base/morris-data.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/places", @"//http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"));
+
+            bundles.Add(new ScriptBundle("~/bundles/geocomplete", @"//https://cdnjs.cloudflare.com/ajax/libs/geocomplete/1.7.0/jquery.geocomplete.js"));
             // **************Section For ScriptBundle END **************
 
             // **************Section For StyleBundle START **************

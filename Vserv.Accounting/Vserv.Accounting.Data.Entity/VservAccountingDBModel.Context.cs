@@ -27,24 +27,28 @@ namespace Vserv.Accounting.Data.Entity
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<AddressType> AddressTypes { get; set; }
         public virtual DbSet<ApplicationLog> ApplicationLogs { get; set; }
+        public virtual DbSet<Bank> Banks { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Config> Configs { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Designation> Designations { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<EmployeeAddress> EmployeeAddresses { get; set; }
+        public virtual DbSet<EmployeeArchive> EmployeeArchives { get; set; }
         public virtual DbSet<EPFNumber> EPFNumbers { get; set; }
         public virtual DbSet<EPFOffice> EPFOffices { get; set; }
+        public virtual DbSet<Feature> Features { get; set; }
+        public virtual DbSet<Gender> Genders { get; set; }
         public virtual DbSet<Membership> Memberships { get; set; }
         public virtual DbSet<OAuthMembership> OAuthMemberships { get; set; }
         public virtual DbSet<OfficeBranch> OfficeBranches { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Salutation> Salutations { get; set; }
+        public virtual DbSet<SecurityQuestion> SecurityQuestions { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
+        public virtual DbSet<UserSecurityQuestion> UserSecurityQuestions { get; set; }
         public virtual DbSet<ZipCode> ZipCodes { get; set; }
     
         public virtual int InsertErrorLog(string appdomain, string exception, string identity, string level, Nullable<int> line, string logger, string message, string method, string ndc, string property, string stacktrace, string stacktracedetail, Nullable<long> timestamp, string thread, string type, string username)
@@ -244,6 +248,44 @@ namespace Vserv.Accounting.Data.Entity
                 new ObjectParameter("username", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertMvcErrorLog", appdomainParameter, aspnetcacheParameter, aspnetcontextParameter, aspnetrequestParameter, aspnetsessionParameter, exceptionParameter, identityParameter, levelParameter, lineParameter, loggerParameter, messageParameter, methodParameter, ndcParameter, propertyParameter, stacktraceParameter, stacktracedetailParameter, timestampParameter, threadParameter, typeParameter, usernameParameter);
+        }
+    
+        public virtual int ArchiveEmployee(Nullable<int> employeeID, string updatedByUserName)
+        {
+            var employeeIDParameter = employeeID.HasValue ?
+                new ObjectParameter("EmployeeID", employeeID) :
+                new ObjectParameter("EmployeeID", typeof(int));
+    
+            var updatedByUserNameParameter = updatedByUserName != null ?
+                new ObjectParameter("UpdatedByUserName", updatedByUserName) :
+                new ObjectParameter("UpdatedByUserName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ArchiveEmployee", employeeIDParameter, updatedByUserNameParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> ValidateUser(string userName, Nullable<int> securityQuestionId, string answer, string emailAddress, string mobileNumber)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var securityQuestionIdParameter = securityQuestionId.HasValue ?
+                new ObjectParameter("SecurityQuestionId", securityQuestionId) :
+                new ObjectParameter("SecurityQuestionId", typeof(int));
+    
+            var answerParameter = answer != null ?
+                new ObjectParameter("Answer", answer) :
+                new ObjectParameter("Answer", typeof(string));
+    
+            var emailAddressParameter = emailAddress != null ?
+                new ObjectParameter("EmailAddress", emailAddress) :
+                new ObjectParameter("EmailAddress", typeof(string));
+    
+            var mobileNumberParameter = mobileNumber != null ?
+                new ObjectParameter("MobileNumber", mobileNumber) :
+                new ObjectParameter("MobileNumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("ValidateUser", userNameParameter, securityQuestionIdParameter, answerParameter, emailAddressParameter, mobileNumberParameter);
         }
     }
 }

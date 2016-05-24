@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Vserv.Accounting.Common.Enums;
+using Vserv.Accounting.Common;
 
 namespace Vserv.Accounting.Business.Common
 {

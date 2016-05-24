@@ -24,7 +24,8 @@
                                 @Html.ValidationMessageFor(m => m.UserName)
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(m => m.Password, new { @class = "control-label" }) <span class="pull-right">@Html.ActionLink("Forgot Password?", "forgotpassword", "account", null, new { @class = "btn btn-link" })</span>
+                                @Html.LabelFor(m => m.Password, new { @class = "control-label" }) 
+                                <span class="pull-right">@Html.ActionLink("Forgot Password?", "forgotpassword", "account", null, new { @class = "btn btn-link" })</span>
                                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.Password)
                             </div>
@@ -36,7 +37,7 @@
                             </div>
 
                             <input type="submit" class="btn btn-lg btn-success btn-block" value="Sign in" />
-                            @*<span class="pull-right">@Html.ActionLink("Create account", "register", "account", null, new { @class = "btn btn-link" })</span>*@
+                            <span class="pull-right">@Html.ActionLink("Create account", "register", "account", null, new { @class = "btn btn-link" })</span>
                         </fieldset>
                     </form>
                     }

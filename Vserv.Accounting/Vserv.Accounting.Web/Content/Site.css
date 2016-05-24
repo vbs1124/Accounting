@@ -348,6 +348,25 @@ table.dataTable thead .sorting_desc_disabled {
             color: #df8a13;
         }
 
+/*blue panel*/
+.panel-blue {
+    border-color: #189AE0;
+}
+
+    .panel-blue .panel-heading {
+        border-color: #189AE0;
+        color: #fff;
+        background-color: #189AE0;
+    }
+
+    .panel-blue a {
+        color: #189AE0;
+    }
+
+        .panel-blue a:hover {
+            color: #1481BC;
+        }
+
 /* styles for validation helpers */
 .field-validation-error {
     color: #a94442;
@@ -360,6 +379,7 @@ table.dataTable thead .sorting_desc_disabled {
 input.input-validation-error {
     border: 1px solid #a94442;
 }
+
 textarea.input-validation-error {
     border: 1px solid #a94442;
 }
@@ -368,9 +388,9 @@ input[type="checkbox"].input-validation-error {
     border: 0 none;
 }
 
-/*.validation-summary-errors {
+.validation-summary-errors {
     color: #a94442;
-}*/
+}
 
 .validation-summary-valid {
     display: none;
@@ -378,4 +398,8 @@ input[type="checkbox"].input-validation-error {
 
 .required-field {
     color: #a94442;
+}
+
+.padding-top10 {
+    padding-top: 10px;
 }
