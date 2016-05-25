@@ -38,5 +38,20 @@ namespace Vserv.Accounting.Data
                 return context.States.FirstOrDefault(state => state.StateId == stateId);
             }
         }
+
+        public State GetStateByCityName(string cityName)
+        {
+            using (var context = new VservAccountingDBEntities())
+            {
+                var city = context.Cities.Include("State").FirstOrDefault(condition => condition.Name == cityName);
+
+                if (city.IsNotNull())
+                {
+                    return city.State;
+                }
+
+                return null;
+            }
+        }
     }
 }

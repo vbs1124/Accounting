@@ -21,5 +21,7 @@ namespace Vserv.Accounting.Data
         /// <param name="stateId">The state identifier.</param>
         /// <returns></returns>
         State GetState(int stateId);
+
+        State GetStateByCityName(string cityName);
     }
 }

@@ -9,36 +9,47 @@ $(function () {
             self.isLoading = function (isLoaderEnabled) {
 
             }
-            self.apiGet = function (uri, data, success, failure, always) {
+            self.apiGet = function (url, data, success, error) {
                 self.isLoading(true);
                 self.errorMessage = "";
-                $.get(WorkCenter.rootPath + uri, data)
-                    .done(success)
-                    .fail(function (result) {
-                        if (failure == null) {
-                            if (result.status != 400) {
-                                self.errorMessage = result.status + ':' + result.statusText + ' - ' + result.responseText;
-                            }
-                            else {
-                                self.errorMessage = JSON.parse(result.responseText);
-                            }
-                        }
-                        else
-                            failure(result);
-                    })
-                    .always(function () {
-                        if (always == null) {
-                            self.isLoading(true);
-                        }
-                        else {
-                            always();
-                        }
-                    });
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    data: data,
+                    dataType: "json",
+                    traditional: true,
+                    contentType: "application/json; charset=utf-8",
+                    success: success,
+                    error: error
+                });
+
+                //$.get(VservApp.rootPath + uri, data)
+                //    .done(success)
+                //    .fail(function (result) {
+                //        if (failure == null) {
+                //            if (result.status != 400) {
+                //                self.errorMessage = result.status + ':' + result.statusText + ' - ' + result.responseText;
+                //            }
+                //            else {
+                //                self.errorMessage = JSON.parse(result.responseText);
+                //            }
+                //        }
+                //        else
+                //            failure(result);
+                //    })
+                //    .always(function () {
+                //        if (always == null) {
+                //            self.isLoading(true);
+                //        }
+                //        else {
+                //            always();
+                //        }
+                //    });
             };
 
             self.apiPost = function (uri, data, success, failure, always) {
                 self.isLoading(true);
-                $.post(WorkCenter.rootPath + uri, data)
+                $.post(VservApp.rootPath + uri, data)
                     .done(success)
                     .fail(function (result) {
                         if (failure == null) {

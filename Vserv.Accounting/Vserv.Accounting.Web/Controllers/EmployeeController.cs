@@ -175,6 +175,20 @@ namespace Vserv.Accounting.Web.Controllers
             return View("_employeecompare", compareEmployeeModel);
         }
 
+        [HttpGet]
+        public JsonResult GetStateByCityName(string cityName)
+        {
+            EmployeeManager _manager = new EmployeeManager();
+            State state = _manager.GetStateByCityName(cityName);
+            string stateId = String.Empty;
+            if (state.IsNotNull())
+            {
+                stateId = Convert.ToString(state.StateId);
+            }
+
+            return Json(stateId, JsonRequestBehavior.AllowGet);
+        }
+
         #region dropdownlist
 
         /// <summary>

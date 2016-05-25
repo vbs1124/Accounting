@@ -409,6 +409,15 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
+        public State GetStateByCityName(string cityName)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                var _repository = _dataRepositoryFactory.GetDataRepository<IStateRepository>();
+                return _repository.GetStateByCityName(cityName);
+            });
+        }
+
         #endregion Address
 
         #endregion

@@ -2,14 +2,26 @@
     $(".mailing-geo-field").geocomplete({
         details: "#fieldset-mailing-address",
         detailsAttribute: "data-geo"
+    }).bind("geocode:result", function (event, result) {
+        console.log(result);
+        var selectedMailingCity = $("#MailingCity").val();
+        if (selectedMailingCity) {
+            $.selectMailingStateByCityName(selectedMailingCity);
+        }
     });
 
     $(".permanent-geo-field").geocomplete({
         details: "#fieldset-permanent-address",
         detailsAttribute: "data-geo"
+    }).bind("geocode:result", function (event, result) {
+        console.log(result);
+        var selectedPermanentCity = $("#PermanentCity").val();
+        if (selectedPermanentCity) {
+            $.selectPermanentStateByCityName(selectedPermanentCity);
+        }
     });
 
-    //Initialise any date pickers
+    //Initialize any date pickers
     $("#dp-birth-date").datetimepicker({
         format: "MM/DD/YYYY",
         showTodayButton: true,
@@ -76,4 +88,24 @@ function onchange_copyPermanentAdds(event, args) {
         $("#MailingZipCode").val("");
         $("#MailingCity").val("");
     }
+}
+
+$.selectPermanentStateByCityName = function (selectedPermanentCity) {
+    var viewModelHelper = new VservApp.viewModelHelper();
+    var url = VservApp.rootPath + "employee/GetStateByCityName";
+    viewModelHelper.apiGet(url, { cityName: selectedPermanentCity }, function (data) {
+        $("#PermanentStateId").val(data);
+    }, function () {
+        toastr.error("An error has occurred while loading state!")
+    });
+}
+
+$.selectMailingStateByCityName = function (selectedMailingCity) {
+    var viewModelHelper = new VservApp.viewModelHelper();
+    var url = VservApp.rootPath + "employee/GetStateByCityName";
+    viewModelHelper.apiGet(url, { cityName: selectedMailingCity }, function (data) {
+        $("#MailingStateId").val(data);
+    }, function () {
+        toastr.error("An error has occurred while loading state!")
+    });
 }
