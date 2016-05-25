@@ -58,6 +58,7 @@
     <Compile Include="Bootstrapper\MEFLoader.cs" />
     <Compile Include="Data\DataRepositoryBase.cs" />
     <Compile Include="DependencyHelper.cs" />
+    <Compile Include="Enums\ManageMessageId.cs" />
     <Compile Include="Exceptions\AuthorizationValidationException.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Extensions\Extensions.cs" />

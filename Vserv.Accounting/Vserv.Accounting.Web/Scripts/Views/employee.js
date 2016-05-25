@@ -9,25 +9,6 @@
         detailsAttribute: "data-geo"
     });
 
-
-    $('#dataTables-security-questions').DataTable({
-        responsive: true,
-        select: true,
-        processing: true
-    });
-
-    $('#dataTables-employees').DataTable({
-        responsive: true,
-        select: true,
-        processing: true
-    });
-
-    $('#dataTables-employee-history').DataTable({
-        responsive: true,
-        select: true,
-        processing: true
-    });
-
     //Initialise any date pickers
     $("#dp-birth-date").datetimepicker({
         format: "MM/DD/YYYY",

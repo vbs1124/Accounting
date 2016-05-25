@@ -2,10 +2,12 @@
 @{
     ViewBag.Title = "Compare Employee Detail";
 }
+<div class="alert alert-dismissible alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Information!</strong> Columns highlighted in<span class="text-danger"><strong> red</strong></span> were updated by <strong> @Model.PreviousEmployeeInfo.UpdatedBy</strong> on <strong>@Model.PreviousEmployeeInfo.UpdatedDate</strong>.
+    Click on each field to view it's current value.
+</div>
 <div class="panel panel-default">
-    <div class="panel-heading">
-        Columns with background in red were updated by <strong> @Model.PreviousEmployeeInfo.UpdatedBy</strong> on <strong>@Model.PreviousEmployeeInfo.UpdatedDate</strong>. <span class="pull-right">@Html.ActionLink("Back", "edit", "employee", new { employeeId = Model.CurrentEmployeeInfo.EmployeeId }, new { @class = "btn btn-xs btn-primary" })</span>
-    </div>
     <div class="panel-body">
         <div class="row">
             <div class="col-lg-4">

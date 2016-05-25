@@ -373,6 +373,8 @@
     <Content Include="Images\vserv-logo.gif" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\base\flot-data.js" />
+    <Content Include="Scripts\base\google-places.js" />
+    <Content Include="Scripts\base\jquery.geocomplete.js" />
     <Content Include="Scripts\base\metisMenu.js" />
     <Content Include="Scripts\base\metisMenu.min.js" />
     <Content Include="Scripts\base\morris-data.js" />

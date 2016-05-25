@@ -11,6 +11,7 @@ using WebMatrix.WebData;
 using System.Linq;
 using Vserv.Accounting.Common;
 using Vserv.Common.Extensions;
+using Vserv.Common.Enums;
 
 #endregion
 
@@ -212,19 +213,6 @@ namespace Vserv.Accounting.Web.Controllers
         [HttpPost]
         public ActionResult ForgotPassword(ForgotPasswordModel forgotPasswordModel)
         {
-            // Fetch Security Quesiton once user enters a valid username.
-            if (ModelState.IsValidField("UserName") && String.IsNullOrWhiteSpace(forgotPasswordModel.SecurityQuestion))
-            {
-                AccountManager _manager = new AccountManager();
-                UserSecurityQuestion randomSecurityQuestion = _manager.GetRandomSecurityQuestion(forgotPasswordModel.UserName);
-
-                if (randomSecurityQuestion.IsNotNull() && randomSecurityQuestion.SecurityQuestion.IsNotNull())
-                {
-                    forgotPasswordModel.SecurityQuestion = randomSecurityQuestion.SecurityQuestion.Question;
-                    forgotPasswordModel.SecurityQuestionId = randomSecurityQuestion.SecurityQuestionId;
-                }
-            }
-
             if (ModelState.IsValid)
             {
                 AccountManager _manager = new AccountManager();
@@ -234,6 +222,7 @@ namespace Vserv.Accounting.Web.Controllers
                 bool isRegisteredUser = _manager.IsRegisteredUser(ConvertTo(forgotPasswordModel));
                 if (isRegisteredUser)
                 {
+                    
                     UserProfileModel userProfileModel = new UserProfileModel
                     {
                         UserName = forgotPasswordModel.UserName
@@ -244,6 +233,19 @@ namespace Vserv.Accounting.Web.Controllers
                 else
                 {
                     ModelState.AddModelError("UserRecoveryFailure", "No account found satisfying provided details.");
+                }
+            }
+
+            // Fetch Security Question once user enters a valid username.
+            if (ModelState.IsValidField("UserName") && String.IsNullOrWhiteSpace(forgotPasswordModel.SecurityQuestion))
+            {
+                AccountManager _manager = new AccountManager();
+                UserSecurityQuestion randomSecurityQuestion = _manager.GetRandomSecurityQuestion(forgotPasswordModel.UserName);
+
+                if (randomSecurityQuestion.IsNotNull() && randomSecurityQuestion.SecurityQuestion.IsNotNull())
+                {
+                    forgotPasswordModel.SecurityQuestion = randomSecurityQuestion.SecurityQuestion.Question;
+                    forgotPasswordModel.SecurityQuestionId = randomSecurityQuestion.SecurityQuestionId;
                 }
             }
 
@@ -291,7 +293,7 @@ namespace Vserv.Accounting.Web.Controllers
                 ModelState.AddModelError("_FORM", "Error is occurred. " + ex.Message);
             }
 
-            return RedirectToAction("Success", "Home", new { successMessage = "Your password has been changed successfully." });
+            return RedirectToAction("Logout");
         }
 
         [NonAction]

@@ -84,9 +84,10 @@
                                         <label class="control-label"> Answer</label>
                                         @Html.TextBoxFor(m => m.UserSecurityQuestion3.Answer, new { @class = "form-control", @maxlength = "100" })
                                     </div>
-                                    <div class="form-group">
-                                        <input type="submit" class="btn btn-lg btn-success " value="Register" />
-                                        <a href="@Url.Action("index","home")" class="btn btn-primary btn-lg ">Sign in</a>
+                                    <div class="form-group pull-right">
+                                        <label class="control-label"> &nbsp;</label>
+                                        <input type="submit" class="btn btn-success" value="Register" />
+                                        <a href="@Url.Action("index","home")" class="btn btn-primary">Sign in</a>
                                     </div>
                                 </div>
                             </div>

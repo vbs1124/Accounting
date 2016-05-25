@@ -5,10 +5,10 @@
 }
 
 <ul class="nav nav-tabs">
-    <li class="active"><a href="#add-employee" data-toggle="tab">@ViewBag.Title</a></li>
+    <li class="active"><a href="#security-questions" data-toggle="tab">@ViewBag.Title</a></li>
 </ul>
 <div class="tab-content">
-    <div class="tab-pane fade active in padding-top10" id="add-employee">
+    <div class="tab-pane fade active in padding-top10" id="security-questions">
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -26,7 +26,7 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr class="odd gradeX">
-                                            <td>@item.SecurityQuestionId</td>
+                                            <td>@item.SecurityQuestionId.ToString().PadLeft(3, '0')</td>
                                             <td>@item.Question</td>
                                         </tr>
                                     }
@@ -44,3 +44,12 @@
         <!-- /.row -->
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $('#dataTables-security-questions').DataTable({
+            responsive: true,
+            select: true,
+            processing: true
+        });
+    })
+</script>
