@@ -204,6 +204,7 @@ namespace Vserv.Accounting.Web.Controllers
         #region Forgot Password
 
         [HttpGet]
+        [Route("accounts/recovery")]
         public ActionResult ForgotPassword()
         {
             ForgotPasswordModel forgotPasswordModel = new ForgotPasswordModel();
@@ -211,6 +212,7 @@ namespace Vserv.Accounting.Web.Controllers
         }
 
         [HttpPost]
+        [Route("accounts/recovery")]
         public ActionResult ForgotPassword(ForgotPasswordModel forgotPasswordModel)
         {
             if (ModelState.IsValid)

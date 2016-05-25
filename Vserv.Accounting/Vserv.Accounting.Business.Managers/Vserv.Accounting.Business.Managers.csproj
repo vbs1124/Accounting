@@ -77,6 +77,10 @@
       <Project>{c2a5d7ef-caa2-4d49-89f9-54551ddd044e}</Project>
       <Name>Vserv.Accounting.Business.Bootstrapper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Vserv.Accounting.Common\Vserv.Accounting.Common.csproj">
+      <Project>{e1a9e6ad-9503-4ee2-b588-180b7d8ef344}</Project>
+      <Name>Vserv.Accounting.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Vserv.Accounting.Data.Entity\Vserv.Accounting.Data.Entity.csproj">
       <Project>{fa75d7c8-f70b-4196-a320-3278a7113750}</Project>
       <Name>Vserv.Accounting.Data.Entity</Name>

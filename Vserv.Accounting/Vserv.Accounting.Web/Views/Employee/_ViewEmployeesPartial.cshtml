@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Vserv.Accounting.Data.Entity.Employee>
+<div class="panel panel-default">
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <div class="dataTable_wrapper">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-employees">
+                <thead>
+                    <tr>
+                        <th title="Employee Id">Emp Id</th>
+                        <th title="Employee Full Name">Name</th>
+                        <th title="Current designation">Designation</th>
+                        <th title="Mobile Number">Mobile Number</th>
+                        <th title="Email Address">Email Address</th>
+                        <th title="Date of Joining">Date of Joining</th>
+                        @*<th title="Is Active Employee">Active</th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="odd gradeX">
+                            <td>@Html.ActionLink(item.VBS_Id, "edit", "employee", new { employeeId = item.EmployeeId }, new { @class = (item.IsActive ? "btn btn-xs btn-block btn-success" : "btn btn-xs btn-block btn-danger"), title = "Click to Edit" })</td>
+                            <td>@String.Format("{0} {1} {2}", item.FirstName, item.MiddleName, item.LastName) </td>
+                            <td>@(item.Designation != null ? item.Designation.Name : String.Empty)</td>
+                            <td>@item.MobileNumber</td>
+                            <td>@item.OfficialEmailAddress</td>
+                            <td>@item.JoiningDate.ToString("MM/dd/yyyy")</td>
+                            @*<td>@(item.IsActive ? "Yes" : "No")</td>*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+    </div>
+    <!-- /.panel-body -->
+</div>
+<!-- /.panel -->
+<script type="text/javascript">
+    $(function () {
+        $('#dataTables-employees').DataTable({
+            responsive: true,
+            select: true,
+            processing: true
+        });
+    })
+</script>

@@ -51,11 +51,13 @@
                     @RenderBody()
                     @Scripts.Render("~/Scripts/base")
                     @Scripts.Render("~/Scripts/app")
-
+                    @Scripts.Render("~/bundles/places")
+                    @Scripts.Render("~/bundles/geocomplete")
                     @Scripts.Render("~/Scripts/DataTables")
                     @Scripts.Render("~/bundles/jqueryval")
                     @Scripts.Render("~/Scripts/views/employee")
                     @Scripts.Render("~/Scripts/views/designation")
+                   
                     @RenderSection("scripts", required: false)
                 </div>
                 <!-- /.col-lg-12 -->

@@ -17,7 +17,8 @@
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Profile" controller="account" action="userprofile">
       <mvcSiteMapNode title="Account" controller="account" action="userprofile"/>
-      <mvcSiteMapNode title="Change Password" controller="account" action="changepassword"/>
     </mvcSiteMapNode>
+    <mvcSiteMapNode title="Change Password" controller="account" action="changepassword"/>
+    <mvcSiteMapNode title="Security Questions" controller="account" action="securityquestions"/>
   </mvcSiteMapNode>
 </mvcSiteMap>

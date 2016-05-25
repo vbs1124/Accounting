@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Vserv.Accounting.Common;
 using Vserv.Accounting.Data;
 //using Vserv.Accounting.Data.Contracts;
 using Vserv.Accounting.Data.Entity;
@@ -48,12 +49,12 @@ namespace Vserv.Accounting.Business.Managers
         /// Gets the employees.
         /// </summary>
         /// <returns></returns>
-        public List<Employee> GetEmployees()
+        public List<Employee> GetEmployees(EmployeeFilter employeeFilter)
         {
             return ExecuteFaultHandledOperation(() =>
             {
                 var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetEmployees();
+                return _employeeRepository.GetEmployees(employeeFilter);
             });
         }
 

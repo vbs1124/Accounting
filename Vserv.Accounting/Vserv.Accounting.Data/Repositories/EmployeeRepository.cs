@@ -5,6 +5,8 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Common.Extensions;
+using Vserv.Accounting.Common;
+
 #endregion
 
 namespace Vserv.Accounting.Data
@@ -26,15 +28,31 @@ namespace Vserv.Accounting.Data
         /// Gets the employees.
         /// </summary>
         /// <returns></returns>
-        public List<Employee> GetEmployees()
+        public List<Employee> GetEmployees(EmployeeFilter employeeFilter)
         {
             using (var context = new VservAccountingDBEntities())
             {
-                var result = context.Employees
+                if (employeeFilter.Equals(EmployeeFilter.ActiveEmployees))
+                {
+                    return context.Employees
                     .Include("Designation")
                     .Include("OfficeBranch")
-                    .Include("Salutation").ToList();
-                return result;
+                    .Include("Salutation").Where(employee => employee.IsActive).ToList();
+                }
+                else if (employeeFilter.Equals(EmployeeFilter.InactiveEmployees))
+                {
+                    return context.Employees
+                   .Include("Designation")
+                   .Include("OfficeBranch")
+                   .Include("Salutation").Where(employee => !employee.IsActive).ToList();
+                }
+                else
+                {
+                    return context.Employees
+                   .Include("Designation")
+                   .Include("OfficeBranch")
+                   .Include("Salutation").ToList();
+                }
             }
         }
 
@@ -168,7 +186,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Employees.Count();
+                return context.Employees.Count(con => con.IsActive);
             }
         }
 

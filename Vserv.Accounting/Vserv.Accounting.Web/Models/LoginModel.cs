@@ -31,7 +31,7 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         ///   <c>true</c> if [remember me]; otherwise, <c>false</c>.
         /// </value>
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Keep me signed in")]
         public bool RememberMe { get; set; }
     }
 }

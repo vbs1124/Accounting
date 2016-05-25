@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Constants\CommonConstants.cs" />
     <Compile Include="Enums\AddressTypeEnum.cs" />
+    <Compile Include="Enums\EmployeHistory.cs" />
     <Compile Include="Enums\FilterLogic.cs" />
     <Compile Include="Enums\FilterOperator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

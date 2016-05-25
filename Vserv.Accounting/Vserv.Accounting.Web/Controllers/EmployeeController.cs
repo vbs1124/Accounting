@@ -36,11 +36,15 @@ namespace Vserv.Accounting.Web.Controllers
         /// Lists this instance.
         /// </summary>
         /// <returns></returns>
-        public ActionResult List()
+        public ActionResult List(int? filterChoice)
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
-            var employees = _employeeManager.GetEmployees();
-            return View(employees);
+            ViewBag.EmployeFilters = GetEmployeeFilters();
+            return View(GetEmployees(filterChoice));
+        }
+
+        public ActionResult GetFilteredEmployees(int? filterChoice)
+        {
+            return PartialView("_ViewEmployeesPartial", GetEmployees(filterChoice));
         }
 
         /// <summary>
@@ -643,6 +647,41 @@ namespace Vserv.Accounting.Web.Controllers
             }
 
             return result;
+        }
+
+        private List<SelectListItem> GetEmployeeFilters()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "All Employees",
+                Value = "1"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Active Employees",
+                Value = "2",
+                Selected = true
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "In Active Employees",
+                Value = "3"
+            });
+
+            return listItems;
+        }
+
+        private static List<Employee> GetEmployees(int? filterChoice)
+        {
+            if (filterChoice.IsNull())
+            {
+                filterChoice = 2; // Set the default to All.
+            }
+
+            EmployeeFilter employeeFilter = (EmployeeFilter)Enum.ToObject(typeof(EmployeeFilter), filterChoice.Value);
+            EmployeeManager _employeeManager = new EmployeeManager();
+            return _employeeManager.GetEmployees(employeeFilter);
         }
 
         #endregion Private Methods

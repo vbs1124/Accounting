@@ -73,6 +73,11 @@
              .prop("checked", "")
              .end();
     });
+
+    $("#cmbEmployeeFilter").on("change", function () {
+        var filterChoice = $("#cmbEmployeeFilter").val();
+        $("#div-employee-list").load(VservApp.rootPath + 'employee/GetFilteredEmployees?filterChoice=' + filterChoice);
+    });
 });
 
 function onchange_copyPermanentAdds(event, args) {

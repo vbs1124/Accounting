@@ -16,27 +16,27 @@
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.FirstName, new { @class = "control-label required-field" })
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @maxlength = "250" })
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @maxlength = "35" })
             @Html.ValidationMessageFor(m => m.FirstName)
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.MiddleName, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", @maxlength = "250" })
+            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", @maxlength = "35" })
             @Html.ValidationMessageFor(m => m.MiddleName)
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @maxlength = "250" })
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @maxlength = "35" })
             @Html.ValidationMessageFor(m => m.LastName)
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.FatherName, new { @class = "control-label required-field" })
-            @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control", @maxlength = "250" })
+            @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control", @maxlength = "35" })
             @Html.ValidationMessageFor(m => m.FatherName)
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.MotherName, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.MotherName, new { @class = "form-control", @maxlength = "250" })
+            @Html.TextBoxFor(m => m.MotherName, new { @class = "form-control", @maxlength = "35" })
             @Html.ValidationMessageFor(m => m.MotherName)
         </div>
         <div class="form-group">
@@ -101,12 +101,12 @@
     <div class="col-lg-4">
         <div class="form-group">
             @Html.LabelFor(m => m.OfficialEmailAddress, new { @class = "control-label required-field" })
-            @Html.TextBoxFor(m => m.OfficialEmailAddress, new { @class = "form-control", @maxlength = "250" })
+            @Html.TextBoxFor(m => m.OfficialEmailAddress, new { @class = "form-control", @maxlength = "35" })
             @Html.ValidationMessageFor(m => m.OfficialEmailAddress)
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.PersonalEmailAddress, new { @class = "control-label required-field" })
-            @Html.TextBoxFor(m => m.PersonalEmailAddress, new { @class = "form-control", @maxlength = "250" })
+            @Html.TextBoxFor(m => m.PersonalEmailAddress, new { @class = "form-control", @maxlength = "35" })
             @Html.ValidationMessageFor(m => m.PersonalEmailAddress)
         </div>
         <div class="form-group">
@@ -159,7 +159,7 @@
                 </span>
                 @Html.ValidationMessageFor(m => m.RelievingDate)
             </div>
-        </div>        
+        </div>
         <div class="form-group">
             <div class="checkbox">
                 <label>
@@ -175,26 +175,26 @@
         <div class="col-lg-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.PermanentAddress1, new { @class = "control-label required-field" })
-                @Html.TextAreaFor(m => m.PermanentAddress1, new { @class = "form-control permanent-geo-field",data_geo = "address_components", placeholder = "", @rows = 4, @maxlength = "250" })
+                @Html.TextAreaFor(m => m.PermanentAddress1, new { @class = "form-control permanent-geo-field", data_geo = "address_components", placeholder = "", @rows = 4, @maxlength = "200" })
                 @Html.ValidationMessageFor(m => m.PermanentAddress1)
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.PermanentAddress2, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.PermanentAddress2, new { @class = "form-control permanent-geo-field",data_geo = "sublocality", placeholder = "", @maxlength = "250" })
+                @Html.TextBoxFor(m => m.PermanentAddress2, new { @class = "form-control permanent-geo-field", data_geo = "sublocality", placeholder = "", @maxlength = "200" })
                 @Html.ValidationMessageFor(m => m.PermanentAddress2)
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.PermanentZipCode, new { @class = "control-label required-field" })
-                @Html.TextBoxFor(m => m.PermanentZipCode, new { @class = "form-control permanent-geo-field", data_geo = "postal_code",placeholder = "", @maxlength = "6" })
+                @Html.TextBoxFor(m => m.PermanentZipCode, new { @class = "form-control permanent-geo-field", data_geo = "postal_code", placeholder = "", @maxlength = "6" })
                 @Html.ValidationMessageFor(m => m.PermanentZipCode)
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.PermanentCity, new { @class = "control-label required-field" })
-                @Html.TextBoxFor(m => m.PermanentCity, new { @class = "form-control permanent-geo-field",data_geo = "locality", placeholder = "", @maxlength = "100" })
+                @Html.TextBoxFor(m => m.PermanentCity, new { @class = "form-control permanent-geo-field", data_geo = "locality", placeholder = "", @maxlength = "35" })
                 @Html.ValidationMessageFor(m => m.PermanentCity)
             </div>
             <div class="form-group">
@@ -220,7 +220,7 @@
         <div class="col-lg-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.MailingAddress1, new { @class = "control-label required-field" })
-                @Html.TextAreaFor(m => m.MailingAddress1, new { @class = "form-control mailing-geo-field", data_geo = "address_components", placeholder = "", @resize = "none", @rows = 3, @maxlength = "250" })
+                @Html.TextAreaFor(m => m.MailingAddress1, new { @class = "form-control mailing-geo-field", data_geo = "address_components", placeholder = "", @resize = "none", @rows = 3, @maxlength = "200" })
                 @Html.ValidationMessageFor(m => m.MailingAddress1)
             </div>
             <div class="form-group">
@@ -237,7 +237,7 @@
         <div class="col-lg-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.MailingAddress2, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.MailingAddress2, new { @class = "form-control mailing-geo-field", data_geo = "sublocality", placeholder = "", @maxlength = "250" })
+                @Html.TextBoxFor(m => m.MailingAddress2, new { @class = "form-control mailing-geo-field", data_geo = "sublocality", placeholder = "", @maxlength = "200" })
                 @Html.ValidationMessageFor(m => m.MailingAddress2)
             </div>
             <div class="form-group">
@@ -249,7 +249,7 @@
         <div class="col-lg-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.MailingCity, new { @class = "control-label required-field" })
-                @Html.TextBoxFor(m => m.MailingCity, new { @class = "form-control mailing-geo-field", data_geo = "locality", placeholder = "", @maxlength = "100" })
+                @Html.TextBoxFor(m => m.MailingCity, new { @class = "form-control mailing-geo-field", data_geo = "locality", placeholder = "", @maxlength = "35" })
                 @Html.ValidationMessageFor(m => m.MailingCity)
             </div>
             <div class="form-group">
@@ -270,5 +270,3 @@
         </div>
     </div>
 </div>
-@Scripts.Render("~/bundles/places")
-@Scripts.Render("~/bundles/geocomplete")

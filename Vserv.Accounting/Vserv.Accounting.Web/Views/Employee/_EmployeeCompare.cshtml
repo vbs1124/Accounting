@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Compare Employee Detail";
 }
-<div class="alert alert-dismissible alert-info">
+<div class="alert alert-dismissible alert-warning">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>Information!</strong> Columns highlighted in<span class="text-danger"><strong> red</strong></span> were updated by <strong> @Model.PreviousEmployeeInfo.UpdatedBy</strong> on <strong>@Model.PreviousEmployeeInfo.UpdatedDate</strong>.
     Click on each field to view it's current value.
@@ -13,7 +13,7 @@
             <div class="col-lg-4">
                 <div class="@(Model.CurrentEmployeeInfo.VBS_Id == Model.PreviousEmployeeInfo.VBS_Id ? "form-group" : "form-group has-error")">
                     <label class="control-label">Employee Id</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.VBS_Id, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.VBS_Id, @readonly = "readonly", @class = "form-control", @maxlength = "4" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.VBS_Id, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.VBS_Id, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.SalutationId == Model.PreviousEmployeeInfo.SalutationId ? "form-group" : "form-group has-error")">
                     <label class="control-label">Salutation</label>
@@ -21,23 +21,23 @@
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.FirstName == Model.PreviousEmployeeInfo.FirstName ? "form-group" : "form-group has-error")">
                     <label class="control-label">First Name</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.FirstName, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.FirstName, @readonly = "readonly", @class = "form-control", @maxlength = "250" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.FirstName, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.FirstName, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.MiddleName == Model.PreviousEmployeeInfo.MiddleName ? "form-group" : "form-group has-error")">
                     <label class="control-label">Middle Name</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.MiddleName, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MiddleName, @readonly = "readonly", @class = "form-control", @maxlength = "250" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.MiddleName, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MiddleName, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.LastName == Model.PreviousEmployeeInfo.LastName ? "form-group" : "form-group has-error")">
                     <label class="control-label">Last Name</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.LastName, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.LastName, @readonly = "readonly", @class = "form-control", @maxlength = "250" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.LastName, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.LastName, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.FatherName == Model.PreviousEmployeeInfo.FatherName ? "form-group" : "form-group has-error")">
                     <label class="control-label">Father's Name</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.FatherName, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.FatherName, @readonly = "readonly", @class = "form-control", @maxlength = "250" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.FatherName, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.FatherName, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.MotherName == Model.PreviousEmployeeInfo.MotherName ? "form-group" : "form-group has-error")">
                     <label class="control-label">Mother's Name</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.MotherName, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MotherName, @readonly = "readonly", @class = "form-control", @maxlength = "250" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.MotherName, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MotherName, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.GenderId == Model.PreviousEmployeeInfo.GenderId ? "form-group" : "form-group has-error")">
                     <label class="control-label">Gender</label>
@@ -45,34 +45,34 @@
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.MobileNumber == Model.PreviousEmployeeInfo.MobileNumber ? "form-group" : "form-group has-error")">
                     <label class="control-label">Mobile Number</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.MobileNumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MobileNumber, @readonly = "readonly", @class = "form-control", @maxlength = "10" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.MobileNumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MobileNumber, @readonly = "readonly", @class = "form-control" })
                 </div>
 
             </div>
             <div class="col-lg-4">
                 <div class="@(Model.CurrentEmployeeInfo.PermanentAccountNumber == Model.PreviousEmployeeInfo.PermanentAccountNumber ? "form-group" : "form-group has-error")">
                     <label class="control-label">PAN Number</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.PermanentAccountNumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.PermanentAccountNumber, @readonly = "readonly", @class = "form-control", @maxlength = "10" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.PermanentAccountNumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.PermanentAccountNumber, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.UniversalAccountNumber == Model.PreviousEmployeeInfo.UniversalAccountNumber ? "form-group" : "form-group has-error")">
                     <label class="control-label">UAN Number</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.UniversalAccountNumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.UniversalAccountNumber, @readonly = "readonly", @class = "form-control", @maxlength = "12" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.UniversalAccountNumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.UniversalAccountNumber, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.EPFNumber == Model.PreviousEmployeeInfo.EPFNumber ? "form-group" : "form-group has-error")">
                     <label class="control-label">EPF Number</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.EPFNumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.EPFNumber, @readonly = "readonly", @class = "form-control", @maxlength = "12" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.EPFNumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.EPFNumber, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.AADHAARNumber == Model.PreviousEmployeeInfo.AADHAARNumber ? "form-group" : "form-group has-error")">
                     <label class="control-label">AADHAAR Number</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.AADHAARNumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.AADHAARNumber, @readonly = "readonly", @class = "form-control", @maxlength = "12" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.AADHAARNumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.AADHAARNumber, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.ESINumber == Model.PreviousEmployeeInfo.ESINumber ? "form-group" : "form-group has-error")">
                     <label class="control-label">ESI Number</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.ESINumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.ESINumber, @readonly = "readonly", @class = "form-control", @maxlength = "15" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.ESINumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.ESINumber, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.BankAccountNumber == Model.PreviousEmployeeInfo.BankAccountNumber ? "form-group" : "form-group has-error")">
                     <label class="control-label">Bank Account Number</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.BankAccountNumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.BankAccountNumber, @readonly = "readonly", @class = "form-control", @maxlength = "15" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.BankAccountNumber, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.BankAccountNumber, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.BankId == Model.PreviousEmployeeInfo.BankId ? "form-group" : "form-group has-error")">
                     <label class="control-label">Bank</label>
@@ -80,21 +80,21 @@
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.BankIFSCCode == Model.PreviousEmployeeInfo.BankIFSCCode ? "form-group" : "form-group has-error")">
                     <label class="control-label">IFSC Code</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.BankIFSCCode, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.BankIFSCCode, @readonly = "readonly", @class = "form-control", @maxlength = "11" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.BankIFSCCode, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.BankIFSCCode, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.BankMICRCode == Model.PreviousEmployeeInfo.BankMICRCode ? "form-group" : "form-group has-error")">
                     <label class="control-label">MICR Code</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.BankMICRCode, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.BankMICRCode, @readonly = "readonly", @class = "form-control", @maxlength = "11" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.BankMICRCode, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.BankMICRCode, @readonly = "readonly", @class = "form-control" })
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="@(Model.CurrentEmployeeInfo.OfficialEmailAddress == Model.PreviousEmployeeInfo.OfficialEmailAddress ? "form-group" : "form-group has-error")">
                     <label class="control-label">Official Email address</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.OfficialEmailAddress, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.OfficialEmailAddress, @readonly = "readonly", @class = "form-control", @maxlength = "250" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.OfficialEmailAddress, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.OfficialEmailAddress, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.PersonalEmailAddress == Model.PreviousEmployeeInfo.PersonalEmailAddress ? "form-group" : "form-group has-error")">
                     <label class="control-label">Personal Email address</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.PersonalEmailAddress, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.PersonalEmailAddress, @readonly = "readonly", @class = "form-control", @maxlength = "250" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.PersonalEmailAddress, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.PersonalEmailAddress, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.OfficeBranchId == Model.PreviousEmployeeInfo.OfficeBranchId ? "form-group" : "form-group has-error")">
                     <label class="control-label">Office Branch</label>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.DesignationId == Model.PreviousEmployeeInfo.DesignationId ? "form-group" : "form-group has-error")">
                     <label class="control-label">Designation</label>
-                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.Designation.Name, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.Designation.Name, @readonly = "readonly", @class = "form-control", id = "cmbDesignation" })
+                    @Html.TextBoxFor(m => m.PreviousEmployeeInfo.Designation.Name, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.Designation.Name, @readonly = "readonly", @class = "form-control" })
                 </div>
                 <div class="@(Model.CurrentEmployeeInfo.BirthDay == Model.PreviousEmployeeInfo.BirthDay ? "form-group" : "form-group has-error")">
                     <label class="control-label">BirthDay</label>
@@ -156,23 +156,23 @@
                 <div class="col-lg-4">
                     <div class="@(Model.CurrentEmployeeInfo.PermanentAddress1 == Model.PreviousEmployeeInfo.PermanentAddress1 ? "form-group" : "form-group has-error")">
                         <label class="control-label">Address 1</label>
-                        @Html.TextAreaFor(m => m.PreviousEmployeeInfo.PermanentAddress1, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.PermanentAddress1, @readonly = "readonly", @class = "form-control", placeholder = "", @rows = 4, @maxlength = "250" })
+                        @Html.TextAreaFor(m => m.PreviousEmployeeInfo.PermanentAddress1, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.PermanentAddress1, @readonly = "readonly", @class = "form-control", @rows = 4 })
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="@(Model.CurrentEmployeeInfo.PermanentAddress2 == Model.PreviousEmployeeInfo.PermanentAddress2 ? "form-group" : "form-group has-error")">
                         <label class="control-label">Address 2</label>
-                        @Html.TextBoxFor(m => m.PreviousEmployeeInfo.PermanentAddress2, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.PermanentAddress2, @readonly = "readonly", @class = "form-control", placeholder = "", @maxlength = "250" })
+                        @Html.TextBoxFor(m => m.PreviousEmployeeInfo.PermanentAddress2, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.PermanentAddress2, @readonly = "readonly", @class = "form-control" })
                     </div>
                     <div class="@(Model.CurrentEmployeeInfo.PermanentZipCode == Model.PreviousEmployeeInfo.PermanentZipCode ? "form-group" : "form-group has-error")">
                         <label class="control-label">Pin Code</label>
-                        @Html.TextBoxFor(m => m.PreviousEmployeeInfo.PermanentZipCode, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.PermanentZipCode, @readonly = "readonly", @class = "form-control", placeholder = "", @maxlength = "6" })
+                        @Html.TextBoxFor(m => m.PreviousEmployeeInfo.PermanentZipCode, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.PermanentZipCode, @readonly = "readonly", @class = "form-control" })
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="@(Model.CurrentEmployeeInfo.PermanentCity == Model.PreviousEmployeeInfo.PermanentCity ? "form-group" : "form-group has-error")">
                         <label class="control-label">City</label>
-                        @Html.TextBoxFor(m => m.PreviousEmployeeInfo.PermanentCity, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.PermanentCity, @readonly = "readonly", @class = "form-control", placeholder = "", @maxlength = "100" })
+                        @Html.TextBoxFor(m => m.PreviousEmployeeInfo.PermanentCity, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.PermanentCity, @readonly = "readonly", @class = "form-control" })
                     </div>
                     <div class="@(Model.CurrentEmployeeInfo.PermanentStateId == Model.PreviousEmployeeInfo.PermanentStateId ? "form-group" : "form-group has-error")">
                         <label class="control-label">State</label>
@@ -190,7 +190,7 @@
                 <div class="col-lg-4">
                     <div class="@(Model.CurrentEmployeeInfo.MailingAddress1 == Model.PreviousEmployeeInfo.MailingAddress1 ? "form-group" : "form-group has-error")">
                         <label class="control-label">Address 1</label>
-                        @Html.TextAreaFor(m => m.PreviousEmployeeInfo.MailingAddress1, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MailingAddress1, @readonly = "readonly", @class = "form-control", placeholder = "", @resize = "none", @rows = 3, @maxlength = "250" })
+                        @Html.TextAreaFor(m => m.PreviousEmployeeInfo.MailingAddress1, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MailingAddress1, @readonly = "readonly", @class = "form-control", placeholder = "", @resize = "none", @rows = 3 })
                     </div>
                     <div class="@(Model.CurrentEmployeeInfo.IsMetro == Model.PreviousEmployeeInfo.IsMetro ? "form-group" : "form-group has-error")">
                         <div class="radio">
@@ -206,17 +206,17 @@
                 <div class="col-lg-4">
                     <div class="@(Model.CurrentEmployeeInfo.MailingAddress2 == Model.PreviousEmployeeInfo.MailingAddress2 ? "form-group" : "form-group has-error")">
                         <label class="control-label">Address 2</label>
-                        @Html.TextBoxFor(m => m.PreviousEmployeeInfo.MailingAddress2, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MailingAddress2, @readonly = "readonly", @class = "form-control", placeholder = "", @maxlength = "250" })
+                        @Html.TextBoxFor(m => m.PreviousEmployeeInfo.MailingAddress2, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MailingAddress2, @readonly = "readonly", @class = "form-control" })
                     </div>
                     <div class="@(Model.CurrentEmployeeInfo.MailingZipCode == Model.PreviousEmployeeInfo.MailingZipCode ? "form-group" : "form-group has-error")">
                         <label class="control-label">Pin Code</label>
-                        @Html.TextBoxFor(m => m.PreviousEmployeeInfo.MailingZipCode, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MailingZipCode, @readonly = "readonly", @class = "form-control", placeholder = "", @maxlength = "6" })
+                        @Html.TextBoxFor(m => m.PreviousEmployeeInfo.MailingZipCode, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MailingZipCode, @readonly = "readonly", @class = "form-control" })
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="@(Model.CurrentEmployeeInfo.MailingCity == Model.PreviousEmployeeInfo.MailingCity ? "form-group" : "form-group has-error")">
                         <label class="control-label">City</label>
-                        @Html.TextBoxFor(m => m.PreviousEmployeeInfo.MailingCity, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MailingCity, @readonly = "readonly", @class = "form-control", placeholder = "", @maxlength = "100" })
+                        @Html.TextBoxFor(m => m.PreviousEmployeeInfo.MailingCity, new { data_toggle = "popover", data_placement = "top", data_content = @Model.CurrentEmployeeInfo.MailingCity, @readonly = "readonly", @class = "form-control" })
                     </div>
                     <div class="@(Model.CurrentEmployeeInfo.MailingStateId == Model.PreviousEmployeeInfo.MailingStateId ? "form-group" : "form-group has-error")">
                         <label class="control-label">State</label>

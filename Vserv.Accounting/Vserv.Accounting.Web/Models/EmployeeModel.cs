@@ -152,7 +152,7 @@ namespace Vserv.Accounting.Web.Models
         /// </value>
         [Display(Name = "Employee Id")]
         [Required(ErrorMessage = "Employee Id is required.")]
-        [RegularExpression("^[1-9]*$", ErrorMessage = "Employee Id should be numeric.")]
+        [RegularExpression("^[1-9][0-9]*$", ErrorMessage = "Employee Id should be numeric and should not start with 0.")]
         [StringLength(4, MinimumLength = 4, ErrorMessage = "Employee Id should be 4 digits.")]
         public string VBS_Id { get; set; }
 
