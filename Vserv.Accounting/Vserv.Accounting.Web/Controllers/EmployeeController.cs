@@ -169,6 +169,7 @@ namespace Vserv.Accounting.Web.Controllers
 
         public ActionResult EmployeeCompareResult(int employeeArchiveId)
         {
+            SetDropdownValues();
             EmployeeManager _employeeManager = new Business.Managers.EmployeeManager();
             CompareEmployeeModel compareEmployeeModel = _employeeManager.GetMatchingEmployeeInformation(employeeArchiveId);
             return View("_employeecompare", compareEmployeeModel);

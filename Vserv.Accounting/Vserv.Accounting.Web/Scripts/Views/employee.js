@@ -1,4 +1,14 @@
 ﻿$(function () {
+    $(".mailing-geo-field").geocomplete({
+        details: "#fieldset-mailing-address",
+        detailsAttribute: "data-geo"
+    });
+
+    $(".permanent-geo-field").geocomplete({
+        details: "#fieldset-permanent-address",
+        detailsAttribute: "data-geo"
+    });
+
 
     $('#dataTables-security-questions').DataTable({
         responsive: true,

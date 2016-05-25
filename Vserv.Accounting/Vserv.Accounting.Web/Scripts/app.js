@@ -1,7 +1,8 @@
 ﻿/// <reference path="toastr.js" />
 $(function () {
     $('#side-menu').metisMenu();
- 
+    $("[data-toggle=popover]").popover();
+
     (function (vbs) {
         var viewModelHelper = function () {
             var self = this;
