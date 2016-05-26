@@ -1,10 +1,12 @@
 ﻿#region Namespaces
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Vserv.Accounting.Data.Entity;
-using Vserv.Common.Extensions;
+using Vserv.Accounting.Common;
+
 #endregion
 
 namespace Vserv.Accounting.Data
@@ -27,7 +29,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Designations.Where(condition => condition.IsActive).ToList();
+                return context.Designations.AsNoTracking().Where(condition => condition.IsActive).ToList();
             }
         }
 
@@ -70,7 +72,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Designations.FirstOrDefault(desg => desg.DesignationId == designationId);
+                return context.Designations.AsNoTracking().FirstOrDefault(desg => desg.DesignationId == designationId);
             }
         }
 
@@ -84,7 +86,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Designations.Any(desg => desg.DesignationId != designationId && desg.Name == name);
+                return context.Designations.AsNoTracking().Any(desg => desg.DesignationId != designationId && desg.Name == name);
             }
         }
 

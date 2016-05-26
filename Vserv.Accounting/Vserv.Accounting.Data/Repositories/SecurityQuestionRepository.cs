@@ -1,10 +1,12 @@
 ﻿#region Namespaces
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Vserv.Accounting.Data.Entity;
-using Vserv.Common.Extensions;
+using Vserv.Accounting.Common;
+
 #endregion
 
 namespace Vserv.Accounting.Data
@@ -21,7 +23,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.SecurityQuestions.ToList();
+                return context.SecurityQuestions.AsNoTracking().ToList();
             }
         }
 
@@ -43,11 +45,11 @@ namespace Vserv.Accounting.Data
 
             using (var context = new VservAccountingDBEntities())
             {
-                UserProfile userProfile = context.UserProfiles.FirstOrDefault(user => user.LoweredUserName == userName);
+                UserProfile userProfile = context.UserProfiles.AsNoTracking().FirstOrDefault(user => user.LoweredUserName == userName);
 
                 if (userProfile.IsNotNull())
                 {
-                    UserSecurityQuestion userSecurityQuestion = context.UserSecurityQuestions.Include("SecurityQuestion").Include("UserProfile")
+                    UserSecurityQuestion userSecurityQuestion = context.UserSecurityQuestions.AsNoTracking().Include("SecurityQuestion").Include("UserProfile")
                   .Where(question => question.UserId == userProfile.UserId)
                   .OrderBy(order => Guid.NewGuid()).FirstOrDefault();
                     return userSecurityQuestion;

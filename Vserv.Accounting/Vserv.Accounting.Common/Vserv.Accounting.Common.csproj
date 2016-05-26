@@ -41,10 +41,19 @@
   <ItemGroup>
     <Compile Include="Constants\CommonConstants.cs" />
     <Compile Include="Enums\AddressTypeEnum.cs" />
-    <Compile Include="Enums\EmployeHistory.cs" />
+    <Compile Include="Enums\ManageMessageId.cs" />
+    <Compile Include="Enums\MessageType.cs" />
+    <Compile Include="Enums\EmployeeFilter.cs" />
     <Compile Include="Enums\FilterLogic.cs" />
     <Compile Include="Enums\FilterOperator.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vserv.Common\Vserv.Common.csproj">
+      <Project>{718c355c-b0fe-467b-b109-8b270b76bdf2}</Project>
+      <Name>Vserv.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

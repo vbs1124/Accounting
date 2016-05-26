@@ -193,7 +193,7 @@ namespace Vserv.Accounting.Web.Models
         /// The office branch identifier.
         /// </value>
         [Required(ErrorMessage = "Office Branch is required.")]
-        [Display(Name = "Office Branch")]
+        [Display(Name = "Office Location")]
         public int? OfficeBranchId { get; set; }
 
         /// <summary>

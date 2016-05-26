@@ -1,10 +1,11 @@
 ﻿#region Namespaces
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Vserv.Accounting.Data.Entity;
-using Vserv.Common.Extensions;
+
 #endregion
 
 namespace Vserv.Accounting.Data
@@ -23,7 +24,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.ZipCodes.Where(zipcode => zipcode.CityId == cityId).ToList();
+                return context.ZipCodes.AsNoTracking().Where(zipcode => zipcode.CityId == cityId).ToList();
             }
         } 
         #endregion

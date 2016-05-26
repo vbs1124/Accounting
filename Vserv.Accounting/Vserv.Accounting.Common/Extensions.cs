@@ -1,12 +1,20 @@
-﻿using System;
+﻿#region Extensions
+
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Vserv.Common.Utils;
 
-namespace Vserv.Common.Extensions
+#endregion
+
+namespace Vserv.Accounting.Common
 {
     /// <summary>
     /// Extensions class
@@ -537,6 +545,37 @@ namespace Vserv.Common.Extensions
         }
         #endregion
 
+        #region Encrypt or Decrypt String
+
+        /// <summary>
+        /// This is an extension method for decrypting the String.
+        /// </summary>
+        /// <param name="sourceDictionary">Source dictionary value.</param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static void ToDecryptedString(this Dictionary<String, String> sourceDictionary, String args)
+        {
+            EncryptedString encryptedString = new EncryptedString(args);
+
+            foreach (KeyValuePair<String, String> kValue in encryptedString)
+            {
+                sourceDictionary.Add(kValue.Key, kValue.Value);
+            }
+        }
+
+        /// <summary>
+        /// This is an extension method for EncryptedString which returns the encrypted String for String type dictionary.
+        /// </summary>
+        /// <param name="sourceDictionary">Source dictionary value.</param>
+        /// <returns></returns>
+        public static String ToEncryptedString(this Dictionary<String, String> sourceDictionary)
+        {
+            EncryptedString encryptedString = new EncryptedString(sourceDictionary);
+            return encryptedString.ToString();
+        }
+
+        #endregion
+
         #region Miscellaneous
 
         /// <summary>
@@ -563,22 +602,6 @@ namespace Vserv.Common.Extensions
         public static Boolean IsNotNull(this object o)
         {
             return !ReferenceEquals(o, null);
-        }
-
-        /// <summary>
-        /// Returns if a collection is null or Empty i.e does not contain any items in it.
-        /// </summary>
-        /// <param name="item">A collection</param>
-        /// <returns>
-        /// Boolean Value
-        /// </returns>
-        public static Boolean IsNullOrEmptyCollection(this System.Collections.ICollection item)
-        {
-            if (item != null && item.Count > 0)
-            {
-                return false;
-            }
-            return true;
         }
 
         /// <summary>
@@ -644,6 +667,304 @@ namespace Vserv.Common.Extensions
 
             return (character == ' ') || (character >= '\x0000' && character <= '\x001f') || character >= '\x007f'
                    || character == '\x0085';
+        }
+
+        public static String GetValue(this Dictionary<String, String> list, String fieldName)
+        {
+            String strValue;
+            list.TryGetValue(fieldName, out strValue);
+            return strValue;
+        }
+
+        /// <summary>
+        /// Converts an object of to type T
+        /// </summary>
+        /// <typeparam name="T">Type to convert to</typeparam>
+        /// <param name="obj">object to convert</param>
+        /// <returns>A T</returns>
+        /// <remarks></remarks>
+        [DebuggerStepThrough]
+        public static T To<T>(this object obj)
+        {
+            Type t = typeof(T);
+
+            return t.IsGenericType && (t.GetGenericTypeDefinition() == typeof(Nullable<>))
+                      ? (obj.IsNull() ? (T)(object)null : (T)Convert.ChangeType(obj, Nullable.GetUnderlyingType(t)))
+                      : (obj == DBNull.Value
+                            ? (T)((object)default(T) ?? String.Empty)
+                            : (obj is IConvertible) ? (T)Convert.ChangeType(obj, t) : (T)obj);
+        }
+
+        /// <summary>
+        /// Returns if a collection is null or Empty i.e does not contain any items in it.
+        /// </summary>
+        /// <param name="item">A collection</param>
+        /// <returns>Boolean Value</returns>
+        public static Boolean IsNullOrEmptyCollection(this ICollection item)
+        {
+            if (item != null && item.Count > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Returns the description for the given value,
+        /// as specified by DescriptionAttribute, or null
+        /// if no description is present.
+        /// </summary>
+        /// <typeparam name="T">Enum type</typeparam>
+        /// <param name="item">Value to fetch description for</param>
+        /// <returns>The description of the value, or null if no description
+        /// has been specified (but the value is a named value).</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="item"/>
+        /// is not a named member of the enum
+        ///   </exception>
+        /// <remarks></remarks>
+        [DebuggerStepThrough]
+        public static String GetDescription<T>(this T item) where T : struct, IComparable, IFormattable, IConvertible
+        {
+            String description;
+
+            if (!EnumHelper<T>.ValueToDescriptionMap.TryGetValue(item, out description))
+            {
+                throw new ArgumentOutOfRangeException("item");
+            }
+
+            return description;
+        }
+
+        /// <summary>
+        /// Returns the description for the given value,
+        /// as specified by DescriptionAttribute, or value
+        /// if no description is present.
+        /// </summary>
+        /// <typeparam name="T">Enum type</typeparam>
+        /// <param name="item">Value to fetch description for</param>
+        /// <returns>The description of the value, or value if no description
+        /// has been specified (but the value is a named value).</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <paramref name="item"/>
+        /// is not a named member of the enum
+        ///   </exception>
+        /// <remarks></remarks>
+        [DebuggerStepThrough]
+        public static String ToDescription<T>(this T item) where T : struct, IComparable, IFormattable, IConvertible
+        {
+            String description;
+
+            return EnumHelper<T>.ValueToDescriptionMap.TryGetValue(item, out description)
+                      ? (description ?? item.ToString())
+                      : item.ToString();
+        }
+
+        /// <summary>
+        /// Attempts to find a value with the given description.
+        /// </summary>
+        /// <typeparam name="T">Enum type</typeparam>
+        /// <param name="description">Description to find</param>
+        /// <param name="value">Enum value corresponding to given description (on return)</param>
+        /// <returns>True if a value with the given description was found,
+        /// false otherwise.</returns>
+        /// <remarks>More than one value may have the same description. In this unlikely
+        /// situation, the first value with the specified description is returned.</remarks>
+        [DebuggerStepThrough]
+        public static Boolean TryParseDescription<T>(String description, out T value)
+           where T : struct, IComparable, IFormattable, IConvertible
+        {
+            if (description.IsNullOrEmpty())
+            {
+                throw new ArgumentException("Description cannot be null or empty.");
+            }
+
+            return EnumHelper<T>.DescriptionToValueMap.TryGetValue(description, out value);
+        }
+
+        /// <summary>
+        /// Parses the name of an enum value.
+        /// </summary>
+        /// <typeparam name="T">Enum type</typeparam>
+        /// <param name="@enum">The enum.</param>
+        /// <param name="enum"></param>
+        /// <param name="name">The name.</param>
+        /// <returns>The parsed value</returns>
+        /// <exception cref="ArgumentException">
+        /// The name could not be parsed.
+        ///   </exception>
+        /// <remarks>This method only considers named values: it does not parse comma-separated
+        /// combinations of flags enums.</remarks>
+        [DebuggerStepThrough]
+        public static T ParseName<T>(this T @enum, String name) where T : struct, IComparable, IFormattable, IConvertible
+        {
+            if (name.IsNullOrEmpty())
+            {
+                throw new ArgumentException("name");
+            }
+
+            T value;
+
+            if (!TryParseName(name, out value))
+            {
+                throw new ArgumentException("Unknown name", name);
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Parses the name of an enum value.
+        /// </summary>
+        /// <typeparam name="T">Enum type</typeparam>
+        /// <param name="name">The name.</param>
+        /// <returns>The parsed value</returns>
+        /// <exception cref="ArgumentException">
+        /// The name could not be parsed.
+        ///   </exception>
+        /// <remarks>This method only considers named values: it does not parse comma-separated
+        /// combinations of flags enums.</remarks>
+        [DebuggerStepThrough]
+        public static T ParseName<T>(String name) where T : struct, IComparable, IFormattable, IConvertible
+        {
+            if (name.IsNullOrEmpty())
+            {
+                throw new ArgumentException("name");
+            }
+
+            T value;
+
+            if (!TryParseName(name, out value))
+            {
+                throw new ArgumentException("Unknown name", name);
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Parses the name of an enum value.
+        /// </summary>
+        /// <typeparam name="T">Enum type</typeparam>
+        /// <param name="name">The name.</param>
+        /// <returns>The parsed value</returns>
+        /// <exception cref="ArgumentException">
+        /// The name could not be parsed.
+        ///   </exception>
+        /// <remarks>This method only considers named values: it does not parse comma-separated
+        /// combinations of flags enums.</remarks>
+        [DebuggerStepThrough]
+        public static T ParseNameOrDefault<T>(String name) where T : struct, IComparable, IFormattable, IConvertible
+        {
+            if (name.IsNullOrEmpty())
+            {
+                throw new ArgumentException("name");
+            }
+
+            T value;
+
+            return !TryParseName(name, out value) ? default(T) : value;
+        }
+
+        /// <summary>
+        /// Attempts to find a value for the specified name.
+        /// Only names are considered - not numeric values.
+        /// </summary>
+        /// <typeparam name="T">Enum type</typeparam>
+        /// <param name="name">Name to parse</param>
+        /// <param name="value">Enum value corresponding to given name (on return)</param>
+        /// <returns>Whether the parse attempt was successful or not</returns>
+        /// <remarks>If the name is not parsed, <paramref name="value"/> will
+        /// be set to the zero value of the enum. This method only
+        /// considers named values: it does not parse comma-separated
+        /// combinations of flags enums.</remarks>
+        [DebuggerStepThrough]
+        public static Boolean TryParseName<T>(String name, out T value)
+           where T : struct, IComparable, IFormattable, IConvertible
+        {
+            if (name.IsNullOrEmpty())
+            {
+                throw new ArgumentException("name");
+            }
+
+            Int32 index = EnumHelper<T>.Names.IndexOf(name.ToLower(CultureInfo.CurrentCulture));
+
+            if (index == -1)
+            {
+                value = default(T);
+                return false;
+            }
+
+            value = EnumHelper<T>.Values[index];
+
+            return true;
+        }
+
+        /// <summary>
+        /// Verifies whether a passed String is a valid Enum of type T
+        /// </summary>
+        /// <typeparam name="T">The type.</typeparam>
+        /// <param name="name">The name.</param>
+        /// <returns>The try parse name.</returns>
+        /// <remarks></remarks>
+        [DebuggerStepThrough]
+        public static Boolean TryParseName<T>(this String name) where T : struct, IComparable, IFormattable, IConvertible
+        {
+            if (name.IsNullOrEmpty())
+            {
+                throw new ArgumentException("name");
+            }
+
+            Int32 index = EnumHelper<T>.Names.IndexOf(name.ToLower(CultureInfo.CurrentCulture));
+
+            return index != -1;
+        }
+
+        /// <summary>
+        /// Returns the underlying type for the enum
+        /// </summary>
+        /// <typeparam name="T">Enum type</typeparam>
+        /// <returns>The underlying type (Byte, Int32 etc) for the enum</returns>
+        /// <remarks></remarks>
+        [DebuggerStepThrough]
+        public static Type GetUnderlyingType<T>() where T : struct, IComparable, IFormattable, IConvertible
+        {
+            return EnumHelper<T>.UnderlyingType;
+        }
+
+        /// <summary>
+        /// Check String for empty and null.
+        /// </summary>
+        /// <param name="obj">The obj.</param>
+        /// <returns><c>true</c> if [is null or empty] [the specified obj]; otherwise, <c>false</c>.</returns>
+        /// <remarks></remarks>
+        [DebuggerStepThrough]
+        public static Boolean IsNullOrEmpty(this object obj)
+        {
+            return obj is String ? ((String)obj).IsNullOrEmpty() : obj.IsNull();
+        }
+
+        /// <summary>
+        /// Check String for empty and null.
+        /// </summary>
+        /// <param name="stringObject">The String to check.</param>
+        /// <returns>True if null or empty, otherwise False</returns>
+        /// <remarks></remarks>
+        [DebuggerStepThrough]
+        public static Boolean IsNullOrEmpty(this String stringObject)
+        {
+            return String.IsNullOrWhiteSpace(stringObject);
+        }
+
+        /// <summary>
+        /// Check is null or white space
+        /// </summary>
+        /// <param name="stringObject"></param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static Boolean IsNullOrWhiteSpace(this String stringObject)
+        {
+            return String.IsNullOrWhiteSpace(stringObject);
         }
 
         #endregion

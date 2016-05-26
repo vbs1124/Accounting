@@ -40,6 +40,7 @@ namespace Vserv.Accounting.Common
         /// </summary>
         public const string USER_SECURITY_QUESTION_3 = "UserSecurityQuestion3";
 
+        public const string MESSAGE = "MESSAGE";
         #endregion
 
        

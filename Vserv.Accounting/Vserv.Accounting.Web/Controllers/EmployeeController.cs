@@ -1,4 +1,5 @@
 ﻿#region Namespaces
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,8 @@ using Vserv.Accounting.Business.Managers;
 using Vserv.Accounting.Common;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Web.Models;
-using Vserv.Common.Extensions;
 using System.Collections;
+
 #endregion
 
 namespace Vserv.Accounting.Web.Controllers
@@ -76,7 +77,10 @@ namespace Vserv.Accounting.Web.Controllers
             {
                 Employee employee = ConvertTo(employeeModel);
                 _employeeManager.AddEmployee(employee);
-                return RedirectToAction("Success", "Home", new { successMessage = "Employee added successfully." });
+
+                Dictionary<string, string> message = new Dictionary<string, string>();
+                message.Add(CommonConstants.MESSAGE, "Employee added successfully.");
+                return RedirectToAction("Success", "Home", new { successMessage = message.ToEncryptedString() });
             }
             ModelState.AddModelError("emp_errors", "Please fill the required fields...");
             SetDropdownValues();
@@ -88,6 +92,7 @@ namespace Vserv.Accounting.Web.Controllers
         /// </summary>
         /// <param name="employeeId">The employee identifier.</param>
         /// <returns></returns>
+        //[Route("employee/edit/{employeeId}")]
         public ActionResult Edit(int employeeId)
         {
             EmployeeManager _employeeManager = new EmployeeManager();
@@ -103,6 +108,7 @@ namespace Vserv.Accounting.Web.Controllers
         /// <param name="employeeModel">The employee model.</param>
         /// <returns></returns>
         [HttpPost]
+        //[Route("employee/edit/")]
         public ActionResult Edit(EmployeeModel employeeModel)
         {
             EmployeeManager _employeeManager = new EmployeeManager();
@@ -118,7 +124,10 @@ namespace Vserv.Accounting.Web.Controllers
                 _employeeManager.ArchiveEmployee(employeeModel.EmployeeId, User.Identity.Name);
 
                 _employeeManager.EditEmployee(employee);
-                return RedirectToAction("Success", "Home", new { successMessage = "Employee updated successfully." });
+                Dictionary<string, string> message = new Dictionary<string, string>();
+                message.Add(CommonConstants.MESSAGE, "Employee updated successfully.");
+                string encryptedMessage = message.ToEncryptedString();
+                return RedirectToAction("Success", "Home", new { successMessage = encryptedMessage });
             }
 
             SetDropdownValues();
@@ -171,6 +180,7 @@ namespace Vserv.Accounting.Web.Controllers
             return PartialView("_employeehistory", employees);
         }
 
+        [Route("employee/{employeeArchiveId}/compare")]
         public ActionResult EmployeeCompareResult(int employeeArchiveId)
         {
             SetDropdownValues();

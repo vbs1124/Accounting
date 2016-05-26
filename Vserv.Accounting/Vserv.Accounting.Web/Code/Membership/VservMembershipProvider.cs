@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Namespaces
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,7 +8,9 @@ using System.Web.Security;
 using Vserv.Accounting.Core.Services;
 using Vserv.Accounting.Data.Entity;
 using WebMatrix.WebData;
-using Vserv.Common.Extensions;
+using Vserv.Accounting.Common;
+
+#endregion
 
 namespace Vserv.Accounting.Web.Code.Membership
 {

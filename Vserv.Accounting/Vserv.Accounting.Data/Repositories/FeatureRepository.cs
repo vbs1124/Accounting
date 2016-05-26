@@ -1,10 +1,11 @@
 ﻿#region Namespaces
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Vserv.Accounting.Data.Entity;
-using Vserv.Common.Extensions;
+
 #endregion
 
 namespace Vserv.Accounting.Data
@@ -19,10 +20,10 @@ namespace Vserv.Accounting.Data
             {
                 if (excludeInactiveFeatures)
                 {
-                    return context.Features.Where(feature => feature.IsActive).ToList();
+                    return context.Features.AsNoTracking().Where(feature => feature.IsActive).ToList();
                 }
 
-                return context.Features.ToList();
+                return context.Features.AsNoTracking().ToList();
             }
         }
     }

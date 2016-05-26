@@ -1,11 +1,12 @@
 ﻿#region Namespaces
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Vserv.Accounting.Data.Entity;
-using Vserv.Common.Extensions;
 using Vserv.Accounting.Common;
+using System.Data.Entity.Core.Objects;
 
 #endregion
 
@@ -34,21 +35,21 @@ namespace Vserv.Accounting.Data
             {
                 if (employeeFilter.Equals(EmployeeFilter.ActiveEmployees))
                 {
-                    return context.Employees
+                    return context.Employees.AsNoTracking()
                     .Include("Designation")
                     .Include("OfficeBranch")
                     .Include("Salutation").Where(employee => employee.IsActive).ToList();
                 }
                 else if (employeeFilter.Equals(EmployeeFilter.InactiveEmployees))
                 {
-                    return context.Employees
+                    return context.Employees.AsNoTracking()
                    .Include("Designation")
                    .Include("OfficeBranch")
                    .Include("Salutation").Where(employee => !employee.IsActive).ToList();
                 }
                 else
                 {
-                    return context.Employees
+                    return context.Employees.AsNoTracking()
                    .Include("Designation")
                    .Include("OfficeBranch")
                    .Include("Salutation").ToList();
@@ -67,7 +68,7 @@ namespace Vserv.Accounting.Data
             using (var context = new VservAccountingDBEntities())
             {
                 Employee aaa = new Employee();
-                var result = context.Employees
+                var result = context.Employees.AsNoTracking()
                     .Include("Designation")
                     .Include("OfficeBranch")
                     .Include("Salutation").FirstOrDefault(userProfile => userProfile.EmployeeId == employeeId);
@@ -146,7 +147,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Employees.Any(employee => employee.EmployeeId != employeeId && employee.VBS_Id.Contains(VBS_Id));
+                return context.Employees.AsNoTracking().Any(employee => employee.EmployeeId != employeeId && employee.VBS_Id.Contains(VBS_Id));
             }
         }
 
@@ -160,7 +161,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Employees.Any(employee => employee.EmployeeId != employeeId && employee.OfficialEmailAddress.Contains(emailAddress));
+                return context.Employees.AsNoTracking().Any(employee => employee.EmployeeId != employeeId && employee.OfficialEmailAddress.Contains(emailAddress));
             }
         }
 
@@ -174,7 +175,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Employees.Any(employee => employee.EmployeeId != employeeId && employee.MobileNumber.Contains(mobileNumber));
+                return context.Employees.AsNoTracking().Any(employee => employee.EmployeeId != employeeId && employee.MobileNumber.Contains(mobileNumber));
             }
         }
 
@@ -186,7 +187,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Employees.Count(con => con.IsActive);
+                return context.Employees.AsNoTracking().Count(con => con.IsActive);
             }
         }
 
@@ -211,7 +212,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.EmployeeArchives.Where(emp => emp.EmployeeId == employeeId).OrderByDescending(order => order.EmployeeArchiveId).ToList();
+                return context.EmployeeArchives.AsNoTracking().Where(emp => emp.EmployeeId == employeeId).OrderByDescending(order => order.EmployeeArchiveId).ToList();
             }
         }
 
@@ -220,7 +221,7 @@ namespace Vserv.Accounting.Data
             CompareEmployeeModel compareEmployeeModel = new CompareEmployeeModel();
             using (var context = new VservAccountingDBEntities())
             {
-                compareEmployeeModel.PreviousEmployeeInfo = context.EmployeeArchives
+                compareEmployeeModel.PreviousEmployeeInfo = context.EmployeeArchives.AsNoTracking()
                     .Include("Bank")
                     .Include("Designation")
                     .Include("Gender")
@@ -232,7 +233,7 @@ namespace Vserv.Accounting.Data
 
                 if (compareEmployeeModel.PreviousEmployeeInfo.IsNotNull())
                 {
-                    compareEmployeeModel.CurrentEmployeeInfo = context.Employees
+                    compareEmployeeModel.CurrentEmployeeInfo = context.Employees.AsNoTracking()
                         .Include("Bank")
                         .Include("Designation")
                         .Include("Gender")
@@ -341,6 +342,14 @@ namespace Vserv.Accounting.Data
 
         #endregion Private Methods
 
+        #endregion
+
+        #region Compiled Query
+
+      //  public static readonly Func<VservAccountingDBEntities, Int32, Employee> CompiledGetEmployee =
+      //CompiledQuery.Compile<VservAccountingDBEntities, Int32, Employee>((dbContext, employeeId) => dbContext.Employees
+      //              .Include("Designation").Include("OfficeBranch")
+      //              .Include("Salutation").FirstOrDefault(userProfile => userProfile.EmployeeId == employeeId));
         #endregion
     }
 }

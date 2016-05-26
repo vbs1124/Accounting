@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vserv.Common.Enums
+namespace Vserv.Accounting.Common
 {
     public enum ManageMessageId
     {

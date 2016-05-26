@@ -1,10 +1,12 @@
 ﻿#region Namespaces
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using Vserv.Accounting.Data.Entity;
-using Vserv.Common.Extensions;
+using Vserv.Accounting.Common;
+
 #endregion
 
 namespace Vserv.Accounting.Data
@@ -21,7 +23,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                var result = context.States.Where(condition => condition.IsActive).ToList();
+                var result = context.States.AsNoTracking().Where(condition => condition.IsActive).ToList();
                 return result;
             }
         }
@@ -35,7 +37,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.States.FirstOrDefault(state => state.StateId == stateId);
+                return context.States.AsNoTracking().FirstOrDefault(state => state.StateId == stateId);
             }
         }
 
@@ -43,7 +45,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                var city = context.Cities.Include("State").FirstOrDefault(condition => condition.Name == cityName);
+                var city = context.Cities.AsNoTracking().Include("State").FirstOrDefault(condition => condition.Name == cityName);
 
                 if (city.IsNotNull())
                 {

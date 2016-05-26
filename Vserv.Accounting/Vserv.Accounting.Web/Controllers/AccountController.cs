@@ -1,4 +1,5 @@
 ﻿#region Namespaces
+
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -10,8 +11,6 @@ using Vserv.Accounting.Web.Models;
 using WebMatrix.WebData;
 using System.Linq;
 using Vserv.Accounting.Common;
-using Vserv.Common.Extensions;
-using Vserv.Common.Enums;
 
 #endregion
 
@@ -196,7 +195,9 @@ namespace Vserv.Accounting.Web.Controllers
                 ModelState.AddModelError("_FORM", "Error is occurred. " + ex.Message);
             }
 
-            return RedirectToAction("Success", "Home", new { successMessage = "Your password has been changed successfully." });
+            Dictionary<string, string> message = new Dictionary<string, string>();
+            message.Add(CommonConstants.MESSAGE, "Your password has been changed successfully.");
+            return RedirectToAction("Success", "Home", new { successMessage = message.ToEncryptedString() });
         }
 
         #endregion
@@ -224,13 +225,14 @@ namespace Vserv.Accounting.Web.Controllers
                 bool isRegisteredUser = _manager.IsRegisteredUser(ConvertTo(forgotPasswordModel));
                 if (isRegisteredUser)
                 {
-                    
-                    UserProfileModel userProfileModel = new UserProfileModel
-                    {
-                        UserName = forgotPasswordModel.UserName
-                    };
+                    //UserProfileModel userProfileModel = new UserProfileModel
+                    //{
+                    //    UserName = forgotPasswordModel.UserName
+                    //};
 
-                    return RedirectToAction("ResetPassword", userProfileModel);
+                    Dictionary<string, string> usrInfo = new Dictionary<string, string>();
+                    usrInfo.Add("vbs_usr_name", forgotPasswordModel.UserName);
+                    return RedirectToAction("VerifyUser", new { userName = usrInfo.ToEncryptedString() });
                 }
                 else
                 {
@@ -254,10 +256,29 @@ namespace Vserv.Accounting.Web.Controllers
             return View(forgotPasswordModel);
         }
 
+        [Route("accounts/recovery/verifyuser/{userName}")]
+        [HttpGet]
+        public ActionResult VerifyUser(string userName)
+        {
+            UserProfileModel userProfileModel = new UserProfileModel { UserName = userName };
+            return View("resetpassword", userProfileModel);
+        }
+
+        [HttpPost]
         public ActionResult ResetPassword(UserProfileModel userProfileModel)
         {
             AccountManager _accountManager = new Business.Managers.AccountManager();
-            UserProfile userProfile = _accountManager.GetUserProfile(userProfileModel.UserName);
+
+            Dictionary<string, string> usrInfo = new Dictionary<string, string>();
+            usrInfo.ToDecryptedString(userProfileModel.UserName);
+
+            UserProfile userProfile = _accountManager.GetUserProfile(usrInfo["vbs_usr_name"]);
+
+            if (userProfile.IsNull())
+            {
+                 return RedirectToAction("BadLink");
+            }
+
             var membership = this.usersService.GetMembership(userProfile.UserId);
             if (membership == null)
             {

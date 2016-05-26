@@ -1,5 +1,10 @@
 ﻿#region Namespaces
+
+using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using Vserv.Accounting.Common;
+
 #endregion
 
 namespace Vserv.Accounting.Web.Controllers
@@ -31,9 +36,12 @@ namespace Vserv.Accounting.Web.Controllers
         /// </summary>
         /// <param name="successMessage">The success message.</param>
         /// <returns></returns>
+        [Route("success/{successMessage}")]
         public ActionResult Success(string successMessage)
         {
-            ViewBag.SuccessMessage = successMessage;
+            Dictionary<String, String> encryptString = new Dictionary<String, String>();
+            encryptString.ToDecryptedString(successMessage);
+            ViewBag.SuccessMessage = encryptString[CommonConstants.MESSAGE];
             return View();
         }
 

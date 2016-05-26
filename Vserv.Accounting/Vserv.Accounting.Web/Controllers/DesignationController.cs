@@ -1,4 +1,5 @@
 ﻿#region Namespaces
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Web.Mvc;
 using Vserv.Accounting.Business.Managers;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Web.Models;
-using Vserv.Common.Extensions;
+using Vserv.Accounting.Common;
 
 #endregion
 

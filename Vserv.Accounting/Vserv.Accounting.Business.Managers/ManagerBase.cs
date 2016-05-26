@@ -9,7 +9,7 @@ using Vserv.Common.Contracts;
 using Vserv.Common.Contracts.Enums;
 using Vserv.Common.Exceptions;
 using Vserv.Common.Faults;
-using Vserv.Common.Extensions;
+using Vserv.Accounting.Common;
 
 #endregion
 

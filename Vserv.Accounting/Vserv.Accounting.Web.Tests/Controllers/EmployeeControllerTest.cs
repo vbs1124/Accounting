@@ -28,7 +28,7 @@ namespace Vserv.Accounting.Web.Tests.Controllers
             EmployeeController controller = new EmployeeController();
 
             // Act
-            ViewResult result = controller.List() as ViewResult;
+            ViewResult result = controller.List(2) as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
