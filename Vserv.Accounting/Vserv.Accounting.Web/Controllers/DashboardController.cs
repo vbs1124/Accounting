@@ -12,8 +12,15 @@ namespace Vserv.Accounting.Web.Controllers
     /// </summary>
     /// <seealso cref="System.Web.Mvc.Controller" />
     [Authorize]
-    public class DashboardController : Controller
+    public class DashboardController : ViewControllerBase
     {
+        public HomeManager _homeManager;
+
+        public DashboardController()
+        {
+            _homeManager = new HomeManager();
+        }
+
         #region Action Methods
         //
         // GET: /Dashboard/
@@ -23,7 +30,6 @@ namespace Vserv.Accounting.Web.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            HomeManager _homeManager = new HomeManager();
             DashboardModel dashboardModel = new DashboardModel();
             dashboardModel.EmployeeCount = _homeManager.GetEmployeeCount();
             return View(dashboardModel);

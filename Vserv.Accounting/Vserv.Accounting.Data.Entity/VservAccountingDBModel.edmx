@@ -15,8 +15,8 @@
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -55,9 +55,10 @@
           <Property Name="BankId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -71,8 +72,8 @@
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -82,21 +83,6 @@
           </Key>
           <Property Name="Key" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Value" Type="nvarchar" MaxLength="250" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Department">
-          <Key>
-            <PropertyRef Name="DepartmentId" />
-          </Key>
-          <Property Name="DepartmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Code" Type="nchar" MaxLength="6" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="DisplayOrder" Type="int" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Designation">
           <Key>
@@ -108,8 +94,8 @@
           <Property Name="Description" Type="varchar" MaxLength="250" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -118,11 +104,11 @@
             <PropertyRef Name="EmployeeId" />
           </Key>
           <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="250" />
-          <Property Name="MiddleName" Type="varchar" MaxLength="250" />
-          <Property Name="LastName" Type="varchar" MaxLength="250" />
-          <Property Name="FatherName" Type="varchar" MaxLength="250" />
-          <Property Name="MotherName" Type="varchar" MaxLength="250" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="FatherName" Type="varchar" MaxLength="100" />
+          <Property Name="MotherName" Type="varchar" MaxLength="100" />
           <Property Name="PermanentAccountNumber" Type="varchar" MaxLength="20" />
           <Property Name="UniversalAccountNumber" Type="varchar" MaxLength="20" />
           <Property Name="EPFNumber" Type="varchar" MaxLength="20" />
@@ -142,23 +128,23 @@
           <Property Name="OfficeBranchId" Type="int" Nullable="false" />
           <Property Name="PermanentAddress1" Type="varchar" MaxLength="250" />
           <Property Name="PermanentAddress2" Type="varchar" MaxLength="250" />
-          <Property Name="PermanentCity" Type="varchar" MaxLength="250" />
-          <Property Name="PermanentZipCode" Type="varchar" MaxLength="250" />
+          <Property Name="PermanentCity" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentZipCode" Type="varchar" MaxLength="6" />
           <Property Name="PermanentStateId" Type="int" />
           <Property Name="PermanentCountryId" Type="int" />
           <Property Name="MailingAddress1" Type="varchar" MaxLength="250" />
           <Property Name="MailingAddress2" Type="varchar" MaxLength="250" />
-          <Property Name="MailingCity" Type="varchar" MaxLength="250" />
-          <Property Name="MailingZipCode" Type="varchar" MaxLength="250" />
+          <Property Name="MailingCity" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MailingZipCode" Type="varchar" MaxLength="6" />
           <Property Name="MailingStateId" Type="int" />
           <Property Name="MailingCountryId" Type="int" />
           <Property Name="IsMetro" Type="bit" Nullable="false" />
-          <Property Name="BankAccountNumber" Type="varchar" MaxLength="250" />
+          <Property Name="BankAccountNumber" Type="varchar" MaxLength="100" />
           <Property Name="BankId" Type="int" />
           <Property Name="BankIFSCCode" Type="varchar" MaxLength="20" />
           <Property Name="BankMICRCode" Type="varchar" MaxLength="20" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
@@ -169,48 +155,48 @@
           </Key>
           <Property Name="EmployeeArchiveId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="MiddleName" Type="varchar" MaxLength="250" />
-          <Property Name="LastName" Type="varchar" MaxLength="250" />
-          <Property Name="FatherName" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="MotherName" Type="varchar" MaxLength="250" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="FatherName" Type="varchar" MaxLength="100" />
+          <Property Name="MotherName" Type="varchar" MaxLength="100" />
           <Property Name="PermanentAccountNumber" Type="varchar" MaxLength="20" />
           <Property Name="UniversalAccountNumber" Type="varchar" MaxLength="20" />
           <Property Name="EPFNumber" Type="varchar" MaxLength="20" />
           <Property Name="AADHAARNumber" Type="varchar" MaxLength="20" />
           <Property Name="ESINumber" Type="varchar" MaxLength="20" />
-          <Property Name="MobileNumber" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="OfficialEmailAddress" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="PersonalEmailAddress" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="20" />
+          <Property Name="OfficialEmailAddress" Type="varchar" MaxLength="250" />
+          <Property Name="PersonalEmailAddress" Type="varchar" MaxLength="250" />
           <Property Name="BirthDay" Type="datetime" Nullable="false" />
           <Property Name="JoiningDate" Type="datetime" Nullable="false" />
           <Property Name="RelievingDate" Type="datetime" />
           <Property Name="ResignationDate" Type="datetime" />
-          <Property Name="VBS_Id" Type="char" MaxLength="7" Nullable="false" />
+          <Property Name="VBS_Id" Type="char" MaxLength="7" />
           <Property Name="DesignationId" Type="int" Nullable="false" />
           <Property Name="SalutationId" Type="int" Nullable="false" />
           <Property Name="GenderId" Type="int" Nullable="false" />
           <Property Name="OfficeBranchId" Type="int" Nullable="false" />
-          <Property Name="PermanentAddress1" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="PermanentAddress2" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="PermanentCity" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="PermanentZipCode" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="PermanentAddress1" Type="varchar" MaxLength="250" />
+          <Property Name="PermanentAddress2" Type="varchar" MaxLength="250" />
+          <Property Name="PermanentCity" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentZipCode" Type="varchar" MaxLength="6" />
           <Property Name="PermanentStateId" Type="int" />
           <Property Name="PermanentCountryId" Type="int" />
-          <Property Name="MailingAddress1" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="MailingAddress2" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="MailingCity" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="MailingZipCode" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="MailingAddress1" Type="varchar" MaxLength="250" />
+          <Property Name="MailingAddress2" Type="varchar" MaxLength="250" />
+          <Property Name="MailingCity" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MailingZipCode" Type="varchar" MaxLength="6" />
           <Property Name="MailingStateId" Type="int" />
           <Property Name="MailingCountryId" Type="int" />
           <Property Name="IsMetro" Type="bit" Nullable="false" />
-          <Property Name="BankAccountNumber" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="BankAccountNumber" Type="varchar" MaxLength="100" />
           <Property Name="BankId" Type="int" />
-          <Property Name="BankIFSCCode" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="BankMICRCode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="BankIFSCCode" Type="varchar" MaxLength="20" />
+          <Property Name="BankMICRCode" Type="varchar" MaxLength="20" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -221,12 +207,12 @@
           <Property Name="EPFNumberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="EPFOfficeId" Type="int" Nullable="false" />
-          <Property Name="EstablishmentCode" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Extension" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="AccountNumber" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="EstablishmentCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Extension" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="AccountNumber" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -235,12 +221,12 @@
             <PropertyRef Name="EPFOfficeId" />
           </Key>
           <Property Name="EPFOfficeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EPFOfficeName" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="EPFOfficeCode" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="StateId" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="EPFOfficeName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EPFOfficeCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="StateId" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -259,8 +245,8 @@
           <Property Name="ParentId" Type="int" Nullable="false" />
           <Property Name="IsParent" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -273,8 +259,22 @@
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LookupMonth">
+          <Key>
+            <PropertyRef Name="MonthId" />
+          </Key>
+          <Property Name="MonthId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -324,8 +324,55 @@
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PaySheet">
+          <Key>
+            <PropertyRef Name="PaySheetId" />
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="CTCPerMonth" />
+            <PropertyRef Name="Basic" />
+            <PropertyRef Name="HRA" />
+            <PropertyRef Name="SpecialAllowance" />
+            <PropertyRef Name="PerformanceIncentive" />
+            <PropertyRef Name="PF" />
+            <PropertyRef Name="Mediclaim" />
+            <PropertyRef Name="Gratuity" />
+            <PropertyRef Name="IsActive" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="PaySheetId" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="CTCPerMonth" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Basic" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="HRA" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Conveyance" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="SpecialAllowance" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="PerformanceIncentive" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="LeaveEncashment" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="SalaryArrears" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="CabDeductions" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="OtherDeduction" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="Commission" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="Others" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="Medical" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="FoodCoupons" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="ProjectIncentive" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="CarLease" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="LTC" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="PF" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Mediclaim" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Gratuity" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Month" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -348,8 +395,8 @@
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -361,8 +408,8 @@
           <Property Name="CollectionId" Type="int" />
           <Property Name="Question" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -376,8 +423,8 @@
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -426,8 +473,8 @@
           <Property Name="CityId" Type="int" Nullable="false" />
           <Property Name="StateId" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
@@ -764,7 +811,6 @@
           <EntitySet Name="Bank" EntityType="Self.Bank" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Config" EntityType="Self.Config" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeArchive" EntityType="Self.EmployeeArchive" Schema="dbo" store:Type="Tables" />
@@ -772,6 +818,7 @@
           <EntitySet Name="EPFOffice" EntityType="Self.EPFOffice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feature" EntityType="Self.Feature" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LookupMonth" EntityType="Self.LookupMonth" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Membership" EntityType="Self.Membership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OAuthMembership" EntityType="Self.OAuthMembership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfficeBranch" EntityType="Self.OfficeBranch" Schema="dbo" store:Type="Tables" />
@@ -783,6 +830,38 @@
           <EntitySet Name="UserSecurityQuestion" EntityType="Self.UserSecurityQuestion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersInRoles" EntityType="Self.UsersInRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ZipCode" EntityType="Self.ZipCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaySheet" EntityType="Self.PaySheet" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PaySheet].[PaySheetId] AS [PaySheetId], 
+    [PaySheet].[EmployeeId] AS [EmployeeId], 
+    [PaySheet].[CTCPerMonth] AS [CTCPerMonth], 
+    [PaySheet].[Basic] AS [Basic], 
+    [PaySheet].[HRA] AS [HRA], 
+    [PaySheet].[Conveyance] AS [Conveyance], 
+    [PaySheet].[SpecialAllowance] AS [SpecialAllowance], 
+    [PaySheet].[PerformanceIncentive] AS [PerformanceIncentive], 
+    [PaySheet].[LeaveEncashment] AS [LeaveEncashment], 
+    [PaySheet].[SalaryArrears] AS [SalaryArrears], 
+    [PaySheet].[CabDeductions] AS [CabDeductions], 
+    [PaySheet].[OtherDeduction] AS [OtherDeduction], 
+    [PaySheet].[Commission] AS [Commission], 
+    [PaySheet].[Others] AS [Others], 
+    [PaySheet].[Medical] AS [Medical], 
+    [PaySheet].[FoodCoupons] AS [FoodCoupons], 
+    [PaySheet].[ProjectIncentive] AS [ProjectIncentive], 
+    [PaySheet].[CarLease] AS [CarLease], 
+    [PaySheet].[LTC] AS [LTC], 
+    [PaySheet].[PF] AS [PF], 
+    [PaySheet].[Mediclaim] AS [Mediclaim], 
+    [PaySheet].[Gratuity] AS [Gratuity], 
+    [PaySheet].[Month] AS [Month], 
+    [PaySheet].[IsActive] AS [IsActive], 
+    [PaySheet].[CreatedBy] AS [CreatedBy], 
+    [PaySheet].[UpdatedBy] AS [UpdatedBy], 
+    [PaySheet].[CreatedDate] AS [CreatedDate], 
+    [PaySheet].[UpdatedDate] AS [UpdatedDate]
+    FROM [dbo].[PaySheet] AS [PaySheet]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_City_State" Association="Self.FK_City_State">
             <End Role="State" EntitySet="State" />
             <End Role="City" EntitySet="City" />
@@ -945,7 +1024,6 @@
           <EntitySet Name="Banks" EntityType="VservAccountingDBModel.Bank" />
           <EntitySet Name="Cities" EntityType="VservAccountingDBModel.City" />
           <EntitySet Name="Configs" EntityType="VservAccountingDBModel.Config" />
-          <EntitySet Name="Departments" EntityType="VservAccountingDBModel.Department" />
           <EntitySet Name="Designations" EntityType="VservAccountingDBModel.Designation" />
           <EntitySet Name="Employees" EntityType="VservAccountingDBModel.Employee" />
           <EntitySet Name="EmployeeArchives" EntityType="VservAccountingDBModel.EmployeeArchive" />
@@ -953,6 +1031,7 @@
           <EntitySet Name="EPFOffices" EntityType="VservAccountingDBModel.EPFOffice" />
           <EntitySet Name="Features" EntityType="VservAccountingDBModel.Feature" />
           <EntitySet Name="Genders" EntityType="VservAccountingDBModel.Gender" />
+          <EntitySet Name="LookupMonths" EntityType="VservAccountingDBModel.LookupMonth" />
           <EntitySet Name="Memberships" EntityType="VservAccountingDBModel.Membership" />
           <EntitySet Name="OAuthMemberships" EntityType="VservAccountingDBModel.OAuthMembership" />
           <EntitySet Name="OfficeBranches" EntityType="VservAccountingDBModel.OfficeBranch" />
@@ -963,6 +1042,7 @@
           <EntitySet Name="UserProfiles" EntityType="VservAccountingDBModel.UserProfile" />
           <EntitySet Name="UserSecurityQuestions" EntityType="VservAccountingDBModel.UserSecurityQuestion" />
           <EntitySet Name="ZipCodes" EntityType="VservAccountingDBModel.ZipCode" />
+          <EntitySet Name="PaySheets" EntityType="VservAccountingDBModel.PaySheet" />
           <AssociationSet Name="FK_Employee_Bank" Association="VservAccountingDBModel.FK_Employee_Bank">
             <End Role="Bank" EntitySet="Banks" />
             <End Role="Employee" EntitySet="Employees" />
@@ -1066,8 +1146,8 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
@@ -1106,9 +1186,10 @@
           <Property Name="BankId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayOrder" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Bank" FromRole="Bank" ToRole="Employee" />
@@ -1124,8 +1205,8 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_City_State" FromRole="City" ToRole="State" />
@@ -1138,21 +1219,6 @@
           <Property Name="Key" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Value" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Department">
-          <Key>
-            <PropertyRef Name="DepartmentId" />
-          </Key>
-          <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="Designation">
           <Key>
             <PropertyRef Name="DesignationId" />
@@ -1163,8 +1229,8 @@
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Designation" ToRole="Employee" />
@@ -1175,11 +1241,11 @@
             <PropertyRef Name="EmployeeId" />
           </Key>
           <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="MiddleName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="FatherName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="MotherName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FatherName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MotherName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PermanentAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="UniversalAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="EPFNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -1199,23 +1265,23 @@
           <Property Name="OfficeBranchId" Type="Int32" Nullable="false" />
           <Property Name="PermanentAddress1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="PermanentAddress2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="PermanentCity" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="PermanentZipCode" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentZipCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="PermanentStateId" Type="Int32" />
           <Property Name="PermanentCountryId" Type="Int32" />
           <Property Name="MailingAddress1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="MailingAddress2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="MailingCity" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="MailingZipCode" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MailingCity" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MailingZipCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="MailingStateId" Type="Int32" />
           <Property Name="MailingCountryId" Type="Int32" />
           <Property Name="IsMetro" Type="Boolean" Nullable="false" />
-          <Property Name="BankAccountNumber" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="BankAccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BankId" Type="Int32" />
           <Property Name="BankIFSCCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="BankMICRCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
@@ -1233,48 +1299,48 @@
           </Key>
           <Property Name="EmployeeArchiveId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="MiddleName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="FatherName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="MotherName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FatherName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MotherName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PermanentAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="UniversalAccountNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="EPFNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="AADHAARNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ESINumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="MobileNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="OfficialEmailAddress" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="PersonalEmailAddress" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OfficialEmailAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PersonalEmailAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="BirthDay" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="JoiningDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RelievingDate" Type="DateTime" Precision="3" />
           <Property Name="ResignationDate" Type="DateTime" Precision="3" />
-          <Property Name="VBS_Id" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="false" />
+          <Property Name="VBS_Id" Type="String" MaxLength="7" FixedLength="true" Unicode="false" />
           <Property Name="DesignationId" Type="Int32" Nullable="false" />
           <Property Name="SalutationId" Type="Int32" Nullable="false" />
           <Property Name="GenderId" Type="Int32" Nullable="false" />
           <Property Name="OfficeBranchId" Type="Int32" Nullable="false" />
-          <Property Name="PermanentAddress1" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="PermanentAddress2" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="PermanentCity" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="PermanentZipCode" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAddress1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAddress2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentZipCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="PermanentStateId" Type="Int32" />
           <Property Name="PermanentCountryId" Type="Int32" />
-          <Property Name="MailingAddress1" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="MailingAddress2" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="MailingCity" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="MailingZipCode" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MailingAddress1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MailingAddress2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MailingCity" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MailingZipCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="MailingStateId" Type="Int32" />
           <Property Name="MailingCountryId" Type="Int32" />
           <Property Name="IsMetro" Type="Boolean" Nullable="false" />
-          <Property Name="BankAccountNumber" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="BankAccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BankId" Type="Int32" />
-          <Property Name="BankIFSCCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="BankMICRCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BankIFSCCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BankMICRCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Bank" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Bank" FromRole="EmployeeArchive" ToRole="Bank" />
@@ -1292,12 +1358,12 @@
           <Property Name="EPFNumberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="EPFOfficeId" Type="Int32" Nullable="false" />
-          <Property Name="EstablishmentCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Extension" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EstablishmentCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Extension" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
@@ -1306,12 +1372,12 @@
             <PropertyRef Name="EPFOfficeId" />
           </Key>
           <Property Name="EPFOfficeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EPFOfficeName" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="EPFOfficeCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="StateId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EPFOfficeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EPFOfficeCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StateId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
@@ -1330,8 +1396,8 @@
           <Property Name="ParentId" Type="Int32" Nullable="false" />
           <Property Name="IsParent" Type="Boolean" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Feature1" Relationship="VservAccountingDBModel.FK_Feature_Feature" FromRole="Feature" ToRole="Feature1" />
@@ -1346,12 +1412,26 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Gender" FromRole="Gender" ToRole="Employee" />
           <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Gender" FromRole="Gender" ToRole="EmployeeArchive" />
+        </EntityType>
+        <EntityType Name="LookupMonth">
+          <Key>
+            <PropertyRef Name="MonthId" />
+          </Key>
+          <Property Name="MonthId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayOrder" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Membership">
           <Key>
@@ -1399,8 +1479,8 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="OfficeBranch" ToRole="Employee" />
@@ -1426,8 +1506,8 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Salutation" FromRole="Salutation" ToRole="Employee" />
@@ -1441,8 +1521,8 @@
           <Property Name="CollectionId" Type="Int32" />
           <Property Name="Question" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="UserSecurityQuestions" Relationship="VservAccountingDBModel.FK_UserSecurityQuestion_SecurityQuestion" FromRole="SecurityQuestion" ToRole="UserSecurityQuestion" />
@@ -1457,8 +1537,8 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Cities" Relationship="VservAccountingDBModel.FK_City_State" FromRole="State" ToRole="City" />
@@ -1509,12 +1589,57 @@
           <Property Name="CityId" Type="Int32" Nullable="false" />
           <Property Name="StateId" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="City" Relationship="VservAccountingDBModel.FK_ZipCode_City" FromRole="ZipCode" ToRole="City" />
           <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_ZipCode_State" FromRole="ZipCode" ToRole="State" />
+        </EntityType>
+        <EntityType Name="PaySheet">
+          <Key>
+            <PropertyRef Name="PaySheetId" />
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="CTCPerMonth" />
+            <PropertyRef Name="Basic" />
+            <PropertyRef Name="HRA" />
+            <PropertyRef Name="SpecialAllowance" />
+            <PropertyRef Name="PerformanceIncentive" />
+            <PropertyRef Name="PF" />
+            <PropertyRef Name="Mediclaim" />
+            <PropertyRef Name="Gratuity" />
+            <PropertyRef Name="IsActive" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="PaySheetId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="CTCPerMonth" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Basic" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="HRA" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Conveyance" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SpecialAllowance" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="PerformanceIncentive" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="LeaveEncashment" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalaryArrears" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CabDeductions" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OtherDeduction" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Commission" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Others" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Medical" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FoodCoupons" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ProjectIncentive" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CarLease" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LTC" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PF" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Mediclaim" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Gratuity" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Month" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_Employee_Bank">
           <End Type="VservAccountingDBModel.Bank" Role="Bank" Multiplicity="0..1" />
@@ -1824,6 +1949,7 @@
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="BankId" ColumnName="BankId" />
@@ -1851,22 +1977,6 @@
               <MappingFragment StoreEntitySet="Config">
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Key" ColumnName="Key" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Departments">
-            <EntityTypeMapping TypeName="VservAccountingDBModel.Department">
-              <MappingFragment StoreEntitySet="Department">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2057,6 +2167,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="LookupMonths">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.LookupMonth">
+              <MappingFragment StoreEntitySet="LookupMonth">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MonthId" ColumnName="MonthId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Memberships">
             <EntityTypeMapping TypeName="VservAccountingDBModel.Membership">
               <MappingFragment StoreEntitySet="Membership">
@@ -2208,6 +2333,40 @@
                 <ScalarProperty Name="DivisionName" ColumnName="DivisionName" />
                 <ScalarProperty Name="PinCode" ColumnName="PinCode" />
                 <ScalarProperty Name="ZipCodeId" ColumnName="ZipCodeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaySheets">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.PaySheet">
+              <MappingFragment StoreEntitySet="PaySheet">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Gratuity" ColumnName="Gratuity" />
+                <ScalarProperty Name="Mediclaim" ColumnName="Mediclaim" />
+                <ScalarProperty Name="PF" ColumnName="PF" />
+                <ScalarProperty Name="LTC" ColumnName="LTC" />
+                <ScalarProperty Name="CarLease" ColumnName="CarLease" />
+                <ScalarProperty Name="ProjectIncentive" ColumnName="ProjectIncentive" />
+                <ScalarProperty Name="FoodCoupons" ColumnName="FoodCoupons" />
+                <ScalarProperty Name="Medical" ColumnName="Medical" />
+                <ScalarProperty Name="Others" ColumnName="Others" />
+                <ScalarProperty Name="Commission" ColumnName="Commission" />
+                <ScalarProperty Name="OtherDeduction" ColumnName="OtherDeduction" />
+                <ScalarProperty Name="CabDeductions" ColumnName="CabDeductions" />
+                <ScalarProperty Name="SalaryArrears" ColumnName="SalaryArrears" />
+                <ScalarProperty Name="LeaveEncashment" ColumnName="LeaveEncashment" />
+                <ScalarProperty Name="PerformanceIncentive" ColumnName="PerformanceIncentive" />
+                <ScalarProperty Name="SpecialAllowance" ColumnName="SpecialAllowance" />
+                <ScalarProperty Name="Conveyance" ColumnName="Conveyance" />
+                <ScalarProperty Name="HRA" ColumnName="HRA" />
+                <ScalarProperty Name="Basic" ColumnName="Basic" />
+                <ScalarProperty Name="CTCPerMonth" ColumnName="CTCPerMonth" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="PaySheetId" ColumnName="PaySheetId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -20,8 +20,15 @@ namespace Vserv.Accounting.Web.Controllers
     /// </summary>
     /// <seealso cref="System.Web.Mvc.Controller" />
     [Authorize]
-    public class EmployeeController : Controller
+    public class EmployeeController : ViewControllerBase
     {
+        public EmployeeManager _employeeManager;
+
+        public EmployeeController()
+        {
+            _employeeManager = new EmployeeManager();
+        }
+
         #region Action Methods
 
         /// <summary>
@@ -54,7 +61,6 @@ namespace Vserv.Accounting.Web.Controllers
         /// <returns></returns>
         public ActionResult Add()
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
             EmployeeModel employeeModel = new EmployeeModel();
             SetDropdownValues();
             return View(employeeModel);
@@ -70,7 +76,6 @@ namespace Vserv.Accounting.Web.Controllers
         {
             employeeModel.CreatedBy = User.Identity.Name;
             employeeModel.CreatedDate = DateTime.Now;
-            EmployeeManager _employeeManager = new EmployeeManager();
 
             // Perform Save for Employee
             if (ModelState.IsValid)
@@ -95,7 +100,7 @@ namespace Vserv.Accounting.Web.Controllers
         //[Route("employee/edit/{employeeId}")]
         public ActionResult Edit(int employeeId)
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
+
             var employee = _employeeManager.GetEmployee(employeeId);
             EmployeeModel employeeModel = ConvertTo(employee);
             SetDropdownValues();
@@ -111,7 +116,7 @@ namespace Vserv.Accounting.Web.Controllers
         //[Route("employee/edit/")]
         public ActionResult Edit(EmployeeModel employeeModel)
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
+
             employeeModel.UpdatedBy = User.Identity.Name;
             employeeModel.UpdatedDate = DateTime.Now;
 
@@ -141,7 +146,7 @@ namespace Vserv.Accounting.Web.Controllers
         /// <returns></returns>
         public ActionResult Delete(int employeeId)
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
+
             _employeeManager.DeleteEmployee(employeeId);
             return RedirectToAction("List");
         }
@@ -175,7 +180,6 @@ namespace Vserv.Accounting.Web.Controllers
 
         public ActionResult EmployeeHistory(int employeeId)
         {
-            EmployeeManager _employeeManager = new Business.Managers.EmployeeManager();
             List<EmployeeArchive> employees = _employeeManager.GetEmployeeHistory(employeeId);
             return PartialView("_employeehistory", employees);
         }
@@ -184,7 +188,6 @@ namespace Vserv.Accounting.Web.Controllers
         public ActionResult EmployeeCompareResult(int employeeArchiveId)
         {
             SetDropdownValues();
-            EmployeeManager _employeeManager = new Business.Managers.EmployeeManager();
             CompareEmployeeModel compareEmployeeModel = _employeeManager.GetMatchingEmployeeInformation(employeeArchiveId);
             return View("_employeecompare", compareEmployeeModel);
         }
@@ -211,7 +214,6 @@ namespace Vserv.Accounting.Web.Controllers
         /// <returns></returns>
         public List<DesignationModel> GetDesignations()
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
             var designations = _employeeManager.GetDesignations();
             List<DesignationModel> designationModels = new List<DesignationModel>();
 
@@ -246,7 +248,6 @@ namespace Vserv.Accounting.Web.Controllers
 
         public JsonResult GetOfficeBranches()
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
             var officeBranches = _employeeManager.GetOfficeBranches();
             IEnumerable<SelectListItem> officeBranchesSelectListItems = null;
 
@@ -260,7 +261,6 @@ namespace Vserv.Accounting.Web.Controllers
 
         public JsonResult GetSalutations()
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
             var officeBranches = _employeeManager.GetSalutations();
             IEnumerable<SelectListItem> officeBranchesSelectListItems = null;
 
@@ -276,7 +276,6 @@ namespace Vserv.Accounting.Web.Controllers
 
         public JsonResult GetStates()
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
             var officeBranches = _employeeManager.GetSalutations();
             IEnumerable<SelectListItem> statesSelectListItems = null;
 
@@ -404,35 +403,6 @@ namespace Vserv.Accounting.Web.Controllers
         /// <summary>
         /// Converts to.
         /// </summary>
-        /// <param name="departments">The departments.</param>
-        /// <returns></returns>
-        private List<DepartmentModel> ConvertTo(List<Department> departments)
-        {
-            var result = new List<DepartmentModel>();
-
-            if (departments.IsNotNull())
-            {
-                departments.ForEach(item => result.Add(new DepartmentModel
-                {
-                    DepartmentId = item.DepartmentId,
-                    Code = item.Code,
-                    Name = item.Name,
-                    Description = item.Description,
-                    DisplayOrder = item.DisplayOrder,
-                    IsActive = item.IsActive,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedBy = item.UpdatedBy,
-                    CreatedDate = item.CreatedDate,
-                    UpdatedDate = item.UpdatedDate,
-                }));
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Converts to.
-        /// </summary>
         /// <param name="addressTypes">The address types.</param>
         /// <returns></returns>
         private List<AddressTypeModel> ConvertTo(List<AddressType> addressTypes)
@@ -527,8 +497,6 @@ namespace Vserv.Accounting.Web.Controllers
         /// <param name="employeeModel">The employee model.</param>
         private void SetDropdownValues()
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
-
             ViewBag.Genders = GetGenders();
 
             var designations = _employeeManager.GetDesignations();
@@ -682,7 +650,7 @@ namespace Vserv.Accounting.Web.Controllers
             return listItems;
         }
 
-        private static List<Employee> GetEmployees(int? filterChoice)
+        private List<Employee> GetEmployees(int? filterChoice)
         {
             if (filterChoice.IsNull())
             {
@@ -690,7 +658,7 @@ namespace Vserv.Accounting.Web.Controllers
             }
 
             EmployeeFilter employeeFilter = (EmployeeFilter)Enum.ToObject(typeof(EmployeeFilter), filterChoice.Value);
-            EmployeeManager _employeeManager = new EmployeeManager();
+
             return _employeeManager.GetEmployees(employeeFilter);
         }
 

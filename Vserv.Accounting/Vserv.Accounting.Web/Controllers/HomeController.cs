@@ -13,7 +13,7 @@ namespace Vserv.Accounting.Web.Controllers
     /// 
     /// </summary>
     /// <seealso cref="System.Web.Mvc.Controller" />
-    public class HomeController : Controller
+    public class HomeController : ViewControllerBase
     {
         #region Action Methods
 

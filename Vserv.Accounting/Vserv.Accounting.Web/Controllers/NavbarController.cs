@@ -6,11 +6,13 @@ using System.Web;
 using System.Web.Mvc;
 using Vserv.Accounting.Business.Managers;
 using Vserv.Accounting.Web.Models;
+using Vserv.Accounting.Web.Helpers;
+
 #endregion
 
 namespace Vserv.Accounting.Web.Controllers
 {
-    public class NavbarController : Controller
+    public class NavbarController : ViewControllerBase
     {
         #region Namespaces
         /// <summary>
@@ -23,6 +25,13 @@ namespace Vserv.Accounting.Web.Controllers
             return PartialView("_Navbar", _homeManager.GetFeatures(true));
         }
 
+        public JsonResult GetFeatures()
+        {
+            HomeManager _homeManager = new HomeManager();
+            var features = _homeManager.GetFeatures(true);
+            return CustomJson(features.ToArray());
+
+        }
         ///// <summary>
         ///// Navbars the items.
         ///// </summary>

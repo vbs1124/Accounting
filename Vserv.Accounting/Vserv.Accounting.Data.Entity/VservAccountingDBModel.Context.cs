@@ -32,7 +32,6 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<Bank> Banks { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Config> Configs { get; set; }
-        public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Designation> Designations { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeArchive> EmployeeArchives { get; set; }
@@ -40,6 +39,7 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<EPFOffice> EPFOffices { get; set; }
         public virtual DbSet<Feature> Features { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
+        public virtual DbSet<LookupMonth> LookupMonths { get; set; }
         public virtual DbSet<Membership> Memberships { get; set; }
         public virtual DbSet<OAuthMembership> OAuthMemberships { get; set; }
         public virtual DbSet<OfficeBranch> OfficeBranches { get; set; }
@@ -50,6 +50,7 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<UserSecurityQuestion> UserSecurityQuestions { get; set; }
         public virtual DbSet<ZipCode> ZipCodes { get; set; }
+        public virtual DbSet<PaySheet> PaySheets { get; set; }
     
         public virtual int InsertErrorLog(string appdomain, string exception, string identity, string level, Nullable<int> line, string logger, string message, string method, string ndc, string property, string stacktrace, string stacktracedetail, Nullable<long> timestamp, string thread, string type, string username)
         {

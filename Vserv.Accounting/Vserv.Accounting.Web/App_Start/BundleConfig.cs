@@ -28,7 +28,7 @@ namespace Vserv.Accounting.Web
                 .Include("~/scripts/bootstrap-datepicker.js")
                 .Include("~/scripts/bootstrap-datetimepicker.js"));
 
-            bundles.Add(new ScriptBundle("~/Scripts/app").Include("~/Scripts/app.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/app").Include("~/Scripts/common.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/base")
                 .Include("~/Scripts/base/metisMenu.js")
@@ -44,12 +44,21 @@ namespace Vserv.Accounting.Web
                 .Include("~/Scripts/DataTables/dataTables.bootstrap.js"));
 
 
-            bundles.Add(new ScriptBundle("~/Scripts/morris")
-       .Include("~/Scripts/base/morris.js")
-       .Include("~/Scripts/base/morris-data.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/morris").Include("~/Scripts/base/morris.js").Include("~/Scripts/base/morris-data.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/places").Include("~/Scripts/base/google-places.js"));
             bundles.Add(new ScriptBundle("~/bundles/geocomplete").Include("~/Scripts/base/jquery.geocomplete.js"));
+
+
+            bundles.Add(new ScriptBundle("~/scripts/app/angular")
+                .Include("~/Scripts/angular.js")
+                .Include("~/Scripts/loading-bar.js")
+                .Include("~/Scripts/angular-animate.js")
+                .Include("~/Scripts/angular-ui/ui-bootstrap.js")
+                .Include("~/Scripts/ui-grid.js")
+                .Include("~/Scripts/App/app.js")
+                .IncludeDirectory("~/Scripts/App/", "*.js", true)
+                );
             // **************Section For ScriptBundle END **************
 
             // **************Section For StyleBundle START **************
@@ -67,6 +76,7 @@ namespace Vserv.Accounting.Web
             bundles.Add(new StyleBundle("~/Content/toastr").Include("~/Content/toastr.css"));
 
             bundles.Add(new StyleBundle("~/Content/DataTables")
+                .Include("~/font-awesome/css/font-awesome.css")
                 .Include("~/Content/DataTables/css/dataTables.bootstrap.css")
                 .Include("~/Content/DataTables/css/dataTables.responsive.css"));
 
@@ -75,10 +85,13 @@ namespace Vserv.Accounting.Web
             .Include("~/Content/base/timeline.css")
             .Include("~/Content/base/morris.css"));
 
+
+            bundles.Add(new StyleBundle("~/content/angular")
+            .Include("~/Content/ui-grid.css")
+            .Include("~/Content/loading-bar.css")
+            );
+
             // **************Section For StyleBundle  END **************
-
-
-
         }
     }
 }

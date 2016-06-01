@@ -70,9 +70,6 @@
     <Compile Include="Config.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Department.cs">
-      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Designation.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
@@ -94,6 +91,9 @@
     <Compile Include="Gender.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="LookupMonth.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Membership.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
@@ -104,6 +104,9 @@
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="OfficeBranch.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaySheet.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Role.cs">

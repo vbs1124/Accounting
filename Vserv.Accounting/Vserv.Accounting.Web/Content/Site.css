@@ -1,6 +1,6 @@
 ﻿body {
     background-color: #F2F2F2;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 #wrapper {
@@ -403,3 +403,12 @@ input[type="checkbox"].input-validation-error {
 .padding-top10 {
     padding-top: 10px;
 }
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-italic {
+    font-style: italic;
+}
+

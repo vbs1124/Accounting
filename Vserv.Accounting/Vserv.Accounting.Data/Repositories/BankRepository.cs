@@ -22,7 +22,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.Banks.AsNoTracking().Where(condition => condition.IsActive).ToList();
+                return context.Banks.AsNoTracking().Where(condition => condition.IsActive).OrderBy(order => order.DisplayOrder).ToList();
             }
         }
     }

@@ -11,7 +11,8 @@ using Vserv.Accounting.Web.Models;
 using WebMatrix.WebData;
 using System.Linq;
 using Vserv.Accounting.Common;
-
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 #endregion
 
 namespace Vserv.Accounting.Web.Controllers
@@ -20,17 +21,21 @@ namespace Vserv.Accounting.Web.Controllers
     /// 
     /// </summary>
     /// <seealso cref="System.Web.Mvc.Controller" />
-    public class AccountController : Controller
+    public class AccountController : ViewControllerBase
     {
         #region Variables
         /// <summary>
         /// The users service
         /// </summary>
         private readonly IUsersService usersService;
+
         /// <summary>
         /// The email service
         /// </summary>
         private readonly IEmailService emailService;
+
+        public AccountManager _accountManager;
+
         #endregion
 
         #region Constructor
@@ -39,10 +44,11 @@ namespace Vserv.Accounting.Web.Controllers
         /// </summary>
         /// <param name="usersService">The users service.</param>
         /// <param name="emailService">The email service.</param>
-        public AccountController(IUsersService usersService, IEmailService emailService)
+        public AccountController(IUsersService usersService, IEmailService emailService, AccountManager accountManager)
         {
             this.usersService = usersService;
             this.emailService = emailService;
+            this._accountManager = accountManager;
         }
         #endregion
 
@@ -129,8 +135,7 @@ namespace Vserv.Accounting.Web.Controllers
 
         private void SetSecurityQuestions()
         {
-            AccountManager _manager = new AccountManager();
-            List<SecurityQuestion> securityQuestions = _manager.GetSecurityQuestions();
+            List<SecurityQuestion> securityQuestions = _accountManager.GetSecurityQuestions();
             ViewBag.SecurityQuestionCollection1 = securityQuestions.Where(question => question.CollectionId == CommonConstants.INT_ONE);
             ViewBag.SecurityQuestionCollection2 = securityQuestions.Where(question => question.CollectionId == CommonConstants.INT_TWO);
             ViewBag.SecurityQuestionCollection3 = securityQuestions.Where(question => question.CollectionId == CommonConstants.INT_THREE);
@@ -156,7 +161,6 @@ namespace Vserv.Accounting.Web.Controllers
         [HttpPost]
         public ActionResult ChangePassword(UserProfileModel userProfileModel)
         {
-            AccountManager _accountManager = new Business.Managers.AccountManager();
             UserProfile userProfile = _accountManager.GetUserProfile(User.Identity.Name);
             var membership = this.usersService.GetMembership(userProfile.UserId);
             if (membership == null)
@@ -218,11 +222,10 @@ namespace Vserv.Accounting.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                AccountManager _manager = new AccountManager();
                 forgotPasswordModel.UserName = forgotPasswordModel.UserName.Trim().ToLower();
                 forgotPasswordModel.EmailAddress = forgotPasswordModel.EmailAddress.Trim().ToLower();
 
-                bool isRegisteredUser = _manager.IsRegisteredUser(ConvertTo(forgotPasswordModel));
+                bool isRegisteredUser = _accountManager.IsRegisteredUser(ConvertTo(forgotPasswordModel));
                 if (isRegisteredUser)
                 {
                     //UserProfileModel userProfileModel = new UserProfileModel
@@ -243,8 +246,7 @@ namespace Vserv.Accounting.Web.Controllers
             // Fetch Security Question once user enters a valid username.
             if (ModelState.IsValidField("UserName") && String.IsNullOrWhiteSpace(forgotPasswordModel.SecurityQuestion))
             {
-                AccountManager _manager = new AccountManager();
-                UserSecurityQuestion randomSecurityQuestion = _manager.GetRandomSecurityQuestion(forgotPasswordModel.UserName);
+                UserSecurityQuestion randomSecurityQuestion = _accountManager.GetRandomSecurityQuestion(forgotPasswordModel.UserName);
 
                 if (randomSecurityQuestion.IsNotNull() && randomSecurityQuestion.SecurityQuestion.IsNotNull())
                 {
@@ -267,8 +269,6 @@ namespace Vserv.Accounting.Web.Controllers
         [HttpPost]
         public ActionResult ResetPassword(UserProfileModel userProfileModel)
         {
-            AccountManager _accountManager = new Business.Managers.AccountManager();
-
             Dictionary<string, string> usrInfo = new Dictionary<string, string>();
             usrInfo.ToDecryptedString(userProfileModel.UserName);
 
@@ -276,7 +276,7 @@ namespace Vserv.Accounting.Web.Controllers
 
             if (userProfile.IsNull())
             {
-                 return RedirectToAction("BadLink");
+                return RedirectToAction("BadLink");
             }
 
             var membership = this.usersService.GetMembership(userProfile.UserId);
@@ -343,7 +343,6 @@ namespace Vserv.Accounting.Web.Controllers
         /// <returns></returns>
         public ActionResult UserProfile()
         {
-            AccountManager _accountManager = new AccountManager();
             UserProfile userProfile = _accountManager.GetUserProfile(User.Identity.Name);
             UserProfileModel userProfileModel = ConvertTo(userProfile);
             return View("profile", userProfileModel);
@@ -351,9 +350,17 @@ namespace Vserv.Accounting.Web.Controllers
 
         public ActionResult SecurityQuestions()
         {
-            AccountManager _accountManager = new AccountManager();
-            var securityQuestions = _accountManager.GetSecurityQuestions();
-            return View(securityQuestions);
+            return View();
+            //var securityQuestions = _accountManager.GetSecurityQuestions();
+
+            //return View(securityQuestions);
+        }
+
+        public ActionResult GetSecurityQuestions()
+        {
+            var result = _accountManager.GetSecurityQuestions().AsQueryable();
+            var securityQuestions = result.ProjectTo<SecurityQuestionModel>();
+            return CustomJson(securityQuestions.ToArray());
         }
 
         #endregion

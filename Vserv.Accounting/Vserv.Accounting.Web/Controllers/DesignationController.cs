@@ -19,8 +19,15 @@ namespace Vserv.Accounting.Web.Controllers
     /// </summary>
     /// <seealso cref="System.Web.Mvc.Controller" />
     [Authorize]
-    public class DesignationController : Controller
+    public class DesignationController : ViewControllerBase
     {
+        public EmployeeManager _employeeManager;
+
+        public DesignationController()
+        {
+            _employeeManager = new EmployeeManager();
+        }
+
         #region Action Methods
 
         /// <summary>
@@ -29,7 +36,7 @@ namespace Vserv.Accounting.Web.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            //EmployeeManager _employeeManager = new EmployeeManager();
+            //
             //List<DesignationModel> designations = ConvertTo(_employeeManager.GetDesignations());
             return View();
         }
@@ -37,7 +44,7 @@ namespace Vserv.Accounting.Web.Controllers
         [HttpGet]
         public ActionResult GetDesignations()
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
+            
             var designations = _employeeManager.GetDesignations();
             var result = ConvertToSelectListItem(designations.Where(condition => condition.IsActive).ToList());
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -46,7 +53,7 @@ namespace Vserv.Accounting.Web.Controllers
         [HttpPost]
         public ActionResult Add(string designationName)
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
+            
             Designation designation = new Data.Entity.Designation
             {
                 //Code = "",
@@ -66,7 +73,7 @@ namespace Vserv.Accounting.Web.Controllers
         [HttpPost]
         public ActionResult Edit(string designationName, int designationId)
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
+            
 
             var existinDesignation = _employeeManager.GetDesignation(designationId);
             if (existinDesignation.IsNotNull() && !String.IsNullOrWhiteSpace(designationName.Trim()))
@@ -81,7 +88,7 @@ namespace Vserv.Accounting.Web.Controllers
 
         public ActionResult DesignationWindow()
         {
-            EmployeeManager _employeeManager = new EmployeeManager();
+            
             var designations = _employeeManager.GetDesignations();
 
             if (designations.IsNotNull())
