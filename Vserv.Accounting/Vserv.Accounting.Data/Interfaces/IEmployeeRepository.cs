@@ -94,6 +94,8 @@ namespace Vserv.Accounting.Data
 
         CompareEmployeeModel GetMatchingEmployeeInformation(int employeeArchiveId);
 
+        List<GetEmployeeSalaryDetail_Result> GetYearlyPaySheet(Nullable<int> employeeId, Nullable<int> financialYearFrom, Nullable<int> financialYearTo);
+
         #endregion
     }
 }

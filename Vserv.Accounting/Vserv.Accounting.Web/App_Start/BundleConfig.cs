@@ -23,6 +23,7 @@ namespace Vserv.Accounting.Web
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap")
                 .Include("~/Scripts/bootstrap.js")
+                .Include("~/Scripts/bootbox.js")
                 .Include("~/Scripts/respond.js")
                 .Include("~/Scripts/bootstrap-select.js")
                 .Include("~/scripts/bootstrap-datepicker.js")
@@ -53,9 +54,11 @@ namespace Vserv.Accounting.Web
             bundles.Add(new ScriptBundle("~/scripts/app/angular")
                 .Include("~/Scripts/angular.js")
                 .Include("~/Scripts/loading-bar.js")
+                .Include("~/Scripts/angular-touch.js")
                 .Include("~/Scripts/angular-animate.js")
                 .Include("~/Scripts/angular-ui/ui-bootstrap.js")
                 .Include("~/Scripts/ui-grid.js")
+                .Include("~/Scripts/xeditable.js")
                 .Include("~/Scripts/App/app.js")
                 .IncludeDirectory("~/Scripts/App/", "*.js", true)
                 );
@@ -89,6 +92,7 @@ namespace Vserv.Accounting.Web
             bundles.Add(new StyleBundle("~/content/angular")
             .Include("~/Content/ui-grid.css")
             .Include("~/Content/loading-bar.css")
+            .Include("~/Content/xeditable.css")
             );
 
             // **************Section For StyleBundle  END **************

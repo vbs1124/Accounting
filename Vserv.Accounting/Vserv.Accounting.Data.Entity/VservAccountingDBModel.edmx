@@ -200,6 +200,22 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="EmployeeSalaryDetail">
+          <Key>
+            <PropertyRef Name="EmployeeSalaryDetailId" />
+          </Key>
+          <Property Name="EmployeeSalaryDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="SalaryComponentId" Type="int" Nullable="false" />
+          <Property Name="MonthId" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Amount" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="EPFNumber">
           <Key>
             <PropertyRef Name="EPFNumberId" />
@@ -329,25 +345,11 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="PaySheet">
           <Key>
             <PropertyRef Name="PaySheetId" />
-            <PropertyRef Name="EmployeeId" />
-            <PropertyRef Name="CTCPerMonth" />
-            <PropertyRef Name="Basic" />
-            <PropertyRef Name="HRA" />
-            <PropertyRef Name="SpecialAllowance" />
-            <PropertyRef Name="PerformanceIncentive" />
-            <PropertyRef Name="PF" />
-            <PropertyRef Name="Mediclaim" />
-            <PropertyRef Name="Gratuity" />
-            <PropertyRef Name="IsActive" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="CreatedDate" />
           </Key>
-          <Property Name="PaySheetId" Type="int" Nullable="false" />
+          <Property Name="PaySheetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="CTCPerMonth" Type="numeric" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Basic" Type="numeric" Precision="19" Scale="4" Nullable="false" />
@@ -384,6 +386,21 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
           <Property Name="RoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="LoweredRoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SalaryComponent">
+          <Key>
+            <PropertyRef Name="SalaryComponentId" />
+          </Key>
+          <Property Name="SalaryComponentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="6" />
+          <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Salutation">
           <Key>
@@ -746,6 +763,11 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
           <Parameter Name="EmployeeID" Type="int" Mode="In" />
           <Parameter Name="UpdatedByUserName" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetEmployeeSalaryDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeId" Type="int" Mode="In" />
+          <Parameter Name="FinancialYearFrom" Type="int" Mode="In" />
+          <Parameter Name="FinancialYearTo" Type="int" Mode="In" />
+        </Function>
         <Function Name="InsertErrorLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="appdomain" Type="varchar" Mode="In" />
           <Parameter Name="exception" Type="varchar(max)" Mode="In" />
@@ -814,6 +836,7 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
           <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeArchive" EntityType="Self.EmployeeArchive" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeSalaryDetail" EntityType="Self.EmployeeSalaryDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EPFNumber" EntityType="Self.EPFNumber" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EPFOffice" EntityType="Self.EPFOffice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feature" EntityType="Self.Feature" Schema="dbo" store:Type="Tables" />
@@ -822,7 +845,9 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
           <EntitySet Name="Membership" EntityType="Self.Membership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OAuthMembership" EntityType="Self.OAuthMembership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfficeBranch" EntityType="Self.OfficeBranch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaySheet" EntityType="Self.PaySheet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalaryComponent" EntityType="Self.SalaryComponent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Salutation" EntityType="Self.Salutation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SecurityQuestion" EntityType="Self.SecurityQuestion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
@@ -830,38 +855,6 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
           <EntitySet Name="UserSecurityQuestion" EntityType="Self.UserSecurityQuestion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersInRoles" EntityType="Self.UsersInRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ZipCode" EntityType="Self.ZipCode" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PaySheet" EntityType="Self.PaySheet" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [PaySheet].[PaySheetId] AS [PaySheetId], 
-    [PaySheet].[EmployeeId] AS [EmployeeId], 
-    [PaySheet].[CTCPerMonth] AS [CTCPerMonth], 
-    [PaySheet].[Basic] AS [Basic], 
-    [PaySheet].[HRA] AS [HRA], 
-    [PaySheet].[Conveyance] AS [Conveyance], 
-    [PaySheet].[SpecialAllowance] AS [SpecialAllowance], 
-    [PaySheet].[PerformanceIncentive] AS [PerformanceIncentive], 
-    [PaySheet].[LeaveEncashment] AS [LeaveEncashment], 
-    [PaySheet].[SalaryArrears] AS [SalaryArrears], 
-    [PaySheet].[CabDeductions] AS [CabDeductions], 
-    [PaySheet].[OtherDeduction] AS [OtherDeduction], 
-    [PaySheet].[Commission] AS [Commission], 
-    [PaySheet].[Others] AS [Others], 
-    [PaySheet].[Medical] AS [Medical], 
-    [PaySheet].[FoodCoupons] AS [FoodCoupons], 
-    [PaySheet].[ProjectIncentive] AS [ProjectIncentive], 
-    [PaySheet].[CarLease] AS [CarLease], 
-    [PaySheet].[LTC] AS [LTC], 
-    [PaySheet].[PF] AS [PF], 
-    [PaySheet].[Mediclaim] AS [Mediclaim], 
-    [PaySheet].[Gratuity] AS [Gratuity], 
-    [PaySheet].[Month] AS [Month], 
-    [PaySheet].[IsActive] AS [IsActive], 
-    [PaySheet].[CreatedBy] AS [CreatedBy], 
-    [PaySheet].[UpdatedBy] AS [UpdatedBy], 
-    [PaySheet].[CreatedDate] AS [CreatedDate], 
-    [PaySheet].[UpdatedDate] AS [UpdatedDate]
-    FROM [dbo].[PaySheet] AS [PaySheet]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_City_State" Association="Self.FK_City_State">
             <End Role="State" EntitySet="State" />
             <End Role="City" EntitySet="City" />
@@ -1027,6 +1020,7 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
           <EntitySet Name="Designations" EntityType="VservAccountingDBModel.Designation" />
           <EntitySet Name="Employees" EntityType="VservAccountingDBModel.Employee" />
           <EntitySet Name="EmployeeArchives" EntityType="VservAccountingDBModel.EmployeeArchive" />
+          <EntitySet Name="EmployeeSalaryDetails" EntityType="VservAccountingDBModel.EmployeeSalaryDetail" />
           <EntitySet Name="EPFNumbers" EntityType="VservAccountingDBModel.EPFNumber" />
           <EntitySet Name="EPFOffices" EntityType="VservAccountingDBModel.EPFOffice" />
           <EntitySet Name="Features" EntityType="VservAccountingDBModel.Feature" />
@@ -1035,14 +1029,15 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
           <EntitySet Name="Memberships" EntityType="VservAccountingDBModel.Membership" />
           <EntitySet Name="OAuthMemberships" EntityType="VservAccountingDBModel.OAuthMembership" />
           <EntitySet Name="OfficeBranches" EntityType="VservAccountingDBModel.OfficeBranch" />
+          <EntitySet Name="PaySheets" EntityType="VservAccountingDBModel.PaySheet" />
           <EntitySet Name="Roles" EntityType="VservAccountingDBModel.Role" />
+          <EntitySet Name="SalaryComponents" EntityType="VservAccountingDBModel.SalaryComponent" />
           <EntitySet Name="Salutations" EntityType="VservAccountingDBModel.Salutation" />
           <EntitySet Name="SecurityQuestions" EntityType="VservAccountingDBModel.SecurityQuestion" />
           <EntitySet Name="States" EntityType="VservAccountingDBModel.State" />
           <EntitySet Name="UserProfiles" EntityType="VservAccountingDBModel.UserProfile" />
           <EntitySet Name="UserSecurityQuestions" EntityType="VservAccountingDBModel.UserSecurityQuestion" />
           <EntitySet Name="ZipCodes" EntityType="VservAccountingDBModel.ZipCode" />
-          <EntitySet Name="PaySheets" EntityType="VservAccountingDBModel.PaySheet" />
           <AssociationSet Name="FK_Employee_Bank" Association="VservAccountingDBModel.FK_Employee_Bank">
             <End Role="Bank" EntitySet="Banks" />
             <End Role="Employee" EntitySet="Employees" />
@@ -1127,6 +1122,11 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
+          <FunctionImport Name="GetEmployeeSalaryDetail" ReturnType="Collection(VservAccountingDBModel.GetEmployeeSalaryDetail_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="FinancialYearFrom" Mode="In" Type="Int32" />
+            <Parameter Name="FinancialYearTo" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="ArchiveEmployee_Result">
           <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
@@ -1351,6 +1351,22 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
           <NavigationProperty Name="State1" Relationship="VservAccountingDBModel.FK_EmployeeArchive_PermanentState" FromRole="EmployeeArchive" ToRole="State" />
           <NavigationProperty Name="Salutation" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Salutation" FromRole="EmployeeArchive" ToRole="Salutation" />
         </EntityType>
+        <EntityType Name="EmployeeSalaryDetail">
+          <Key>
+            <PropertyRef Name="EmployeeSalaryDetailId" />
+          </Key>
+          <Property Name="EmployeeSalaryDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="SalaryComponentId" Type="Int32" Nullable="false" />
+          <Property Name="MonthId" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="EPFNumber">
           <Key>
             <PropertyRef Name="EPFNumberId" />
@@ -1486,6 +1502,39 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="OfficeBranch" ToRole="Employee" />
           <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_OfficeBranch" FromRole="OfficeBranch" ToRole="EmployeeArchive" />
         </EntityType>
+        <EntityType Name="PaySheet">
+          <Key>
+            <PropertyRef Name="PaySheetId" />
+          </Key>
+          <Property Name="PaySheetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="CTCPerMonth" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Basic" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="HRA" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Conveyance" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SpecialAllowance" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="PerformanceIncentive" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="LeaveEncashment" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalaryArrears" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CabDeductions" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OtherDeduction" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Commission" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Others" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Medical" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FoodCoupons" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ProjectIncentive" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CarLease" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LTC" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PF" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Mediclaim" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Gratuity" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Month" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -1495,6 +1544,21 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
           <Property Name="LoweredRoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserProfiles" Relationship="VservAccountingDBModel.UsersInRoles" FromRole="Role" ToRole="UserProfile" />
+        </EntityType>
+        <EntityType Name="SalaryComponent">
+          <Key>
+            <PropertyRef Name="SalaryComponentId" />
+          </Key>
+          <Property Name="SalaryComponentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Salutation">
           <Key>
@@ -1595,51 +1659,6 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="City" Relationship="VservAccountingDBModel.FK_ZipCode_City" FromRole="ZipCode" ToRole="City" />
           <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_ZipCode_State" FromRole="ZipCode" ToRole="State" />
-        </EntityType>
-        <EntityType Name="PaySheet">
-          <Key>
-            <PropertyRef Name="PaySheetId" />
-            <PropertyRef Name="EmployeeId" />
-            <PropertyRef Name="CTCPerMonth" />
-            <PropertyRef Name="Basic" />
-            <PropertyRef Name="HRA" />
-            <PropertyRef Name="SpecialAllowance" />
-            <PropertyRef Name="PerformanceIncentive" />
-            <PropertyRef Name="PF" />
-            <PropertyRef Name="Mediclaim" />
-            <PropertyRef Name="Gratuity" />
-            <PropertyRef Name="IsActive" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="CreatedDate" />
-          </Key>
-          <Property Name="PaySheetId" Type="Int32" Nullable="false" />
-          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
-          <Property Name="CTCPerMonth" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Basic" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="HRA" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Conveyance" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="SpecialAllowance" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="PerformanceIncentive" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="LeaveEncashment" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="SalaryArrears" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CabDeductions" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="OtherDeduction" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Commission" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Others" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Medical" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="FoodCoupons" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ProjectIncentive" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CarLease" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="LTC" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="PF" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Mediclaim" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Gratuity" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Month" Type="Int32" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_Employee_Bank">
           <End Type="VservAccountingDBModel.Bank" Role="Bank" Multiplicity="0..1" />
@@ -1885,6 +1904,24 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
           <End Type="VservAccountingDBModel.Role" Role="Role" Multiplicity="*" />
           <End Type="VservAccountingDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
+        <ComplexType Name="GetEmployeeSalaryDetail_Result">
+          <Property Type="Int32" Name="EmployeeId" Nullable="true" />
+          <Property Type="String" Name="ComponentName" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="Year" Nullable="true" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
+          <Property Type="Decimal" Name="April" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="May" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="June" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="July" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="August" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="September" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="October" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="November" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="December" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="January" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="February" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="March" Nullable="true" Precision="38" Scale="4" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2099,6 +2136,23 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeSalaryDetails">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.EmployeeSalaryDetail">
+              <MappingFragment StoreEntitySet="EmployeeSalaryDetail">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="MonthId" ColumnName="MonthId" />
+                <ScalarProperty Name="SalaryComponentId" ColumnName="SalaryComponentId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeeSalaryDetailId" ColumnName="EmployeeSalaryDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="EPFNumbers">
             <EntityTypeMapping TypeName="VservAccountingDBModel.EPFNumber">
               <MappingFragment StoreEntitySet="EPFNumber">
@@ -2235,6 +2289,40 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PaySheets">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.PaySheet">
+              <MappingFragment StoreEntitySet="PaySheet">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Gratuity" ColumnName="Gratuity" />
+                <ScalarProperty Name="Mediclaim" ColumnName="Mediclaim" />
+                <ScalarProperty Name="PF" ColumnName="PF" />
+                <ScalarProperty Name="LTC" ColumnName="LTC" />
+                <ScalarProperty Name="CarLease" ColumnName="CarLease" />
+                <ScalarProperty Name="ProjectIncentive" ColumnName="ProjectIncentive" />
+                <ScalarProperty Name="FoodCoupons" ColumnName="FoodCoupons" />
+                <ScalarProperty Name="Medical" ColumnName="Medical" />
+                <ScalarProperty Name="Others" ColumnName="Others" />
+                <ScalarProperty Name="Commission" ColumnName="Commission" />
+                <ScalarProperty Name="OtherDeduction" ColumnName="OtherDeduction" />
+                <ScalarProperty Name="CabDeductions" ColumnName="CabDeductions" />
+                <ScalarProperty Name="SalaryArrears" ColumnName="SalaryArrears" />
+                <ScalarProperty Name="LeaveEncashment" ColumnName="LeaveEncashment" />
+                <ScalarProperty Name="PerformanceIncentive" ColumnName="PerformanceIncentive" />
+                <ScalarProperty Name="SpecialAllowance" ColumnName="SpecialAllowance" />
+                <ScalarProperty Name="Conveyance" ColumnName="Conveyance" />
+                <ScalarProperty Name="HRA" ColumnName="HRA" />
+                <ScalarProperty Name="Basic" ColumnName="Basic" />
+                <ScalarProperty Name="CTCPerMonth" ColumnName="CTCPerMonth" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="PaySheetId" ColumnName="PaySheetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="VservAccountingDBModel.Role">
               <MappingFragment StoreEntitySet="Roles">
@@ -2242,6 +2330,22 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
                 <ScalarProperty Name="LoweredRoleName" ColumnName="LoweredRoleName" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalaryComponents">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.SalaryComponent">
+              <MappingFragment StoreEntitySet="SalaryComponent">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SalaryComponentId" ColumnName="SalaryComponentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2336,40 +2440,6 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PaySheets">
-            <EntityTypeMapping TypeName="VservAccountingDBModel.PaySheet">
-              <MappingFragment StoreEntitySet="PaySheet">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="Gratuity" ColumnName="Gratuity" />
-                <ScalarProperty Name="Mediclaim" ColumnName="Mediclaim" />
-                <ScalarProperty Name="PF" ColumnName="PF" />
-                <ScalarProperty Name="LTC" ColumnName="LTC" />
-                <ScalarProperty Name="CarLease" ColumnName="CarLease" />
-                <ScalarProperty Name="ProjectIncentive" ColumnName="ProjectIncentive" />
-                <ScalarProperty Name="FoodCoupons" ColumnName="FoodCoupons" />
-                <ScalarProperty Name="Medical" ColumnName="Medical" />
-                <ScalarProperty Name="Others" ColumnName="Others" />
-                <ScalarProperty Name="Commission" ColumnName="Commission" />
-                <ScalarProperty Name="OtherDeduction" ColumnName="OtherDeduction" />
-                <ScalarProperty Name="CabDeductions" ColumnName="CabDeductions" />
-                <ScalarProperty Name="SalaryArrears" ColumnName="SalaryArrears" />
-                <ScalarProperty Name="LeaveEncashment" ColumnName="LeaveEncashment" />
-                <ScalarProperty Name="PerformanceIncentive" ColumnName="PerformanceIncentive" />
-                <ScalarProperty Name="SpecialAllowance" ColumnName="SpecialAllowance" />
-                <ScalarProperty Name="Conveyance" ColumnName="Conveyance" />
-                <ScalarProperty Name="HRA" ColumnName="HRA" />
-                <ScalarProperty Name="Basic" ColumnName="Basic" />
-                <ScalarProperty Name="CTCPerMonth" ColumnName="CTCPerMonth" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="PaySheetId" ColumnName="PaySheetId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="UsersInRoles" TypeName="VservAccountingDBModel.UsersInRoles" StoreEntitySet="UsersInRoles">
             <EndProperty Name="UserProfile">
               <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -2378,6 +2448,28 @@ warning 6002: The table/view 'VservAccountingDB.dbo.PaySheet' does not have a pr
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="GetEmployeeSalaryDetail" FunctionName="VservAccountingDBModel.Store.GetEmployeeSalaryDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.GetEmployeeSalaryDetail_Result">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="April" ColumnName="April" />
+                <ScalarProperty Name="May" ColumnName="May" />
+                <ScalarProperty Name="June" ColumnName="June" />
+                <ScalarProperty Name="July" ColumnName="July" />
+                <ScalarProperty Name="August" ColumnName="August" />
+                <ScalarProperty Name="September" ColumnName="September" />
+                <ScalarProperty Name="October" ColumnName="October" />
+                <ScalarProperty Name="November" ColumnName="November" />
+                <ScalarProperty Name="December" ColumnName="December" />
+                <ScalarProperty Name="January" ColumnName="January" />
+                <ScalarProperty Name="February" ColumnName="February" />
+                <ScalarProperty Name="March" ColumnName="March" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

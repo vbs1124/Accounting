@@ -35,6 +35,7 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<Designation> Designations { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeArchive> EmployeeArchives { get; set; }
+        public virtual DbSet<EmployeeSalaryDetail> EmployeeSalaryDetails { get; set; }
         public virtual DbSet<EPFNumber> EPFNumbers { get; set; }
         public virtual DbSet<EPFOffice> EPFOffices { get; set; }
         public virtual DbSet<Feature> Features { get; set; }
@@ -43,14 +44,15 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<Membership> Memberships { get; set; }
         public virtual DbSet<OAuthMembership> OAuthMemberships { get; set; }
         public virtual DbSet<OfficeBranch> OfficeBranches { get; set; }
+        public virtual DbSet<PaySheet> PaySheets { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<SalaryComponent> SalaryComponents { get; set; }
         public virtual DbSet<Salutation> Salutations { get; set; }
         public virtual DbSet<SecurityQuestion> SecurityQuestions { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<UserSecurityQuestion> UserSecurityQuestions { get; set; }
         public virtual DbSet<ZipCode> ZipCodes { get; set; }
-        public virtual DbSet<PaySheet> PaySheets { get; set; }
     
         public virtual int InsertErrorLog(string appdomain, string exception, string identity, string level, Nullable<int> line, string logger, string message, string method, string ndc, string property, string stacktrace, string stacktracedetail, Nullable<long> timestamp, string thread, string type, string username)
         {
@@ -287,6 +289,23 @@ namespace Vserv.Accounting.Data.Entity
                 new ObjectParameter("MobileNumber", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("ValidateUser", userNameParameter, securityQuestionIdParameter, answerParameter, emailAddressParameter, mobileNumberParameter);
+        }
+    
+        public virtual ObjectResult<GetEmployeeSalaryDetail_Result> GetEmployeeSalaryDetail(Nullable<int> employeeId, Nullable<int> financialYearFrom, Nullable<int> financialYearTo)
+        {
+            var employeeIdParameter = employeeId.HasValue ?
+                new ObjectParameter("EmployeeId", employeeId) :
+                new ObjectParameter("EmployeeId", typeof(int));
+    
+            var financialYearFromParameter = financialYearFrom.HasValue ?
+                new ObjectParameter("FinancialYearFrom", financialYearFrom) :
+                new ObjectParameter("FinancialYearFrom", typeof(int));
+    
+            var financialYearToParameter = financialYearTo.HasValue ?
+                new ObjectParameter("FinancialYearTo", financialYearTo) :
+                new ObjectParameter("FinancialYearTo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmployeeSalaryDetail_Result>("GetEmployeeSalaryDetail", employeeIdParameter, financialYearFromParameter, financialYearToParameter);
         }
     }
 }

@@ -10,6 +10,8 @@ using Vserv.Accounting.Common;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Web.Models;
 using System.Collections;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 #endregion
 
@@ -204,6 +206,14 @@ namespace Vserv.Accounting.Web.Controllers
             }
 
             return Json(stateId, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetYearlyPaySheet(PaySheetParameter paySheetParameter)
+        {
+            EmployeeManager _manager = new EmployeeManager();
+            var result = _manager.GetYearlyPaySheet(paySheetParameter.EmployeeId, paySheetParameter.FinancialYearFrom, paySheetParameter.FinancialYearTo);
+            var paySheet = result.AsQueryable().ProjectTo<EmployeePaySheet>();
+            return Json(paySheet, JsonRequestBehavior.AllowGet);
         }
 
         #region dropdownlist

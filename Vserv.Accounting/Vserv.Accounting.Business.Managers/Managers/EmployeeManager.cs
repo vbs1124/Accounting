@@ -250,12 +250,33 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employeeArchiveId"></param>
+        /// <returns></returns>
         public CompareEmployeeModel GetMatchingEmployeeInformation(int employeeArchiveId)
         {
             return ExecuteFaultHandledOperation(() =>
             {
                 var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
                 return _employeeRepository.GetMatchingEmployeeInformation(employeeArchiveId);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <param name="financialYearFrom"></param>
+        /// <param name="financialYearTo"></param>
+        /// <returns></returns>
+        public List<GetEmployeeSalaryDetail_Result> GetYearlyPaySheet(Nullable<int> employeeId, Nullable<int> financialYearFrom, Nullable<int> financialYearTo)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return _employeeRepository.GetYearlyPaySheet(employeeId, financialYearFrom, financialYearTo);
             });
         }
 

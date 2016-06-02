@@ -336,6 +336,15 @@ namespace Vserv.Accounting.Data
             compareEmployeeModel.ModifiedColumnCount = modifiedColumnCount;
         }
 
+        public List<GetEmployeeSalaryDetail_Result> GetYearlyPaySheet(Nullable<int> employeeId, Nullable<int> financialYearFrom, Nullable<int> financialYearTo)
+        {
+            CompareEmployeeModel compareEmployeeModel = new CompareEmployeeModel();
+            using (var context = new VservAccountingDBEntities())
+            {
+                return context.GetEmployeeSalaryDetail(employeeId, financialYearFrom, financialYearTo).ToList();
+            }
+        }
+
         #endregion Public Methods
 
         #region Private Methods
@@ -346,10 +355,10 @@ namespace Vserv.Accounting.Data
 
         #region Compiled Query
 
-      //  public static readonly Func<VservAccountingDBEntities, Int32, Employee> CompiledGetEmployee =
-      //CompiledQuery.Compile<VservAccountingDBEntities, Int32, Employee>((dbContext, employeeId) => dbContext.Employees
-      //              .Include("Designation").Include("OfficeBranch")
-      //              .Include("Salutation").FirstOrDefault(userProfile => userProfile.EmployeeId == employeeId));
+        //  public static readonly Func<VservAccountingDBEntities, Int32, Employee> CompiledGetEmployee =
+        //CompiledQuery.Compile<VservAccountingDBEntities, Int32, Employee>((dbContext, employeeId) => dbContext.Employees
+        //              .Include("Designation").Include("OfficeBranch")
+        //              .Include("Salutation").FirstOrDefault(userProfile => userProfile.EmployeeId == employeeId));
         #endregion
     }
 }

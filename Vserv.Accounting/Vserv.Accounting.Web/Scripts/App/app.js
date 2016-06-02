@@ -1,10 +1,12 @@
 ﻿(function () {
     'use strict';
 
-    window.app = angular.module('VservAccountingApp', ['angular-loading-bar', 'ngAnimate', 'ui.bootstrap', 'ui.grid'])
+    window.app = angular.module('VservAccountingApp', ['angular-loading-bar', 'ngAnimate', 'ui.bootstrap', 'ui.grid', 'xeditable'])
                         .config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
                             cfpLoadingBarProvider.includeSpinner = false;
-                        }]);
+                        }]).run(function (editableOptions) {
+                            editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+                        });
 
     //cfpLoadingBar.start();
     //// will insert the loading bar into the DOM, and display its progress at 1%.
