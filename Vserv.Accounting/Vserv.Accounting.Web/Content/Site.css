@@ -412,3 +412,6 @@ input[type="checkbox"].input-validation-error {
     font-style: italic;
 }
 
+.editable-wrap .editable-controls > input, .editable-wrap .editable-controls > select, .editable-wrap .editable-controls > textarea {
+    max-width: 100px;
+}

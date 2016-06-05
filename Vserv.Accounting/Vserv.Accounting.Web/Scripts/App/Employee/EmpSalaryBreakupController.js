@@ -34,30 +34,33 @@
             });
         };
 
-        $scope.gridOptions = {
-            enableCellSelection: true,
-            enableCellEditOnFocus: true,
-            cellEditableCondition: 'row.entity.editable',
-            columnDefs: [
-                { displayName: "", name: '', field: 'ComponentName', width: 140, enableCellEdit: true },
-                { displayName: "April", name: 'April', field: 'April', width: 80, enableCellEdit: true },
-                { displayName: "May", name: 'May', field: 'May', width: 80 },
-                { displayName: "June", name: 'June', field: 'June', width: 80 },
-                { displayName: "July", name: 'July', field: 'July', width: 80 },
-                { displayName: "August", name: 'August', field: 'August', width: 80 },
-                { displayName: "September", name: 'September', field: 'September', width: 100 },
-                { displayName: "October", name: 'October', field: 'October', width: 100 },
-                { displayName: "November", name: 'November', field: 'November', width: 100 },
-                { displayName: "December", name: 'December', field: 'December', width: 100 },
-                { displayName: "January", name: 'January', field: 'January', width: 100 },
-                { displayName: "February", name: 'February', field: 'February', width: 100 },
-                { displayName: "March", name: 'March', field: 'March', width: 100 },
-            ],
-            data: 'paysheets'
+        $scope.parseFloat = function (value) {
+            return parseFloat(value);
+        }
+
+        $scope.getCurrentComponentTotal = function (item) {
+            var result = parseFloat(item.April) + parseFloat(item.May)
+                + parseFloat(item.June) + parseFloat(item.July)
+                + parseFloat(item.August) + parseFloat(item.September)
+                + parseFloat(item.October) + parseFloat(item.November)
+                + parseFloat(item.December) + parseFloat(item.January)
+                + parseFloat(item.February) + parseFloat(item.March);
+
+            result = result.toFixed(0);
+            return result;
         };
 
-        $scope.user = {
-            name: 'awesome user'
-        };
+        $scope.nonEditableComponents = ["CTC", "Basic", "HRA", "Conveyance"
+            , "Special Allowance", "PerformanceIncentive"
+            , "Medical", "PF", "Mediclaim", "Gratuity"];
+
+        $scope.componentForFooterTotal = ["Basic", "HRA", "Conveyance"
+            , "Special Allowance", "Performance Incentive", "Leave encashment"
+            , "Salary Arrears", "Cab Deductions", "Other Deduction"
+            , "Commission", "Others", "Medical", "Food Coupons"];
+
+        $scope.isEditableColumn = function (componentName) {
+            return $.inArray(componentName, $scope.nonEditableComponents) == -1;
+        }
     }
 })();

@@ -458,8 +458,10 @@
     <Content Include="Scripts\App\Dashboard\DashboardService.js" />
     <Content Include="Scripts\App\Designation\DesignationController.js" />
     <Content Include="Scripts\App\Designation\DesignationService.js" />
+    <Content Include="Scripts\App\Employee\EmpSalarySummaryController.js" />
     <Content Include="Scripts\App\Employee\EmpSalaryBreakupController.js" />
     <Content Include="Scripts\App\Employee\EmployeeController.js" />
+    <Content Include="Scripts\App\Employee\EmpSalarySummaryService.js" />
     <Content Include="Scripts\App\Employee\EmpSalaryBreakupService.js" />
     <Content Include="Scripts\App\Employee\EmployeeService.js" />
     <Content Include="Scripts\App\Home\HomeController.js" />
@@ -871,6 +873,10 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Employee\_ViewEmployeesPartial.cshtml" />
     <Content Include="Views\Employee\EmpSalaryBreakup.cshtml" />
+    <Content Include="Views\Employee\_SalaryBreakup.cshtml" />
+    <Content Include="Views\Employee\_SalarySummary.cshtml" />
+    <Content Include="Views\Employee\_EmpAppraisalHistory.cshtml" />
+    <Content Include="Views\Employee\_EmpAppraisalGraph.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

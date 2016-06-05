@@ -216,6 +216,17 @@ namespace Vserv.Accounting.Web.Controllers
             return Json(paySheet, JsonRequestBehavior.AllowGet);
         }
 
+        #region Salary Management
+
+        [HttpPost]
+        public JsonResult SaveEmployeeSalaryDetail(SalarySummaryModel salarySummaryModel)
+        {
+            EmployeeManager _manager = new EmployeeManager();
+            _manager.SaveEmployeeSalaryDetail(salarySummaryModel, User.Identity.Name);
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
         #region dropdownlist
 
         /// <summary>

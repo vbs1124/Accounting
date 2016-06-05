@@ -2,14 +2,13 @@
 @{
     ViewBag.Title = "Edit Employee";
 }
- <style type="text/css">
+<style type="text/css">
     .gridStyle {
         width: 1260px;
         height: 650px;
     }
-     
 </style>
- 
+
 <ul class="nav nav-tabs">
     <li class="active"><a href="#edit-employee" data-toggle="tab">@ViewBag.Title</a></li>
     <li class=""><a href="#emp-salary-summary" data-toggle="tab" aria-expanded="false">Salary Summary</a></li>
@@ -25,152 +24,68 @@
             @Html.Partial("_EmployeePartial")
         }
     </div>
-    <div class="tab-pane fade padding-top10" id="emp-salary-summary">
-        @using (Html.BeginForm("calculateBreakup", "employee"))
-        {
-        <div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="control-label" for="">Cost to company</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="">Cab Deductions</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="">Project Incentive</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="">Car Lease</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="">Food Coupons</label>
-                    <select class="form-control" id="select">
-                        <option value="0">0</option>
-                        <option value="1100">1100</option>
-                        <option value="2200">2200</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="">Performance Incentive</label>
-                    <select class="form-control" id="select">
-                        <option value="0">0</option>
-                        <option value="1">5 % of CTC paid Anually</option>
-                        <option value="2">25% of increment in June and 25% in December</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <button type="submit" class="btn btn-primary pull-right">Calculate Breakup</button>
-            </div>
-        </div>
-        }
+    <div class="tab-pane fade padding-top10" id="emp-salary-summary" ng-controller="EmpSalarySummaryController" ng-init="">
+        @Html.Partial("_SalarySummary")
     </div>
-
-    @*<div class="tab-pane fade padding-top10" id="emp-salary-breakup" ng-controller="EmpSalaryBreakupController as vm" ng-init="loadYearlyPaySheet(@Model.EmployeeId)">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel">
-                    <div class="panel-body">
-                        <div ui-grid="gridOptions" ui-grid-edit ui-grid-cellnav class="gridStyle"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="form-group pull-right">
-                        <button type="reset" class="btn btn-default">Reset</button>
-                        <button type="submit" class="btn btn-success">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>*@
     <div class="tab-pane fade padding-top10" ng-controller="EmpSalaryBreakupController" id="emp-salary-breakup" ng-init="loadYearlyPaySheet(@Model.EmployeeId)">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover">
-                        <thead>
-                            <tr class="success">
-                                <th>&nbsp;</th>
-                                <th>April</th>
-                                <th>May</th>
-                                <th>June</th>
-                                <th>July</th>
-                                <th>August</th>
-                                <th>September</th>
-                                <th>October</th>
-                                <th>November</th>
-                                <th>December</th>
-                                <th>January</th>
-                                <th>February</th>
-                                <th>March</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="XXXXXXX in paysheets">
-                                <td class="text-bold"><a href="#" editable-text="XXXXXXX.ComponentName">{{ XXXXXXX.ComponentName || "empty" }}</a></td>
-                                <td>{{XXXXXXX.April}}</td>
-                                <td>{{XXXXXXX.May}}</td>
-                                <td>{{XXXXXXX.June}}</td>
-                                <td>{{XXXXXXX.July}}</td>
-                                <td>{{XXXXXXX.August}}</td>
-                                <td>{{XXXXXXX.September}}</td>
-                                <td>{{XXXXXXX.October}}</td>
-                                <td>{{XXXXXXX.November}}</td>
-                                <td>{{XXXXXXX.December}}</td>
-                                <td>{{XXXXXXX.January}}</td>
-                                <td>{{XXXXXXX.February}}</td>
-                                <td>{{XXXXXXX.March}}</td>
-                                <td class="text-bold">999999.90</td>
-                            </tr>
-                        </tbody>
-                        <tfoot class="text-bold">
-                            <tr class="success">
-                                <td>Total</td>
-                                <td>12500.00</td>
-                                <td>13500.00</td>
-                                <td>13560.00</td>
-                                <td>13560.00</td>
-                                <td>13560.00</td>
-                                <td>13568.90</td>
-                                <td>13568.90</td>
-                                <td>13568.90</td>
-                                <td>13568.90</td>
-                                <td>13568.90</td>
-                                <td>13568.90</td>
-                                <td>13568.90</td>
-                                <td class="text-bold">999999.90</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
+        @Html.Partial("_SalaryBreakup")
     </div>
     <div class="tab-pane fade padding-top10" id="employee-history">
         @Html.Action("employeehistory", "employee")
     </div>
 </div>
 
-            @Html.Action("DesignationWindow", "Designation")
+@Html.Action("DesignationWindow", "Designation")
+<script src="~/Scripts/base/morris.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+         
+        Morris.Bar({
+            element: 'morris-bar-chart',
+            data: [
+                 {
+                     y: '2006',
+                     a: 130000
+                 }, {
+                     y: '2007',
+                     a: 160000
+                 }, {
+                     y: '2008',
+                     a: 190000
+                 }, {
+                     y: '2009',
+                     a: 250000
+                 }, {
+                     y: '2010',
+                     a: 280000
+                 }, {
+                     y: '2011',
+                     a: 320000
+                 }, {
+                     y: '2012',
+                     a: 480000
+                 }, {
+                     y: '2013',
+                     a: 620000
+                 }, {
+                     y: '2014',
+                     a: 720000
+                 }, {
+                     y: '2015',
+                     a: 875000
+                 }, {
+                     y: '2016',
+                     a: 1000000
+                 }],
+            xkey: 'y',
+            ykeys: ['a'],
+            labels: ['CTC in Lac'],
+            //hideHover: 'auto',
+            resize: true
+        });
+
+    });
+
+</script>
+
