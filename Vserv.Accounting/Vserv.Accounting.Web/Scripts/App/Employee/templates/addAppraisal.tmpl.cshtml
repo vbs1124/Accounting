@@ -1,0 +1,81 @@
+﻿@using Vserv.Accounting.Web.Helpers
+@model Vserv.Accounting.Web.Models.SalarySummaryModel
+<form novalidate
+      name="vm.form"
+      ng-submit="vm.form.$valid && vm.add()">
+    <fieldset ng-disabled="vm.saving">
+        <div class="modal-header">
+            <h3 class="modal-title">Add New Appraisal</h3>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-danger" ng-show="vm.errorMessage != null">
+                {{vm.errorMessage}}
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label" for="">Cost to company</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-inr"></i></span>
+                            <input type="text" class="form-control" ng-model="vm.salarySummaryModel.CTC">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="">Cab Deductions</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-inr"></i></span>
+                            <input type="text" class="form-control" ng-model="vm.salarySummaryModel.CabDeductions">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="">Project Incentive</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-inr"></i></span>
+                            <input type="text" class="form-control" ng-model="vm.salarySummaryModel.ProjectIncentive">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="">Car Lease</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-inr"></i></span>
+                            <input type="text" class="form-control" ng-model="vm.salarySummaryModel.CarLease">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="">Food Coupons</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-inr"></i></span>
+                            <select class="form-control" ng-model="vm.salarySummaryModel.FoodCoupons">
+                                <option value="0">0</option>
+                                <option value="1100">1100</option>
+                                <option value="2200">2200</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="">Performance Incentive</label>
+                        <select class="form-control" ng-model="vm.salarySummaryModel.PerformanceIncentive">
+                            <option value="0">0</option>
+                            <option value="1">5 % of CTC paid Anually</option>
+                            <option value="2">25% of increment in June and 25% in December</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="">Period</label>
+                        <input type="text" class="form-control" ng-model="vm.salarySummaryModel.Year">
+                    </div>
+                </div>
+            </div>
+            @*<div class="row">
+                    <div class="col-md-6">
+                        @Html.Angular().FormForModel("vm.salarySummaryModel")
+
+                    </div>
+                </div>*@
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success">Save</button>
+            <button type="button" class="btn btn-warning" ng-click="$dismiss()">Cancel</button>
+        </div>
+    </fieldset>
+</form>

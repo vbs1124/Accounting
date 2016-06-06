@@ -5,7 +5,14 @@
             @Html.LabelFor(m => m.VBS_Id, new { @class = "control-label required-field" })
             <div class="input-group">
                 <span class="input-group-addon">vbs</span>
-                @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @maxlength = "4" })
+                @if (Model.EmployeeId > 0)
+                {
+                    @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @disabled = "disabled", @maxlength = "4" })
+                }
+                else
+                {
+                    @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @maxlength = "4" })
+                }
             </div>
             @Html.ValidationMessageFor(m => m.VBS_Id)
         </div>

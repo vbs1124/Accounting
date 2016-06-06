@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using Vserv.Accounting.Common;
 using Vserv.Accounting.Common.Enums;
 using Vserv.Accounting.Data;
-//using Vserv.Accounting.Data.Contracts;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Common.Contracts;
 
@@ -445,7 +444,7 @@ namespace Vserv.Accounting.Business.Managers
 
         #region Salary Calculation
 
-        public bool SaveEmployeeSalaryDetail(SalarySummaryModel salarySummaryModel, string userName)
+        public bool SaveEmployeeSalaryDetail(SalarySummary salarySummary, string userName)
         {
             return ExecuteFaultHandledOperation(() =>
             {
@@ -456,7 +455,7 @@ namespace Vserv.Accounting.Business.Managers
                 // Create the object for entire months.
                 foreach (SalaryComponentEnum salaryComponentEnum in Enum.GetValues(typeof(SalaryComponentEnum)))
                 {
-                    var result = CreateEmployeeSalaryDetailObject(salarySummaryModel, userName, salaryComponentEnum);
+                    var result = CreateEmployeeSalaryDetailObject(salarySummary, userName, salaryComponentEnum);
                     if (result.IsNotNull())
                     {
                         employeeSalaryDetails.AddRange(result);
@@ -473,76 +472,76 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
-        private List<EmployeeSalaryDetail> CreateEmployeeSalaryDetailObject(SalarySummaryModel salarySummaryModel, string userName, SalaryComponentEnum salaryComponentEnum)
+        private List<EmployeeSalaryDetail> CreateEmployeeSalaryDetailObject(SalarySummary salarySummary, string userName, SalaryComponentEnum salaryComponentEnum)
         {
-            Decimal? CTCMonthly = salarySummaryModel.CTC / 12;
+            Decimal? CTCMonthly = salarySummary.CTC / 12;
             Decimal? basic = 40 * CTCMonthly / 100;
 
             switch (salaryComponentEnum)
             {
                 case SalaryComponentEnum.CTCPerMonth:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, CTCMonthly, SalaryComponentEnum.CTCPerMonth);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, CTCMonthly, SalaryComponentEnum.CTCPerMonth);
                 case SalaryComponentEnum.Basic:
                     //40% of CTC
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, basic, SalaryComponentEnum.Basic);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, basic, SalaryComponentEnum.Basic);
                 case SalaryComponentEnum.HRA:
                     //50 % of Basic
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, 50 * basic / 100, SalaryComponentEnum.HRA);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 50 * basic / 100, SalaryComponentEnum.HRA);
                 case SalaryComponentEnum.Conveyance:
                     // Fixed: 1600
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, 1600, SalaryComponentEnum.Conveyance);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 1600, SalaryComponentEnum.Conveyance);
                 case SalaryComponentEnum.SpecialAllowance:
                     // CTC -(Basic + HRA + Conveyance)- Performance Incentive - 
                     // (Medical + Food Coupons + Project Incentive + Car Lease + LTC + PF + Mediclaim + Gratuity) - (Cab Deductions)
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, 0, SalaryComponentEnum.SpecialAllowance);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.SpecialAllowance);
                 case SalaryComponentEnum.PerformanceIncentive:
                     // 5 % of CTC paid Anually or (25% of increment in June and 25% in December)
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, 5 * CTCMonthly / 100, SalaryComponentEnum.PerformanceIncentive);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 5 * CTCMonthly / 100, SalaryComponentEnum.PerformanceIncentive);
                 case SalaryComponentEnum.LeaveEncashment:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, 0, SalaryComponentEnum.LeaveEncashment);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.LeaveEncashment);
                 case SalaryComponentEnum.SalaryArrears:
                     //Input Field / Calculated Columns and if blank the input field.
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, 0, SalaryComponentEnum.SalaryArrears);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.SalaryArrears);
                 case SalaryComponentEnum.CabDeductions:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, salarySummaryModel.CabDeductions / 12, SalaryComponentEnum.CabDeductions);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, salarySummary.CabDeductions / 12, SalaryComponentEnum.CabDeductions);
                 case SalaryComponentEnum.OtherDeduction:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, 0, SalaryComponentEnum.OtherDeduction);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.OtherDeduction);
                 case SalaryComponentEnum.Commission:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, 0, SalaryComponentEnum.Commission);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.Commission);
                 case SalaryComponentEnum.Others:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, 0, SalaryComponentEnum.Others);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.Others);
                 case SalaryComponentEnum.Medical:
                     // Fixed: 1250
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, 1250, SalaryComponentEnum.Medical);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 1250, SalaryComponentEnum.Medical);
                 case SalaryComponentEnum.FoodCoupons:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, salarySummaryModel.FoodCoupons, SalaryComponentEnum.FoodCoupons);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, salarySummary.FoodCoupons, SalaryComponentEnum.FoodCoupons);
                 case SalaryComponentEnum.ProjectIncentive:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, salarySummaryModel.PerformanceIncentive / 12, SalaryComponentEnum.ProjectIncentive);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, salarySummary.PerformanceIncentive / 12, SalaryComponentEnum.ProjectIncentive);
                 case SalaryComponentEnum.CarLease:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, salarySummaryModel.CarLease / 12, SalaryComponentEnum.CarLease);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, salarySummary.CarLease / 12, SalaryComponentEnum.CarLease);
                 case SalaryComponentEnum.LTC:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, 0, SalaryComponentEnum.LTC);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.LTC);
                 case SalaryComponentEnum.PF:
                     //12 % of Basic
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, 12 * basic / 100, SalaryComponentEnum.PF);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 12 * basic / 100, SalaryComponentEnum.PF);
                 case SalaryComponentEnum.Mediclaim:
                     //if(CTC < 41667){484}
                     //else if (CTC > 41668 AND CTC< 83334){969}
                     //else{1453}
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, 0, SalaryComponentEnum.Mediclaim);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.Mediclaim);
                 case SalaryComponentEnum.Gratuity:
                     //Basic*15/26/12
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummaryModel, basic * 15 / 26 / 12, SalaryComponentEnum.Gratuity);
+                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, basic * 15 / 26 / 12, SalaryComponentEnum.Gratuity);
             }
 
             return null;
         }
 
-        private List<EmployeeSalaryDetail> GetEmployeeSalaryDetailObjectForYear(SalarySummaryModel salarySummaryModel, decimal? amount, SalaryComponentEnum salaryComponentEnum)
+        private List<EmployeeSalaryDetail> GetEmployeeSalaryDetailObjectForYear(SalarySummary salarySummary, decimal? amount, SalaryComponentEnum salaryComponentEnum)
         {
             List<EmployeeSalaryDetail> employeeSalaryDetails = new List<EmployeeSalaryDetail>();
             EmployeeSalaryDetail employeeSalaryDetail = null;
-            decimal? monthlyCTC = salarySummaryModel.CTC / 12;
+            decimal? monthlyCTC = salarySummary.CTC / 12;
 
             foreach (MonthEnum month in Enum.GetValues(typeof(MonthEnum)))
             {
@@ -550,12 +549,12 @@ namespace Vserv.Accounting.Business.Managers
                 {
                     employeeSalaryDetail = new EmployeeSalaryDetail
                      {
-                         EmployeeId = salarySummaryModel.EmployeeId,
+                         EmployeeId = salarySummary.EmployeeId,
                          SalaryComponentId = Convert.ToInt32(salaryComponentEnum),
                          MonthId = Convert.ToInt32(month),
-                         Year = salarySummaryModel.Year,
+                         Year = salarySummary.Year,
                          IsActive = true,
-                         CreatedBy = salarySummaryModel.UserName,
+                         CreatedBy = salarySummary.UserName,
                          CreatedDate = DateTime.Now,
                      };
 
@@ -582,13 +581,13 @@ namespace Vserv.Accounting.Business.Managers
                 {
                     employeeSalaryDetail = new EmployeeSalaryDetail
                     {
-                        EmployeeId = salarySummaryModel.EmployeeId,
+                        EmployeeId = salarySummary.EmployeeId,
                         SalaryComponentId = Convert.ToInt32(salaryComponentEnum),
                         MonthId = Convert.ToInt32(month),
-                        Year = salarySummaryModel.Year,
+                        Year = salarySummary.Year,
                         Amount = amount,
                         IsActive = true,
-                        CreatedBy = salarySummaryModel.UserName,
+                        CreatedBy = salarySummary.UserName,
                         CreatedDate = DateTime.Now,
                     };
                 }

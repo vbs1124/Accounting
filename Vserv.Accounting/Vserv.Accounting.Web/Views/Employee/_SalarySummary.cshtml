@@ -6,12 +6,17 @@
         @Html.Partial("_EmpAppraisalGraph")
     </div>
 </div>
-
-<div class="panel panel-success">
+<div class="row" ng-controller="EmployeeController as vm">
+    <div class="col-md-12">
+        <div class="form-group">
+            <a class="btn btn-primary" href="" ng-click="vm.add()">Add new Appraisal</a>
+        </div>
+    </div>
+</div>
+@*<div class="panel panel-success">
     <div class="panel-heading">
         <h3 class="panel-title">Add New Appraisal</h3>
     </div>
-    <!-- /.panel-heading -->
     <div class="panel-body">
         <div class="row">
             <div class="col-md-4">
@@ -29,10 +34,8 @@
                         <input type="text" class="form-control">
                     </div>
                 </div>
-
             </div>
             <div class="col-md-4">
-
                 <div class="form-group">
                     <label class="control-label" for="">Project Incentive</label>
                     <div class="input-group">
@@ -47,7 +50,6 @@
                         <input type="text" class="form-control">
                     </div>
                 </div>
-
             </div>
             <div class="col-md-4">
                 <div class="form-group">
@@ -79,12 +81,4 @@
             </div>
         </div>
     </div>
-</div>
-       
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group  pull-right">
-                    &nbsp;
-                </div>
-            </div>
-        </div>
+</div>*@

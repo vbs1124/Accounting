@@ -222,8 +222,29 @@ namespace Vserv.Accounting.Web.Controllers
         public JsonResult SaveEmployeeSalaryDetail(SalarySummaryModel salarySummaryModel)
         {
             EmployeeManager _manager = new EmployeeManager();
-            _manager.SaveEmployeeSalaryDetail(salarySummaryModel, User.Identity.Name);
+            SalarySummary salarySummary = new SalarySummary
+            {
+                CTC = String.IsNullOrWhiteSpace(salarySummaryModel.CTC) ? 0 : Convert.ToDecimal(salarySummaryModel.CTC),
+                CabDeductions = String.IsNullOrWhiteSpace(salarySummaryModel.CabDeductions) ? 0 : Convert.ToDecimal(salarySummaryModel.CabDeductions),
+                ProjectIncentive = String.IsNullOrWhiteSpace(salarySummaryModel.ProjectIncentive) ? 0 : Convert.ToDecimal(salarySummaryModel.ProjectIncentive),
+                CarLease = String.IsNullOrWhiteSpace(salarySummaryModel.CarLease) ? 0 : Convert.ToDecimal(salarySummaryModel.CarLease),
+                FoodCoupons = String.IsNullOrWhiteSpace(salarySummaryModel.FoodCoupons) ? 0 : Convert.ToDecimal(salarySummaryModel.FoodCoupons),
+                PerformanceIncentive = String.IsNullOrWhiteSpace(salarySummaryModel.PerformanceIncentive) ? 0 : Convert.ToDecimal(salarySummaryModel.PerformanceIncentive),
+                Year = String.IsNullOrWhiteSpace(salarySummaryModel.Year) ? 0 : Convert.ToInt32(salarySummaryModel.Year),
+                EmployeeId = String.IsNullOrWhiteSpace(salarySummaryModel.EmployeeId) ? 0 : Convert.ToInt32(salarySummaryModel.EmployeeId),
+                UserName = User.Identity.Name,
+            };
+
+            _manager.SaveEmployeeSalaryDetail(salarySummary, User.Identity.Name);
             return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult GetSalarySummaryModel()
+        {
+            SalarySummaryModel salarySummaryModel = new SalarySummaryModel();
+
+            return Json(salarySummaryModel, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

@@ -90,16 +90,16 @@ namespace Vserv.Accounting.Web.Helpers
 				? "textarea"
 				: "input";
 
-			var placeholder = metadata.Watermark ??
-			                  (labelText + "...");
+            //var placeholder = metadata.Watermark ??
+            //                  (labelText + "...");
 			//Creates <input ng-model="expression"
 			//		   class="form-control" name="Name" type="text" >
 			var input = new HtmlTag(tagName)
 				.AddClass("form-control")
 				.Attr("ng-model", expression)
 				.Attr("name", name)
-				.Attr("type", "text")
-				.Attr("placeholder", placeholder);
+				.Attr("type", "text");
+                //.Attr("placeholder", placeholder); //TODO: Un comment to include placeholder.
 
 			ApplyValidationToInput(input, metadata);
 

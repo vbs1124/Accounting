@@ -12,9 +12,14 @@ namespace Vserv.Accounting.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            
+
             //enabling attribute routing
             routes.MapMvcAttributeRoutes();
+
+            routes.MapRoute(
+                name: "Templates",
+                url: "{feature}/Template/{name}",
+                defaults: new { controller = "Template", action = "Render" });
 
             routes.MapRoute(
                 name: "Default",
