@@ -474,6 +474,7 @@ namespace Vserv.Accounting.Business.Managers
 
         private List<EmployeeSalaryDetail> CreateEmployeeSalaryDetailObject(SalarySummary salarySummary, string userName, SalaryComponentEnum salaryComponentEnum)
         {
+
             Decimal? CTCMonthly = salarySummary.CTC / 12;
             Decimal? basic = 40 * CTCMonthly / 100;
 
@@ -552,7 +553,7 @@ namespace Vserv.Accounting.Business.Managers
                          EmployeeId = salarySummary.EmployeeId,
                          SalaryComponentId = Convert.ToInt32(salaryComponentEnum),
                          MonthId = Convert.ToInt32(month),
-                         Year = salarySummary.Year,
+                         Year = salarySummary.EffectiveFrom.Year,
                          IsActive = true,
                          CreatedBy = salarySummary.UserName,
                          CreatedDate = DateTime.Now,
@@ -584,7 +585,7 @@ namespace Vserv.Accounting.Business.Managers
                         EmployeeId = salarySummary.EmployeeId,
                         SalaryComponentId = Convert.ToInt32(salaryComponentEnum),
                         MonthId = Convert.ToInt32(month),
-                        Year = salarySummary.Year,
+                        Year = salarySummary.EffectiveFrom.Year,
                         Amount = amount,
                         IsActive = true,
                         CreatedBy = salarySummary.UserName,

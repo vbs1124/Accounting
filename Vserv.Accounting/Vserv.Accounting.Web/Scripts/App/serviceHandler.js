@@ -31,6 +31,9 @@
         }).success(function (data, status, headers, config) {
             deferred.resolve({ result: data, businessException: null });
         }).error(function (data, status, headers, config) {
+            console.log("<<<<<<<<<<<<<<< Error Message Start >>>>>>>>>>>>>>>>");
+            console.log(data);
+            console.log("<<<<<<<<<<<<<<< Error Message End >>>>>>>>>>>>>>>>");
             if (status == 417) // business exception
             {
                 deferred.resolve({ result: null, businessException: data });

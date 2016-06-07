@@ -3,15 +3,13 @@
     window.app.service('EmployeeService', EmployeeService);
     EmployeeService.$inject = ['serviceHandler'];
     function EmployeeService(serviceHandler) {
-        var salarySummaryModel = {};
 
+        var salarySummaryModel = {};
         loadSalarySummaryModel();
 
         var svc = {
             add: add,
-            //  update: update,
             salarySummaryModel: salarySummaryModel,
-            // getCustomer: getCustomer
         };
 
         return svc;
@@ -27,24 +25,8 @@
             });
         }
 
-        function add(salarySummaryModel) {
-            salarySummaryModel.EmployeeId = $("#EmployeeId").val();
-            return serviceHandler.executePostService('/Employee/SaveEmployeeSalaryDetail', salarySummaryModel);
+        function add(salarySummaryModel, employeeId) {
+            return serviceHandler.executePostService('/Employee/SaveEmployeeSalaryDetail?employeeId=' + employeeId, salarySummaryModel);
         }
-
-        //function update(existingCustomer, updatedCustomer) {
-        //    return $http.post('/Customer/Update', updatedCustomer)
-        //		.success(function (customer) {
-        //		    angular.extend(existingCustomer, customer);
-        //		});
-        //}
-
-        //function getCustomer(id) {
-        //    for (var i = 0; i < customers.length; i++) {
-        //        if (customers[i].Id == id) return customers[i];
-        //    }
-
-        //    return null;
-        //}
     }
 })();

@@ -218,8 +218,7 @@ namespace Vserv.Accounting.Web.Controllers
 
         #region Salary Management
 
-        [HttpPost]
-        public JsonResult SaveEmployeeSalaryDetail(SalarySummaryModel salarySummaryModel)
+        public JsonResult SaveEmployeeSalaryDetail(SalarySummaryModel salarySummaryModel, int employeeId)
         {
             EmployeeManager _manager = new EmployeeManager();
             SalarySummary salarySummary = new SalarySummary
@@ -229,9 +228,8 @@ namespace Vserv.Accounting.Web.Controllers
                 ProjectIncentive = String.IsNullOrWhiteSpace(salarySummaryModel.ProjectIncentive) ? 0 : Convert.ToDecimal(salarySummaryModel.ProjectIncentive),
                 CarLease = String.IsNullOrWhiteSpace(salarySummaryModel.CarLease) ? 0 : Convert.ToDecimal(salarySummaryModel.CarLease),
                 FoodCoupons = String.IsNullOrWhiteSpace(salarySummaryModel.FoodCoupons) ? 0 : Convert.ToDecimal(salarySummaryModel.FoodCoupons),
-                PerformanceIncentive = String.IsNullOrWhiteSpace(salarySummaryModel.PerformanceIncentive) ? 0 : Convert.ToDecimal(salarySummaryModel.PerformanceIncentive),
-                Year = String.IsNullOrWhiteSpace(salarySummaryModel.Year) ? 0 : Convert.ToInt32(salarySummaryModel.Year),
-                EmployeeId = String.IsNullOrWhiteSpace(salarySummaryModel.EmployeeId) ? 0 : Convert.ToInt32(salarySummaryModel.EmployeeId),
+                EffectiveFrom = String.IsNullOrWhiteSpace(salarySummaryModel.EffectiveFrom)? DateTime.Now : Convert.ToDateTime(salarySummaryModel.EffectiveFrom),
+                EmployeeId = employeeId,
                 UserName = User.Identity.Name,
             };
 

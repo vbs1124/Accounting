@@ -14,7 +14,7 @@ namespace Vserv.Accounting.Data.Entity
         public Decimal? CarLease { get; set; }
         public Decimal? FoodCoupons { get; set; }
         public Decimal? PerformanceIncentive { get; set; }
-        public int Year { get; set; }
+        public DateTime EffectiveFrom { get; set; }
         public int EmployeeId { get; set; }
         public string UserName { get; set; }
     }
