@@ -100,6 +100,17 @@
     <Build Include="Tables\dbo.Gender.sql" />
     <Build Include="Tables\dbo.SecurityQuestion.sql" />
     <Build Include="Tables\dbo.UserSecurityQuestion.sql" />
+    <Build Include="Tables\dbo.Bank.sql" />
+    <Build Include="Tables\dbo.EmployeeSalaryDetail.sql" />
+    <Build Include="Tables\dbo.LookupMonth.sql" />
+    <Build Include="Tables\dbo.PaySheet.sql" />
+    <Build Include="Tables\dbo.SalaryComponent.sql" />
+    <Build Include="StoredProcedures\dbo.ValidateUser.sql" />
+    <Build Include="StoredProcedures\dbo.ArchiveEmployee.sql" />
+    <Build Include="StoredProcedures\dbo.GetEmployeeSalaryDetail.sql" />
+    <Build Include="StoredProcedures\dbo.InsertErrorLog.sql" />
+    <Build Include="StoredProcedures\dbo.InsertInfoLog.sql" />
+    <Build Include="StoredProcedures\dbo.InsertMvcErrorLog.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeploymentScript.sql" />
