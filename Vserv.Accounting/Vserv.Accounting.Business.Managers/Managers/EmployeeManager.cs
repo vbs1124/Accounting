@@ -6,7 +6,9 @@ using Vserv.Accounting.Common;
 using Vserv.Accounting.Common.Enums;
 using Vserv.Accounting.Data;
 using Vserv.Accounting.Data.Entity;
+using Vserv.Accounting.Data.Entity.Models;
 using Vserv.Common.Contracts;
+using System.Linq;
 
 #endregion
 
@@ -448,155 +450,223 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-
-                List<EmployeeSalaryDetail> employeeSalaryDetails = new List<EmployeeSalaryDetail>();
-                IEmployeeSalaryDetailRepo _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeSalaryDetailRepo>();
-
-                // Create the object for entire months.
-                foreach (SalaryComponentEnum salaryComponentEnum in Enum.GetValues(typeof(SalaryComponentEnum)))
+                if (salarySummary.CTC.IsNotNull())
                 {
-                    var result = CreateEmployeeSalaryDetailObject(salarySummary, userName, salaryComponentEnum);
-                    if (result.IsNotNull())
+                    List<EmployeeSalaryDetail> employeeSalaryDetails = CalculateSalaryComponents(salarySummary, userName);
+                    IEmployeeSalaryDetailRepo _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeSalaryDetailRepo>();
+
+                    // Go for saving in database.
+                    foreach (var employeeSalaryDetail in employeeSalaryDetails)
                     {
-                        employeeSalaryDetails.AddRange(result);
+                        _employeeRepository.Add(employeeSalaryDetail, userName);
                     }
-                }
-
-                // Go for saving in database.
-                foreach (var employeeSalaryDetail in employeeSalaryDetails)
-                {
-                    _employeeRepository.Add(employeeSalaryDetail, userName);
                 }
 
                 return true;
             });
         }
 
-        private List<EmployeeSalaryDetail> CreateEmployeeSalaryDetailObject(SalarySummary salarySummary, string userName, SalaryComponentEnum salaryComponentEnum)
+        private List<EmployeeSalaryDetail> CalculateSalaryComponents(SalarySummary salarySummary, string userName)
         {
+            List<EmployeeSalaryDetail> employeeSalaryDetails = new List<EmployeeSalaryDetail>();
+            Dictionary<int, int> financialYearMonths = GetFinancialYearMonths(salarySummary.EffectiveFrom);
 
+            foreach (var item in financialYearMonths)
+            {
+                if (salarySummary.EffectiveFrom.Month == item.Key && salarySummary.EffectiveFrom.Day > 1)
+                {
+                    employeeSalaryDetails.AddRange(CalculateSalaryComponent(salarySummary, item.Key, item.Value)); //TODO: need to calculate on pro data basis.
+                }
+                else
+                {
+                    employeeSalaryDetails.AddRange(CalculateSalaryComponent(salarySummary, item.Key, item.Value));
+                }
+            }
+
+            return employeeSalaryDetails;
+        }
+
+        private List<EmployeeSalaryDetail> CalculateSalaryComponent(SalarySummary salarySummary, int monthId, int year)
+        {
+            List<EmployeeSalaryDetail> employeeSalaryDetails = new List<EmployeeSalaryDetail>();
+            var salaryComponents = GetSalaryComponents();
+
+            SalaryComponentEnum salaryComponentEnum = Common.Enums.SalaryComponentEnum.Basic;
+            Decimal? deductedAmountfromCTC = 0;
+
+            String[] deductedComponentFromCTC = { "Basic", "HRA", "Conveyance", "PerformanceIncentive", "Medical", "FoodCoupons", "ProjectIncentive", "CarLease", "LTC", "PF", "Mediclaim", "Gratuity", "CabDeductions", };
+            EmployeeSalaryDetail employeeSalaryDetail = null;
+
+            foreach (SalaryComponent salaryComponent in salaryComponents)
+            {
+                salaryComponentEnum = (SalaryComponentEnum)Enum.Parse(typeof(SalaryComponentEnum), salaryComponent.Name);
+
+                if (!salaryComponentEnum.Equals(SalaryComponentEnum.SpecialAllowance))
+                {
+                    employeeSalaryDetail = new EmployeeSalaryDetail();
+                    employeeSalaryDetail.EmployeeId = salarySummary.EmployeeId;
+                    employeeSalaryDetail.SalaryComponentId = salaryComponent.SalaryComponentId;
+                    employeeSalaryDetail.MonthId = monthId;
+                    employeeSalaryDetail.Year = year;
+                    employeeSalaryDetail.Amount = GetAmountBySalaryComponent(salarySummary, salaryComponent.DefaultAmount, salaryComponentEnum, monthId);
+                    employeeSalaryDetail.IsActive = true;
+                    employeeSalaryDetail.CreatedBy = salarySummary.UserName;
+                    employeeSalaryDetail.CreatedDate = DateTime.Now;
+
+                    if (deductedComponentFromCTC.Contains(salaryComponentEnum.ToStringValue()))
+                    {
+                        deductedAmountfromCTC += employeeSalaryDetail.Amount.IsNotNull() && employeeSalaryDetail.Amount.HasValue ? employeeSalaryDetail.Amount : 0;
+                    }
+
+                    employeeSalaryDetails.Add(employeeSalaryDetail);
+                }
+            }
+
+            // Update value for SpecialAllowance based on below rules.
+            // CTC -(Basic + HRA + Conveyance)- Performance Incentive - 
+            // (Medical + Food Coupons + Project Incentive + Car Lease + LTC + PF + Mediclaim + Gratuity) - (Cab Deductions)
+
+            employeeSalaryDetail = new EmployeeSalaryDetail();
+            employeeSalaryDetail.EmployeeId = salarySummary.EmployeeId;
+            employeeSalaryDetail.SalaryComponentId = Convert.ToInt32(SalaryComponentEnum.SpecialAllowance);
+            employeeSalaryDetail.MonthId = monthId;
+            employeeSalaryDetail.Year = year;
+            employeeSalaryDetail.Amount = (salarySummary.CTC / 12) - deductedAmountfromCTC;
+            employeeSalaryDetail.IsActive = true;
+            employeeSalaryDetail.CreatedBy = salarySummary.UserName;
+            employeeSalaryDetail.CreatedDate = DateTime.Now;
+            employeeSalaryDetails.Add(employeeSalaryDetail);
+
+            return employeeSalaryDetails.OrderBy(order => order.MonthId).ThenBy(then => then.SalaryComponentId).ToList();
+        }
+
+        private Decimal? GetAmountBySalaryComponent(SalarySummary salarySummary, Decimal? defaultAmount, SalaryComponentEnum salaryComponentEnum, int monthId)
+        {
             Decimal? CTCMonthly = salarySummary.CTC / 12;
             Decimal? basic = 40 * CTCMonthly / 100;
 
             switch (salaryComponentEnum)
             {
                 case SalaryComponentEnum.CTCPerMonth:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, CTCMonthly, SalaryComponentEnum.CTCPerMonth);
+                    return CTCMonthly; // Divide yearly CTC in twelve months.
                 case SalaryComponentEnum.Basic:
-                    //40% of CTC
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, basic, SalaryComponentEnum.Basic);
+                    return basic;  // 40% of CTC
                 case SalaryComponentEnum.HRA:
-                    //50 % of Basic
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 50 * basic / 100, SalaryComponentEnum.HRA);
+                    return 50 * basic / 100; // 50 % of Basic
                 case SalaryComponentEnum.Conveyance:
-                    // Fixed: 1600
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 1600, SalaryComponentEnum.Conveyance);
+                    return defaultAmount;
                 case SalaryComponentEnum.SpecialAllowance:
                     // CTC -(Basic + HRA + Conveyance)- Performance Incentive - 
                     // (Medical + Food Coupons + Project Incentive + Car Lease + LTC + PF + Mediclaim + Gratuity) - (Cab Deductions)
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.SpecialAllowance);
+                    return 0;
                 case SalaryComponentEnum.PerformanceIncentive:
-                    // 5 % of CTC paid Anually or (25% of increment in June and 25% in December)
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 5 * CTCMonthly / 100, SalaryComponentEnum.PerformanceIncentive);
+                    return GetPerformanceIncentive(salarySummary); // 5 * CTCMonthly / 100;
                 case SalaryComponentEnum.LeaveEncashment:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.LeaveEncashment);
+                    return 0;
                 case SalaryComponentEnum.SalaryArrears:
-                    //Input Field / Calculated Columns and if blank the input field.
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.SalaryArrears);
+                    return 0;
                 case SalaryComponentEnum.CabDeductions:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, salarySummary.CabDeductions / 12, SalaryComponentEnum.CabDeductions);
+                    return salarySummary.CabDeductions / 12;
                 case SalaryComponentEnum.OtherDeduction:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.OtherDeduction);
+                    return 0;
                 case SalaryComponentEnum.Commission:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.Commission);
+                    return 0;
                 case SalaryComponentEnum.Others:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.Others);
+                    return 0;
                 case SalaryComponentEnum.Medical:
-                    // Fixed: 1250
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 1250, SalaryComponentEnum.Medical);
+                    return defaultAmount;
                 case SalaryComponentEnum.FoodCoupons:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, salarySummary.FoodCoupons, SalaryComponentEnum.FoodCoupons);
+                    return salarySummary.FoodCoupons;
                 case SalaryComponentEnum.ProjectIncentive:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, salarySummary.PerformanceIncentive / 12, SalaryComponentEnum.ProjectIncentive);
+                    return salarySummary.ProjectIncentive;
                 case SalaryComponentEnum.CarLease:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, salarySummary.CarLease / 12, SalaryComponentEnum.CarLease);
+                    return salarySummary.CarLease / 12;
                 case SalaryComponentEnum.LTC:
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.LTC);
+                    return 0;
                 case SalaryComponentEnum.PF:
-                    //12 % of Basic
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 12 * basic / 100, SalaryComponentEnum.PF);
+                    return 12 * basic / 100;
                 case SalaryComponentEnum.Mediclaim:
+                    return GetCalculatedMediclaimByMonth(CTCMonthly, monthId);
+                case SalaryComponentEnum.Gratuity:
+                    return basic * 15 / 26 / 12;
+                default:
+                    return 0;
+            }
+        }
+
+        /// <summary>
+        /// // 5 % of CTC paid Anually or (25% of increment in June and 25% in December)
+        /// </summary>
+        /// <param name="salarySummary"></param>
+        /// <returns></returns>
+        private decimal? GetPerformanceIncentive(SalarySummary salarySummary)
+        {
+            // 5 % of CTC paid Anually or (25% of increment in June and 25% in December)
+            return 5 * salarySummary.CTC / 12 / 100;
+        }
+
+        private decimal? GetCalculatedMediclaimByMonth(decimal? monthlyCTC, int monthId)
+        {
+            //=IF(H21<41667, 484, IF(AND(H21>41668, H21<83334), 969,1453))
+            //    =IF(L21<41667, 476, IF(AND(L21>41668, L21<83334), 952,1428))
+            //if (month.Equals(MonthEnum.April)
+            //    || month.Equals(MonthEnum.May) || month.Equals(MonthEnum.June)
+            //    || month.Equals(MonthEnum.February) || month.Equals(MonthEnum.March))
+
+                if (monthId >= 2 && monthId <= 6)
+                {
                     //if(CTC < 41667){484}
                     //else if (CTC > 41668 AND CTC< 83334){969}
                     //else{1453}
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, 0, SalaryComponentEnum.Mediclaim);
-                case SalaryComponentEnum.Gratuity:
-                    //Basic*15/26/12
-                    return GetEmployeeSalaryDetailObjectForYear(salarySummary, basic * 15 / 26 / 12, SalaryComponentEnum.Gratuity);
-            }
-
-            return null;
-        }
-
-        private List<EmployeeSalaryDetail> GetEmployeeSalaryDetailObjectForYear(SalarySummary salarySummary, decimal? amount, SalaryComponentEnum salaryComponentEnum)
-        {
-            List<EmployeeSalaryDetail> employeeSalaryDetails = new List<EmployeeSalaryDetail>();
-            EmployeeSalaryDetail employeeSalaryDetail = null;
-            decimal? monthlyCTC = salarySummary.CTC / 12;
-
-            foreach (MonthEnum month in Enum.GetValues(typeof(MonthEnum)))
-            {
-                if (salaryComponentEnum.Equals(SalaryComponentEnum.Mediclaim))
-                {
-                    employeeSalaryDetail = new EmployeeSalaryDetail
-                     {
-                         EmployeeId = salarySummary.EmployeeId,
-                         SalaryComponentId = Convert.ToInt32(salaryComponentEnum),
-                         MonthId = Convert.ToInt32(month),
-                         Year = salarySummary.EffectiveFrom.Year,
-                         IsActive = true,
-                         CreatedBy = salarySummary.UserName,
-                         CreatedDate = DateTime.Now,
-                     };
-
-                    //=IF(H21<41667, 484, IF(AND(H21>41668, H21<83334), 969,1453))
-                    //    =IF(L21<41667, 476, IF(AND(L21>41668, L21<83334), 952,1428))
-                    if (month.Equals(MonthEnum.April)
-                        || month.Equals(MonthEnum.May) || month.Equals(MonthEnum.June)
-                        || month.Equals(MonthEnum.February) || month.Equals(MonthEnum.March))
-                    {
-                        //if(CTC < 41667){484}
-                        //else if (CTC > 41668 AND CTC< 83334){969}
-                        //else{1453}
-                        employeeSalaryDetail.Amount = monthlyCTC < 41667 ? 484 : monthlyCTC > 41668 && monthlyCTC < 83334 ? 969 : 1453;
-                    }
-                    else
-                    {
-                        //if(CTC < 41667){476}
-                        //else if (CTC > 41668 AND CTC< 83334){952}
-                        //else{1428}
-                        employeeSalaryDetail.Amount = monthlyCTC < 41667 ? 484 : monthlyCTC > 41668 && monthlyCTC < 83334 ? 969 : 1453;
-                    }
+                    return monthlyCTC < 41667 ? 484 : monthlyCTC > 41668 && monthlyCTC < 83334 ? 969 : 1453;
                 }
                 else
                 {
-                    employeeSalaryDetail = new EmployeeSalaryDetail
-                    {
-                        EmployeeId = salarySummary.EmployeeId,
-                        SalaryComponentId = Convert.ToInt32(salaryComponentEnum),
-                        MonthId = Convert.ToInt32(month),
-                        Year = salarySummary.EffectiveFrom.Year,
-                        Amount = amount,
-                        IsActive = true,
-                        CreatedBy = salarySummary.UserName,
-                        CreatedDate = DateTime.Now,
-                    };
+                    //if(CTC < 41667){476}
+                    //else if (CTC > 41668 AND CTC< 83334){952}
+                    //else{1428}
+                    return monthlyCTC < 41667 ? 476 : monthlyCTC > 41668 && monthlyCTC < 83334 ? 952 : 1428;
+                }
+        }
+
+        public IEnumerable<SalaryComponent> GetSalaryComponents()
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                var _repository = _dataRepositoryFactory.GetDataRepository<ISalaryComponentRepository>();
+                return _repository.Get();
+            });
+        }
+
+        public static Dictionary<int, int> GetFinancialYearMonths(DateTime inputDate)
+        {
+            Dictionary<int, int> monthsInfo = new Dictionary<int, int>();
+
+            var currentMonthId = inputDate.Month;
+            var currentYear = inputDate.Year;
+
+            if (currentMonthId >= 4)
+            {
+                // Months of Current Year
+                for (int i = currentMonthId; i <= 12; i++)
+                {
+                    monthsInfo.Add(i, currentYear);
                 }
 
-                employeeSalaryDetails.Add(employeeSalaryDetail);
+                for (int i = 1; i <= 3; i++)
+                {
+                    monthsInfo.Add(i, currentYear + 1);
+                }
             }
-
-            return employeeSalaryDetails;
+            else
+            {
+                // Months of Current Year
+                for (int i = currentMonthId; i <= 3; i++)
+                {
+                    monthsInfo.Add(i, currentYear);
+                }
+            }
+            return monthsInfo;
         }
 
         #endregion

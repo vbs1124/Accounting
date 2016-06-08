@@ -106,6 +106,7 @@
     <Compile Include="Models\CompareEmployeeModel.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\Membership.cs" />
+    <Compile Include="Models\SalaryComponentAmountMapper.cs" />
     <Compile Include="Models\SalarySummary.cs" />
     <Compile Include="OAuthMembership.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>

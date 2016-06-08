@@ -167,7 +167,7 @@ function showException(exceptionObject, status, headers, config) {
     //if(status=="401") Unauthorized, Session Expired
     //if(status=="500") Internal Error
     if (status == 401) // session expired
-        location.href = "/account/login?ReturnUrl=" + location.pathname;
+        location.href = "/dashboard/index?ReturnUrl=" + location.pathname;
     else {
         var message = "<div class='text-danger'>";
         message += "<h1>Oops some thing went wrong</h1>";

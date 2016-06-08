@@ -9,7 +9,7 @@ namespace Vserv.Accounting.Web
         {
             filters.Add(new HandleErrorAttribute());
             //Controllers are secure-by-default. 
-            filters.Add(new AuthorizeAttribute());
+            //filters.Add(new AuthorizeAttribute());
         }
     }
 }

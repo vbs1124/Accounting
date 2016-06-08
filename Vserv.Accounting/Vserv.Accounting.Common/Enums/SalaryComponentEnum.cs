@@ -8,7 +8,7 @@ namespace Vserv.Accounting.Common.Enums
 {
     public enum SalaryComponentEnum
     {
-        CTCPerMonth,
+        CTCPerMonth = 1,
         Basic,
         HRA,
         Conveyance,

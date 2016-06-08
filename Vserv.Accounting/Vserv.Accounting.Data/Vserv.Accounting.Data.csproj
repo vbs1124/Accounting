@@ -52,8 +52,9 @@
     <Compile Include="DataRepositoryFactory.cs" />
     <Compile Include="Interfaces\IAddressTypeRepository.cs" />
     <Compile Include="Interfaces\IBankRepository.cs" />
-    <Compile Include="Interfaces\ICityRepository - Copy.cs" />
+    <Compile Include="Interfaces\ICityRepository.cs" />
     <Compile Include="Interfaces\IEmployeeSalaryDetailRepo.cs" />
+    <Compile Include="Interfaces\ISalaryComponentRepository.cs" />
     <Compile Include="Interfaces\ISecurityQuestionRepository.cs" />
     <Compile Include="Interfaces\IDesignationRepository.cs" />
     <Compile Include="Interfaces\IEmployeeRepository.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Repositories\AddressTypeRepository.cs" />
     <Compile Include="Repositories\BankRepository.cs" />
     <Compile Include="Repositories\EmployeeSalaryDetailRepo.cs" />
+    <Compile Include="Repositories\SalaryComponentRepository.cs" />
     <Compile Include="Repositories\SecurityQuestionRepository.cs" />
     <Compile Include="Repositories\FeatureRepository.cs" />
     <Compile Include="Repositories\CityRepository.cs" />

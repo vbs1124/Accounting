@@ -395,6 +395,7 @@
           <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Code" Type="varchar" MaxLength="6" />
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DefaultAmount" Type="numeric" Precision="19" Scale="2" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
@@ -1012,6 +1013,11 @@
             <Parameter Name="EmailAddress" Mode="In" Type="String" />
             <Parameter Name="MobileNumber" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetEmployeeSalaryDetail" ReturnType="Collection(VservAccountingDBModel.GetEmployeeSalaryDetail_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="FinancialYearFrom" Mode="In" Type="Int32" />
+            <Parameter Name="FinancialYearTo" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="AddressTypes" EntityType="VservAccountingDBModel.AddressType" />
           <EntitySet Name="ApplicationLogs" EntityType="VservAccountingDBModel.ApplicationLog" />
           <EntitySet Name="Banks" EntityType="VservAccountingDBModel.Bank" />
@@ -1122,11 +1128,6 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
-          <FunctionImport Name="GetEmployeeSalaryDetail" ReturnType="Collection(VservAccountingDBModel.GetEmployeeSalaryDetail_Result)">
-            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
-            <Parameter Name="FinancialYearFrom" Mode="In" Type="Int32" />
-            <Parameter Name="FinancialYearTo" Mode="In" Type="Int32" />
-          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="ArchiveEmployee_Result">
           <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
@@ -1135,6 +1136,24 @@
           <Property Type="String" Name="ErrorProcedure" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="ErrorLine" Nullable="true" />
           <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <ComplexType Name="GetEmployeeSalaryDetail_Result">
+          <Property Type="Int32" Name="EmployeeId" Nullable="true" />
+          <Property Type="String" Name="ComponentName" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="Year" Nullable="true" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
+          <Property Type="Decimal" Name="April" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="May" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="June" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="July" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="August" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="September" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="October" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="November" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="December" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="January" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="February" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="March" Nullable="true" Precision="38" Scale="4" />
         </ComplexType>
         <EntityType Name="AddressType">
           <Key>
@@ -1553,6 +1572,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Code" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DefaultAmount" Type="Decimal" Precision="19" Scale="2" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1904,24 +1924,6 @@
           <End Type="VservAccountingDBModel.Role" Role="Role" Multiplicity="*" />
           <End Type="VservAccountingDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
-        <ComplexType Name="GetEmployeeSalaryDetail_Result">
-          <Property Type="Int32" Name="EmployeeId" Nullable="true" />
-          <Property Type="String" Name="ComponentName" Nullable="true" MaxLength="250" />
-          <Property Type="Int32" Name="Year" Nullable="true" />
-          <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
-          <Property Type="Decimal" Name="April" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="May" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="June" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="July" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="August" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="September" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="October" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="November" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="December" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="January" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="February" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="March" Nullable="true" Precision="38" Scale="4" />
-        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1933,6 +1935,28 @@
           <FunctionImportMapping FunctionImportName="InsertMvcErrorLog" FunctionName="VservAccountingDBModel.Store.InsertMvcErrorLog" />
           <FunctionImportMapping FunctionImportName="ArchiveEmployee" FunctionName="VservAccountingDBModel.Store.ArchiveEmployee" />
           <FunctionImportMapping FunctionImportName="ValidateUser" FunctionName="VservAccountingDBModel.Store.ValidateUser" />
+          <FunctionImportMapping FunctionImportName="GetEmployeeSalaryDetail" FunctionName="VservAccountingDBModel.Store.GetEmployeeSalaryDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.GetEmployeeSalaryDetail_Result">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="April" ColumnName="April" />
+                <ScalarProperty Name="May" ColumnName="May" />
+                <ScalarProperty Name="June" ColumnName="June" />
+                <ScalarProperty Name="July" ColumnName="July" />
+                <ScalarProperty Name="August" ColumnName="August" />
+                <ScalarProperty Name="September" ColumnName="September" />
+                <ScalarProperty Name="October" ColumnName="October" />
+                <ScalarProperty Name="November" ColumnName="November" />
+                <ScalarProperty Name="December" ColumnName="December" />
+                <ScalarProperty Name="January" ColumnName="January" />
+                <ScalarProperty Name="February" ColumnName="February" />
+                <ScalarProperty Name="March" ColumnName="March" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="AddressTypes">
             <EntityTypeMapping TypeName="VservAccountingDBModel.AddressType">
               <MappingFragment StoreEntitySet="AddressType">
@@ -2342,6 +2366,7 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="DefaultAmount" ColumnName="DefaultAmount" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -2448,28 +2473,6 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="GetEmployeeSalaryDetail" FunctionName="VservAccountingDBModel.Store.GetEmployeeSalaryDetail">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="VservAccountingDBModel.GetEmployeeSalaryDetail_Result">
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
-                <ScalarProperty Name="April" ColumnName="April" />
-                <ScalarProperty Name="May" ColumnName="May" />
-                <ScalarProperty Name="June" ColumnName="June" />
-                <ScalarProperty Name="July" ColumnName="July" />
-                <ScalarProperty Name="August" ColumnName="August" />
-                <ScalarProperty Name="September" ColumnName="September" />
-                <ScalarProperty Name="October" ColumnName="October" />
-                <ScalarProperty Name="November" ColumnName="November" />
-                <ScalarProperty Name="December" ColumnName="December" />
-                <ScalarProperty Name="January" ColumnName="January" />
-                <ScalarProperty Name="February" ColumnName="February" />
-                <ScalarProperty Name="March" ColumnName="March" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

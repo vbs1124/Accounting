@@ -159,8 +159,8 @@ namespace Vserv.Accounting.Web.Helpers
 
             var inputControl = new HtmlTag("input")
             .Attr("type", "text")
-            //.Attr("uib-datepicker-popup", "dd/MM/yyyy")
-            .Attr("uib-datepicker-popup", "")
+            .Attr("uib-datepicker-popup", "dd/MM/yyyy")
+            //.Attr("uib-datepicker-popup", "")
             .Attr("ng-model", expression)
             .Attr("is-open", String.Format("popup{0}.opened", uniqueName))
             .Attr("datepicker-options", "dateOptions")

@@ -11,8 +11,8 @@
         }
     }
 
-    controller.$inject = ['$scope', 'EmployeeService'];
-    function controller($scope, EmployeeService) {
+    controller.$inject = ['$scope', 'EmployeeService', 'toastr'];
+    function controller($scope, EmployeeService, toastr) {
         var vm = this;
         vm.add = add;
 
@@ -24,6 +24,7 @@
             vm.saving = true;
             EmployeeService.add(vm.salarySummaryModel, $("#EmployeeId").val()).then(function (resp) {
                 if (resp.businessException == null) {
+                    toastr.success('Salary breakup generated successfully.');
                     //Close the modal
                     $scope.$close();
                 }
