@@ -1,26 +1,32 @@
-﻿CREATE TABLE ApplicationLog
+CREATE TABLE [dbo].[ApplicationLog](
+	[LogId] [bigint] IDENTITY(1,1) NOT NULL,
+	[AppDomain] [varchar](256) NULL,
+	[AspnetCache] [varchar](max) NULL,
+	[AspnetContext] [varchar](max) NULL,
+	[AspnetRequest] [varchar](max) NULL,
+	[AspnetSession] [varchar](max) NULL,
+	[Date] [datetime] NOT NULL,
+	[Exception] [varchar](max) NULL,
+	[Identity] [varchar](256) NULL,
+	[Level] [varchar](30) NULL,
+	[Line] [int] NULL,
+	[Logger] [varchar](100) NULL,
+	[Message] [varchar](2000) NULL,
+	[Method] [varchar](500) NULL,
+	[NDC] [varchar](500) NULL,
+	[Property] [varchar](500) NULL,
+	[StackTrace] [varchar](max) NULL,
+	[StackTraceDetail] [varchar](max) NULL,
+	[TimeStamp] [bigint] NULL,
+	[Thread] [varchar](256) NULL,
+	[Type] [varchar](256) NULL,
+	[Username] [varchar](100) NULL,
+	[UTCDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
 (
-  [LogId] BIGINT NOT NULL PRIMARY KEY identity(1,1), 
-  [appdomain] varchar(256), 
-  [aspnetcache] varchar(max), 
-  [aspnetcontext] varchar(max), 
-  [aspnetrequest] varchar(max), 
-  [aspnetsession] varchar(max), 
-  [date] datetime NOT NULL, 
-  [exception] varchar(max),   
-  [identity] varchar(256),   
-  [level] varchar(30), 
-  [line] integer, 
-  [logger] varchar(100), 
-  [message] varchar(2000), 
-  [method] varchar(500), 
-  [ndc] varchar(500), 
-  [property] varchar(500), 
-  [stacktrace] varchar(max), 
-  [stacktracedetail] varchar(max), 
-  [timestamp] bigint, 
-  [thread] varchar(256), 
-  [type] varchar(256), 
-  [username] varchar(100), 
-  [utcdate] datetime NOT NULL
-)
+	[LogId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+

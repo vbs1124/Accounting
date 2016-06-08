@@ -1,13 +1,13 @@
-﻿
 CREATE TABLE [dbo].[Designation](
 	[DesignationId] [int] IDENTITY(1,1) NOT NULL,
-	[Code] [nchar](6) NOT NULL,
+	[Code] [nchar](6) NULL,
 	[Name] [varchar](100) NOT NULL,
-	[Description] [varchar](250) NOT NULL,
-	[IsActive] [bit] NOT NULL,
-	[CreatedById] [int] NOT NULL,
-	[UpdatedById] [int] NULL,
-	[CreatedDate] [datetime] NOT NULL,
+	[Description] [varchar](250) NULL,
+	[DisplayOrder] [int] NOT NULL CONSTRAINT [DF_Designation_DisplayOrder]  DEFAULT ((0)),
+	[IsActive] [bit] NOT NULL CONSTRAINT [DF_Designation_IsActive]  DEFAULT ((1)),
+	[CreatedBy] [varchar](50) NOT NULL,
+	[UpdatedBy] [varchar](50) NULL,
+	[CreatedDate] [datetime] NOT NULL CONSTRAINT [DF_Designation_CreatedDate]  DEFAULT (getdate()),
 	[UpdatedDate] [datetime] NULL,
  CONSTRAINT [PK_Designation] PRIMARY KEY CLUSTERED 
 (
@@ -16,11 +16,3 @@ CREATE TABLE [dbo].[Designation](
 ) ON [PRIMARY]
 
 GO
-
-ALTER TABLE [dbo].[Designation] ADD  CONSTRAINT [DF_Designation_IsActive]  DEFAULT ((1)) FOR [IsActive]
-GO
-
-ALTER TABLE [dbo].[Designation] ADD  CONSTRAINT [DF_Designation_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
-GO
-
-
