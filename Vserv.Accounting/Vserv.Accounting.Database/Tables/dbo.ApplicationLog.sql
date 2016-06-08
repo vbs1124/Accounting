@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[ApplicationLog](
+CREATE TABLE [dbo].[ApplicationLog](
 	[LogId] [bigint] IDENTITY(1,1) NOT NULL,
 	[AppDomain] [varchar](256) NULL,
 	[AspnetCache] [varchar](max) NULL,
@@ -29,3 +29,4 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
+

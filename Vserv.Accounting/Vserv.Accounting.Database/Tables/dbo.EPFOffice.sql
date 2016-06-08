@@ -1,4 +1,3 @@
-﻿
 CREATE TABLE [dbo].[EPFOffice](
 	[EPFOfficeId] [int] IDENTITY(1,1) NOT NULL,
 	[EPFOfficeName] [varchar](50) NOT NULL,
@@ -16,11 +15,3 @@ CREATE TABLE [dbo].[EPFOffice](
 ) ON [PRIMARY]
 
 GO
-
-ALTER TABLE [dbo].[EPFOffice] ADD  CONSTRAINT [DF_EPFOffice_IsActive]  DEFAULT ((1)) FOR [IsActive]
-GO
-
-ALTER TABLE [dbo].[EPFOffice] ADD  CONSTRAINT [DF_EPFOffice_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
-GO
-
-

@@ -1,4 +1,3 @@
-﻿
 CREATE TABLE [dbo].[Employee](
 	[EmployeeId] [int] IDENTITY(1,1) NOT NULL,
 	[FirstName] [varchar](50) NULL,
@@ -40,7 +39,7 @@ CREATE TABLE [dbo].[Employee](
 	[BankId] [int] NULL,
 	[BankIFSCCode] [varchar](20) NULL,
 	[BankMICRCode] [varchar](20) NULL,
-	[IsActive] [bit] NOT NULL,
+	[IsActive] [bit] NOT NULL CONSTRAINT [DF_Employee_IsActive]  DEFAULT ((1)),
 	[CreatedBy] [varchar](50) NOT NULL,
 	[UpdatedBy] [varchar](50) NULL,
 	[CreatedDate] [datetime] NOT NULL,
@@ -64,57 +63,3 @@ CREATE TABLE [dbo].[Employee](
 ) ON [PRIMARY]
 
 GO
-
-ALTER TABLE [dbo].[Employee] ADD  CONSTRAINT [DF_Employee_IsActive]  DEFAULT ((1)) FOR [IsActive]
-GO
-
-ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Bank] FOREIGN KEY([BankId])
-REFERENCES [dbo].[Bank] ([BankId])
-GO
-
-ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_Bank]
-GO
-
-ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Designation] FOREIGN KEY([DesignationId])
-REFERENCES [dbo].[Designation] ([DesignationId])
-GO
-
-ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_Designation]
-GO
-
-ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Gender] FOREIGN KEY([GenderId])
-REFERENCES [dbo].[Gender] ([GenderId])
-GO
-
-ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_Gender]
-GO
-
-ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_MailingState] FOREIGN KEY([MailingStateId])
-REFERENCES [dbo].[State] ([StateId])
-GO
-
-ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_MailingState]
-GO
-
-ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_OfficeBranch] FOREIGN KEY([OfficeBranchId])
-REFERENCES [dbo].[OfficeBranch] ([OfficeBranchId])
-GO
-
-ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_OfficeBranch]
-GO
-
-ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_PermanentState] FOREIGN KEY([PermanentStateId])
-REFERENCES [dbo].[State] ([StateId])
-GO
-
-ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_PermanentState]
-GO
-
-ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Salutation] FOREIGN KEY([SalutationId])
-REFERENCES [dbo].[Salutation] ([SalutationId])
-GO
-
-ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_Salutation]
-GO
-
-

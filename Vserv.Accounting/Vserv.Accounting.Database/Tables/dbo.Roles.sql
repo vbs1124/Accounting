@@ -1,4 +1,3 @@
-﻿
 CREATE TABLE [dbo].[Roles](
 	[RoleId] [int] IDENTITY(1,1) NOT NULL,
 	[RoleName] [nvarchar](256) NOT NULL,
@@ -14,7 +13,4 @@ CREATE TABLE [dbo].[Roles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
-GO
-
-ALTER TABLE [dbo].[Roles] ADD  CONSTRAINT [DF_Roles_Description]  DEFAULT ('') FOR [Description]
 GO

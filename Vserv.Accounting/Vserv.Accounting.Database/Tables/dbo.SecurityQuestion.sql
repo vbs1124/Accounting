@@ -1,9 +1,8 @@
-﻿
 CREATE TABLE [dbo].[SecurityQuestion](
 	[SecurityQuestionId] [int] IDENTITY(1,1) NOT NULL,
 	[CollectionId] [int] NULL,
 	[Question] [varchar](250) NOT NULL,
-	[IsActive] [bit] NOT NULL,
+	[IsActive] [bit] NOT NULL CONSTRAINT [DF_SecurityQuestion_IsActive]  DEFAULT ((1)),
 	[CreatedBy] [varchar](50) NOT NULL,
 	[UpdatedBy] [varchar](50) NULL,
 	[CreatedDate] [datetime] NOT NULL,
@@ -16,5 +15,3 @@ CREATE TABLE [dbo].[SecurityQuestion](
 
 GO
 
-ALTER TABLE [dbo].[SecurityQuestion] ADD  CONSTRAINT [DF_SecurityQuestion_IsActive]  DEFAULT ((1)) FOR [IsActive]
-GO

@@ -1,4 +1,3 @@
-﻿
 CREATE TABLE [dbo].[EmployeeArchive](
 	[EmployeeArchiveId] [int] IDENTITY(1,1) NOT NULL,
 	[EmployeeId] [int] NOT NULL,
@@ -41,7 +40,7 @@ CREATE TABLE [dbo].[EmployeeArchive](
 	[BankId] [int] NULL,
 	[BankIFSCCode] [varchar](20) NULL,
 	[BankMICRCode] [varchar](20) NULL,
-	[IsActive] [bit] NOT NULL,
+	[IsActive] [bit] NOT NULL CONSTRAINT [DF_EmployeeArchive_IsActive]  DEFAULT ((1)),
 	[CreatedBy] [varchar](50) NOT NULL,
 	[UpdatedBy] [varchar](50) NULL,
 	[CreatedDate] [datetime] NOT NULL,
@@ -53,57 +52,3 @@ CREATE TABLE [dbo].[EmployeeArchive](
 ) ON [PRIMARY]
 
 GO
-
-ALTER TABLE [dbo].[EmployeeArchive] ADD  CONSTRAINT [DF_EmployeeArchive_IsActive]  DEFAULT ((1)) FOR [IsActive]
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeArchive_Bank] FOREIGN KEY([BankId])
-REFERENCES [dbo].[Bank] ([BankId])
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive] CHECK CONSTRAINT [FK_EmployeeArchive_Bank]
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeArchive_Designation] FOREIGN KEY([DesignationId])
-REFERENCES [dbo].[Designation] ([DesignationId])
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive] CHECK CONSTRAINT [FK_EmployeeArchive_Designation]
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeArchive_Gender] FOREIGN KEY([GenderId])
-REFERENCES [dbo].[Gender] ([GenderId])
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive] CHECK CONSTRAINT [FK_EmployeeArchive_Gender]
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeArchive_MailingState] FOREIGN KEY([MailingStateId])
-REFERENCES [dbo].[State] ([StateId])
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive] CHECK CONSTRAINT [FK_EmployeeArchive_MailingState]
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeArchive_OfficeBranch] FOREIGN KEY([OfficeBranchId])
-REFERENCES [dbo].[OfficeBranch] ([OfficeBranchId])
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive] CHECK CONSTRAINT [FK_EmployeeArchive_OfficeBranch]
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeArchive_PermanentState] FOREIGN KEY([PermanentStateId])
-REFERENCES [dbo].[State] ([StateId])
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive] CHECK CONSTRAINT [FK_EmployeeArchive_PermanentState]
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeArchive_Salutation] FOREIGN KEY([SalutationId])
-REFERENCES [dbo].[Salutation] ([SalutationId])
-GO
-
-ALTER TABLE [dbo].[EmployeeArchive] CHECK CONSTRAINT [FK_EmployeeArchive_Salutation]
-GO
-
-

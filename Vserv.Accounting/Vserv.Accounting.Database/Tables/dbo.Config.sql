@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Config](
+CREATE TABLE [dbo].[Config](
 	[Key] [nvarchar](50) NOT NULL,
 	[Value] [nvarchar](250) NOT NULL,
  CONSTRAINT [PK_Site] PRIMARY KEY CLUSTERED 
@@ -8,3 +8,4 @@
 ) ON [PRIMARY]
 
 GO
+
