@@ -82,6 +82,9 @@
     <Compile Include="EmployeeSalaryDetail.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmpSalaryStructure.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EPFNumber.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
@@ -97,6 +100,9 @@
     <Compile Include="GetEmployeeSalaryDetail_Result.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="LookupFrequency.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="LookupMonth.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
@@ -107,7 +113,6 @@
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\Membership.cs" />
     <Compile Include="Models\SalaryComponentAmountMapper.cs" />
-    <Compile Include="Models\SalarySummary.cs" />
     <Compile Include="OAuthMembership.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>

@@ -218,3 +218,18 @@ function bindEnterEventOnTable(tableId, tableObject) {
             tableObject.fnFilter(this.value);
     });
 }
+
+$.showToastrMessage = function (messageType, message, title, optionsOverride) {
+    if (messageType == "success") {
+        toastr.success(message, title, optionsOverride);
+    }
+    else if (messageType == "error") {
+        toastr.error(message, title, optionsOverride);
+    }
+    else if (messageType == "info") {
+        toastr.info(message, title, optionsOverride);
+    }
+    else if (messageType == "warning") {
+        toastr.warning(message, title, optionsOverride);
+    }
+};

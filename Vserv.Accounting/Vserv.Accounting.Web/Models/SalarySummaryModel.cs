@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Vserv.Accounting.Web.Models
 {
-    public class SalarySummaryModel : IMapFrom<SalarySummary>
+    public class SalarySummaryModel : IMapFrom<EmpSalaryStructure>
     {
         //public string CTC { get; set; }
         //public string CabDeductions { get; set; }

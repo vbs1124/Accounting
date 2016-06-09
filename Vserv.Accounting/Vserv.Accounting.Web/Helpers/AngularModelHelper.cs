@@ -131,6 +131,7 @@ namespace Vserv.Accounting.Web.Helpers
               .AddClass("form-control")
               .Attr("ng-model", expression)
               .Attr("name", name)
+              .Attr("id", name)
               .Attr("type", "text");
 
                 ApplyValidationToInput(input, metadata);
@@ -166,6 +167,7 @@ namespace Vserv.Accounting.Web.Helpers
             .Attr("datepicker-options", "dateOptions")
             .Attr("close-text", "Close")
             .Attr("name", name)
+            .Attr("id", name)
             .AddClass("form-control");
 
             ApplyValidationToInput(inputControl, metadata);
@@ -185,6 +187,8 @@ namespace Vserv.Accounting.Web.Helpers
             .Attr("type", "text")
             .Attr("ng-model", expression)
             .Attr("name", name)
+            .Attr("id", name)
+            .Attr("maxlength", 15)
             .AddClass("form-control");
 
             ApplyValidationToInput(inputControl, metadata);

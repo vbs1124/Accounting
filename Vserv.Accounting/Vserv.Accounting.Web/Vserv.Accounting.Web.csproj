@@ -446,10 +446,6 @@
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
-    <Content Include="Scripts\angular-toastr.js" />
-    <Content Include="Scripts\angular-toastr.min.js" />
-    <Content Include="Scripts\angular-toastr.tpls.js" />
-    <Content Include="Scripts\angular-toastr.tpls.min.js" />
     <Content Include="Scripts\angular-touch.js" />
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
@@ -478,6 +474,7 @@
     <Content Include="Scripts\App\Navbar\NavbarService.js" />
     <Content Include="Scripts\App\serviceHandler.js" />
     <Content Include="Scripts\App\Utility\ArrayExtensions.js" />
+    <Content Include="Scripts\App\Utility\bootstrapDropdownDirective.js" />
     <Content Include="Scripts\App\Utility\FormGroupValidationDirective.js" />
     <Content Include="Scripts\App\Utility\InputValidationIconsDirective.js" />
     <Content Include="Scripts\App\Utility\MvcGridDirective.js" />

@@ -36,10 +36,12 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeArchive> EmployeeArchives { get; set; }
         public virtual DbSet<EmployeeSalaryDetail> EmployeeSalaryDetails { get; set; }
+        public virtual DbSet<EmpSalaryStructure> EmpSalaryStructures { get; set; }
         public virtual DbSet<EPFNumber> EPFNumbers { get; set; }
         public virtual DbSet<EPFOffice> EPFOffices { get; set; }
         public virtual DbSet<Feature> Features { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
+        public virtual DbSet<LookupFrequency> LookupFrequencies { get; set; }
         public virtual DbSet<LookupMonth> LookupMonths { get; set; }
         public virtual DbSet<Membership> Memberships { get; set; }
         public virtual DbSet<OAuthMembership> OAuthMemberships { get; set; }

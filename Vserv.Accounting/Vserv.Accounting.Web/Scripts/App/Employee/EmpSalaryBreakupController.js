@@ -5,6 +5,8 @@
 
     function EmpSalaryBreakupController($scope, EmpSalaryBreakupService) {
         $scope.paysheets = [];
+        $scope.FinancialYears = GetFinancialYears();
+        $scope.selectedFinancialYear = moment().year().toString();
 
         $scope.paySheetParameter = {
             EmployeeId: null,
@@ -62,5 +64,15 @@
         $scope.isEditableColumn = function (componentName) {
             return $.inArray(componentName, $scope.nonEditableComponents) == -1;
         }
+    }
+
+    function GetFinancialYears() {
+        var currentYear = moment().year();
+        var financialYears = [];
+        for (var i = currentYear + 1 ; i > currentYear - 9; i--) {
+            financialYears.push({ currentYear: i - 1, financialYear: i - 1 + '-' + i });
+        }
+        console.log(financialYears);
+        return financialYears;
     }
 })();

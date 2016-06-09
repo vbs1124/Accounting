@@ -11,7 +11,7 @@
         }
     }
 
-    controller.$inject = ['$scope', 'EmployeeService', 'toastr'];
+    controller.$inject = ['$scope', 'EmployeeService'];
     function controller($scope, EmployeeService, toastr) {
         var vm = this;
         vm.add = add;
@@ -21,10 +21,32 @@
         vm.errorMessage = null;
 
         function add() {
+            var monthlyCTC = vm.salarySummaryModel.ctc / 12;
+
+            if (vm.salarySummaryModel.cabDeductions > monthlyCTC) {
+                $.showToastrMessage("error", "Cab Deductions should be less than CTC.", "Error!");
+                return false;
+            }
+
+            if (vm.salarySummaryModel.projectIncentive > monthlyCTC) {
+                $.showToastrMessage("error", "Project Incentive should be less than CTC.", "Error!");
+                return false;
+            }
+
+            if (vm.salarySummaryModel.carLease > monthlyCTC) {
+                $.showToastrMessage("error", "Car Lease should be less than CTC.", "Error!");
+                return false;
+            }
+
+            if (vm.salarySummaryModel.foodCoupons > monthlyCTC) {
+                $.showToastrMessage("error", "Food Coupons should be less than CTC.", "Error!");
+                return false;
+            }
+
             vm.saving = true;
             EmployeeService.add(vm.salarySummaryModel, $("#EmployeeId").val()).then(function (resp) {
                 if (resp.businessException == null) {
-                    toastr.success('Salary breakup generated successfully.');
+                    $.showToastrMessage("success", 'Salary breakup generated successfully.', "Success!");
                     //Close the modal
                     $scope.$close();
                 }
@@ -33,6 +55,7 @@
                 }
                 vm.saving = false;
             });
+
         }
 
         //-------------------------

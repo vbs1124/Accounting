@@ -17,6 +17,7 @@ namespace Vserv.Accounting.Data.Entity
         public int EmployeeSalaryDetailId { get; set; }
         public int EmployeeId { get; set; }
         public int SalaryComponentId { get; set; }
+        public int EmpSalaryStructureId { get; set; }
         public int MonthId { get; set; }
         public Nullable<int> Year { get; set; }
         public Nullable<decimal> Amount { get; set; }
@@ -25,5 +26,7 @@ namespace Vserv.Accounting.Data.Entity
         public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+    
+        public virtual EmpSalaryStructure EmpSalaryStructure { get; set; }
     }
 }

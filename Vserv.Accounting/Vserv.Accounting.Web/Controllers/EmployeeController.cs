@@ -221,19 +221,19 @@ namespace Vserv.Accounting.Web.Controllers
         public JsonResult SaveEmployeeSalaryDetail(SalarySummaryModel salarySummaryModel, int employeeId)
         {
             EmployeeManager _manager = new EmployeeManager();
-            SalarySummary salarySummary = new SalarySummary
+            EmpSalaryStructure empSalaryStructure = new EmpSalaryStructure
             {
                 CTC = String.IsNullOrWhiteSpace(salarySummaryModel.CTC) ? 0 : Convert.ToDecimal(salarySummaryModel.CTC),
-                CabDeductions = String.IsNullOrWhiteSpace(salarySummaryModel.CabDeductions) ? 0 : Convert.ToDecimal(salarySummaryModel.CabDeductions),
-                ProjectIncentive = String.IsNullOrWhiteSpace(salarySummaryModel.ProjectIncentive) ? 0 : Convert.ToDecimal(salarySummaryModel.ProjectIncentive),
-                CarLease = String.IsNullOrWhiteSpace(salarySummaryModel.CarLease) ? 0 : Convert.ToDecimal(salarySummaryModel.CarLease),
-                FoodCoupons = String.IsNullOrWhiteSpace(salarySummaryModel.FoodCoupons) ? 0 : Convert.ToDecimal(salarySummaryModel.FoodCoupons),
-                EffectiveFrom = String.IsNullOrWhiteSpace(salarySummaryModel.EffectiveFrom)? DateTime.Now : Convert.ToDateTime(salarySummaryModel.EffectiveFrom),
+                MonthlyCabDeductions = String.IsNullOrWhiteSpace(salarySummaryModel.CabDeductions) ? 0 : Convert.ToDecimal(salarySummaryModel.CabDeductions),
+                MonthlyProjectIncentive = String.IsNullOrWhiteSpace(salarySummaryModel.ProjectIncentive) ? 0 : Convert.ToDecimal(salarySummaryModel.ProjectIncentive),
+                MonthlyCarLease = String.IsNullOrWhiteSpace(salarySummaryModel.CarLease) ? 0 : Convert.ToDecimal(salarySummaryModel.CarLease),
+                MonthlyFoodCoupons = String.IsNullOrWhiteSpace(salarySummaryModel.FoodCoupons) ? 0 : Convert.ToDecimal(salarySummaryModel.FoodCoupons),
+                EffectiveFrom = String.IsNullOrWhiteSpace(salarySummaryModel.EffectiveFrom) ? DateTime.Now : Convert.ToDateTime(salarySummaryModel.EffectiveFrom),
                 EmployeeId = employeeId,
-                UserName = User.Identity.Name,
+                CreatedBy = User.Identity.Name,
             };
 
-            _manager.SaveEmployeeSalaryDetail(salarySummary, User.Identity.Name);
+            _manager.SaveEmployeeSalaryDetail(empSalaryStructure, User.Identity.Name);
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
 

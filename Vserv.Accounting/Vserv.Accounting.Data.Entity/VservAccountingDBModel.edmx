@@ -207,9 +207,29 @@
           <Property Name="EmployeeSalaryDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="SalaryComponentId" Type="int" Nullable="false" />
+          <Property Name="EmpSalaryStructureId" Type="int" Nullable="false" />
           <Property Name="MonthId" Type="int" Nullable="false" />
           <Property Name="Year" Type="int" />
           <Property Name="Amount" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EmpSalaryStructure">
+          <Key>
+            <PropertyRef Name="EmpSalaryStructureId" />
+          </Key>
+          <Property Name="EmpSalaryStructureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="CTC" Type="numeric" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="MonthlyCabDeductions" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="MonthlyProjectIncentive" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="MonthlyCarLease" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="MonthlyFoodCoupons" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="EffectiveFrom" Type="datetime" Nullable="false" />
+          <Property Name="EffectiveTo" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -274,6 +294,20 @@
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LookupFrequency">
+          <Key>
+            <PropertyRef Name="FrequencyId" />
+          </Key>
+          <Property Name="FrequencyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -676,6 +710,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmployeeSalaryDetail_EmployeeSalaryDetail">
+          <End Role="EmpSalaryStructure" Type="Self.EmpSalaryStructure" Multiplicity="1" />
+          <End Role="EmployeeSalaryDetail" Type="Self.EmployeeSalaryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpSalaryStructure">
+              <PropertyRef Name="EmpSalaryStructureId" />
+            </Principal>
+            <Dependent Role="EmployeeSalaryDetail">
+              <PropertyRef Name="EmpSalaryStructureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Feature_Feature">
           <End Role="Feature" Type="Self.Feature" Multiplicity="1" />
           <End Role="Feature1" Type="Self.Feature" Multiplicity="0..1" />
@@ -838,10 +884,12 @@
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeArchive" EntityType="Self.EmployeeArchive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeSalaryDetail" EntityType="Self.EmployeeSalaryDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpSalaryStructure" EntityType="Self.EmpSalaryStructure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EPFNumber" EntityType="Self.EPFNumber" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EPFOffice" EntityType="Self.EPFOffice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feature" EntityType="Self.Feature" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LookupFrequency" EntityType="Self.LookupFrequency" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LookupMonth" EntityType="Self.LookupMonth" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Membership" EntityType="Self.Membership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OAuthMembership" EntityType="Self.OAuthMembership" Schema="dbo" store:Type="Tables" />
@@ -915,6 +963,10 @@
           <AssociationSet Name="FK_EmployeeArchive_Salutation" Association="Self.FK_EmployeeArchive_Salutation">
             <End Role="Salutation" EntitySet="Salutation" />
             <End Role="EmployeeArchive" EntitySet="EmployeeArchive" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeSalaryDetail_EmployeeSalaryDetail" Association="Self.FK_EmployeeSalaryDetail_EmployeeSalaryDetail">
+            <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructure" />
+            <End Role="EmployeeSalaryDetail" EntitySet="EmployeeSalaryDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_Feature_Feature" Association="Self.FK_Feature_Feature">
             <End Role="Feature" EntitySet="Feature" />
@@ -1027,10 +1079,12 @@
           <EntitySet Name="Employees" EntityType="VservAccountingDBModel.Employee" />
           <EntitySet Name="EmployeeArchives" EntityType="VservAccountingDBModel.EmployeeArchive" />
           <EntitySet Name="EmployeeSalaryDetails" EntityType="VservAccountingDBModel.EmployeeSalaryDetail" />
+          <EntitySet Name="EmpSalaryStructures" EntityType="VservAccountingDBModel.EmpSalaryStructure" />
           <EntitySet Name="EPFNumbers" EntityType="VservAccountingDBModel.EPFNumber" />
           <EntitySet Name="EPFOffices" EntityType="VservAccountingDBModel.EPFOffice" />
           <EntitySet Name="Features" EntityType="VservAccountingDBModel.Feature" />
           <EntitySet Name="Genders" EntityType="VservAccountingDBModel.Gender" />
+          <EntitySet Name="LookupFrequencies" EntityType="VservAccountingDBModel.LookupFrequency" />
           <EntitySet Name="LookupMonths" EntityType="VservAccountingDBModel.LookupMonth" />
           <EntitySet Name="Memberships" EntityType="VservAccountingDBModel.Membership" />
           <EntitySet Name="OAuthMemberships" EntityType="VservAccountingDBModel.OAuthMembership" />
@@ -1107,6 +1161,10 @@
           <AssociationSet Name="FK_EmployeeArchive_Salutation" Association="VservAccountingDBModel.FK_EmployeeArchive_Salutation">
             <End Role="Salutation" EntitySet="Salutations" />
             <End Role="EmployeeArchive" EntitySet="EmployeeArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeSalaryDetail_EmployeeSalaryDetail" Association="VservAccountingDBModel.FK_EmployeeSalaryDetail_EmployeeSalaryDetail">
+            <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructures" />
+            <End Role="EmployeeSalaryDetail" EntitySet="EmployeeSalaryDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Feature_Feature" Association="VservAccountingDBModel.FK_Feature_Feature">
             <End Role="Feature" EntitySet="Features" />
@@ -1377,6 +1435,7 @@
           <Property Name="EmployeeSalaryDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="SalaryComponentId" Type="Int32" Nullable="false" />
+          <Property Name="EmpSalaryStructureId" Type="Int32" Nullable="false" />
           <Property Name="MonthId" Type="Int32" Nullable="false" />
           <Property Name="Year" Type="Int32" />
           <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
@@ -1385,6 +1444,27 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EmpSalaryStructure" Relationship="VservAccountingDBModel.FK_EmployeeSalaryDetail_EmployeeSalaryDetail" FromRole="EmployeeSalaryDetail" ToRole="EmpSalaryStructure" />
+        </EntityType>
+        <EntityType Name="EmpSalaryStructure">
+          <Key>
+            <PropertyRef Name="EmpSalaryStructureId" />
+          </Key>
+          <Property Name="EmpSalaryStructureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="CTC" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="MonthlyCabDeductions" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MonthlyProjectIncentive" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MonthlyCarLease" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MonthlyFoodCoupons" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EffectiveTo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EmployeeSalaryDetails" Relationship="VservAccountingDBModel.FK_EmployeeSalaryDetail_EmployeeSalaryDetail" FromRole="EmpSalaryStructure" ToRole="EmployeeSalaryDetail" />
         </EntityType>
         <EntityType Name="EPFNumber">
           <Key>
@@ -1453,6 +1533,20 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Gender" FromRole="Gender" ToRole="Employee" />
           <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Gender" FromRole="Gender" ToRole="EmployeeArchive" />
+        </EntityType>
+        <EntityType Name="LookupFrequency">
+          <Key>
+            <PropertyRef Name="FrequencyId" />
+          </Key>
+          <Property Name="FrequencyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayOrder" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="LookupMonth">
           <Key>
@@ -1872,6 +1966,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmployeeSalaryDetail_EmployeeSalaryDetail">
+          <End Type="VservAccountingDBModel.EmpSalaryStructure" Role="EmpSalaryStructure" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmployeeSalaryDetail" Role="EmployeeSalaryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpSalaryStructure">
+              <PropertyRef Name="EmpSalaryStructureId" />
+            </Principal>
+            <Dependent Role="EmployeeSalaryDetail">
+              <PropertyRef Name="EmpSalaryStructureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Feature_Feature">
           <End Type="VservAccountingDBModel.Feature" Role="Feature" Multiplicity="1" />
           <End Type="VservAccountingDBModel.Feature" Role="Feature1" Multiplicity="0..1" />
@@ -2171,9 +2277,30 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="MonthId" ColumnName="MonthId" />
+                <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
                 <ScalarProperty Name="SalaryComponentId" ColumnName="SalaryComponentId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="EmployeeSalaryDetailId" ColumnName="EmployeeSalaryDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpSalaryStructures">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.EmpSalaryStructure">
+              <MappingFragment StoreEntitySet="EmpSalaryStructure">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="EffectiveTo" ColumnName="EffectiveTo" />
+                <ScalarProperty Name="EffectiveFrom" ColumnName="EffectiveFrom" />
+                <ScalarProperty Name="MonthlyFoodCoupons" ColumnName="MonthlyFoodCoupons" />
+                <ScalarProperty Name="MonthlyCarLease" ColumnName="MonthlyCarLease" />
+                <ScalarProperty Name="MonthlyProjectIncentive" ColumnName="MonthlyProjectIncentive" />
+                <ScalarProperty Name="MonthlyCabDeductions" ColumnName="MonthlyCabDeductions" />
+                <ScalarProperty Name="CTC" ColumnName="CTC" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2242,6 +2369,21 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LookupFrequencies">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.LookupFrequency">
+              <MappingFragment StoreEntitySet="LookupFrequency">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FrequencyId" ColumnName="FrequencyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

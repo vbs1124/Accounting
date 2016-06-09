@@ -60,7 +60,6 @@ namespace Vserv.Accounting.Web
                 .Include("~/Scripts/angular-ui/ui-bootstrap-tpls.js")
                 .Include("~/Scripts/ui-grid.js")
                 .Include("~/Scripts/xeditable.js")
-                .Include("~/Scripts/angular-toastr.tpls.js")
                 .Include("~/Scripts/App/app.js")
                 .IncludeDirectory("~/Scripts/App/", "*.js", true)
                 );
@@ -95,7 +94,6 @@ namespace Vserv.Accounting.Web
             .Include("~/Content/ui-grid.css")
             .Include("~/Content/loading-bar.css")
             .Include("~/Content/xeditable.css")
-            .Include("~/Content/angular-toastr.css")
             );
 
             // **************Section For StyleBundle  END **************

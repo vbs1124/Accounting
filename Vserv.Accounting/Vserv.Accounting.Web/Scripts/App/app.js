@@ -1,20 +1,8 @@
 ﻿(function () {
     'use strict';
 
-    window.app = angular.module('VservAccountingApp', ['angular-loading-bar', 'ngAnimate', 'ui.bootstrap', 'ui.grid', 'xeditable', 'toastr'])
+    window.app = angular.module('VservAccountingApp', ['angular-loading-bar', 'ngAnimate', 'ui.bootstrap', 'ui.grid', 'xeditable'])
                         .config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) { cfpLoadingBarProvider.includeSpinner = false; }])
-                        .config(["toastrConfig", function (toastrConfig) {
-                            angular.extend(toastrConfig, {
-                                autoDismiss: false,
-                                containerId: 'toast-container',
-                                maxOpened: 0,
-                                newestOnTop: true,
-                                positionClass: 'toast-top-right',
-                                preventDuplicates: false,
-                                preventOpenDuplicates: false,
-                                target: 'body'
-                            });
-                        }])
                         .run(function (editableOptions) {
                             editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
                         });
