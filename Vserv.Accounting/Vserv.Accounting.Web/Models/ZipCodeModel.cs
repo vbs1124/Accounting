@@ -68,21 +68,21 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The updated by identifier.
         /// </value>
-        public Nullable<int> UpdatedById { get; set; }
+        public int? UpdatedById { get; set; }
         /// <summary>
         /// Gets or sets the created date.
         /// </summary>
         /// <value>
         /// The created date.
         /// </value>
-        public System.DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         /// <summary>
         /// Gets or sets the updated date.
         /// </summary>
         /// <value>
         /// The updated date.
         /// </value>
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the addresses.

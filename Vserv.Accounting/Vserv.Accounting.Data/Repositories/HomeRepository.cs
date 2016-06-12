@@ -6,7 +6,6 @@ namespace Vserv.Accounting.Data
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="Vserv.Accounting.Data.DataRepositoryBase{Vserv.Accounting.Data.Entity.UserProfile}" />
     /// <seealso cref="Vserv.Accounting.Data.IHomeRepository" />
     [Export(typeof(IHomeRepository))]
     [PartCreationPolicy(CreationPolicy.NonShared)]

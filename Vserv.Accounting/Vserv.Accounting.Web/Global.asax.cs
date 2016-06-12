@@ -1,16 +1,16 @@
-﻿using Microsoft.Practices.Unity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Microsoft.Practices.Unity;
+using Vserv.Accounting.Common;
 using Vserv.Accounting.Web.Code.Unity;
+using Vserv.Common.Bootstrapper;
+using Vserv.Common.Utils;
 
 namespace Vserv.Accounting.Web
 {
-    public class MvcApplication : System.Web.HttpApplication, IUnityContainerAccessor
+    public class MvcApplication : HttpApplication, IUnityContainerAccessor
     {
         #region IUnityContainerAccessor
 
@@ -41,7 +41,7 @@ namespace Vserv.Accounting.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Vserv.Common.Bootstrapper.Log4NetLoader.Initialize(Server.MapPath(Vserv.Common.Utils.ApplicationConfiguration.GetApplicationConfiguration(Vserv.Accounting.Common.CommonConstants.Log4NetConfigKeyName)));
+            Log4NetLoader.Initialize(Server.MapPath(ApplicationConfiguration.GetApplicationConfiguration(CommonConstants.LOG4_NET_CONFIG_KEY_NAME)));
         }
     }
 }

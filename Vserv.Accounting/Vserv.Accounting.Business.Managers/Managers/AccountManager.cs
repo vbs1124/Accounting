@@ -29,8 +29,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _userProfileRepository = _dataRepositoryFactory.GetDataRepository<IUserProfileRepository>();
-                return _userProfileRepository.GetUserProfile(userName);
+                var userProfileRepository = DataRepositoryFactory.GetDataRepository<IUserProfileRepository>();
+                return userProfileRepository.GetUserProfile(userName);
             });
         }
 
@@ -42,8 +42,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                ISecurityQuestionRepository _securityQuestionRepository = _dataRepositoryFactory.GetDataRepository<ISecurityQuestionRepository>();
-                return _securityQuestionRepository.GetSecurityQuestions();
+                ISecurityQuestionRepository securityQuestionRepository = DataRepositoryFactory.GetDataRepository<ISecurityQuestionRepository>();
+                return securityQuestionRepository.GetSecurityQuestions();
             });
         }
 
@@ -51,8 +51,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                ISecurityQuestionRepository _securityQuestionRepository = _dataRepositoryFactory.GetDataRepository<ISecurityQuestionRepository>();
-                return _securityQuestionRepository.IsRegisteredUser(forgotPassword);
+                ISecurityQuestionRepository securityQuestionRepository = DataRepositoryFactory.GetDataRepository<ISecurityQuestionRepository>();
+                return securityQuestionRepository.IsRegisteredUser(forgotPassword);
             });
         }
 
@@ -60,8 +60,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                ISecurityQuestionRepository _securityQuestionRepository = _dataRepositoryFactory.GetDataRepository<ISecurityQuestionRepository>();
-                return _securityQuestionRepository.GetRandomSecurityQuestion(userName);
+                ISecurityQuestionRepository securityQuestionRepository = DataRepositoryFactory.GetDataRepository<ISecurityQuestionRepository>();
+                return securityQuestionRepository.GetRandomSecurityQuestion(userName);
             });
         }
 

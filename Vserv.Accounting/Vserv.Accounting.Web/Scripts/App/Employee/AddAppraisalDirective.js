@@ -1,24 +1,8 @@
 ﻿(function () {
     "use strict";
 
-    window.app.directive('addAppraisal', addAppraisal);
-
-    function addAppraisal() {
-        return {
-            templateUrl: '/employee/template/addAppraisal.tmpl.cshtml',
-            controller: controller,
-            controllerAs: 'vm'
-        }
-    }
-
-    controller.$inject = ['$scope', 'EmployeeService'];
-    function controller($scope, EmployeeService, toastr) {
+    function controller($scope, employeeService) {
         var vm = this;
-        vm.add = add;
-
-        vm.saving = false;
-        vm.salarySummaryModel = {};
-        vm.errorMessage = null;
 
         function add() {
             var monthlyCTC = vm.salarySummaryModel.ctc / 12;
@@ -44,7 +28,7 @@
             }
 
             vm.saving = true;
-            EmployeeService.add(vm.salarySummaryModel, $("#EmployeeId").val()).then(function (resp) {
+            employeeService.add(vm.salarySummaryModel, $("#EmployeeId").val()).then(function (resp) {
                 if (resp.businessException == null) {
                     $.showToastrMessage("success", 'Salary breakup generated successfully.', "Success!");
                     //Close the modal
@@ -55,10 +39,14 @@
                 }
                 vm.saving = false;
             });
-
+            return false;
         }
 
-        //-------------------------
+        vm.add = add;
+
+        vm.saving = false;
+        vm.salarySummaryModel = {};
+        vm.errorMessage = null; //-------------------------
         $scope.today = function () {
             $scope.dt = new Date();
         };
@@ -68,11 +56,35 @@
             $scope.dt = null;
         };
 
+        function getDayClass(data) {
+            var date = data.date,
+                mode = data.mode;
+            if (mode === 'day') {
+                var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+
+                for (var i = 0; i < $scope.events.length; i++) {
+                    var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
+
+                    if (dayToCheck === currentDay) {
+                        return $scope.events[i].status;
+                    }
+                }
+            }
+
+            return "";
+        }
+
         $scope.inlineOptions = {
             customClass: getDayClass,
             minDate: new Date(),
             showWeeks: true
         };
+
+        function disabled(data) {
+            var date = data.date,
+                mode = data.mode;
+            return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+        }
 
         $scope.dateOptions = {
             dateDisabled: disabled,
@@ -83,12 +95,6 @@
         };
 
         // Disable weekend selection
-        function disabled(data) {
-            var date = data.date,
-              mode = data.mode;
-            return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-        }
-
         $scope.toggleMin = function () {
             $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
             $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
@@ -117,33 +123,25 @@
         var afterTomorrow = new Date();
         afterTomorrow.setDate(tomorrow.getDate() + 1);
         $scope.events = [
-          {
-              date: tomorrow,
-              status: 'full'
-          },
-          {
-              date: afterTomorrow,
-              status: 'partially'
-          }
-        ];
-
-        function getDayClass(data) {
-            var date = data.date,
-              mode = data.mode;
-            if (mode === 'day') {
-                var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
-
-                for (var i = 0; i < $scope.events.length; i++) {
-                    var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
-
-                    if (dayToCheck === currentDay) {
-                        return $scope.events[i].status;
-                    }
-                }
+            {
+                date: tomorrow,
+                status: 'full'
+            },
+            {
+                date: afterTomorrow,
+                status: 'partially'
             }
-
-            return '';
-        }
-        //---------------------------
+        ]; //---------------------------
     }
+
+    function addAppraisal() {
+        return {
+            templateUrl: '/employee/template/addAppraisal.tmpl.cshtml',
+            controller: controller,
+            controllerAs: 'vm'
+        }
+    }
+
+    window.app.directive('addAppraisal', addAppraisal);
+    controller.$inject = ['$scope', 'EmployeeService'];
 })();

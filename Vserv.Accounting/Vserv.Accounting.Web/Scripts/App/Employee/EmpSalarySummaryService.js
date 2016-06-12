@@ -1,16 +1,18 @@
 ﻿(function () {
     'use strict';
-    window.app.service('EmpSalarySummaryService', EmpSalarySummaryService);
-    EmpSalarySummaryService.$inject = ['serviceHandler'];
-    function EmpSalarySummaryService(serviceHandler) {
+
+    function empSalarySummaryService(serviceHandler) {
+        function saveEmployeeSalaryDetail(salarySummaryModel) {
+            return serviceHandler.executePostService('/Employee/SaveEmployeeSalaryDetail', salarySummaryModel);
+        }
+
         var svc = {
             saveEmployeeSalaryDetail: saveEmployeeSalaryDetail
         };
 
         return svc;
-
-        function saveEmployeeSalaryDetail(salarySummaryModel) {
-            return serviceHandler.executePostService('/Employee/SaveEmployeeSalaryDetail', salarySummaryModel);
-        }
     }
+
+    window.app.service('EmpSalarySummaryService', empSalarySummaryService);
+    empSalarySummaryService.$inject = ['serviceHandler'];
 })();

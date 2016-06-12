@@ -1,7 +1,7 @@
 ﻿(function() {
-	'use strict';
+	"use strict";
 
-	Object.defineProperty(Array.prototype, 'count', {
+	Object.defineProperty(Array.prototype, "count", {
 		get: function () { return this.length; }
 	});
 

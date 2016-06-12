@@ -1,12 +1,10 @@
 ﻿(function () {
     'use strict';
-    window.app.controller('SecurityQuestionsController', SecurityQuestionsController);
-    SecurityQuestionsController.$inject = ['AccountService'];
 
-    function SecurityQuestionsController(AccountService) {
+    function securityQuestionsController(accountService) {
         var vm = this;
-       // vm.add = add;
-        vm.securityQuestions = AccountService.securityQuestions;
+        // vm.add = add;
+        vm.securityQuestions = accountService.securityQuestions;
 
 
         //function add() {
@@ -15,4 +13,7 @@
         //    });
         //}
     }
+
+    window.app.controller('SecurityQuestionsController', securityQuestionsController);
+    securityQuestionsController.$inject = ['AccountService'];
 })();

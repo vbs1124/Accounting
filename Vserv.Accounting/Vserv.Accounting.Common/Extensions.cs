@@ -9,8 +9,6 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Vserv.Accounting.Common;
 using Vserv.Common.Utils;
 
 #endregion
@@ -101,7 +99,7 @@ namespace Vserv.Accounting.Common
         /// </returns>
         public static DateTime ToDateTimeValue(this DateTime? item)
         {
-            return item.HasValue ? item.Value : DateTime.MinValue;
+            return item ?? DateTime.MinValue;
         }
 
         /// <summary>
@@ -171,7 +169,7 @@ namespace Vserv.Accounting.Common
         /// </returns>
         public static string ToStringValue(this string item)
         {
-            return (item != null) ? item.ToString().Trim() : string.Empty;
+            return (item != null) ? item.Trim() : string.Empty;
         }
 
         /// <summary>
@@ -183,7 +181,7 @@ namespace Vserv.Accounting.Common
         /// </returns>
         public static string ToPascalCase(this string item)
         {
-            System.Globalization.TextInfo ti = new System.Globalization.CultureInfo("en-US", false).TextInfo;
+            TextInfo ti = new CultureInfo("en-US", false).TextInfo;
             return ti.ToTitleCase(item.ToStringValue().ToLower());
         }
 
@@ -349,7 +347,7 @@ namespace Vserv.Accounting.Common
         /// </returns>
         public static bool ToBooleanValue(this object item)
         {
-            return (item != null) ? ToBooleanValue(item.ToStringValue()) : false;
+            return (item != null) && ToBooleanValue(item.ToStringValue());
         }
 
         /// <summary>
@@ -362,15 +360,9 @@ namespace Vserv.Accounting.Common
         public static bool ToBooleanValue(this string item)
         {
             bool x;
-            if (bool.TryParse(item, out x))
-            {
-                return x;
-            }
-            else
-            {
-                return false;
-            }
+            return bool.TryParse(item, out x) && x;
         }
+
         #endregion
 
         #region Guid
@@ -526,20 +518,13 @@ namespace Vserv.Accounting.Common
         public static bool IsInRoles(this IPrincipal user, string roles, char delimiter)
         {
             bool isInRoles = false;
-            string[] roleArray;
 
-            if (!String.IsNullOrEmpty(roles))
+            if (String.IsNullOrEmpty(roles)) return false;
+            var roleArray = roles.Split(separator: new[] { delimiter }, options: StringSplitOptions.RemoveEmptyEntries);
+
+            if (roleArray.Any(user.IsInRole))
             {
-                roleArray = roles.Split(new char[] { delimiter }, StringSplitOptions.RemoveEmptyEntries);
-
-                foreach (string role in roleArray)
-                {
-                    if (user.IsInRole(role))
-                    {
-                        isInRoles = true;
-                        break;
-                    }
-                }
+                isInRoles = true;
             }
 
             return isInRoles;
@@ -757,8 +742,8 @@ namespace Vserv.Accounting.Common
             String description;
 
             return EnumHelper<T>.ValueToDescriptionMap.TryGetValue(item, out description)
-                      ? (description ?? item.ToString())
-                      : item.ToString();
+                      ? (description ?? item.ToString(CultureInfo.InvariantCulture))
+                      : item.ToString(CultureInfo.InvariantCulture);
         }
 
         /// <summary>

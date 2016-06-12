@@ -1,17 +1,8 @@
 ﻿(function () {
-    'use strict';
-    window.app.factory('AccountService', AccountService);
-    AccountService.$inject = ['serviceHandler'];
+    "use strict";
 
-    function AccountService(serviceHandler) {
+    function accountService(serviceHandler) {
         var securityQuestions = [];
-        loadsecurityQuestions();
-
-        var svc = {
-            securityQuestions: securityQuestions,
-        };
-
-        return svc;
 
         function loadsecurityQuestions() {
             serviceHandler.executePostService('/Account/GetSecurityQuestions').then(function (resp) {
@@ -23,5 +14,16 @@
                 }
             });
         }
+
+        loadsecurityQuestions();
+
+        var svc = {
+            securityQuestions: securityQuestions
+        };
+
+        return svc;
     }
+
+    window.app.factory("AccountService", accountService);
+    accountService.$inject = ["serviceHandler"];
 })();

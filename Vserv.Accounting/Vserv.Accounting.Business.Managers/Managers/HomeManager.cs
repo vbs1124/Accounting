@@ -23,8 +23,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetEmployeeCount();
+                var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return employeeRepository.GetEmployeeCount();
             });
         }
 
@@ -37,8 +37,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                IFeatureRepository _featureRepository = _dataRepositoryFactory.GetDataRepository<IFeatureRepository>();
-                return _featureRepository.GetFeatures(excludeInactiveFeatures);
+                IFeatureRepository featureRepository = DataRepositoryFactory.GetDataRepository<IFeatureRepository>();
+                return featureRepository.GetFeatures(excludeInactiveFeatures);
             });
 
         }

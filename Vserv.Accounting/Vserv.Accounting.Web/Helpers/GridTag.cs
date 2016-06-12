@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.UI;
-using Vserv.Accounting.Web.Code.Utilities;
 using HtmlTags;
+using Vserv.Accounting.Web.Code.Utilities;
 
 namespace Vserv.Accounting.Web.Helpers
 {
@@ -66,7 +66,7 @@ namespace Vserv.Accounting.Web.Helpers
 		protected override void writeHtml(HtmlTextWriter html)
 		{
 			if (_columns.Any())
-				this.Attr("columns", _columns.ToArray().ToJson(includeNull: false));
+				Attr("columns", _columns.ToArray().ToJson(includeNull: false));
 
 			base.writeHtml(html);
 		}

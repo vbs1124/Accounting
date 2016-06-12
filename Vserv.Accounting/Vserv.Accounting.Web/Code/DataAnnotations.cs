@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System;
-using Vserv.Accounting.Business.Managers;
-using Vserv.Accounting.Web.Models;
-using System.Linq;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
+using Vserv.Accounting.Business.Managers;
 using Vserv.Accounting.Data.Entity;
+using Vserv.Accounting.Web.Models;
 
 namespace Vserv.Accounting.Web.Code
 {
@@ -55,7 +55,7 @@ namespace Vserv.Accounting.Web.Code
                 if (VBS_Id.StartsWith("vbs"))
                 {
                     EmployeeManager employeeManager = new EmployeeManager();
-                    Boolean isexists = employeeManager.IsEmployeeIdAlreadyRegistered(VBS_Id, ((Vserv.Accounting.Web.Models.EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
+                    Boolean isexists = employeeManager.IsEmployeeIdAlreadyRegistered(VBS_Id, ((EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
 
                     if (isexists)
                     {
@@ -95,7 +95,7 @@ namespace Vserv.Accounting.Web.Code
             {
                 string emailAddress = value.ToString();
                 EmployeeManager employeeManager = new EmployeeManager();
-                Boolean isexists = employeeManager.IsEmailAlreadyRegistered(emailAddress, ((Vserv.Accounting.Web.Models.EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
+                Boolean isexists = employeeManager.IsEmailAlreadyRegistered(emailAddress, ((EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
 
                 if (isexists)
                 {
@@ -127,7 +127,7 @@ namespace Vserv.Accounting.Web.Code
             {
                 string mobileNumber = value.ToString();
                 EmployeeManager employeeManager = new EmployeeManager();
-                Boolean isexists = employeeManager.IsMobileNumberAlreadyRegistered(mobileNumber, ((Vserv.Accounting.Web.Models.EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
+                Boolean isexists = employeeManager.IsMobileNumberAlreadyRegistered(mobileNumber, ((EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
 
                 if (isexists)
                 {
@@ -159,7 +159,7 @@ namespace Vserv.Accounting.Web.Code
             {
                 string designationName = value.ToString();
                 EmployeeManager employeeManager = new EmployeeManager();
-                Boolean isexists = employeeManager.IsDesignationExists(designationName, ((Vserv.Accounting.Web.Models.DesignationModel)(validationContext.ObjectInstance)).DesignationId);
+                Boolean isexists = employeeManager.IsDesignationExists(designationName, ((DesignationModel)(validationContext.ObjectInstance)).DesignationId);
 
                 if (isexists)
                 {

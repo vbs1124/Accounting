@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Security.Cryptography;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web;
 
 namespace Vserv.Common.Utils
 {
@@ -37,13 +36,13 @@ namespace Vserv.Common.Utils
 
         // Change the following keys to ensure uniqueness
         // Must be 8 bytes
-        protected Byte[] _keyBytes = { 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18 };
+        protected Byte[] KeyBytes = { 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18 };
 
         // Must be at least 8 characters
-        protected String _keyString = "ABC12345";
+        protected String KeyString = "ABC12345";
 
         // Name for checksum value (unlikely to be used as arguments by user)
-        protected String _checksumKey = "__$$";
+        protected String ChecksumKey = "__$$";
 
         #endregion
 
@@ -73,13 +72,13 @@ namespace Vserv.Common.Utils
                     String key = arg.Substring(0, counter);
                     String value = arg.Substring(counter + 1);
 
-                    if (key.Equals(_checksumKey))
+                    if (key.Equals(ChecksumKey))
                     {
                         checksum = value;
                     }
                     else
                     {
-                        Add(HttpUtility.UrlDecode(key), HttpUtility.UrlDecode(value));
+                        Add(key: HttpUtility.UrlDecode(key), value: HttpUtility.UrlDecode(value));
                     }
                 }
             }
@@ -117,7 +116,7 @@ namespace Vserv.Common.Utils
                 content.Append('&');
             }
 
-            content.AppendFormat("{0}={1}", _checksumKey, ComputeChecksum());
+            content.AppendFormat("{0}={1}", ChecksumKey, ComputeChecksum());
             return Encrypt(content.ToString());
         }
 
@@ -134,12 +133,12 @@ namespace Vserv.Common.Utils
         {
             try
             {
-                Byte[] keyData = Encoding.UTF8.GetBytes(_keyString.Substring(0, 8));
+                Byte[] keyData = Encoding.UTF8.GetBytes(KeyString.Substring(0, 8));
                 DESCryptoServiceProvider des = new DESCryptoServiceProvider();
                 Byte[] textData = Encoding.UTF8.GetBytes(text);
                 MemoryStream ms = new MemoryStream();
                 CryptoStream cs = new CryptoStream(ms,
-                  des.CreateEncryptor(keyData, _keyBytes), CryptoStreamMode.Write);
+                  des.CreateEncryptor(keyData, KeyBytes), CryptoStreamMode.Write);
                 cs.Write(textData, 0, textData.Length);
                 cs.FlushFinalBlock();
 
@@ -160,12 +159,12 @@ namespace Vserv.Common.Utils
         {
             try
             {
-                Byte[] keyData = Encoding.UTF8.GetBytes(_keyString.Substring(0, 8));
+                Byte[] keyData = Encoding.UTF8.GetBytes(KeyString.Substring(0, 8));
                 DESCryptoServiceProvider des = new DESCryptoServiceProvider();
                 Byte[] textData = GetBytes(text);
                 MemoryStream ms = new MemoryStream();
                 CryptoStream cs = new CryptoStream(ms,
-                  des.CreateDecryptor(keyData, _keyBytes), CryptoStreamMode.Write);
+                  des.CreateDecryptor(keyData, KeyBytes), CryptoStreamMode.Write);
                 cs.Write(textData, 0, textData.Length);
                 cs.FlushFinalBlock();
 

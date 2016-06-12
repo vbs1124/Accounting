@@ -1,51 +1,51 @@
 ﻿(function () {
-	'use strict';
+	"use strict";
 
-	window.app.directive('formGroupValidation', formGroupValidation);
+    function controller($scope) {
+        var vm = this;
 
-	function formGroupValidation() {
-		return {
-			require: '^form',
-			replace: true,
-			transclude: true,
-			template:
-				'<div class="has-feedback" ng-class="vm.getValidationClass()">' +
-					'<ng-transclude></ng-transclude>' +
-					'<input-validation-icons field="vm.field"></input-validation-icons>' +
-				'</div>',
-			scope: {
-				field: '@formGroupValidation'
-			},
-			controller: controller,
-			controllerAs: 'vm',
-			link: function (scope, element, attrs, formCtrl) {
-				scope.form = formCtrl;
-			}
-		}
-	}
+        vm.field = $scope.field;
 
-	controller.$inject = ['$scope'];
-	function controller($scope) {
-		var vm = this;
+        function canBeValidated() {
+            return ($scope.form[vm.field].$touched || $scope.form.$submitted);
+        }
 
-		vm.field = $scope.field;
-		vm.getValidationClass = getValidationClass;
+        function isValid() {
+            return $scope.form[vm.field].$valid;
+        }
 
-		function getValidationClass() {
-			if (!canBeValidated()) return '';
+        function getValidationClass() {
+            if (!canBeValidated()) return "";
 
-			if (isValid()) return 'has-success';
+            if (isValid()) return "has-success";
 
-			return 'has-error';
-		}
+            return "has-error";
+        }
 
-		function canBeValidated() {
-			return ($scope.form[vm.field].$touched || $scope.form.$submitted);
-		}
+        vm.getValidationClass = getValidationClass;
+    }
 
-		function isValid() {
-			return $scope.form[vm.field].$valid;
-		}
-	}
+    function formGroupValidation() {
+        return {
+            require: "^form",
+            replace: true,
+            transclude: true,
+            template:
+                "<div class=\"has-feedback\" ng-class=\"vm.getValidationClass()\">" +
+                    "<ng-transclude></ng-transclude>" +
+                    "<input-validation-icons field=\"vm.field\"></input-validation-icons>" +
+                    "</div>",
+            scope: {
+                field: "@formGroupValidation"
+            },
+            controller: controller,
+            controllerAs: "vm",
+            link: function (scope, element, attrs, formCtrl) {
+                scope.form = formCtrl;
+            }
+        }
+    }
 
+    window.app.directive("formGroupValidation", formGroupValidation);
+    controller.$inject = ["$scope"];
 })();

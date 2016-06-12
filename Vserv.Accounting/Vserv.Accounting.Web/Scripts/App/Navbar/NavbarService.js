@@ -1,17 +1,8 @@
 ﻿(function () {
     'use strict';
-    window.app.factory('NavbarService', NavbarService);
-    NavbarService.$inject = ['serviceHandler'];
 
-    function NavbarService(serviceHandler) {
+    function navbarService(serviceHandler) {
         var features = [];
-        loadFeatures();
-
-        var svc = {
-            features: features,
-        };
-
-        return svc;
 
         function loadFeatures() {
             serviceHandler.executePostService('/Navbar/GetFeatures').then(function (resp) {
@@ -23,5 +14,16 @@
                 }
             });
         }
+
+        loadFeatures();
+
+        var svc = {
+            features: features
+        };
+
+        return svc;
     }
+
+    window.app.factory('NavbarService', navbarService);
+    navbarService.$inject = ['serviceHandler'];
 })();

@@ -20,14 +20,14 @@ namespace Vserv.Common.Data
         /// <summary>
         /// The _logger
         /// </summary>
-        protected ILogger _logger = new Logger();
+        protected ILogger Logger = new Logger();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataRepositoryBase{TEntity, TContext}"/> class.
         /// </summary>
         protected DataRepositoryBase()
         {
-            _logger.LoggerType = this.GetType();
+            Logger.LoggerType = GetType();
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Vserv.Common.Data
         /// <param name="includeProperties">The include properties.</param>
         /// <param name="count">The count.</param>
         /// <returns></returns>
-        protected abstract IEnumerable<TEntity> GetPagedEntity(TContext entityContext, int skip, int take, Expression<System.Func<TEntity, bool>> filter, System.Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties, out int count);
+        protected abstract IEnumerable<TEntity> GetPagedEntity(TContext entityContext, int skip, int take, Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties, out int count);
 
         /// <summary>
         /// Gets the paged entity.
@@ -86,7 +86,7 @@ namespace Vserv.Common.Data
         /// <param name="includeProperties">The include properties.</param>
         /// <param name="count">The count.</param>
         /// <returns></returns>
-        protected abstract IEnumerable<TEntity> GetPagedEntity(TContext entityContext, int skip, int take, Expression<System.Func<TEntity, bool>> filter, string orderBy, string includeProperties, out int count);
+        protected abstract IEnumerable<TEntity> GetPagedEntity(TContext entityContext, int skip, int take, Expression<Func<TEntity, bool>> filter, string orderBy, string includeProperties, out int count);
 
         /// <summary>
         /// Gets the filtered entities.
@@ -133,7 +133,7 @@ namespace Vserv.Common.Data
         {
             using (var entityContext = new TContext())
             {
-                entityContext.Entry<TEntity>(entity).State = EntityState.Deleted;
+                entityContext.Entry(entity).State = EntityState.Deleted;
                 entityContext.SaveChanges();
             }
         }
@@ -149,7 +149,7 @@ namespace Vserv.Common.Data
                 var entity = GetEntity(entityContext, id);
                 if (entity != null)
                 {
-                    entityContext.Entry<TEntity>(entity).State = EntityState.Deleted;
+                    entityContext.Entry(entity).State = EntityState.Deleted;
                     entityContext.SaveChanges();
                 }
             }
@@ -201,7 +201,7 @@ namespace Vserv.Common.Data
         /// <param name="includeProperties">The include properties.</param>
         /// <param name="count">The count.</param>
         /// <returns></returns>
-        public IEnumerable<TEntity> GetPaged(int skip, int take, Expression<System.Func<TEntity, bool>> filter, System.Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties, out int count)
+        public IEnumerable<TEntity> GetPaged(int skip, int take, Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties, out int count)
         {
 
             using (var entityContext = new TContext())
@@ -220,7 +220,7 @@ namespace Vserv.Common.Data
         /// <param name="includeProperties">The include properties.</param>
         /// <param name="count">The count.</param>
         /// <returns></returns>
-        public IEnumerable<TEntity> GetPaged(int skip, int take, Expression<System.Func<TEntity, bool>> filter, string orderBy, string includeProperties, out int count)
+        public IEnumerable<TEntity> GetPaged(int skip, int take, Expression<Func<TEntity, bool>> filter, string orderBy, string includeProperties, out int count)
         {
 
             using (var entityContext = new TContext())

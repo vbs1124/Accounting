@@ -1,7 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using Vserv.Accounting.Web;
 
-[assembly: OwinStartupAttribute(typeof(Vserv.Accounting.Web.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 namespace Vserv.Accounting.Web
 {
     public partial class Startup

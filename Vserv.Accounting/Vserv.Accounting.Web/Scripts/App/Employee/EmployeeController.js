@@ -1,17 +1,20 @@
 ﻿(function () {
     'use strict';
-    window.app.controller('EmployeeController', EmployeeController);
 
-    EmployeeController.$inject = ['$uibModal', 'EmployeeService'];
-    function EmployeeController($modal, EmployeeService) {
+    function employeeController($modal, employeeService) {
         var vm = this;
-        vm.add = add;
-        vm.salarySummaryModel = EmployeeService.salarySummaryModel;
 
         function add() {
             $modal.open({
                 template: '<add-appraisal />'
             });
         }
+
+        vm.add = add;
+        vm.salarySummaryModel = employeeService.salarySummaryModel;
     }
+
+    window.app.controller('EmployeeController', employeeController);
+
+    employeeController.$inject = ['$uibModal', 'EmployeeService'];
 })();

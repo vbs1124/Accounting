@@ -286,7 +286,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MonthlySalaryBreakupModel.cs" />
-    <Compile Include="Models\Navbar.cs" />
     <Compile Include="Models\PaySheetParameter.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\RoleModel.cs" />

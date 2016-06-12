@@ -8,7 +8,7 @@ namespace Vserv.Accounting.Common
         /// <summary>
         /// The log4 net configuration key name
         /// </summary>
-        public const string Log4NetConfigKeyName = "log4NetConfig";
+        public const string LOG4_NET_CONFIG_KEY_NAME = "log4NetConfig";
 
         /// <summary>
         /// Value is numeric 1.

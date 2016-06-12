@@ -1,10 +1,6 @@
-﻿using Heroic.AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
+using Heroic.AutoMapper;
 using Vserv.Accounting.Data.Entity;
-using System.ComponentModel.DataAnnotations;
 
 namespace Vserv.Accounting.Web.Models
 {

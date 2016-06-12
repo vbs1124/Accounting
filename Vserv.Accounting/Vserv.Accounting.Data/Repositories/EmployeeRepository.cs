@@ -4,9 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Common;
-using System.Data.Entity.Core.Objects;
+using Vserv.Accounting.Data.Entity;
 
 #endregion
 
@@ -15,7 +14,7 @@ namespace Vserv.Accounting.Data
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="Vserv.Accounting.Data.DataRepositoryBase{Vserv.Accounting.Data.Entity.Employee}" />
+    /// <seealso></seealso>
     /// <seealso cref="Vserv.Accounting.Data.IEmployeeRepository" />
     [Export(typeof(IEmployeeRepository))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
@@ -64,10 +63,8 @@ namespace Vserv.Accounting.Data
         /// <returns></returns>
         public Employee GetEmployee(int employeeId)
         {
-
             using (var context = new VservAccountingDBEntities())
             {
-                Employee aaa = new Employee();
                 var result = context.Employees.AsNoTracking()
                     .Include("Designation")
                     .Include("OfficeBranch")
@@ -83,21 +80,12 @@ namespace Vserv.Accounting.Data
         /// <returns></returns>
         public Employee AddEmployee(Employee employee)
         {
-            try
+            using (var context = new VservAccountingDBEntities())
             {
-                using (var context = new VservAccountingDBEntities())
-                {
-                    context.Employees.Add(employee);
-                    context.SaveChanges();
-                    return employee;
-                }
+                context.Employees.Add(employee);
+                context.SaveChanges();
+                return employee;
             }
-            catch
-            {
-
-                throw;
-            }
-
         }
 
         /// <summary>
@@ -195,6 +183,7 @@ namespace Vserv.Accounting.Data
         /// Archive Employee information to maintain audit trail.
         /// </summary>
         /// <param name="employeeId"></param>
+        /// <param name="updatedByUserName"></param>
         public void ArchiveEmployee(int employeeId, string updatedByUserName)
         {
             using (var context = new VservAccountingDBEntities())
@@ -249,96 +238,8 @@ namespace Vserv.Accounting.Data
             return compareEmployeeModel;
         }
 
-        private void SetModifiedColumnCount(CompareEmployeeModel compareEmployeeModel)
+        public List<GetEmployeeSalaryDetail_Result> GetYearlyPaySheet(int? employeeId, int? financialYearFrom, int? financialYearTo)
         {
-            int modifiedColumnCount = 0;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.FirstName.Equals(compareEmployeeModel.PreviousEmployeeInfo.FirstName))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.MiddleName.Equals(compareEmployeeModel.PreviousEmployeeInfo.MiddleName))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.LastName.Equals(compareEmployeeModel.PreviousEmployeeInfo.LastName))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.FatherName.Equals(compareEmployeeModel.PreviousEmployeeInfo.FatherName))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.MotherName.Equals(compareEmployeeModel.PreviousEmployeeInfo.MotherName))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.PermanentAccountNumber.Equals(compareEmployeeModel.PreviousEmployeeInfo.PermanentAccountNumber))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.UniversalAccountNumber.Equals(compareEmployeeModel.PreviousEmployeeInfo.UniversalAccountNumber))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.EPFNumber.Equals(compareEmployeeModel.PreviousEmployeeInfo.EPFNumber))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.AADHAARNumber.Equals(compareEmployeeModel.PreviousEmployeeInfo.AADHAARNumber))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.ESINumber.Equals(compareEmployeeModel.PreviousEmployeeInfo.ESINumber))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.MobileNumber.Equals(compareEmployeeModel.PreviousEmployeeInfo.MobileNumber))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.OfficialEmailAddress.Equals(compareEmployeeModel.PreviousEmployeeInfo.OfficialEmailAddress))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.PersonalEmailAddress.Equals(compareEmployeeModel.PreviousEmployeeInfo.PersonalEmailAddress))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.BirthDay.Equals(compareEmployeeModel.PreviousEmployeeInfo.BirthDay))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.JoiningDate.Equals(compareEmployeeModel.PreviousEmployeeInfo.JoiningDate))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.RelievingDate.Equals(compareEmployeeModel.PreviousEmployeeInfo.RelievingDate))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.ResignationDate.Equals(compareEmployeeModel.PreviousEmployeeInfo.ResignationDate))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.VBS_Id.Equals(compareEmployeeModel.PreviousEmployeeInfo.VBS_Id))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.DesignationId.Equals(compareEmployeeModel.PreviousEmployeeInfo.DesignationId))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.SalutationId.Equals(compareEmployeeModel.PreviousEmployeeInfo.SalutationId))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.GenderId.Equals(compareEmployeeModel.PreviousEmployeeInfo.GenderId))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.OfficeBranchId.Equals(compareEmployeeModel.PreviousEmployeeInfo.OfficeBranchId))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.PermanentAddress1.Equals(compareEmployeeModel.PreviousEmployeeInfo.PermanentAddress1))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.PermanentAddress2.Equals(compareEmployeeModel.PreviousEmployeeInfo.PermanentAddress2))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.PermanentCity.Equals(compareEmployeeModel.PreviousEmployeeInfo.PermanentCity))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.PermanentZipCode.Equals(compareEmployeeModel.PreviousEmployeeInfo.PermanentZipCode))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.PermanentStateId.Equals(compareEmployeeModel.PreviousEmployeeInfo.PermanentStateId))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.PermanentCountryId.Equals(compareEmployeeModel.PreviousEmployeeInfo.PermanentCountryId))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.MailingAddress1.Equals(compareEmployeeModel.PreviousEmployeeInfo.MailingAddress1))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.MailingAddress2.Equals(compareEmployeeModel.PreviousEmployeeInfo.MailingAddress2))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.MailingCity.Equals(compareEmployeeModel.PreviousEmployeeInfo.MailingCity))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.MailingZipCode.Equals(compareEmployeeModel.PreviousEmployeeInfo.MailingZipCode))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.MailingStateId.Equals(compareEmployeeModel.PreviousEmployeeInfo.MailingStateId))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.MailingCountryId.Equals(compareEmployeeModel.PreviousEmployeeInfo.MailingCountryId))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.IsMetro.Equals(compareEmployeeModel.PreviousEmployeeInfo.IsMetro))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.BankAccountNumber.Equals(compareEmployeeModel.PreviousEmployeeInfo.BankAccountNumber))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.BankId.Equals(compareEmployeeModel.PreviousEmployeeInfo.BankId))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.BankIFSCCode.Equals(compareEmployeeModel.PreviousEmployeeInfo.BankIFSCCode))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.BankMICRCode.Equals(compareEmployeeModel.PreviousEmployeeInfo.BankMICRCode))
-                modifiedColumnCount++;
-            if (!compareEmployeeModel.CurrentEmployeeInfo.IsActive.Equals(compareEmployeeModel.PreviousEmployeeInfo.IsActive))
-                modifiedColumnCount++;
-
-            compareEmployeeModel.ModifiedColumnCount = modifiedColumnCount;
-        }
-
-        public List<GetEmployeeSalaryDetail_Result> GetYearlyPaySheet(Nullable<int> employeeId, Nullable<int> financialYearFrom, Nullable<int> financialYearTo)
-        {
-            CompareEmployeeModel compareEmployeeModel = new CompareEmployeeModel();
             using (var context = new VservAccountingDBEntities())
             {
                 return context.GetEmployeeSalaryDetail(employeeId, financialYearFrom, financialYearTo).ToList();

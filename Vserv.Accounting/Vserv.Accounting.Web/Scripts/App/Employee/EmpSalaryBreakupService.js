@@ -1,9 +1,13 @@
 ﻿(function () {
     'use strict';
-    window.app.service('EmpSalaryBreakupService', EmpSalaryBreakupService);
-    EmpSalaryBreakupService.$inject = ['serviceHandler'];
-    function EmpSalaryBreakupService(serviceHandler) {
+
+    function empSalaryBreakupService(serviceHandler) {
         var salaryBreakups = [];
+
+        function getYearlyPaySheet(paySheetParameter) {
+            return serviceHandler.executePostService('/Employee/GetYearlyPaySheet', paySheetParameter);
+        }
+
         var svc = {
             //add: add,
             //update: update,
@@ -12,9 +16,8 @@
         };
 
         return svc;
-
-        function getYearlyPaySheet(paySheetParameter) {
-            return serviceHandler.executePostService('/Employee/GetYearlyPaySheet', paySheetParameter);
-        }
     }
+
+    window.app.service('EmpSalaryBreakupService', empSalaryBreakupService);
+    empSalaryBreakupService.$inject = ['serviceHandler'];
 })();

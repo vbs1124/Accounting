@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
+using log4net.Config;
 
 namespace Vserv.Common.Bootstrapper
 {
@@ -16,7 +13,7 @@ namespace Vserv.Common.Bootstrapper
         /// </summary>
         public static void Initialize()
         {
-            log4net.Config.XmlConfigurator.Configure();
+            XmlConfigurator.Configure();
         }
 
         /// <summary>
@@ -25,7 +22,7 @@ namespace Vserv.Common.Bootstrapper
         /// <param name="xmlConfigPath">The XML configuration path.</param>
         public static void Initialize(string xmlConfigPath)
         {
-            log4net.Config.XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(xmlConfigPath));
+            XmlConfigurator.ConfigureAndWatch(new FileInfo(xmlConfigPath));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Vserv.Accounting.Core.Services
         /// <summary>
         /// The _SMTP client
         /// </summary>
-        private SmtpClient _smtpClient;
+        private readonly SmtpClient _smtpClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EmailService"/> class.
@@ -29,7 +29,7 @@ namespace Vserv.Accounting.Core.Services
         /// <param name="smtpClient">The SMTP client.</param>
         public EmailService(SmtpClient smtpClient)
         {
-            this._smtpClient = smtpClient;
+            _smtpClient = smtpClient;
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Vserv.Accounting.Core.Services
 
             // emailAddress may contain a list of email addresses. For example: "user1@mail.com, user2@mail.com"
             // so.. let's split them into an array
-            var emailAddresses = emailAddress.Split(new char[] { ',', ';' })
+            var emailAddresses = emailAddress.Split(',', ';')
                 .Where(x => !String.IsNullOrWhiteSpace(x))
                 .Select(x => x.Trim()).ToArray();
 
@@ -127,10 +127,12 @@ namespace Vserv.Accounting.Core.Services
             {
                 var httpResponse = new HttpResponse(stringWriter);
                 var newHttpContext = new HttpContext(new HttpRequest("/", sendEmailModel.WebsiteURL, ""), httpResponse) { User = new GenericPrincipal(new GenericIdentity(""), null) };
-                var controllerContext = new ControllerContext();
-                controllerContext.HttpContext = new HttpContextWrapper(newHttpContext);
-                controllerContext.RequestContext = new RequestContext(new HttpContextWrapper(newHttpContext),
-                                                                      new RouteData());
+                var controllerContext = new ControllerContext
+                {
+                    HttpContext = new HttpContextWrapper(newHttpContext),
+                    RequestContext = new RequestContext(new HttpContextWrapper(newHttpContext),
+                        new RouteData())
+                };
                 controllerContext.RouteData.Values.Add("controller", "foo");
 
                 ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(controllerContext,

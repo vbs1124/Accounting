@@ -1,8 +1,8 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Linq;
+using log4net;
 using Vserv.Common.Contracts;
 using Vserv.Common.Contracts.Enums;
 
@@ -38,34 +38,32 @@ namespace Vserv.Common
         /// <summary>
         /// Logs a string message
         /// </summary>
-        /// <param name="level"><see cref="MCCA.MMS.Core.Enums.LogLevel"/></param>
+        /// <param name="level"><see /></param>
         /// <param name="message">Message to log</param>
         public Guid Log(LogLevel level, String message)
         {
-            return this.Log(level, null, message);
+            return Log(level, null, message);
         }
 
         /// <summary>
         /// Logs an exception object
         /// </summary>
-        /// <param name="level"><see cref="MCCA.MMS.Core.Enums.LogLevel"/></param>
-        /// <param name="exception"><see cref="System.Exception"/></param>
+        /// <see cref="System.Exception"/>
         public Guid Log(LogLevel level, Exception exception)
         {
-            return this.Log(level, exception, null);
+            return Log(level, exception, null);
         }
 
         /// <summary>
         /// Logs an exception with an extra message
         /// </summary>
-        /// <param name="level"><see cref="MCCA.MMS.Core.Enums.LogLevel"/></param>
+        /// <param name="level"></param>
         /// <param name="exception"><see cref="System.Exception"/></param>
         /// <param name="message">Message to log</param>
         public Guid Log(LogLevel level, Exception exception, String message)
         {
-            this.GetLoggerInstance();
+            GetLoggerInstance();
             Guid logId = Guid.Empty;
-            string idMessage = string.Empty;
             switch (level)
             {
                 case LogLevel.Error:
@@ -82,10 +80,7 @@ namespace Vserv.Common
                     break;
             }
 
-            if (logId != Guid.Empty)
-                idMessage = string.Format("MessageId:{0} Message: {1}", logId.ToString(), message);
-            else
-                idMessage = message;
+            var idMessage = logId != Guid.Empty ? string.Format("MessageId:{0} Message: {1}", logId, message) : message;
             if (idMessage != null)
             {
                 if (idMessage.Length > 2000)

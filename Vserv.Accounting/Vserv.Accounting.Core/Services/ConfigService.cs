@@ -21,7 +21,7 @@ namespace Vserv.Accounting.Core.Services
         /// <param name="databaseContext">The database context.</param>
         public ConfigService(IDatabaseContext databaseContext)
         {
-            this._databaseContext = databaseContext;
+            _databaseContext = databaseContext;
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Vserv.Accounting.Core.Services
         /// <returns></returns>
         string IConfigService.GetValue(ConfigName name)
         {
-            var config = this._databaseContext.Configs.FirstOrDefault(x => x.Key.Equals(name.ToString()));
+            var config = _databaseContext.Configs.FirstOrDefault(x => x.Key.Equals(name.ToString()));
             if (config != null)
             {
                 return config.Value;
@@ -47,7 +47,7 @@ namespace Vserv.Accounting.Core.Services
         IDictionary<string, string> IConfigService.GetValues(ConfigName[] configNames)
         {
             var names = configNames.Select(x => x.ToString());
-            var configs = this._databaseContext.Configs.Where(x => names.Contains(x.Key));
+            var configs = _databaseContext.Configs.Where(x => names.Contains(x.Key));
 
             return configs.ToDictionary(x => x.Key, x => x.Value);
         }

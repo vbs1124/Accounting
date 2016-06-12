@@ -1,13 +1,3 @@
-USE [VservAccountingDB]
-GO
-
-/****** Object:  StoredProcedure [dbo].[InsertInfoLog]    Script Date: 08-06-2016 12:18:36 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 CREATE PROCEDURE [dbo].[InsertInfoLog]
 	(
 	@appdomain	VARCHAR(256),		

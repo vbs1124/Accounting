@@ -1,10 +1,11 @@
-using Heroic.Web.IoC;
 using System.Web.Http;
 using System.Web.Mvc;
-using StructureMap;
+using Heroic.Web.IoC;
 using StructureMap.Graph;
+using Vserv.Accounting.Web;
+using WebActivatorEx;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Vserv.Accounting.Web.StructureMapConfig), "Configure")]
+[assembly: PreApplicationStartMethod(typeof(StructureMapConfig), "Configure")]
 namespace Vserv.Accounting.Web
 {
 	public static class StructureMapConfig

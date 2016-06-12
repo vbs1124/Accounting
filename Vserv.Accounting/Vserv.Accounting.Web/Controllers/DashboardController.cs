@@ -1,8 +1,9 @@
 ﻿#region Namespaces
+
 using System.Web.Mvc;
 using Vserv.Accounting.Business.Managers;
-using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Web.Models;
+
 #endregion
 
 namespace Vserv.Accounting.Web.Controllers
@@ -14,11 +15,11 @@ namespace Vserv.Accounting.Web.Controllers
     [Authorize]
     public class DashboardController : ViewControllerBase
     {
-        public HomeManager _homeManager;
+        public HomeManager HomeManager;
 
         public DashboardController()
         {
-            _homeManager = new HomeManager();
+            HomeManager = new HomeManager();
         }
 
         #region Action Methods
@@ -30,8 +31,7 @@ namespace Vserv.Accounting.Web.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            DashboardModel dashboardModel = new DashboardModel();
-            dashboardModel.EmployeeCount = _homeManager.GetEmployeeCount();
+            DashboardModel dashboardModel = new DashboardModel {EmployeeCount = HomeManager.GetEmployeeCount()};
             return View(dashboardModel);
         }
         #endregion

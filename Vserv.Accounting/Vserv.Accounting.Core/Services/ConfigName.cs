@@ -10,7 +10,7 @@ namespace Vserv.Accounting.Core.Services
         /// <summary>
         /// The name
         /// </summary>
-        private readonly String name;
+        private readonly String _name;
 
         /// <summary>
         /// The website URL name
@@ -31,7 +31,7 @@ namespace Vserv.Accounting.Core.Services
         /// <param name="name">The name.</param>
         private ConfigName(String name)
         {
-            this.name = name;
+            _name = name;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Vserv.Accounting.Core.Services
         /// </returns>
         public override String ToString()
         {
-            return name;
+            return _name;
         }
     }
 }

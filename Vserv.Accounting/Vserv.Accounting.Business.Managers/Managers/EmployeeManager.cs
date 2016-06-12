@@ -2,13 +2,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Vserv.Accounting.Common;
 using Vserv.Accounting.Common.Enums;
 using Vserv.Accounting.Data;
 using Vserv.Accounting.Data.Entity;
-using Vserv.Accounting.Data.Entity.Models;
 using Vserv.Common.Contracts;
-using System.Linq;
 
 #endregion
 
@@ -40,7 +39,7 @@ namespace Vserv.Accounting.Business.Managers
         /// <param name="dataRepositoryFactory">The data repository factory.</param>
         public EmployeeManager(IDataRepositoryFactory dataRepositoryFactory)
         {
-            _dataRepositoryFactory = dataRepositoryFactory;
+            DataRepositoryFactory = dataRepositoryFactory;
         }
 
         #endregion Constructor
@@ -55,8 +54,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetEmployees(employeeFilter);
+                var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return employeeRepository.GetEmployees(employeeFilter);
             });
         }
 
@@ -69,8 +68,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetEmployee(employeeId);
+                var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return employeeRepository.GetEmployee(employeeId);
             });
         }
 
@@ -82,8 +81,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             ExecuteFaultHandledOperation(() =>
           {
-              var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-              _employeeRepository.DeleteEmployee(employeeId);
+              var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+              employeeRepository.DeleteEmployee(employeeId);
           });
         }
 
@@ -96,8 +95,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.AddEmployee(employee);
+                var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return employeeRepository.AddEmployee(employee);
             });
         }
 
@@ -110,8 +109,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.EditEmployee(employee);
+                var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return employeeRepository.EditEmployee(employee);
             });
         }
 
@@ -123,8 +122,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                IAddressTypeRepository _repository = _dataRepositoryFactory.GetDataRepository<IAddressTypeRepository>();
-                return _repository.GetAddressTypes();
+                IAddressTypeRepository repository = DataRepositoryFactory.GetDataRepository<IAddressTypeRepository>();
+                return repository.GetAddressTypes();
             });
         }
 
@@ -136,8 +135,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                IOfficeBranchRepository _repository = _dataRepositoryFactory.GetDataRepository<IOfficeBranchRepository>();
-                return _repository.GetOfficeBranches();
+                IOfficeBranchRepository repository = DataRepositoryFactory.GetDataRepository<IOfficeBranchRepository>();
+                return repository.GetOfficeBranches();
             });
         }
 
@@ -149,23 +148,23 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _repository = _dataRepositoryFactory.GetDataRepository<ISalutationRepository>();
-                return _repository.GetSalutations();
+                var repository = DataRepositoryFactory.GetDataRepository<ISalutationRepository>();
+                return repository.GetSalutations();
             });
         }
 
         /// <summary>
         /// Determines whether [is employee identifier already registered] [the specified vb s_ identifier].
         /// </summary>
-        /// <param name="VBS_Id">The vb s_ identifier.</param>
+        /// <param name="vbsId">The vb s_ identifier.</param>
         /// <param name="employeeId">The employee identifier.</param>
         /// <returns></returns>
-        public Boolean IsEmployeeIdAlreadyRegistered(string VBS_Id, int employeeId)
+        public Boolean IsEmployeeIdAlreadyRegistered(string vbsId, int employeeId)
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.IsEmployeeIdAlreadyRegistered(VBS_Id, employeeId);
+                var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return employeeRepository.IsEmployeeIdAlreadyRegistered(vbsId, employeeId);
             });
         }
 
@@ -179,8 +178,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.IsEmailAlreadyRegistered(emailAddress, employeeId);
+                var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return employeeRepository.IsEmailAlreadyRegistered(emailAddress, employeeId);
             });
         }
 
@@ -194,8 +193,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.IsMobileNumberAlreadyRegistered(mobileNumber, employeeId);
+                var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return employeeRepository.IsMobileNumberAlreadyRegistered(mobileNumber, employeeId);
             });
         }
 
@@ -207,8 +206,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetEmployeeCount();
+                var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return employeeRepository.GetEmployeeCount();
             });
         }
 
@@ -220,8 +219,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                IBankRepository _bankRepository = _dataRepositoryFactory.GetDataRepository<IBankRepository>();
-                return _bankRepository.GetBanks();
+                IBankRepository bankRepository = DataRepositoryFactory.GetDataRepository<IBankRepository>();
+                return bankRepository.GetBanks();
             });
         }
 
@@ -229,12 +228,13 @@ namespace Vserv.Accounting.Business.Managers
         /// 
         /// </summary>
         /// <param name="employeeId"></param>
+        /// <param name="updatedByUserName"></param>
         public void ArchiveEmployee(int employeeId, string updatedByUserName)
         {
             ExecuteFaultHandledOperation(() =>
           {
-              var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-              _employeeRepository.ArchiveEmployee(employeeId, updatedByUserName);
+              var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+              employeeRepository.ArchiveEmployee(employeeId, updatedByUserName);
           });
         }
 
@@ -247,8 +247,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetEmployeeHistory(employeeId);
+                var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return employeeRepository.GetEmployeeHistory(employeeId);
             });
         }
 
@@ -261,8 +261,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetMatchingEmployeeInformation(employeeArchiveId);
+                var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return employeeRepository.GetMatchingEmployeeInformation(employeeArchiveId);
             });
         }
 
@@ -273,12 +273,12 @@ namespace Vserv.Accounting.Business.Managers
         /// <param name="financialYearFrom"></param>
         /// <param name="financialYearTo"></param>
         /// <returns></returns>
-        public List<GetEmployeeSalaryDetail_Result> GetYearlyPaySheet(Nullable<int> employeeId, Nullable<int> financialYearFrom, Nullable<int> financialYearTo)
+        public List<GetEmployeeSalaryDetail_Result> GetYearlyPaySheet(int? employeeId, int? financialYearFrom, int? financialYearTo)
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _employeeRepository = _dataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
-                return _employeeRepository.GetYearlyPaySheet(employeeId, financialYearFrom, financialYearTo);
+                var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return employeeRepository.GetYearlyPaySheet(employeeId, financialYearFrom, financialYearTo);
             });
         }
 
@@ -292,8 +292,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _repository = _dataRepositoryFactory.GetDataRepository<IDesignationRepository>();
-                return _repository.GetDesignations();
+                var repository = DataRepositoryFactory.GetDataRepository<IDesignationRepository>();
+                return repository.GetDesignations();
             });
         }
 
@@ -306,8 +306,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _repository = _dataRepositoryFactory.GetDataRepository<IDesignationRepository>();
-                return _repository.GetDesignation(designationId);
+                var repository = DataRepositoryFactory.GetDataRepository<IDesignationRepository>();
+                return repository.GetDesignation(designationId);
             });
         }
 
@@ -320,12 +320,12 @@ namespace Vserv.Accounting.Business.Managers
         {
             ExecuteFaultHandledOperation(() =>
             {
-                var _designationRepository = _dataRepositoryFactory.GetDataRepository<IDesignationRepository>();
+                var designationRepository = DataRepositoryFactory.GetDataRepository<IDesignationRepository>();
                 designation.CreatedBy = userName;
                 designation.CreatedDate = DateTime.Now;
                 designation.DisplayOrder = 0;
                 designation.IsActive = true; // By default mark the designation as active.
-                _designationRepository.Add(designation, userName);
+                designationRepository.Add(designation, userName);
             });
         }
 
@@ -340,8 +340,8 @@ namespace Vserv.Accounting.Business.Managers
             {
                 designation.UpdatedBy = userName;
                 designation.UpdatedDate = DateTime.Now;
-                IDesignationRepository _designationRepository = _dataRepositoryFactory.GetDataRepository<IDesignationRepository>();
-                _designationRepository.Update(designation, userName);
+                IDesignationRepository designationRepository = DataRepositoryFactory.GetDataRepository<IDesignationRepository>();
+                designationRepository.Update(designation, userName);
             });
         }
 
@@ -355,8 +355,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _repository = _dataRepositoryFactory.GetDataRepository<IDesignationRepository>();
-                return _repository.IsDesignationExists(name, designationId);
+                var repository = DataRepositoryFactory.GetDataRepository<IDesignationRepository>();
+                return repository.IsDesignationExists(name, designationId);
             });
         }
 
@@ -372,8 +372,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _repository = _dataRepositoryFactory.GetDataRepository<ICityRepository>();
-                return _repository.GetCities();
+                var repository = DataRepositoryFactory.GetDataRepository<ICityRepository>();
+                return repository.GetCities();
             });
         }
 
@@ -387,8 +387,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _repository = _dataRepositoryFactory.GetDataRepository<ICityRepository>();
-                return _repository.GetCities(stateId, cityId);
+                var repository = DataRepositoryFactory.GetDataRepository<ICityRepository>();
+                return repository.GetCities(stateId, cityId);
             });
         }
 
@@ -400,8 +400,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _repository = _dataRepositoryFactory.GetDataRepository<IStateRepository>();
-                return _repository.GetStates();
+                var repository = DataRepositoryFactory.GetDataRepository<IStateRepository>();
+                return repository.GetStates();
             });
         }
 
@@ -414,8 +414,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _repository = _dataRepositoryFactory.GetDataRepository<IStateRepository>();
-                return _repository.GetState(stateId);
+                var repository = DataRepositoryFactory.GetDataRepository<IStateRepository>();
+                return repository.GetState(stateId);
             });
         }
 
@@ -428,8 +428,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _repository = _dataRepositoryFactory.GetDataRepository<IZipCodeRepository>();
-                return _repository.GetZipCodes(cityId);
+                var repository = DataRepositoryFactory.GetDataRepository<IZipCodeRepository>();
+                return repository.GetZipCodes(cityId);
             });
         }
 
@@ -437,8 +437,8 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _repository = _dataRepositoryFactory.GetDataRepository<IStateRepository>();
-                return _repository.GetStateByCityName(cityName);
+                var repository = DataRepositoryFactory.GetDataRepository<IStateRepository>();
+                return repository.GetStateByCityName(cityName);
             });
         }
 
@@ -454,12 +454,12 @@ namespace Vserv.Accounting.Business.Managers
                 {
                     List<EmployeeSalaryDetail> employeeSalaryDetails = CalculateSalaryComponents(empSalaryStructure, userName);
                     // Push record for input fields from the form.
-                    IEmpSalaryStructureRepo _empSalaryStructureRepo = _dataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
+                    IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
 
                     empSalaryStructure.CreatedDate = DateTime.Now;
                     empSalaryStructure.IsActive = true;
                     empSalaryStructure.EmployeeSalaryDetails = employeeSalaryDetails;
-                    _empSalaryStructureRepo.Add(empSalaryStructure, userName);
+                    empSalaryStructureRepo.Add(empSalaryStructure, userName);
                 }
 
                 return true;
@@ -498,27 +498,30 @@ namespace Vserv.Accounting.Business.Managers
             List<EmployeeSalaryDetail> employeeSalaryDetails = new List<EmployeeSalaryDetail>();
             var salaryComponents = GetSalaryComponents();
 
-            SalaryComponentEnum salaryComponentEnum = Common.Enums.SalaryComponentEnum.Basic;
             Decimal? deductedAmountfromCTC = 0;
 
             String[] deductedComponentFromCTC = { "Basic", "HRA", "Conveyance", "PerformanceIncentive", "Medical", "FoodCoupons", "ProjectIncentive", "CarLease", "LTC", "PF", "Mediclaim", "Gratuity", "CabDeductions", };
-            EmployeeSalaryDetail employeeSalaryDetail = null;
+            EmployeeSalaryDetail employeeSalaryDetail;
 
             foreach (SalaryComponent salaryComponent in salaryComponents)
             {
-                salaryComponentEnum = (SalaryComponentEnum)Enum.Parse(typeof(SalaryComponentEnum), salaryComponent.Name);
+                var salaryComponentEnum = (SalaryComponentEnum)Enum.Parse(typeof(SalaryComponentEnum), salaryComponent.Name);
 
                 if (!salaryComponentEnum.Equals(SalaryComponentEnum.SpecialAllowance))
                 {
-                    employeeSalaryDetail = new EmployeeSalaryDetail();
-                    employeeSalaryDetail.EmployeeId = empSalaryStructure.EmployeeId;
-                    employeeSalaryDetail.SalaryComponentId = salaryComponent.SalaryComponentId;
-                    employeeSalaryDetail.MonthId = monthId;
-                    employeeSalaryDetail.Year = year;
-                    employeeSalaryDetail.Amount = GetAmountBySalaryComponent(empSalaryStructure, salaryComponent.DefaultAmount, salaryComponentEnum, monthId);
-                    employeeSalaryDetail.IsActive = true;
-                    employeeSalaryDetail.CreatedBy = empSalaryStructure.CreatedBy;
-                    employeeSalaryDetail.CreatedDate = DateTime.Now;
+                    employeeSalaryDetail = new EmployeeSalaryDetail
+                    {
+                        EmployeeId = empSalaryStructure.EmployeeId,
+                        SalaryComponentId = salaryComponent.SalaryComponentId,
+                        MonthId = monthId,
+                        Year = year,
+                        Amount =
+                            GetAmountBySalaryComponent(empSalaryStructure, salaryComponent.DefaultAmount,
+                                salaryComponentEnum, monthId),
+                        IsActive = true,
+                        CreatedBy = empSalaryStructure.CreatedBy,
+                        CreatedDate = DateTime.Now
+                    };
 
                     if (deductedComponentFromCTC.Contains(salaryComponentEnum.ToStringValue()))
                     {
@@ -532,15 +535,17 @@ namespace Vserv.Accounting.Business.Managers
             // Update value for SpecialAllowance based on below rules.
             // CTC -(Basic + HRA + Conveyance)- Performance Incentive - 
             // (Medical + Food Coupons + Project Incentive + Car Lease + LTC + PF + Mediclaim + Gratuity) - (Cab Deductions)
-            employeeSalaryDetail = new EmployeeSalaryDetail();
-            employeeSalaryDetail.EmployeeId = empSalaryStructure.EmployeeId;
-            employeeSalaryDetail.SalaryComponentId = Convert.ToInt32(SalaryComponentEnum.SpecialAllowance);
-            employeeSalaryDetail.MonthId = monthId;
-            employeeSalaryDetail.Year = year;
-            employeeSalaryDetail.Amount = (empSalaryStructure.CTC / 12) - deductedAmountfromCTC;
-            employeeSalaryDetail.IsActive = true;
-            employeeSalaryDetail.CreatedBy = empSalaryStructure.CreatedBy;
-            employeeSalaryDetail.CreatedDate = DateTime.Now;
+            employeeSalaryDetail = new EmployeeSalaryDetail
+            {
+                EmployeeId = empSalaryStructure.EmployeeId,
+                SalaryComponentId = Convert.ToInt32(SalaryComponentEnum.SpecialAllowance),
+                MonthId = monthId,
+                Year = year,
+                Amount = (empSalaryStructure.CTC/12) - deductedAmountfromCTC,
+                IsActive = true,
+                CreatedBy = empSalaryStructure.CreatedBy,
+                CreatedDate = DateTime.Now
+            };
             employeeSalaryDetails.Add(employeeSalaryDetail);
 
             return employeeSalaryDetails.OrderBy(order => order.MonthId).ThenBy(then => then.SalaryComponentId).ToList();
@@ -548,13 +553,13 @@ namespace Vserv.Accounting.Business.Managers
 
         private Decimal? GetAmountBySalaryComponent(EmpSalaryStructure empSalaryStructure, Decimal? defaultAmount, SalaryComponentEnum salaryComponentEnum, int monthId)
         {
-            Decimal? CTCMonthly = empSalaryStructure.CTC / 12;
-            Decimal? basic = 40 * CTCMonthly / 100;
+            Decimal? ctcMonthly = empSalaryStructure.CTC / 12;
+            Decimal? basic = 40 * ctcMonthly / 100;
 
             switch (salaryComponentEnum)
             {
                 case SalaryComponentEnum.CTCPerMonth:
-                    return CTCMonthly; // Divide yearly CTC in twelve months.
+                    return ctcMonthly; // Divide yearly CTC in twelve months.
                 case SalaryComponentEnum.Basic:
                     return basic;  // 40% of CTC
                 case SalaryComponentEnum.HRA:
@@ -592,7 +597,7 @@ namespace Vserv.Accounting.Business.Managers
                 case SalaryComponentEnum.PF:
                     return 12 * basic / 100;
                 case SalaryComponentEnum.Mediclaim:
-                    return GetCalculatedMediclaimByMonth(CTCMonthly, monthId);
+                    return GetCalculatedMediclaimByMonth(ctcMonthly, monthId);
                 case SalaryComponentEnum.Gratuity:
                     return basic * 15 / 26 / 12;
                 default:
@@ -625,21 +630,18 @@ namespace Vserv.Accounting.Business.Managers
                 //else{1453}
                 return monthlyCTC < 41667 ? 484 : monthlyCTC > 41668 && monthlyCTC < 83334 ? 969 : 1453;
             }
-            else
-            {
-                //if(CTC < 41667){476}
-                //else if (CTC > 41668 AND CTC< 83334){952}
-                //else{1428}
-                return monthlyCTC < 41667 ? 476 : monthlyCTC > 41668 && monthlyCTC < 83334 ? 952 : 1428;
-            }
+            //if(CTC < 41667){476}
+            //else if (CTC > 41668 AND CTC< 83334){952}
+            //else{1428}
+            return monthlyCTC < 41667 ? 476 : monthlyCTC > 41668 && monthlyCTC < 83334 ? 952 : 1428;
         }
 
         public IEnumerable<SalaryComponent> GetSalaryComponents()
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                var _repository = _dataRepositoryFactory.GetDataRepository<ISalaryComponentRepository>();
-                return _repository.Get();
+                var repository = DataRepositoryFactory.GetDataRepository<ISalaryComponentRepository>();
+                return repository.Get();
             });
         }
 
@@ -653,12 +655,12 @@ namespace Vserv.Accounting.Business.Managers
             if (currentMonthId >= 4)
             {
                 // Months of Current Year
-                for (int i = currentMonthId; i <= 12; i++)
+                for (var i = currentMonthId; i <= 12; i++)
                 {
                     monthsInfo.Add(i, currentYear);
                 }
 
-                for (int i = 1; i <= 3; i++)
+                for (var i = 1; i <= 3; i++)
                 {
                     monthsInfo.Add(i, currentYear + 1);
                 }
@@ -666,7 +668,7 @@ namespace Vserv.Accounting.Business.Managers
             else
             {
                 // Months of Current Year
-                for (int i = currentMonthId; i <= 3; i++)
+                for (var i = currentMonthId; i <= 3; i++)
                 {
                     monthsInfo.Add(i, currentYear);
                 }

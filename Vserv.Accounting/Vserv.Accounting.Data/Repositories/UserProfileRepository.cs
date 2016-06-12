@@ -11,7 +11,6 @@ namespace Vserv.Accounting.Data
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="Vserv.Accounting.Data.DataRepositoryBase{Vserv.Accounting.Data.Entity.UserProfile}" />
     /// <seealso cref="Vserv.Accounting.Data.IUserProfileRepository" />
     [Export(typeof(IUserProfileRepository))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
@@ -42,9 +41,9 @@ namespace Vserv.Accounting.Data
         /// <returns></returns>
         public UserProfile GetUserProfile(int userId)
         {
-            using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
+            using (var vservAccountingDbEntities = new VservAccountingDBEntities())
             {
-                return _vservAccountingDBEntities.UserProfiles.AsNoTracking().FirstOrDefault(x => x.UserId.Equals(userId));
+                return vservAccountingDbEntities.UserProfiles.AsNoTracking().FirstOrDefault(x => x.UserId.Equals(userId));
             }
         }
 
@@ -54,20 +53,13 @@ namespace Vserv.Accounting.Data
         /// <param name="userProfile">The user profile.</param>
         public void Save(UserProfile userProfile)
         {
-            try
+            using (var vservAccountingDbEntities = new VservAccountingDBEntities())
             {
-                using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
+                if (userProfile.UserId == 0)
                 {
-                    if (userProfile.UserId == 0)
-                    {
-                        _vservAccountingDBEntities.UserProfiles.Add(userProfile);
-                    }
-                    _vservAccountingDBEntities.SaveChanges();
+                    vservAccountingDbEntities.UserProfiles.Add(userProfile);
                 }
-            }
-            catch
-            {
-                throw;
+                vservAccountingDbEntities.SaveChanges();
             }
         }
 
@@ -79,9 +71,9 @@ namespace Vserv.Accounting.Data
         /// <returns></returns>
         public OAuthMembership GetOAuthMembership(string provider, string providerUserId)
         {
-            using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
+            using (var vservAccountingDbEntities = new VservAccountingDBEntities())
             {
-                return _vservAccountingDBEntities.OAuthMemberships.AsNoTracking().FirstOrDefault(x => x.Provider.Equals(provider) && x.ProviderUserId.Equals(providerUserId));
+                return vservAccountingDbEntities.OAuthMemberships.AsNoTracking().FirstOrDefault(x => x.Provider.Equals(provider) && x.ProviderUserId.Equals(providerUserId));
             }
         }
 
@@ -93,18 +85,18 @@ namespace Vserv.Accounting.Data
         /// <param name="userId">The user identifier.</param>
         public void SaveOAuthMembership(string provider, string providerUserId, int userId)
         {
-            using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
+            using (var vservAccountingDbEntities = new VservAccountingDBEntities())
             {
-                var oAuthMembership = _vservAccountingDBEntities.OAuthMemberships.AsNoTracking().FirstOrDefault(x => x.Provider.Equals(provider) && x.ProviderUserId.Equals(providerUserId));
+                var oAuthMembership = vservAccountingDbEntities.OAuthMemberships.AsNoTracking().FirstOrDefault(x => x.Provider.Equals(provider) && x.ProviderUserId.Equals(providerUserId));
 
                 if (oAuthMembership == null)
                 {
                     oAuthMembership = new OAuthMembership { Provider = provider, ProviderUserId = providerUserId };
-                    _vservAccountingDBEntities.OAuthMemberships.Add(oAuthMembership);
+                    vservAccountingDbEntities.OAuthMemberships.Add(oAuthMembership);
                 }
 
                 oAuthMembership.UserId = userId;
-                _vservAccountingDBEntities.SaveChanges();
+                vservAccountingDbEntities.SaveChanges();
             }
         }
 
@@ -115,9 +107,9 @@ namespace Vserv.Accounting.Data
         /// <returns></returns>
         public Membership GetMembership(int userId)
         {
-            using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
+            using (var vservAccountingDbEntities = new VservAccountingDBEntities())
             {
-                return _vservAccountingDBEntities.Memberships.AsNoTracking().FirstOrDefault(x => x.UserId == userId);
+                return vservAccountingDbEntities.Memberships.AsNoTracking().FirstOrDefault(x => x.UserId == userId);
             }
         }
 
@@ -129,12 +121,12 @@ namespace Vserv.Accounting.Data
         /// <returns></returns>
         public Membership GetMembershipByConfirmToken(string token, bool withUserProfile)
         {
-            using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
+            using (var vservAccountingDbEntities = new VservAccountingDBEntities())
             {
-                var membership = _vservAccountingDBEntities.Memberships.AsNoTracking().FirstOrDefault(x => x.ConfirmationToken.Equals(token.ToLower()));
+                var membership = vservAccountingDbEntities.Memberships.AsNoTracking().FirstOrDefault(x => x.ConfirmationToken.Equals(token.ToLower()));
                 if (membership != null && withUserProfile)
                 {
-                    membership.UserProfile = _vservAccountingDBEntities.UserProfiles.First(x => x.UserId == membership.UserId);
+                    membership.UserProfile = vservAccountingDbEntities.UserProfiles.First(x => x.UserId == membership.UserId);
                 }
                 return membership;
             }
@@ -149,12 +141,12 @@ namespace Vserv.Accounting.Data
         /// <returns></returns>
         public Membership GetMembershipByVerificationToken(string token, bool withUserProfile)
         {
-            using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
+            using (var vservAccountingDbEntities = new VservAccountingDBEntities())
             {
-                var membership = _vservAccountingDBEntities.Memberships.AsNoTracking().FirstOrDefault(x => x.PasswordVerificationToken.Equals(token.ToLower()));
+                var membership = vservAccountingDbEntities.Memberships.AsNoTracking().FirstOrDefault(x => x.PasswordVerificationToken.Equals(token.ToLower()));
                 if (membership != null && withUserProfile)
                 {
-                    membership.UserProfile = _vservAccountingDBEntities.UserProfiles.AsNoTracking().First(x => x.UserId == membership.UserId);
+                    membership.UserProfile = vservAccountingDbEntities.UserProfiles.AsNoTracking().First(x => x.UserId == membership.UserId);
                 }
                 return membership;
             }
@@ -167,20 +159,13 @@ namespace Vserv.Accounting.Data
         /// <param name="add">if set to <c>true</c> [add].</param>
         public void Save(Membership membership, bool add)
         {
-            try
+            using (var vservAccountingDbEntities = new VservAccountingDBEntities())
             {
-                using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
+                if (add)
                 {
-                    if (add)
-                    {
-                        _vservAccountingDBEntities.Memberships.Add(membership);
-                    }
-                    _vservAccountingDBEntities.SaveChanges();
+                    vservAccountingDbEntities.Memberships.Add(membership);
                 }
-            }
-            catch
-            {
-                throw;
+                vservAccountingDbEntities.SaveChanges();
             }
         }
 
@@ -191,9 +176,9 @@ namespace Vserv.Accounting.Data
         /// <returns></returns>
         public string[] GetRoles(string userName)
         {
-            using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
+            using (var vservAccountingDbEntities = new VservAccountingDBEntities())
             {
-                var userProfile = _vservAccountingDBEntities.UserProfiles.AsNoTracking().FirstOrDefault(x => x.UserName.Equals(userName));
+                var userProfile = vservAccountingDbEntities.UserProfiles.AsNoTracking().FirstOrDefault(x => x.UserName.Equals(userName));
                 if (userProfile != null)
                 {
                     return userProfile.Roles.Select(x => x.RoleName).ToArray();
@@ -208,9 +193,9 @@ namespace Vserv.Accounting.Data
         /// <param name="membership">The membership.</param>
         public void ChangePassword(Membership membership)
         {
-            using (var _vservAccountingDBEntities = new VservAccountingDBEntities())
+            using (var vservAccountingDbEntities = new VservAccountingDBEntities())
             {
-                _vservAccountingDBEntities.SaveChanges();
+                vservAccountingDbEntities.SaveChanges();
             }
         }
         /// <summary>
@@ -224,26 +209,6 @@ namespace Vserv.Accounting.Data
         #endregion Public Methods
 
         #region Private Methods
-
-        /// <summary>
-        /// Converts to user profile dc.
-        /// </summary>
-        /// <param name="userProfile">The user profile.</param>
-        /// <returns></returns>
-        private UserProfile ConvertToUserProfileDC(UserProfile userProfile)
-        {
-            return new UserProfile
-            {
-                UserId = userProfile.UserId,
-                UserName = userProfile.UserName,
-                LoweredUserName = userProfile.LoweredUserName,
-                DisplayName = userProfile.DisplayName,
-                MobileAlias = userProfile.MobileAlias,
-                IsAnonymous = userProfile.IsAnonymous,
-                LastActivityDate = userProfile.LastActivityDate,
-            };
-
-        }
 
         #endregion Private Methods
 

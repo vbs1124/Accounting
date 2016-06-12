@@ -1,9 +1,11 @@
 ﻿#region Namespaces
+
 using System;
 using System.Collections.Generic;
 using Vserv.Accounting.Common;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Common.Contracts;
+
 #endregion
 
 namespace Vserv.Accounting.Data
@@ -11,7 +13,6 @@ namespace Vserv.Accounting.Data
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="Vserv.Common.Contracts.IDataRepository{Vserv.Accounting.Data.Entity.Employee}" />
     public interface IEmployeeRepository : IDataRepository<Employee>
     {
         #region Methods
@@ -83,6 +84,7 @@ namespace Vserv.Accounting.Data
         /// Archive Employee information to maintain audit trail.
         /// </summary>
         /// <param name="employeeId"></param>
+        /// <param name="updatedByUserName"></param>
         void ArchiveEmployee(int employeeId, string updatedByUserName);
 
         /// <summary>
@@ -94,7 +96,7 @@ namespace Vserv.Accounting.Data
 
         CompareEmployeeModel GetMatchingEmployeeInformation(int employeeArchiveId);
 
-        List<GetEmployeeSalaryDetail_Result> GetYearlyPaySheet(Nullable<int> employeeId, Nullable<int> financialYearFrom, Nullable<int> financialYearTo);
+        List<GetEmployeeSalaryDetail_Result> GetYearlyPaySheet(int? employeeId, int? financialYearFrom, int? financialYearTo);
 
         #endregion
     }

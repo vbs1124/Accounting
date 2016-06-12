@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Security;
 using Vserv.Accounting.Core.Services;
 
@@ -16,14 +13,14 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// <summary>
         /// The users service
         /// </summary>
-        private readonly IUsersService usersService;
+        private readonly IUsersService _usersService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VservRoleProvider"/> class.
         /// </summary>
         public VservRoleProvider()
         {
-            this.usersService = (IUsersService)MvcApplication.Container.Resolve(typeof(IUsersService), null);
+            _usersService = (IUsersService)MvcApplication.Container.Resolve(typeof(IUsersService), null);
         }
 
         /// <summary>
@@ -113,7 +110,7 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// </returns>
         public override string[] GetRolesForUser(string username)
         {
-            return this.usersService.GetRoles(username);
+            return _usersService.GetRoles(username);
         }
 
         /// <summary>

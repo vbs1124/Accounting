@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Common;
+using Vserv.Accounting.Data.Entity;
 
 #endregion
 

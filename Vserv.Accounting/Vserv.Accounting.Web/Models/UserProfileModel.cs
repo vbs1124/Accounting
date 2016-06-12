@@ -79,7 +79,7 @@ namespace Vserv.Accounting.Web.Models
         /// The is anonymous.
         /// </value>
         [Display(Name = "Is Anonymous User")]
-        public Nullable<bool> IsAnonymous
+        public bool? IsAnonymous
         {
             get;
             set;
@@ -92,7 +92,7 @@ namespace Vserv.Accounting.Web.Models
         /// The last activity date.
         /// </value>
         [Display(Name = "Last Activity Date")]
-        public Nullable<DateTime> LastActivityDate
+        public DateTime? LastActivityDate
         {
             get;
             set;

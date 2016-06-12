@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 using Vserv.Accounting.Web.Code;
 
 namespace Vserv.Accounting.Web.Models
@@ -9,7 +8,7 @@ namespace Vserv.Accounting.Web.Models
     /// <summary>
     /// 
     /// </summary>
-    public partial class EmployeeModel
+    public class EmployeeModel
     {
         /// <summary>
         /// Gets or sets the employee identifier.
@@ -18,7 +17,7 @@ namespace Vserv.Accounting.Web.Models
         /// The employee identifier.
         /// </value>
         [ScaffoldColumn(true)]
-        [Display(Name = "Employee Id")]
+        [Display(Name = @"Employee Id")]
         public int EmployeeId { get; set; }
 
         /// <summary>
@@ -142,7 +141,7 @@ namespace Vserv.Accounting.Web.Models
         /// The relieving date.
         /// </value>
         [Display(Name = "Relieving Date")]
-        public Nullable<DateTime> RelievingDate { get; set; }
+        public DateTime? RelievingDate { get; set; }
 
         /// <summary>
         /// Gets or sets the vb s_ identifier.
@@ -150,10 +149,10 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The vb s_ identifier.
         /// </value>
-        [Display(Name = "Employee Id")]
-        [Required(ErrorMessage = "Employee Id is required.")]
-        [RegularExpression("^[1-9][0-9]*$", ErrorMessage = "Employee Id should be numeric and should not start with 0.")]
-        [StringLength(4, MinimumLength = 4, ErrorMessage = "Employee Id should be 4 digits.")]
+        [Display(Name = @"Employee Id")]
+        [Required(ErrorMessage = @"Employee Id is required.")]
+        [RegularExpression("^[1-9][0-9]*$", ErrorMessage = @"Employee Id should be numeric and should not start with 0.")]
+        [StringLength(4, MinimumLength = 4, ErrorMessage = @"Employee Id should be 4 digits.")]
         public string VBS_Id { get; set; }
 
         /// <summary>
@@ -162,8 +161,8 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The designation identifier.
         /// </value>
-        [Required(ErrorMessage = "Designation is required.")]
-        [Display(Name = "Designation")]
+        [Required(ErrorMessage = @"Designation is required.")]
+        [Display(Name = @"Designation")]
         public int? DesignationId { get; set; }
 
         /// <summary>
@@ -239,7 +238,7 @@ namespace Vserv.Accounting.Web.Models
         /// The created date.
         /// </value>
         [Display(Name = "Created Date")]
-        public System.DateTime? CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the updated date.
@@ -248,7 +247,7 @@ namespace Vserv.Accounting.Web.Models
         /// The updated date.
         /// </value>
         [Display(Name = "Updated Date")]
-        public Nullable<DateTime> UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
         [Display(Name = "EPF Number")]
         public string EPFNumber { get; set; }
@@ -256,25 +255,25 @@ namespace Vserv.Accounting.Web.Models
         [Display(Name = "ESI Number")]
         public string ESINumber { get; set; }
 
-        [Required(ErrorMessage = "Official Email address is required.")]
+        [Required(ErrorMessage = @"Official Email address is required.")]
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "Official Email address")]
-        [ValidEmailAddress(ErrorMessage = "Invalid Official Email address.")]
+        [Display(Name = @"Official Email address")]
+        [ValidEmailAddress(ErrorMessage = @"Invalid Official Email address.")]
         [EmailAddressExists]
         public string OfficialEmailAddress { get; set; }
 
-        [Required(ErrorMessage = "Personal Email address is required.")]
+        [Required(ErrorMessage = @"Personal Email address is required.")]
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "Personal Email address")]
-        [ValidEmailAddress(ErrorMessage = "Invalid Personal Email address.")]
+        [Display(Name = @"Personal Email address")]
+        [ValidEmailAddress(ErrorMessage = @"Invalid Personal Email address.")]
         public string PersonalEmailAddress { get; set; }
 
-        [Display(Name = "Resignation Date")]
-        public Nullable<System.DateTime> ResignationDate { get; set; }
+        [Display(Name = @"Resignation Date")]
+        public DateTime? ResignationDate { get; set; }
 
-        [Required(ErrorMessage = "Address 1 is required.")]
-        [StringLength(250, MinimumLength = 3, ErrorMessage = "Address 1 is too short.")]
-        [Display(Name = "Address 1")]
+        [Required(ErrorMessage = @"Address 1 is required.")]
+        [StringLength(250, MinimumLength = 3, ErrorMessage = @"Address 1 is too short.")]
+        [Display(Name = @"Address 1")]
         public string PermanentAddress1 { get; set; }
 
         [Display(Name = "Address 2")]
@@ -293,10 +292,10 @@ namespace Vserv.Accounting.Web.Models
 
         [Required(ErrorMessage = "State is required.")]
         [Display(Name = "State")]
-        public Nullable<int> PermanentStateId { get; set; }
+        public int? PermanentStateId { get; set; }
 
         [Display(Name = "Country")]
-        public Nullable<int> PermanentCountryId { get; set; }
+        public int? PermanentCountryId { get; set; }
 
         [Required(ErrorMessage = "Address 1 is required.")]
         [StringLength(250, MinimumLength = 3, ErrorMessage = "Address 1 is too short.")]
@@ -319,10 +318,10 @@ namespace Vserv.Accounting.Web.Models
 
         [Required(ErrorMessage = "State is required.")]
         [Display(Name = "State")]
-        public Nullable<int> MailingStateId { get; set; }
+        public int? MailingStateId { get; set; }
 
         [Display(Name = "Country")]
-        public Nullable<int> MailingCountryId { get; set; }
+        public int? MailingCountryId { get; set; }
 
         [Display(Name = "Metro/Non Metro")]
         public bool IsMetro { get; set; }
@@ -331,7 +330,7 @@ namespace Vserv.Accounting.Web.Models
         public string BankAccountNumber { get; set; }
 
         [Display(Name = "Bank Name")]
-        public Nullable<int> BankId { get; set; }
+        public int? BankId { get; set; }
 
         [Display(Name = "IFSC Code")]
         public string BankIFSCCode { get; set; }
@@ -352,21 +351,21 @@ namespace Vserv.Accounting.Web.Models
         public virtual SalutationModel Salutation { get; set; }
     }
 
-    public partial class BankModel
+    public class BankModel
     {
         public int BankId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public bool? IsActive { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
         public virtual ICollection<EmployeeModel> Employees { get; set; }
     }
 
-    public partial class AddressModel
+    public class AddressModel
     {
         /// <summary>
         /// Gets or sets the address identifier.
@@ -430,7 +429,7 @@ namespace Vserv.Accounting.Web.Models
         /// The latitude.
         /// </value>
         [Display(Name = "Latitude")]
-        public Nullable<decimal> Latitude { get; set; }
+        public decimal? Latitude { get; set; }
 
         /// <summary>
         /// Gets or sets the longitude.
@@ -439,7 +438,7 @@ namespace Vserv.Accounting.Web.Models
         /// The longitude.
         /// </value>
         [Display(Name = "LongitDude")]
-        public Nullable<decimal> Longitude { get; set; }
+        public decimal? Longitude { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is communication address.
@@ -510,7 +509,7 @@ namespace Vserv.Accounting.Web.Models
         /// The created date.
         /// </value>
         [Display(Name = "Created Date")]
-        public System.DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the updated date.
@@ -519,7 +518,7 @@ namespace Vserv.Accounting.Web.Models
         /// The updated date.
         /// </value>
         [Display(Name = "Updated Date")]
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the address.
@@ -534,7 +533,7 @@ namespace Vserv.Accounting.Web.Models
     /// <summary>
     /// 
     /// </summary>
-    public partial class AddressTypeModel
+    public class AddressTypeModel
     {
         /// <summary>
         /// Gets or sets the address type identifier.
@@ -598,14 +597,14 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The created date.
         /// </value>
-        public System.DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         /// <summary>
         /// Gets or sets the updated date.
         /// </summary>
         /// <value>
         /// The updated date.
         /// </value>
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the addresses.
@@ -619,7 +618,7 @@ namespace Vserv.Accounting.Web.Models
     /// <summary>
     /// 
     /// </summary>
-    public partial class DepartmentModel
+    public class DepartmentModel
     {
         /// <summary>
         /// Gets or sets the department identifier.
@@ -683,20 +682,20 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The created date.
         /// </value>
-        public System.DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         /// <summary>
         /// Gets or sets the updated date.
         /// </summary>
         /// <value>
         /// The updated date.
         /// </value>
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public partial class EPFNumberModel
+    public class EPFNumberModel
     {
         /// <summary>
         /// Gets or sets the epf number identifier.
@@ -767,20 +766,20 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The created date.
         /// </value>
-        public System.DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         /// <summary>
         /// Gets or sets the updated date.
         /// </summary>
         /// <value>
         /// The updated date.
         /// </value>
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public partial class EPFOffice
+    public class EPFOffice
     {
         /// <summary>
         /// Gets or sets the epf office identifier.
@@ -837,23 +836,21 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The created date.
         /// </value>
-        public System.DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         /// <summary>
         /// Gets or sets the updated date.
         /// </summary>
         /// <value>
         /// The updated date.
         /// </value>
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public partial class OfficeBranchModel
+    public class OfficeBranchModel
     {
-
-
         /// <summary>
         /// Gets or sets the office branch identifier.
         /// </summary>
@@ -916,14 +913,14 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The created date.
         /// </value>
-        public System.DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         /// <summary>
         /// Gets or sets the updated date.
         /// </summary>
         /// <value>
         /// The updated date.
         /// </value>
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the employees.
@@ -937,7 +934,7 @@ namespace Vserv.Accounting.Web.Models
     /// <summary>
     /// 
     /// </summary>
-    public partial class SalutationModel
+    public class SalutationModel
     {
         /// <summary>
         /// Gets or sets the salutation identifier.
@@ -995,14 +992,14 @@ namespace Vserv.Accounting.Web.Models
         /// The updated by.
         /// </value>
         public string UpdatedBy { get; set; }
-        public System.DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         /// <summary>
         /// Gets or sets the updated date.
         /// </summary>
         /// <value>
         /// The updated date.
         /// </value>
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the employees.

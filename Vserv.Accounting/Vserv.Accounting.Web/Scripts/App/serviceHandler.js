@@ -6,10 +6,10 @@
             method: "get",
             params: request,
             headers: { 'Content-Type': 'application/json; charset=utf-8' }
-        }).success(function (data, status, headers, config) {
+        }).success(function (data) {
             deferred.resolve({ result:data, businessException: null });
         }).error(function (data, status, headers, config) {
-            if (status == 417) // business exception
+            if (status === 417) // business exception
             {
                 deferred.resolve({ result: null, businessException: data });
             }
@@ -28,13 +28,13 @@
             method: "post",
             data: angular.toJson(model),
             headers: { 'Content-Type': 'application/json; charset=utf-8' }
-        }).success(function (data, status, headers, config) {
+        }).success(function (data) {
             deferred.resolve({ result: data, businessException: null });
         }).error(function (data, status, headers, config) {
             console.log("<<<<<<<<<<<<<<< Error Message Start >>>>>>>>>>>>>>>>");
             console.log(data);
             console.log("<<<<<<<<<<<<<<< Error Message End >>>>>>>>>>>>>>>>");
-            if (status == 417) // business exception
+            if (status === 417) // business exception
             {
                 deferred.resolve({ result: null, businessException: data });
             }

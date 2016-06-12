@@ -1,8 +1,10 @@
 ﻿#region Namespaces
+
 using System;
 using System.Collections.Generic;
 using Vserv.Accounting.Data.Entity;
-using Vserv.Common.Contracts; 
+using Vserv.Common.Contracts;
+
 #endregion
 
 namespace Vserv.Accounting.Data
@@ -10,7 +12,6 @@ namespace Vserv.Accounting.Data
     /// <summary>
     /// 
     /// </summary>
-    /// <seealso cref="Vserv.Common.Contracts.IDataRepository{Vserv.Accounting.Data.Entity.Designation}" />
     public interface IDesignationRepository : IDataRepository<Designation>
     {
         #region Methods

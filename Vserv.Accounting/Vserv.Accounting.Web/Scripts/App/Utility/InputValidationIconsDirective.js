@@ -1,41 +1,43 @@
 ﻿(function () {
-	'use strict';
+	"use strict";
 
-	window.app.directive('inputValidationIcons', inputValidationIcons);
+    function controller($scope) {
+        var vm = this;
 
-	function inputValidationIcons() {
-		return {
-			require: '^form',
-			scope: {
-				field: '='
-			},
-			template:
-				'<span ng-show="vm.canBeValidated() && vm.isValid()" ' +
-					'class="fa fa-2x fa-check-square form-control-feedback"></span>' +
-				'<span ng-show="vm.canBeValidated() && !vm.isValid()" ' +
-					'class="fa fa-2x fa-exclamation-triangle form-control-feedback"></span>',
-			controller: controller,
-			controllerAs: 'vm',
-			link: function (scope, element, attrs, formCtrl) {
-				scope.form = formCtrl;
-			}
-		}
-	}
+        vm.field = $scope.field;
 
-	controller.$inject = ['$scope'];
-	function controller($scope) {
-		var vm = this;
+        function canBeValidated() {
+            return ($scope.form[vm.field].$touched || $scope.form.$submitted);
+        }
 
-		vm.field = $scope.field;
-		vm.canBeValidated = canBeValidated;
-		vm.isValid = isValid;
+        vm.canBeValidated = canBeValidated;
 
-		function canBeValidated() {
-			return ($scope.form[vm.field].$touched || $scope.form.$submitted);
-		}
+        function isValid() {
+            return $scope.form[vm.field].$valid;
+        }
 
-		function isValid() {
-			return $scope.form[vm.field].$valid;
-		}
-	}
+        vm.isValid = isValid;
+    }
+
+    function inputValidationIcons() {
+        return {
+            require: "^form",
+            scope: {
+                field: "="
+            },
+            template:
+                "<span ng-show=\"vm.canBeValidated() && vm.isValid()\" " +
+                    "class=\"fa fa-2x fa-check-square form-control-feedback\"></span>" +
+                    "<span ng-show=\"vm.canBeValidated() && !vm.isValid()\" " +
+                    "class=\"fa fa-2x fa-exclamation-triangle form-control-feedback\"></span>",
+            controller: controller,
+            controllerAs: "vm",
+            link: function (scope, element, attrs, formCtrl) {
+                scope.form = formCtrl;
+            }
+        }
+    }
+
+    window.app.directive("inputValidationIcons", inputValidationIcons);
+    controller.$inject = ["$scope"];
 })();

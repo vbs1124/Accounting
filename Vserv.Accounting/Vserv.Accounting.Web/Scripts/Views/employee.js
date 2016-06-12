@@ -27,7 +27,7 @@
         showTodayButton: true,
         showClear: true,
         showClose: true,
-        maxDate: moment().subtract(18, 'months')
+        maxDate: moment().subtract(18, "months")
     });
 
     $("#dp-relieving-date").datetimepicker({
@@ -53,21 +53,21 @@
     });
 
     $("#dp-joining-date").on("dp.change", function (e) {
-        $('#dp-relieving-date').data("DateTimePicker").minDate(e.date);
-        $('#dp-relieving-date').data("DateTimePicker").clear();
+        $("#dp-relieving-date").data("DateTimePicker").minDate(e.date);
+        $("#dp-relieving-date").data("DateTimePicker").clear();
     });
 
     $("#dp-relieving-date").on("dp.change", function (e) {
-        $('#dp-joining-date').data("DateTimePicker").maxDate(e.date);
-        $('#dp-resignation-date').data("DateTimePicker").maxDate(e.date);
+        $("#dp-joining-date").data("DateTimePicker").maxDate(e.date);
+        $("#dp-resignation-date").data("DateTimePicker").maxDate(e.date);
     });
 
     // Reset form controls once the modal is closed.
-    $('#modal-add-designation').on('hidden.bs.modal', function (e) {
+    $("#modal-add-designation").on("hidden.bs.modal", function () {
         $(this)
           //.find("input,textarea,select")
             .find("input,textarea")
-             .val('')
+             .val("")
              .end()
           .find("input[type=checkbox], input[type=radio]")
              .prop("checked", "")
@@ -76,11 +76,11 @@
 
     $("#cmbEmployeeFilter").on("change", function () {
         var filterChoice = $("#cmbEmployeeFilter").val();
-        $("#div-employee-list").load(VservApp.rootPath + 'employee/GetFilteredEmployees?filterChoice=' + filterChoice);
+        $("#div-employee-list").load(window.VservApp.rootPath + "employee/GetFilteredEmployees?filterChoice=" + filterChoice);
     });
 });
 
-function onchange_copyPermanentAdds(event, args) {
+function onchange_copyPermanentAdds(event) {
     if (event.checked) {
         $("#MailingAddress1").val($("#PermanentAddress1").val());
         $("#MailingAddress2").val($("#PermanentAddress2").val());
@@ -96,21 +96,20 @@ function onchange_copyPermanentAdds(event, args) {
 }
 
 $.selectPermanentStateByCityName = function (selectedPermanentCity) {
-    var viewModelHelper = new VservApp.viewModelHelper();
-    var url = VservApp.rootPath + "employee/GetStateByCityName";
+    var viewModelHelper = new window.VservApp.viewModelHelper();
+    var url = window.VservApp.rootPath + "employee/GetStateByCityName";
     viewModelHelper.apiGet(url, { cityName: selectedPermanentCity }, function (data) {
         $("#PermanentStateId").val(data);
     }, function () {
-        toastr.error("An error has occurred while loading state!")
+        toastr.error("An error has occurred while loading state!");
     });
-}
-
+};
 $.selectMailingStateByCityName = function (selectedMailingCity) {
-    var viewModelHelper = new VservApp.viewModelHelper();
-    var url = VservApp.rootPath + "employee/GetStateByCityName";
+    var viewModelHelper = new window.VservApp.viewModelHelper();
+    var url = window.VservApp.rootPath + "employee/GetStateByCityName";
     viewModelHelper.apiGet(url, { cityName: selectedMailingCity }, function (data) {
         $("#MailingStateId").val(data);
     }, function () {
-        toastr.error("An error has occurred while loading state!")
+        toastr.error("An error has occurred while loading state!");
     });
-}
+};

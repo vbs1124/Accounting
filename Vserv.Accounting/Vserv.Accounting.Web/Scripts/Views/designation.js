@@ -14,14 +14,13 @@
         } else {
             toastr.error("Designation Name is required.", "Error!");
             return false;
-            event.preventDefault();
-            return false;
         }
     }
+    return false;
 }
 
 $(function () {
-    $('#dataTables-designation').DataTable({
+    $("#dataTables-designation").DataTable({
         responsive: true,
         select: true,
         processing: true
@@ -29,25 +28,24 @@ $(function () {
 
     $("#cmbPopupDesgName").prop("disabled", true);
 
-    $('#cmbPopupDesgName').on('change', function () {
-        var selectedDesignationId = this.Value;
+    $("#cmbPopupDesgName").on("change", function () {
         var selectedDesignation = this.options[this.selectedIndex].innerHTML;
         $("#txtDesignationName").val(selectedDesignation);
     });
 });
 
 function refreshDesignationDropdownList() {
-    $.getJSON(VservApp.rootPath + "Designation/GetDesignations", function (data) {
-        var result = '';
+    $.getJSON(window.VservApp.rootPath + "Designation/GetDesignations", function (data) {
+        var result = "";
 
         for (var i = 0, iL = data.length; i < iL; i++) {
-            result += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+            result += "<option value=\"" + data[i].Value + "\">" + data[i].Text + "</option>";
         }
         $("#cmbDesignation").html(result);
     });
 }
 
-function onclick_linkEditDesignation(event, args) {
+function onclick_linkEditDesignation() {
     $("#cmbPopupDesgName").prop("disabled", !$("#cmbPopupDesgName").prop("disabled"));
 }
 
@@ -55,15 +53,15 @@ function addDesignation() {
     var designationName = $("#txtDesignationName").val();
     if (designationName.length > 0) {
         $.ajax({
-            url: VservApp.rootPath + "Designation/Add",
+            url: window.VservApp.rootPath + "Designation/Add",
             dataType: "json",
             type: "POST",
-            contentType: 'application/json; charset=utf-8',
+            contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ designationName: designationName }),
             success: function (result) {
                 if (result) {
                     refreshDesignationDropdownList(); // Refresh the designation dropdown.
-                    $('#modal-add-designation').modal('hide');
+                    $("#modal-add-designation").modal("hide");
                     toastr.success("Designation added successfully.", "Success!");
                 }
             }
@@ -71,7 +69,7 @@ function addDesignation() {
 
         }).fail(function () {
 
-            toastr.error('Unable to save the requested records.', 'Error!')
+            toastr.error("Unable to save the requested records.", "Error!");
         }).always(function () {
 
         });
@@ -80,6 +78,7 @@ function addDesignation() {
         toastr.error("Designation Name is required.", "Error!");
         return false;
     }
+    return false;
 }
 
 function updateDesignation() {
@@ -87,25 +86,26 @@ function updateDesignation() {
     var designationId = $("#cmbPopupDesgName").val();
     if (designationName.length > 0 && designationId > 0) {
         $.ajax({
-            url: VservApp.rootPath + "Designation/Edit",
+            url: window.VservApp.rootPath + "Designation/Edit",
             dataType: "json",
             type: "POST",
-            contentType: 'application/json; charset=utf-8',
+            contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ designationName: designationName, designationId: designationId }),
             success: function (result) {
                 if (result) {
                     refreshDesignationDropdownList(); // Refresh the designation dropdown.
-                    $('#modal-add-designation').modal('hide');
+                    $("#modal-add-designation").modal("hide");
                     toastr.success("Designation updated successfully.", "Success!");
                 } else {
                     toastr.error("Failed to update selected designation.", "Error!");
                     return false;
                 }
+                return false;
             }
         }).done(function () {
 
         }).fail(function () {
-            toastr.error('Unable to save the requested records.', 'Error!')
+            toastr.error("Unable to save the requested records.", 'Error!');
         }).always(function () {
 
         });
@@ -114,4 +114,5 @@ function updateDesignation() {
         toastr.error("Designation Name is required.", "Error!");
         return false;
     }
+    return false;
 }

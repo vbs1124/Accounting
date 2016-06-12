@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Vserv.Accounting.Web.Models
 {
@@ -22,35 +19,35 @@ namespace Vserv.Accounting.Web.Models
         public PaySheet Total { get; set; }
     }
 
-    public partial class PaySheet
+    public class PaySheet
     {
         public int PaySheetId { get; set; }
         public int EmployeeId { get; set; }
         public decimal CTCPerMonth { get; set; }
         public decimal Basic { get; set; }
         public decimal HRA { get; set; }
-        public Nullable<decimal> Conveyance { get; set; }
+        public decimal? Conveyance { get; set; }
         public decimal SpecialAllowance { get; set; }
         public decimal PerformanceIncentive { get; set; }
-        public Nullable<decimal> LeaveEncashment { get; set; }
-        public Nullable<decimal> SalaryArrears { get; set; }
-        public Nullable<decimal> CabDeductions { get; set; }
-        public Nullable<decimal> OtherDeduction { get; set; }
-        public Nullable<decimal> Commission { get; set; }
-        public Nullable<decimal> Others { get; set; }
-        public Nullable<decimal> Medical { get; set; }
-        public Nullable<decimal> FoodCoupons { get; set; }
-        public Nullable<decimal> ProjectIncentive { get; set; }
-        public Nullable<decimal> CarLease { get; set; }
-        public Nullable<decimal> LTC { get; set; }
+        public decimal? LeaveEncashment { get; set; }
+        public decimal? SalaryArrears { get; set; }
+        public decimal? CabDeductions { get; set; }
+        public decimal? OtherDeduction { get; set; }
+        public decimal? Commission { get; set; }
+        public decimal? Others { get; set; }
+        public decimal? Medical { get; set; }
+        public decimal? FoodCoupons { get; set; }
+        public decimal? ProjectIncentive { get; set; }
+        public decimal? CarLease { get; set; }
+        public decimal? LTC { get; set; }
         public decimal PF { get; set; }
         public decimal Mediclaim { get; set; }
         public decimal Gratuity { get; set; }
-        public Nullable<int> Month { get; set; }
+        public int? Month { get; set; }
         public bool IsActive { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 }

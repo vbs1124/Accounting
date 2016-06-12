@@ -83,18 +83,12 @@
     <Build Include="Tables\dbo.OAuthMembership.sql" />
     <Build Include="Tables\dbo.UserProfile.sql" />
     <Build Include="Tables\dbo.UsersInRoles.sql" />
-    <Build Include="StoredProcedures\InsertErrorLog.sql" />
-    <Build Include="StoredProcedures\InsertInfoLog.sql" />
-    <Build Include="StoredProcedures\InsertMvcErrorLog.sql" />
     <Build Include="Tables\dbo.ApplicationLog.sql" />
     <None Include="Scripts\dbo.State.InsertScript.sql" />
     <None Include="Scripts\dbo.ZipCode.InsertScript.sql" />
     <Build Include="Tables\dbo.City.sql" />
     <Build Include="Tables\dbo.State.sql" />
     <Build Include="Tables\dbo.ZipCode.sql" />
-    <Build Include="StoredProcedures\ArchiveEmployee.sql" />
-    <Build Include="StoredProcedures\ValidateUser.sql" />
-    <Build Include="Tables\Bank.sql" />
     <Build Include="Tables\dbo.EmployeeArchive.sql" />
     <Build Include="Tables\dbo.Feature.sql" />
     <Build Include="Tables\dbo.Gender.sql" />
@@ -120,5 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\dbo.City.InsertScript.sql" />
+    <None Include="Vserv.Accounting.Database.publish.xml" />
   </ItemGroup>
 </Project>

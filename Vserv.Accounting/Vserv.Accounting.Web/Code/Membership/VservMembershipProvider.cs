@@ -2,13 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Security;
+using Vserv.Accounting.Common;
 using Vserv.Accounting.Core.Services;
 using Vserv.Accounting.Data.Entity;
 using WebMatrix.WebData;
-using Vserv.Accounting.Common;
 
 #endregion
 
@@ -23,14 +21,14 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// <summary>
         /// The users service
         /// </summary>
-        private readonly IUsersService usersService;
+        private readonly IUsersService _usersService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VservMembershipProvider"/> class.
         /// </summary>
         public VservMembershipProvider()
         {
-            this.usersService = (IUsersService)MvcApplication.Container.Resolve(typeof(IUsersService), null);
+            _usersService = (IUsersService)MvcApplication.Container.Resolve(typeof(IUsersService), null);
         }
 
         #region MembershipProvider
@@ -93,7 +91,7 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// A <see cref="T:System.Web.Security.MembershipUser" /> object populated with the information for the newly created user.
         /// </returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override System.Web.Security.MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out System.Web.Security.MembershipCreateStatus status)
+        public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
             throw new NotImplementedException();
         }
@@ -141,7 +139,7 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// A <see cref="T:System.Web.Security.MembershipUserCollection" /> collection that contains a page of <paramref name="pageSize" /><see cref="T:System.Web.Security.MembershipUser" /> objects beginning at the page specified by <paramref name="pageIndex" />.
         /// </returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override System.Web.Security.MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
+        public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             throw new NotImplementedException();
         }
@@ -157,7 +155,7 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// A <see cref="T:System.Web.Security.MembershipUserCollection" /> collection that contains a page of <paramref name="pageSize" /><see cref="T:System.Web.Security.MembershipUser" /> objects beginning at the page specified by <paramref name="pageIndex" />.
         /// </returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override System.Web.Security.MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
+        public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             throw new NotImplementedException();
         }
@@ -172,7 +170,7 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// A <see cref="T:System.Web.Security.MembershipUserCollection" /> collection that contains a page of <paramref name="pageSize" /><see cref="T:System.Web.Security.MembershipUser" /> objects beginning at the page specified by <paramref name="pageIndex" />.
         /// </returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override System.Web.Security.MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
+        public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
         {
             throw new NotImplementedException();
         }
@@ -212,7 +210,7 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// A <see cref="T:System.Web.Security.MembershipUser" /> object populated with the specified user's information from the data source.
         /// </returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override System.Web.Security.MembershipUser GetUser(string username, bool userIsOnline)
+        public override MembershipUser GetUser(string username, bool userIsOnline)
         {
             throw new NotImplementedException();
         }
@@ -226,7 +224,7 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// A <see cref="T:System.Web.Security.MembershipUser" /> object populated with the specified user's information from the data source.
         /// </returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override System.Web.Security.MembershipUser GetUser(object providerUserKey, bool userIsOnline)
+        public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
         {
             throw new NotImplementedException();
         }
@@ -284,7 +282,7 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// Gets a value indicating the format for storing passwords in the membership data store.
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public override System.Web.Security.MembershipPasswordFormat PasswordFormat
+        public override MembershipPasswordFormat PasswordFormat
         {
             get { throw new NotImplementedException(); }
         }
@@ -348,7 +346,7 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// </summary>
         /// <param name="user">A <see cref="T:System.Web.Security.MembershipUser" /> object that represents the user to update and the updated information for the user.</param>
         /// <exception cref="NotImplementedException"></exception>
-        public override void UpdateUser(System.Web.Security.MembershipUser user)
+        public override void UpdateUser(MembershipUser user)
         {
             throw new NotImplementedException();
         }
@@ -363,12 +361,12 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// </returns>
         public override bool ValidateUser(string username, string password)
         {
-            var userProfile = this.usersService.GetUserProfile(username);
+            var userProfile = _usersService.GetUserProfile(username);
             if (userProfile == null)
             {
                 return false;
             }
-            var membership = this.usersService.GetMembership(userProfile.UserId);
+            var membership = _usersService.GetMembership(userProfile.UserId);
             if (membership == null)
             {
                 return false;
@@ -377,7 +375,7 @@ namespace Vserv.Accounting.Web.Code.Membership
             {
                 return false;
             }
-            if (membership.PasswordSalt == this.usersService.GetHash(password))
+            if (membership.PasswordSalt == _usersService.GetHash(password))
             {
                 return true;
             }
@@ -388,7 +386,7 @@ namespace Vserv.Accounting.Web.Code.Membership
                 if (membership.ConfirmationToken == password)
                 {
                     membership.ConfirmationToken = null;
-                    this.usersService.Save(membership, add: false);
+                    _usersService.Save(membership, add: false);
                     return true;
                 }
             }
@@ -413,7 +411,7 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// </exception>
         public override bool ConfirmAccount(string accountConfirmationToken)
         {
-            var membership = this.usersService.GetMembershipByConfirmToken(accountConfirmationToken, withUserProfile: false);
+            var membership = _usersService.GetMembershipByConfirmToken(accountConfirmationToken, withUserProfile: false);
             if (membership == null)
             {
                 throw new Exception("Activation code is incorrect.");
@@ -423,7 +421,7 @@ namespace Vserv.Accounting.Web.Code.Membership
                 throw new Exception("Your account is already activated.");
             }
             membership.IsConfirmed = true;
-            this.usersService.Save(membership, add: false);
+            _usersService.Save(membership, add: false);
             return true;
         }
 
@@ -471,7 +469,7 @@ namespace Vserv.Accounting.Web.Code.Membership
         {
             userName = userName.Trim().ToLower();
 
-            var userProfile = this.usersService.GetUserProfile(userName);
+            var userProfile = _usersService.GetUserProfile(userName);
 
             if (userProfile.IsNotNull())
             {
@@ -486,13 +484,13 @@ namespace Vserv.Accounting.Web.Code.Membership
                 DisplayName = values.ContainsKey("DisplayName") ? values["DisplayName"].ToString() : String.Empty,
             };
 
-            this.usersService.Save(newUserProfile);
+            _usersService.Save(newUserProfile);
 
-            var membership = new Vserv.Accounting.Data.Entity.Membership
+            var membership = new Data.Entity.Membership
             {
                 UserId = newUserProfile.UserId,
                 CreateDate = DateTime.Now,
-                PasswordSalt = this.usersService.GetHash(password),
+                PasswordSalt = _usersService.GetHash(password),
                 IsConfirmed = true, // Turn it false if you want to send an email for activation link.
                 ConfirmationToken = Guid.NewGuid().ToString().ToLower(),
                 Email = values.ContainsKey("Email") ? values["Email"].ToString() : String.Empty,
@@ -500,40 +498,40 @@ namespace Vserv.Accounting.Web.Code.Membership
                 Comment = values.ContainsKey("Comment") ? Convert.ToString(values["Comment"]) : String.Empty,
             };
 
-            this.usersService.Save(membership, add: true);
+            _usersService.Save(membership, add: true);
 
             List<UserSecurityQuestion> userSecurityQuestions = new List<UserSecurityQuestion>();
-            UserSecurityQuestion userSecurityQuestion = null;
+            UserSecurityQuestion userSecurityQuestion;
 
             // Save Security Questions for each user.
-            if (values.ContainsKey(Common.CommonConstants.USER_SECURITY_QUESTION_1))
+            if (values.ContainsKey(CommonConstants.USER_SECURITY_QUESTION_1))
             {
-                userSecurityQuestion = (UserSecurityQuestion)values[Common.CommonConstants.USER_SECURITY_QUESTION_1];
+                userSecurityQuestion = (UserSecurityQuestion)values[CommonConstants.USER_SECURITY_QUESTION_1];
                 userSecurityQuestion.CreatedBy = userName;
                 userSecurityQuestion.CreatedDate = DateTime.Now;
                 userSecurityQuestion.IsActive = true;
                 userSecurityQuestions.Add(userSecurityQuestion);
             }
 
-            if (values.ContainsKey(Common.CommonConstants.USER_SECURITY_QUESTION_2))
+            if (values.ContainsKey(CommonConstants.USER_SECURITY_QUESTION_2))
             {
-                userSecurityQuestion = (UserSecurityQuestion)values[Common.CommonConstants.USER_SECURITY_QUESTION_2];
+                userSecurityQuestion = (UserSecurityQuestion)values[CommonConstants.USER_SECURITY_QUESTION_2];
                 userSecurityQuestion.CreatedBy = userName;
                 userSecurityQuestion.CreatedDate = DateTime.Now;
                 userSecurityQuestion.IsActive = true;
                 userSecurityQuestions.Add(userSecurityQuestion);
             }
 
-            if (values.ContainsKey(Common.CommonConstants.USER_SECURITY_QUESTION_3))
+            if (values.ContainsKey(CommonConstants.USER_SECURITY_QUESTION_3))
             {
-                userSecurityQuestion = (UserSecurityQuestion)values[Common.CommonConstants.USER_SECURITY_QUESTION_3];
+                userSecurityQuestion = (UserSecurityQuestion)values[CommonConstants.USER_SECURITY_QUESTION_3];
                 userSecurityQuestion.CreatedBy = userName;
                 userSecurityQuestion.CreatedDate = DateTime.Now;
                 userSecurityQuestion.IsActive = true;
                 userSecurityQuestions.Add(userSecurityQuestion);
             }
 
-            this.usersService.Save(userSecurityQuestions, userName, add: true);
+            _usersService.Save(userSecurityQuestions, userName, add: true);
             return membership.ConfirmationToken;
         }
 
@@ -677,7 +675,7 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// <returns></returns>
         public override int GetUserIdFromOAuth(string provider, string providerUserId)
         {
-            var oAuthMembership = this.usersService.GetOAuthMembership(provider, providerUserId);
+            var oAuthMembership = _usersService.GetOAuthMembership(provider, providerUserId);
             if (oAuthMembership != null)
             {
                 return oAuthMembership.UserId;
@@ -694,12 +692,12 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// <exception cref="Exception">User profile was not created.</exception>
         public override void CreateOrUpdateOAuthAccount(string provider, string providerUserId, string userName)
         {
-            var userProfile = this.usersService.GetUserProfile(userName);
+            var userProfile = _usersService.GetUserProfile(userName);
             if (userProfile == null)
             {
                 throw new Exception("User profile was not created.");
             }
-            this.usersService.SaveOAuthMembership(provider, providerUserId, userProfile.UserId);
+            _usersService.SaveOAuthMembership(provider, providerUserId, userProfile.UserId);
         }
 
         /// <summary>
@@ -711,7 +709,7 @@ namespace Vserv.Accounting.Web.Code.Membership
         /// </returns>
         public override string GetUserNameFromId(int userId)
         {
-            var userProfile = this.usersService.GetUserProfile(userId);
+            var userProfile = _usersService.GetUserProfile(userId);
             if (userProfile != null)
             {
                 return userProfile.UserName;

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vserv.Common.Utils
 {
@@ -103,7 +102,7 @@ namespace Vserv.Common.Utils
         /// <remarks></remarks>
         private static String GetDescription(T value)
         {
-            FieldInfo field = typeof(T).GetField(value.ToString());
+            FieldInfo field = typeof(T).GetField(value.ToString(CultureInfo.InvariantCulture));
 
             return field.GetCustomAttributes(typeof(DescriptionAttribute), false)
                     .Cast<DescriptionAttribute>()

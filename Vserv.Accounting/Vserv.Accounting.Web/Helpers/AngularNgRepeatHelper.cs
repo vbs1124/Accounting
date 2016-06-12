@@ -1,6 +1,6 @@
 ﻿﻿using System;
-using System.Web.Mvc;
-using HtmlTags;
+﻿using System.Web.Mvc;
+﻿using HtmlTags;
 
 namespace Vserv.Accounting.Web.Helpers
 {

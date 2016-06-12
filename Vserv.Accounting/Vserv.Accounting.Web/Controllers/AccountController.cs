@@ -2,17 +2,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
+using AutoMapper.QueryableExtensions;
 using Vserv.Accounting.Business.Managers;
+using Vserv.Accounting.Common;
 using Vserv.Accounting.Core.Services;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Web.Models;
 using WebMatrix.WebData;
-using System.Linq;
-using Vserv.Accounting.Common;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
+
 #endregion
 
 namespace Vserv.Accounting.Web.Controllers
@@ -27,28 +27,24 @@ namespace Vserv.Accounting.Web.Controllers
         /// <summary>
         /// The users service
         /// </summary>
-        private readonly IUsersService usersService;
+        private readonly IUsersService _usersService;
 
-        /// <summary>
-        /// The email service
-        /// </summary>
-        private readonly IEmailService emailService;
-
-        public AccountManager _accountManager;
+        public AccountManager AccountManager;
 
         #endregion
 
         #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountController"/> class.
         /// </summary>
         /// <param name="usersService">The users service.</param>
         /// <param name="emailService">The email service.</param>
+        /// <param name="accountManager"></param>
         public AccountController(IUsersService usersService, IEmailService emailService, AccountManager accountManager)
         {
-            this.usersService = usersService;
-            this.emailService = emailService;
-            this._accountManager = accountManager;
+            _usersService = usersService;
+            AccountManager = accountManager;
         }
         #endregion
 
@@ -82,7 +78,7 @@ namespace Vserv.Accounting.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "User Name or password provided is incorrect.");
+            ModelState.AddModelError("", @"User Name or password provided is incorrect.");
             return View(model);
         }
 
@@ -135,7 +131,7 @@ namespace Vserv.Accounting.Web.Controllers
 
         private void SetSecurityQuestions()
         {
-            List<SecurityQuestion> securityQuestions = _accountManager.GetSecurityQuestions();
+            List<SecurityQuestion> securityQuestions = AccountManager.GetSecurityQuestions();
             ViewBag.SecurityQuestionCollection1 = securityQuestions.Where(question => question.CollectionId == CommonConstants.INT_ONE);
             ViewBag.SecurityQuestionCollection2 = securityQuestions.Where(question => question.CollectionId == CommonConstants.INT_TWO);
             ViewBag.SecurityQuestionCollection3 = securityQuestions.Where(question => question.CollectionId == CommonConstants.INT_THREE);
@@ -161,8 +157,8 @@ namespace Vserv.Accounting.Web.Controllers
         [HttpPost]
         public ActionResult ChangePassword(UserProfileModel userProfileModel)
         {
-            UserProfile userProfile = _accountManager.GetUserProfile(User.Identity.Name);
-            var membership = this.usersService.GetMembership(userProfile.UserId);
+            UserProfile userProfile = AccountManager.GetUserProfile(User.Identity.Name);
+            var membership = _usersService.GetMembership(userProfile.UserId);
             if (membership == null)
             {
                 return RedirectToAction("BadLink");
@@ -171,36 +167,38 @@ namespace Vserv.Accounting.Web.Controllers
             // passwords
             if (String.IsNullOrEmpty(userProfileModel.NewPassword))
             {
-                ModelState.AddModelError("newPassword", "New Password is required.");
+                ModelState.AddModelError("newPassword", @"New Password is required.");
                 return View();
             }
             if (userProfileModel.NewPassword.Length < 4)
             {
-                ModelState.AddModelError("newPassword", "New Password is too short.");
+                ModelState.AddModelError("newPassword", @"New Password is too short.");
                 return View();
             }
             if (String.IsNullOrEmpty(userProfileModel.ConfirmPassword))
             {
-                ModelState.AddModelError("confirmPassword", "Confirm password is required.");
+                ModelState.AddModelError("confirmPassword", @"Confirm password is required.");
                 return View();
             }
             if (userProfileModel.NewPassword != userProfileModel.ConfirmPassword)
             {
-                ModelState.AddModelError("confirmPassword", "Passwords are mismatched.");
+                ModelState.AddModelError("confirmPassword", @"Passwords are mismatched.");
                 return View();
             }
 
             try
             {
-                this.usersService.ChangePassword(membership, userProfileModel.NewPassword);
+                _usersService.ChangePassword(membership, userProfileModel.NewPassword);
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("_FORM", "Error is occurred. " + ex.Message);
+                ModelState.AddModelError("_FORM", @"Error is occurred. " + ex.Message);
             }
 
-            Dictionary<string, string> message = new Dictionary<string, string>();
-            message.Add(CommonConstants.MESSAGE, "Your password has been changed successfully.");
+            Dictionary<string, string> message = new Dictionary<string, string>
+            {
+                {CommonConstants.MESSAGE, "Your password has been changed successfully."}
+            };
             return RedirectToAction("Success", "Home", new { successMessage = message.ToEncryptedString() });
         }
 
@@ -225,7 +223,7 @@ namespace Vserv.Accounting.Web.Controllers
                 forgotPasswordModel.UserName = forgotPasswordModel.UserName.Trim().ToLower();
                 forgotPasswordModel.EmailAddress = forgotPasswordModel.EmailAddress.Trim().ToLower();
 
-                bool isRegisteredUser = _accountManager.IsRegisteredUser(ConvertTo(forgotPasswordModel));
+                bool isRegisteredUser = AccountManager.IsRegisteredUser(ConvertTo(forgotPasswordModel));
                 if (isRegisteredUser)
                 {
                     //UserProfileModel userProfileModel = new UserProfileModel
@@ -233,20 +231,22 @@ namespace Vserv.Accounting.Web.Controllers
                     //    UserName = forgotPasswordModel.UserName
                     //};
 
-                    Dictionary<string, string> usrInfo = new Dictionary<string, string>();
-                    usrInfo.Add("vbs_usr_name", forgotPasswordModel.UserName);
+                    Dictionary<string, string> usrInfo = new Dictionary<string, string>
+                    {
+                        {"vbs_usr_name", forgotPasswordModel.UserName}
+                    };
                     return RedirectToAction("VerifyUser", new { userName = usrInfo.ToEncryptedString() });
                 }
                 else
                 {
-                    ModelState.AddModelError("UserRecoveryFailure", "No account found satisfying provided details.");
+                    ModelState.AddModelError("UserRecoveryFailure", @"No account found satisfying provided details.");
                 }
             }
 
             // Fetch Security Question once user enters a valid username.
             if (ModelState.IsValidField("UserName") && String.IsNullOrWhiteSpace(forgotPasswordModel.SecurityQuestion))
             {
-                UserSecurityQuestion randomSecurityQuestion = _accountManager.GetRandomSecurityQuestion(forgotPasswordModel.UserName);
+                UserSecurityQuestion randomSecurityQuestion = AccountManager.GetRandomSecurityQuestion(forgotPasswordModel.UserName);
 
                 if (randomSecurityQuestion.IsNotNull() && randomSecurityQuestion.SecurityQuestion.IsNotNull())
                 {
@@ -272,14 +272,14 @@ namespace Vserv.Accounting.Web.Controllers
             Dictionary<string, string> usrInfo = new Dictionary<string, string>();
             usrInfo.ToDecryptedString(userProfileModel.UserName);
 
-            UserProfile userProfile = _accountManager.GetUserProfile(usrInfo["vbs_usr_name"]);
+            UserProfile userProfile = AccountManager.GetUserProfile(usrInfo["vbs_usr_name"]);
 
             if (userProfile.IsNull())
             {
                 return RedirectToAction("BadLink");
             }
 
-            var membership = this.usersService.GetMembership(userProfile.UserId);
+            var membership = _usersService.GetMembership(userProfile.UserId);
             if (membership == null)
             {
                 return RedirectToAction("BadLink");
@@ -288,32 +288,32 @@ namespace Vserv.Accounting.Web.Controllers
             // passwords
             if (String.IsNullOrEmpty(userProfileModel.NewPassword))
             {
-                ModelState.AddModelError("newPassword", "New Password is required.");
+                ModelState.AddModelError("newPassword", @"New Password is required.");
                 return View();
             }
             if (userProfileModel.NewPassword.Length < 4)
             {
-                ModelState.AddModelError("newPassword", "New Password is too short.");
+                ModelState.AddModelError("newPassword", @"New Password is too short.");
                 return View();
             }
             if (String.IsNullOrEmpty(userProfileModel.ConfirmPassword))
             {
-                ModelState.AddModelError("confirmPassword", "Confirm password is required.");
+                ModelState.AddModelError("confirmPassword", @"Confirm password is required.");
                 return View();
             }
             if (userProfileModel.NewPassword != userProfileModel.ConfirmPassword)
             {
-                ModelState.AddModelError("confirmPassword", "Passwords are mismatched.");
+                ModelState.AddModelError("confirmPassword", @"Passwords are mismatched.");
                 return View();
             }
 
             try
             {
-                this.usersService.ChangePassword(membership, userProfileModel.NewPassword);
+                _usersService.ChangePassword(membership, userProfileModel.NewPassword);
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("_FORM", "Error is occurred. " + ex.Message);
+                ModelState.AddModelError("_FORM", @"Error is occurred. " + ex.Message);
             }
 
             return RedirectToAction("Logout");
@@ -343,7 +343,7 @@ namespace Vserv.Accounting.Web.Controllers
         /// <returns></returns>
         public ActionResult UserProfile()
         {
-            UserProfile userProfile = _accountManager.GetUserProfile(User.Identity.Name);
+            UserProfile userProfile = AccountManager.GetUserProfile(User.Identity.Name);
             UserProfileModel userProfileModel = ConvertTo(userProfile);
             return View("profile", userProfileModel);
         }
@@ -358,7 +358,7 @@ namespace Vserv.Accounting.Web.Controllers
 
         public ActionResult GetSecurityQuestions()
         {
-            var result = _accountManager.GetSecurityQuestions().AsQueryable();
+            var result = AccountManager.GetSecurityQuestions().AsQueryable();
             var securityQuestions = result.ProjectTo<SecurityQuestionModel>();
             return CustomJson(securityQuestions.ToArray());
         }

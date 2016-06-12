@@ -19,8 +19,7 @@ namespace Vserv.Common.Utils
         {
             if (ConfigurationManager.AppSettings.AllKeys.Contains(keyName))
                 return ConfigurationManager.AppSettings[keyName];
-            else
-                throw new KeyNotFoundException(string.Format("Attempt to read the ConfigurationKey {0} failed because it does not exist", keyName));
+            throw new KeyNotFoundException(string.Format("Attempt to read the ConfigurationKey {0} failed because it does not exist", keyName));
         }
     }
 }

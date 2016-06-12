@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Vserv.Accounting.Web.Models
 {
@@ -88,7 +86,7 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The updated date.
         /// </value>
-        public Nullable<DateTime> UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the employees.

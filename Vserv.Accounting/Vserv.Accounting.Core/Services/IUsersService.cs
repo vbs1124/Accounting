@@ -117,6 +117,7 @@ namespace Vserv.Accounting.Core.Services
         /// Save the security Questions against each user.
         /// </summary>
         /// <param name="userSecurityQuestions"></param>
+        /// <param name="userName"></param>
         /// <param name="add"></param>
         void Save(List<UserSecurityQuestion> userSecurityQuestions, string userName, bool add);
     }

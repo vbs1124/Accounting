@@ -1,11 +1,11 @@
 ﻿﻿using System;
 ﻿using System.Collections.Generic;
 ﻿using System.Linq.Expressions;
-using System.Web;
-using System.Web.Mvc;
-using Vserv.Accounting.Web.Code.Utilities;
-using HtmlTags;
-using Humanizer;
+﻿using System.Web;
+﻿using System.Web.Mvc;
+﻿using HtmlTags;
+﻿using Humanizer;
+﻿using Vserv.Accounting.Web.Code.Utilities;
 
 namespace Vserv.Accounting.Web.Helpers
 {
@@ -115,7 +115,7 @@ namespace Vserv.Accounting.Web.Helpers
             //    .Attr("type", "text");
             //.Attr("placeholder", placeholder); //TODO: Un comment to include placeholder.
 
-            HtmlTag input = null;
+            HtmlTag input;
 
             if (metadata.DataTypeName == "DateTime")
             {

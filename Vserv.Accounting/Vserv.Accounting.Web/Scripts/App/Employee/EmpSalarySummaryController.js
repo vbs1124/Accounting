@@ -1,14 +1,12 @@
 ﻿(function () {
     'use strict';
-    window.app.controller('EmpSalarySummaryController', EmpSalarySummaryController);
-    EmpSalarySummaryController.$inject = ['$scope', 'EmpSalarySummaryService'];
 
-    function EmpSalarySummaryController($scope, EmpSalarySummaryService) {
+    function empSalarySummaryController($scope, empSalarySummaryService) {
 
         $scope.salarySummaryModel = null;
 
         $scope.saveEmployeeSalaryDetail = function () {
-            EmpSalarySummaryService.saveEmployeeSalaryDetail(salarySummaryModel).then(function (resp) {
+            empSalarySummaryService.saveEmployeeSalaryDetail(salarySummaryModel).then(function (resp) {
                 if (resp.businessException == null) {
 
                 }
@@ -18,4 +16,7 @@
             });
         }
     }
+
+    window.app.controller('EmpSalarySummaryController', empSalarySummaryController);
+    empSalarySummaryController.$inject = ['$scope', 'EmpSalarySummaryService'];
 })();

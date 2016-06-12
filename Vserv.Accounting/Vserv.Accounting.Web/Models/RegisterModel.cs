@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Vserv.Accounting.Web.Code;
 using Vserv.Accounting.Data.Entity;
+using Vserv.Accounting.Web.Code;
 
 namespace Vserv.Accounting.Web.Models
 {

@@ -1,17 +1,25 @@
 ﻿(function () {
     'use strict';
-    window.app.controller('EmpSalaryBreakupController', EmpSalaryBreakupController);
-    EmpSalaryBreakupController.$inject = ['$scope', 'EmpSalaryBreakupService'];
 
-    function EmpSalaryBreakupController($scope, EmpSalaryBreakupService) {
+    function getFinancialYears() {
+        var currentYear = moment().year();
+        var financialYears = [];
+        for (var i = currentYear + 1 ; i > currentYear - 9; i--) {
+            financialYears.push({ currentYear: i - 1, financialYear: i - 1 + '-' + i });
+        }
+        console.log(financialYears);
+        return financialYears;
+    }
+
+    function empSalaryBreakupController($scope, empSalaryBreakupService) {
         $scope.paysheets = [];
-        $scope.FinancialYears = GetFinancialYears();
+        $scope.FinancialYears = getFinancialYears();
         $scope.selectedFinancialYear = moment().year().toString();
 
         $scope.paySheetParameter = {
             EmployeeId: null,
             FinancialYearFrom: null,
-            FinancialYearTo: null,
+            FinancialYearTo: null
         };
 
         //Method Initialize
@@ -25,7 +33,7 @@
             $scope.paySheetParameter.FinancialYearFrom = 2016;
             $scope.paySheetParameter.FinancialYearTo = 2017;
 
-            EmpSalaryBreakupService.getYearlyPaySheet($scope.paySheetParameter).then(function (resp) {
+            empSalaryBreakupService.getYearlyPaySheet($scope.paySheetParameter).then(function (resp) {
                 if (resp.businessException == null) {
                     $scope.paysheets = resp.result;
                     // $scope.gridOptions = { data: "paysheets" };
@@ -62,17 +70,10 @@
             , "Commission", "Others", "Medical", "Food Coupons"];
 
         $scope.isEditableColumn = function (componentName) {
-            return $.inArray(componentName, $scope.nonEditableComponents) == -1;
+            return $.inArray(componentName, $scope.nonEditableComponents) === -1;
         }
     }
 
-    function GetFinancialYears() {
-        var currentYear = moment().year();
-        var financialYears = [];
-        for (var i = currentYear + 1 ; i > currentYear - 9; i--) {
-            financialYears.push({ currentYear: i - 1, financialYear: i - 1 + '-' + i });
-        }
-        console.log(financialYears);
-        return financialYears;
-    }
+    window.app.controller('EmpSalaryBreakupController', empSalaryBreakupController);
+    empSalaryBreakupController.$inject = ['$scope', 'EmpSalaryBreakupService'];
 })();

@@ -1,6 +1,8 @@
 using Heroic.AutoMapper;
+using Vserv.Accounting.Web;
+using WebActivatorEx;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Vserv.Accounting.Web.AutoMapperConfig), "Configure")]
+[assembly: PreApplicationStartMethod(typeof(AutoMapperConfig), "Configure")]
 namespace Vserv.Accounting.Web
 {
 	public static class AutoMapperConfig
