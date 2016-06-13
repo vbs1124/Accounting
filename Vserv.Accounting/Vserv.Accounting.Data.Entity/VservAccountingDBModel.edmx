@@ -223,6 +223,7 @@
           </Key>
           <Property Name="EmpSalaryStructureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
           <Property Name="CTC" Type="numeric" Precision="19" Scale="4" Nullable="false" />
           <Property Name="MonthlyCabDeductions" Type="numeric" Precision="19" Scale="4" />
           <Property Name="MonthlyProjectIncentive" Type="numeric" Precision="19" Scale="4" />
@@ -810,6 +811,9 @@
           <Parameter Name="EmployeeID" Type="int" Mode="In" />
           <Parameter Name="UpdatedByUserName" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetEmpAppraisalHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeId" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetEmployeeSalaryDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmployeeId" Type="int" Mode="In" />
           <Parameter Name="FinancialYearFrom" Type="int" Mode="In" />
@@ -1186,6 +1190,9 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
+          <FunctionImport Name="GetEmpAppraisalHistory" ReturnType="Collection(VservAccountingDBModel.GetEmpAppraisalHistory_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="ArchiveEmployee_Result">
           <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
@@ -1465,6 +1472,7 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="EmployeeSalaryDetails" Relationship="VservAccountingDBModel.FK_EmployeeSalaryDetail_EmployeeSalaryDetail" FromRole="EmpSalaryStructure" ToRole="EmployeeSalaryDetail" />
+          <Property Name="ParentId" Type="Int32" />
         </EntityType>
         <EntityType Name="EPFNumber">
           <Key>
@@ -2030,6 +2038,16 @@
           <End Type="VservAccountingDBModel.Role" Role="Role" Multiplicity="*" />
           <End Type="VservAccountingDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
+        <ComplexType Name="GetEmpAppraisalHistory_Result">
+          <Property Type="Int32" Name="EmpSalaryStructureId" Nullable="false" />
+          <Property Type="Decimal" Name="CurrentCTC" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="DateTime" Name="CurrentEffectiveFrom" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="CurrentEffectiveTo" Nullable="false" Precision="23" />
+          <Property Type="Decimal" Name="PrevCTC" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="DateTime" Name="PrevEffectiveFrom" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="PrevEffectiveTo" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="PercentageGrowth" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2287,6 +2305,7 @@
           <EntitySetMapping Name="EmpSalaryStructures">
             <EntityTypeMapping TypeName="VservAccountingDBModel.EmpSalaryStructure">
               <MappingFragment StoreEntitySet="EmpSalaryStructure">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
@@ -2615,6 +2634,20 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="GetEmpAppraisalHistory" FunctionName="VservAccountingDBModel.Store.GetEmpAppraisalHistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.GetEmpAppraisalHistory_Result">
+                <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
+                <ScalarProperty Name="CurrentCTC" ColumnName="CurrentCTC" />
+                <ScalarProperty Name="CurrentEffectiveFrom" ColumnName="CurrentEffectiveFrom" />
+                <ScalarProperty Name="CurrentEffectiveTo" ColumnName="CurrentEffectiveTo" />
+                <ScalarProperty Name="PrevCTC" ColumnName="PrevCTC" />
+                <ScalarProperty Name="PrevEffectiveFrom" ColumnName="PrevEffectiveFrom" />
+                <ScalarProperty Name="PrevEffectiveTo" ColumnName="PrevEffectiveTo" />
+                <ScalarProperty Name="PercentageGrowth" ColumnName="PercentageGrowth" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,5 +1,5 @@
 ﻿@using Vserv.Accounting.Web.Helpers
-@model Vserv.Accounting.Web.Models.SalarySummaryModel
+@model Vserv.Accounting.Web.Models.EmpSalaryStructureModel
 <script src="~/Scripts/App/Employee/EmployeeService.js"></script>
 <form novalidate
       name="vm.form"
@@ -14,71 +14,9 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    @Html.Angular().FormForModel("vm.salarySummaryModel")
+                    @Html.Angular().FormForModel("vm.empSalaryStructureModel")
                 </div>
             </div>
-            @*<div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label" for="">Cost to company(CTC)</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                            <input type="text" class="form-control" ng-model="vm.salarySummaryModel.CTC">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="">Cab Deductions</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                            <input type="text" class="form-control" ng-model="vm.salarySummaryModel.CabDeductions">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="">Project Incentive</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                            <input type="text" class="form-control" ng-model="vm.salarySummaryModel.ProjectIncentive">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="">Car Lease</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                            <input type="text" class="form-control" ng-model="vm.salarySummaryModel.CarLease">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label" for="">Food Coupons</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                            <select class="form-control" ng-model="vm.salarySummaryModel.FoodCoupons">
-                                <option value="0">0</option>
-                                <option value="1100">1100</option>
-                                <option value="2200">2200</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="">Performance Incentive</label>
-                        <select class="form-control" ng-model="vm.salarySummaryModel.PerformanceIncentive">
-                            <option value="0">0</option>
-                            <option value="1">5 % of CTC paid Anually</option>
-                            <option value="2">25% of increment in June and 25% in December</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="">Effective From</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.salarySummaryModel.EffectiveFrom" is-open="popup2.opened" datepicker-options="dateOptions" close-text="Close" />
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
         </div>
         <div class="modal-footer">
             <button class="btn btn-success">Save</button>

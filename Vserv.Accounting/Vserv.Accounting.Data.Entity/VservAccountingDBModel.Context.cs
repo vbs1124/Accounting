@@ -309,5 +309,14 @@ namespace Vserv.Accounting.Data.Entity
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmployeeSalaryDetail_Result>("GetEmployeeSalaryDetail", employeeIdParameter, financialYearFromParameter, financialYearToParameter);
         }
+    
+        public virtual ObjectResult<GetEmpAppraisalHistory_Result> GetEmpAppraisalHistory(Nullable<int> employeeId)
+        {
+            var employeeIdParameter = employeeId.HasValue ?
+                new ObjectParameter("EmployeeId", employeeId) :
+                new ObjectParameter("EmployeeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmpAppraisalHistory_Result>("GetEmpAppraisalHistory", employeeIdParameter);
+        }
     }
 }

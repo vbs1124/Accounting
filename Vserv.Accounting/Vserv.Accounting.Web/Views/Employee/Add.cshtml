@@ -3,16 +3,20 @@
     ViewBag.Title = "Add a New Employee";
 }
 
-<ul class="nav nav-tabs">
-    <li class="active"><a href="#add-employee" data-toggle="tab">@ViewBag.Title</a></li>
-</ul>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#add-employee" data-toggle="tab">@ViewBag.Title</a></li>
+        </ul>
 
-<div class="tab-content">
-    <div class="tab-pane fade active in padding-top10" id="add-employee">
-        @using (Html.BeginForm("add", "employee"))
-        {
-            @Html.Partial("_EmployeePartial")
-        }
+        <div class="tab-content">
+            <div class="tab-pane fade active in padding-top10" id="add-employee">
+                @using (Html.BeginForm("add", "employee"))
+                {
+                    @Html.Partial("_EmployeePartial")
+                }
+            </div>
+        </div>
     </div>
 </div>
 @Html.Action("DesignationWindow", "Designation")

@@ -289,7 +289,7 @@
     <Compile Include="Models\PaySheetParameter.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\RoleModel.cs" />
-    <Compile Include="Models\SalarySummaryModel.cs" />
+    <Compile Include="Models\EmpSalaryStructureModel.cs" />
     <Compile Include="Models\SecurityQuestionModel.cs" />
     <Compile Include="Models\StateModel.cs" />
     <Compile Include="Models\UserProfileModel.cs" />
@@ -461,11 +461,7 @@
     <Content Include="Scripts\App\Designation\DesignationController.js" />
     <Content Include="Scripts\App\Designation\DesignationService.js" />
     <Content Include="Scripts\App\Employee\AddAppraisalDirective.js" />
-    <Content Include="Scripts\App\Employee\EmpSalarySummaryController.js" />
-    <Content Include="Scripts\App\Employee\EmpSalaryBreakupController.js" />
     <Content Include="Scripts\App\Employee\EmployeeController.js" />
-    <Content Include="Scripts\App\Employee\EmpSalarySummaryService.js" />
-    <Content Include="Scripts\App\Employee\EmpSalaryBreakupService.js" />
     <Content Include="Scripts\App\Employee\EmployeeService.js" />
     <Content Include="Scripts\App\Home\HomeController.js" />
     <Content Include="Scripts\App\Home\HomeService.js" />

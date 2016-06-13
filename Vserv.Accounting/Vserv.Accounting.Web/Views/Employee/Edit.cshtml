@@ -2,45 +2,41 @@
 @{
     ViewBag.Title = "Edit Employee";
 }
-<style type="text/css">
-    .gridStyle {
-        width: 1260px;
-        height: 650px;
-    }
-</style>
-
-<ul class="nav nav-tabs">
-    <li class="active"><a href="#edit-employee" data-toggle="tab">@ViewBag.Title</a></li>
-    <li class=""><a href="#emp-salary-summary" data-toggle="tab" aria-expanded="false">Salary Summary</a></li>
-    <li class=""><a href="#emp-salary-breakup" data-toggle="tab" aria-expanded="false">Salary Breakup</a></li>
-    <li class=""><a href="#employee-history" data-toggle="tab" aria-expanded="false">View History</a></li>
-</ul>
-<div class="tab-content">
-
-    <div class="tab-pane fade active in padding-top10" id="edit-employee">
-        @using (Html.BeginForm("edit", "employee"))
-        {
-            @Html.HiddenFor(emp => emp.EmployeeId)
-            @Html.Partial("_EmployeePartial")
-        }
+<div class="row" ng-controller="EmployeeController as vm" ng-init="initialize(@Model.EmployeeId)">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#edit-employee" data-toggle="tab">@ViewBag.Title</a></li>
+            <li class=""><a href="#emp-salary-summary" data-toggle="tab" aria-expanded="false">Salary Summary</a></li>
+            <li class=""><a href="#emp-salary-breakup" data-toggle="tab" aria-expanded="false">Salary Breakup</a></li>
+            <li class=""><a href="#employee-history" data-toggle="tab" aria-expanded="false">View History</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade active in padding-top10" id="edit-employee">
+                @using (Html.BeginForm("edit", "employee"))
+                {
+                    @Html.HiddenFor(emp => emp.EmployeeId)
+                    @Html.Partial("_EmployeePartial")
+                }
+            </div>
+            <div class="tab-pane fade padding-top10" id="emp-salary-summary">
+                @Html.Partial("_SalarySummary")
+            </div>
+            <div class="tab-pane fade padding-top10" id="emp-salary-breakup">
+                @Html.Partial("_SalaryBreakup")
+            </div>
+            <div class="tab-pane fade padding-top10" id="employee-history">
+                @Html.Action("employeehistory", "employee")
+            </div>
+        </div>
     </div>
-    <div class="tab-pane fade padding-top10" id="emp-salary-summary" ng-controller="EmpSalarySummaryController" ng-init="">
-        @Html.Partial("_SalarySummary")
-    </div>
-    <div class="tab-pane fade padding-top10" ng-controller="EmpSalaryBreakupController" id="emp-salary-breakup" ng-init="loadYearlyPaySheet(@Model.EmployeeId)">
-        @Html.Partial("_SalaryBreakup")
-    </div>
-    <div class="tab-pane fade padding-top10" id="employee-history">
-        @Html.Action("employeehistory", "employee")
-    </div>
+    <!-- /.col-md-12 -->
 </div>
-
 @Html.Action("DesignationWindow", "Designation")
 <script src="~/Scripts/base/morris.js"></script>
 
 <script type="text/javascript">
     $(function () {
-         
+
         Morris.Bar({
             element: 'morris-bar-chart',
             data: [

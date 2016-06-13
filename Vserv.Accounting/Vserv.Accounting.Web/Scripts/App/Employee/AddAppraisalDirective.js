@@ -1,34 +1,36 @@
 ﻿(function () {
     "use strict";
+    window.app.directive('addAppraisal', addAppraisal);
+    controller.$inject = ['$scope', 'employeeService'];
 
     function controller($scope, employeeService) {
         var vm = this;
 
         function add() {
-            var monthlyCTC = vm.salarySummaryModel.ctc / 12;
+            var monthlyCTC = vm.empSalaryStructureModel.ctc / 12;
 
-            if (vm.salarySummaryModel.cabDeductions > monthlyCTC) {
+            if (vm.empSalaryStructureModel.cabDeductions > monthlyCTC) {
                 $.showToastrMessage("error", "Cab Deductions should be less than CTC.", "Error!");
                 return false;
             }
 
-            if (vm.salarySummaryModel.projectIncentive > monthlyCTC) {
+            if (vm.empSalaryStructureModel.projectIncentive > monthlyCTC) {
                 $.showToastrMessage("error", "Project Incentive should be less than CTC.", "Error!");
                 return false;
             }
 
-            if (vm.salarySummaryModel.carLease > monthlyCTC) {
+            if (vm.empSalaryStructureModel.carLease > monthlyCTC) {
                 $.showToastrMessage("error", "Car Lease should be less than CTC.", "Error!");
                 return false;
             }
 
-            if (vm.salarySummaryModel.foodCoupons > monthlyCTC) {
+            if (vm.empSalaryStructureModel.foodCoupons > monthlyCTC) {
                 $.showToastrMessage("error", "Food Coupons should be less than CTC.", "Error!");
                 return false;
             }
 
             vm.saving = true;
-            employeeService.add(vm.salarySummaryModel, $("#EmployeeId").val()).then(function (resp) {
+            employeeService.addEmployeeSalaryDetail(vm.empSalaryStructureModel, $("#EmployeeId").val()).then(function (resp) {
                 if (resp.businessException == null) {
                     $.showToastrMessage("success", 'Salary breakup generated successfully.', "Success!");
                     //Close the modal
@@ -45,8 +47,10 @@
         vm.add = add;
 
         vm.saving = false;
-        vm.salarySummaryModel = {};
-        vm.errorMessage = null; //-------------------------
+        vm.empSalaryStructureModel = {};
+        vm.errorMessage = null;
+
+        //-------------------------
         $scope.today = function () {
             $scope.dt = new Date();
         };
@@ -102,8 +106,8 @@
 
         $scope.toggleMin();
 
-        $scope.openvmsalarySummaryModeleffectiveFrom = function () {
-            $scope.popupvmsalarySummaryModeleffectiveFrom.opened = true;
+        $scope.openvmempSalaryStructureModeleffectiveFrom = function () {
+            $scope.popupvmempSalaryStructureModeleffectiveFrom.opened = true;
         };
 
         $scope.setDate = function (year, month, day) {
@@ -114,7 +118,7 @@
         $scope.format = $scope.formats[0];
         $scope.altInputFormats = ['M!/d!/yyyy'];
 
-        $scope.popupvmsalarySummaryModeleffectiveFrom = {
+        $scope.popupvmempSalaryStructureModeleffectiveFrom = {
             opened: false
         };
 
@@ -131,7 +135,9 @@
                 date: afterTomorrow,
                 status: 'partially'
             }
-        ]; //---------------------------
+        ];
+
+        //---------------------------
     }
 
     function addAppraisal() {
@@ -141,7 +147,4 @@
             controllerAs: 'vm'
         }
     }
-
-    window.app.directive('addAppraisal', addAppraisal);
-    controller.$inject = ['$scope', 'EmployeeService'];
 })();

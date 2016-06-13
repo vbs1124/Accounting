@@ -114,6 +114,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\dbo.City.InsertScript.sql" />
-    <None Include="Vserv.Accounting.Database.publish.xml" />
   </ItemGroup>
 </Project>

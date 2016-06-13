@@ -217,19 +217,26 @@ namespace Vserv.Accounting.Web.Controllers
             return Json(paySheet, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetEmployee(int employeeId)
+        {
+            var employee = EmployeeManager.GetEmployee(employeeId);
+            EmployeeModel employeeModel = ConvertTo(employee);
+            return CustomJson(employeeModel);
+        }
+
         #region Salary Management
 
-        public JsonResult SaveEmployeeSalaryDetail(SalarySummaryModel salarySummaryModel, int employeeId)
+        public JsonResult SaveEmployeeSalaryDetail(EmpSalaryStructureModel empSalaryStructureModel, int employeeId)
         {
             EmployeeManager manager = new EmployeeManager();
             EmpSalaryStructure empSalaryStructure = new EmpSalaryStructure
             {
-                CTC = String.IsNullOrWhiteSpace(salarySummaryModel.CTC) ? 0 : Convert.ToDecimal(salarySummaryModel.CTC),
-                MonthlyCabDeductions = String.IsNullOrWhiteSpace(salarySummaryModel.CabDeductions) ? 0 : Convert.ToDecimal(salarySummaryModel.CabDeductions),
-                MonthlyProjectIncentive = String.IsNullOrWhiteSpace(salarySummaryModel.ProjectIncentive) ? 0 : Convert.ToDecimal(salarySummaryModel.ProjectIncentive),
-                MonthlyCarLease = String.IsNullOrWhiteSpace(salarySummaryModel.CarLease) ? 0 : Convert.ToDecimal(salarySummaryModel.CarLease),
-                MonthlyFoodCoupons = String.IsNullOrWhiteSpace(salarySummaryModel.FoodCoupons) ? 0 : Convert.ToDecimal(salarySummaryModel.FoodCoupons),
-                EffectiveFrom = String.IsNullOrWhiteSpace(salarySummaryModel.EffectiveFrom) ? DateTime.Now : Convert.ToDateTime(salarySummaryModel.EffectiveFrom),
+                CTC = String.IsNullOrWhiteSpace(empSalaryStructureModel.CTC) ? 0 : Convert.ToDecimal(empSalaryStructureModel.CTC),
+                MonthlyCabDeductions = String.IsNullOrWhiteSpace(empSalaryStructureModel.CabDeductions) ? 0 : Convert.ToDecimal(empSalaryStructureModel.CabDeductions),
+                MonthlyProjectIncentive = String.IsNullOrWhiteSpace(empSalaryStructureModel.ProjectIncentive) ? 0 : Convert.ToDecimal(empSalaryStructureModel.ProjectIncentive),
+                MonthlyCarLease = String.IsNullOrWhiteSpace(empSalaryStructureModel.CarLease) ? 0 : Convert.ToDecimal(empSalaryStructureModel.CarLease),
+                MonthlyFoodCoupons = String.IsNullOrWhiteSpace(empSalaryStructureModel.FoodCoupons) ? 0 : Convert.ToDecimal(empSalaryStructureModel.FoodCoupons),
+                EffectiveFrom = String.IsNullOrWhiteSpace(empSalaryStructureModel.EffectiveFrom) ? DateTime.Now : Convert.ToDateTime(empSalaryStructureModel.EffectiveFrom),
                 EmployeeId = employeeId,
                 CreatedBy = User.Identity.Name,
             };
@@ -239,12 +246,20 @@ namespace Vserv.Accounting.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetSalarySummaryModel()
+        public JsonResult GetEmpSalaryStructureModel()
         {
-            SalarySummaryModel salarySummaryModel = new SalarySummaryModel();
+            EmpSalaryStructureModel empSalaryStructureModel = new EmpSalaryStructureModel();
 
-            return Json(salarySummaryModel, JsonRequestBehavior.AllowGet);
+            return Json(empSalaryStructureModel, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult GetEmployeeAppraisalHistory(int employeeId)
+        {
+            EmployeeManager manager = new EmployeeManager();
+            return Json(manager.GetEmployeeAppraisalHistory(employeeId), JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region dropdownlist

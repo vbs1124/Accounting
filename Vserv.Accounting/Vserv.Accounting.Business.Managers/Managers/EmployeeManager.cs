@@ -456,6 +456,12 @@ namespace Vserv.Accounting.Business.Managers
                     // Push record for input fields from the form.
                     IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
 
+                    EmpSalaryStructure currentEmpSalaryStructure = empSalaryStructureRepo.GetCurrentEmpSalaryStructure(empSalaryStructure.EmployeeId);
+                    if (currentEmpSalaryStructure.IsNotNull())
+                    {
+                        empSalaryStructure.ParentId = currentEmpSalaryStructure.EmpSalaryStructureId;
+                    }
+
                     empSalaryStructure.CreatedDate = DateTime.Now;
                     empSalaryStructure.IsActive = true;
                     empSalaryStructure.EmployeeSalaryDetails = employeeSalaryDetails;
@@ -541,7 +547,7 @@ namespace Vserv.Accounting.Business.Managers
                 SalaryComponentId = Convert.ToInt32(SalaryComponentEnum.SpecialAllowance),
                 MonthId = monthId,
                 Year = year,
-                Amount = (empSalaryStructure.CTC/12) - deductedAmountfromCTC,
+                Amount = (empSalaryStructure.CTC / 12) - deductedAmountfromCTC,
                 IsActive = true,
                 CreatedBy = empSalaryStructure.CreatedBy,
                 CreatedDate = DateTime.Now
@@ -645,7 +651,7 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
-        public static Dictionary<int, int> GetFinancialYearMonths(DateTime inputDate)
+        private Dictionary<int, int> GetFinancialYearMonths(DateTime inputDate)
         {
             Dictionary<int, int> monthsInfo = new Dictionary<int, int>();
 
@@ -674,6 +680,15 @@ namespace Vserv.Accounting.Business.Managers
                 }
             }
             return monthsInfo;
+        }
+
+        public List<GetEmpAppraisalHistory_Result> GetEmployeeAppraisalHistory(int employeeId)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
+                return empSalaryStructureRepo.GetEmployeeAppraisalHistory(employeeId);
+            });
         }
 
         #endregion

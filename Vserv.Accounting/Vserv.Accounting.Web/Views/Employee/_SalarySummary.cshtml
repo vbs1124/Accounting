@@ -1,84 +1,15 @@
 ﻿<div class="row">
-    <div class="col-lg-6">
-        @Html.Partial("_EmpAppraisalHistory")
-    </div>
-    <div class="col-lg-6">
-        @Html.Partial("_EmpAppraisalGraph")
-    </div>
-</div>
-<div class="row" ng-controller="EmployeeController as vm">
     <div class="col-md-12">
-        <div class="form-group">
+        <div class="form-group pull-right">
             <a class="btn btn-primary" href="" ng-click="vm.add()">Add new Appraisal</a>
         </div>
     </div>
 </div>
-@*<div class="panel panel-success">
-    <div class="panel-heading">
-        <h3 class="panel-title">Add New Appraisal</h3>
+<div class="row">
+    <div class="col-md-6">
+        @Html.Partial("_EmpAppraisalHistory")
     </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="control-label" for="">Cost to company</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="">Cab Deductions</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="control-label" for="">Project Incentive</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="">Car Lease</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="control-label" for="">Food Coupons</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                        <select class="form-control" id="select">
-                            <option value="0">0</option>
-                            <option value="1100">1100</option>
-                            <option value="2200">2200</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="">Performance Incentive</label>
-                    <select class="form-control" id="select">
-                        <option value="0">0</option>
-                        <option value="1">5 % of CTC paid Anually</option>
-                        <option value="2">25% of increment in June and 25% in December</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group  pull-right">
-                    <button type="submit" class="btn btn-primary pull-right">Calculate Breakup</button>
-                </div>
-            </div>
-        </div>
+    <div class="col-md-6">
+        @Html.Partial("_EmpAppraisalGraph")
     </div>
-</div>*@
+</div>

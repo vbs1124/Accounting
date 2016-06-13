@@ -97,6 +97,9 @@
     <Compile Include="Gender.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetEmpAppraisalHistory_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetEmployeeSalaryDetail_Result.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
