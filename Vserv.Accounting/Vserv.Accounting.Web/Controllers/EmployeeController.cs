@@ -9,6 +9,7 @@ using Vserv.Accounting.Business.Managers;
 using Vserv.Accounting.Common;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Web.Models;
+using AutoMapper;
 
 #endregion
 
@@ -258,6 +259,38 @@ namespace Vserv.Accounting.Web.Controllers
         {
             EmployeeManager manager = new EmployeeManager();
             return Json(manager.GetEmployeeAppraisalHistory(employeeId), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateYearlyPaySheet(List<EmployeePaySheet> paySheets)
+        {
+            EmployeeManager _manager = new EmployeeManager();
+            List<GetEmployeeSalaryDetail_Result> updatedPaySheet = new List<GetEmployeeSalaryDetail_Result>();
+            foreach (var item in paySheets)
+            {
+                updatedPaySheet.Add(new GetEmployeeSalaryDetail_Result
+                {
+                    EmployeeId = item.EmployeeId,
+                    SCName = item.SCName,
+                    SCDescription = item.SCDescription,
+                    SCCode = item.SCCode,
+                    DisplayOrder = item.DisplayOrder,
+                    April = item.April,
+                    May = item.May,
+                    June = item.June,
+                    July = item.July,
+                    August = item.August,
+                    September = item.September,
+                    October = item.October,
+                    November = item.November,
+                    December = item.December,
+                    January = item.January,
+                    February = item.February,
+                    March = item.March
+                });
+            }
+
+            var result = _manager.UpdateYearlyPaySheet(updatedPaySheet);
+            return Json("success", JsonRequestBehavior.AllowGet);
         }
 
         #endregion

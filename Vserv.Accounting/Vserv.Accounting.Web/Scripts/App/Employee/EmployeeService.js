@@ -15,6 +15,7 @@
             getFinancialYears: getFinancialYears,
             getEmployee: getEmployee,
             employeeAppraisalHistory: employeeAppraisalHistory,
+            updateYearlyPaySheet: updateYearlyPaySheet
         };
 
         return svc;
@@ -33,6 +34,10 @@
 
         function loadYearlyPaySheet(paySheetParameter) {
             return serviceHandler.executePostService('/Employee/GetYearlyPaySheet', paySheetParameter);
+        }
+
+        function updateYearlyPaySheet(paysheets) {
+            return serviceHandler.executePostService('/Employee/UpdateYearlyPaySheet', paysheets);
         }
 
         function getFinancialYears() {

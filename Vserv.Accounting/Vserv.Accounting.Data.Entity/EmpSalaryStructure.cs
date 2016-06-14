@@ -21,6 +21,7 @@ namespace Vserv.Accounting.Data.Entity
     
         public int EmpSalaryStructureId { get; set; }
         public int EmployeeId { get; set; }
+        public Nullable<int> ParentId { get; set; }
         public decimal CTC { get; set; }
         public Nullable<decimal> MonthlyCabDeductions { get; set; }
         public Nullable<decimal> MonthlyProjectIncentive { get; set; }
@@ -33,7 +34,6 @@ namespace Vserv.Accounting.Data.Entity
         public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public Nullable<int> ParentId { get; set; }
     
         public virtual ICollection<EmployeeSalaryDetail> EmployeeSalaryDetails { get; set; }
     }

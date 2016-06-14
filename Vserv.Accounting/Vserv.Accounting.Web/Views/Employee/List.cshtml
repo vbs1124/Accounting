@@ -8,19 +8,25 @@
     <li class="active"><a href="#list-employee" data-toggle="tab">@ViewBag.Title</a></li>
 </ul>
 <div class="tab-content">
-    <div class="tab-pane fade active in padding-top10" id="list-employee">
-        <div class="row">
+    <div class="tab-pane fade active in padding-top10 " id="list-employee">
+        <div class="row form-horizontal">
             <div class="col-md-12">
-                <div class="form-group pull-right">
-                    @Html.DropDownList("cmbEmployeeFilter", new SelectList(ViewBag.EmployeFilters, "Value", "Text", "2"), new { @class = "form-control" })
+                <div class="form-group">
+                    <div class="col-md-8">
+                        &nbsp;
+                    </div>
+                    <label for="" class="col-md-2 control-label">Filter By</label>
+                    <div class="col-md-2">
+                        @Html.DropDownList("cmbEmployeeFilter", new SelectList(ViewBag.EmployeFilters, "Value", "Text", "2"), new { @class = "form-control" })
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12" id="div-employee-list">
+            <div class="col-md-12" id="div-employee-list">
                 @{Html.RenderPartial("_ViewEmployeesPartial", Model);}
             </div>
-            <!-- /.col-lg-12 -->
+            <!-- /.col-md-12 -->
         </div>
         <!-- /.row -->
     </div>

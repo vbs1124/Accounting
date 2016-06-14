@@ -6,8 +6,6 @@ namespace Vserv.Accounting.Web.Models
     public class EmployeePaySheet : IMapFrom<GetEmployeeSalaryDetail_Result>
     {
         public int? EmployeeId { get; set; }
-        public string ComponentName { get; set; }
-        public int? Year { get; set; }
         public int? DisplayOrder { get; set; }
         public decimal? April { get; set; }
         public decimal? May { get; set; }
@@ -21,5 +19,9 @@ namespace Vserv.Accounting.Web.Models
         public decimal? January { get; set; }
         public decimal? February { get; set; }
         public decimal? March { get; set; }
+        public int? EmpSalaryStructureId { get; set; }
+        public string SCName { get; set; }
+        public string SCCode { get; set; }
+        public string SCDescription { get; set; }
     }
 }

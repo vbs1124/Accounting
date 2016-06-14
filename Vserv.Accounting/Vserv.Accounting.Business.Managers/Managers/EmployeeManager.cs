@@ -691,6 +691,14 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
+        public List<GetEmployeeSalaryDetail_Result> UpdateYearlyPaySheet(List<GetEmployeeSalaryDetail_Result> paySheet)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                return new List<GetEmployeeSalaryDetail_Result>(); //TODO: need to implement the paySheet update logic.
+            });
+        }
+
         #endregion
 
         #endregion

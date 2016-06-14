@@ -122,9 +122,6 @@
     <Compile Include="OfficeBranch.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="PaySheet.cs">
-      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Role.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>

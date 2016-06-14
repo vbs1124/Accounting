@@ -1,18 +1,18 @@
-﻿<form class="form-horizontal">
-    <fieldset>
+﻿<div class="row form-horizontal">
+    <div class="col-md-12">
         <div class="form-group">
-            <label for="" class="col-lg-2 control-label">Financial Year</label>
+            <div class="col-md-8">
+                &nbsp;
+            </div>
+            <label for="" class="col-md-2 control-label">Financial Year</label>
             <div class="col-md-2">
                 <select class="form-control" ng-model="selectedFinancialYear" ng-change="onChangeFinancialYear()">
                     <option ng-repeat="x in FinancialYears" value="{{x.currentYear}}">{{x.financialYear}}</option>
                 </select>
             </div>
-            <div class="col-md-8">
-            </div>
         </div>
-    </fieldset>
-</form>
-
+    </div>
+</div>
 <div class="row" ng-show="paysheets.length > 0 ">
     <div class="col-lg-12">
         <div class="table-responsive">
@@ -35,75 +35,94 @@
                         <th>Total</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr ng-repeat="item in paysheets">
-                        <td class="text-right"><strong>{{item.ComponentName}}</strong></td>
+                <tbody ng-repeat="item in paysheets">
+                    <tr class="warning" ng-show="item.SCDescription=='Medical'">
+                        <td colspan="14"><center><strong>Reimbursments:</strong></center></td>
+                    </tr>
+                    <tr ng-hide="item.SCDescription=='Special Allowance'">
+                        <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
                         <td>
-                            <a href="#" buttons="no" ng-show="isEditableColumn(item.ComponentName)" editable-text="item.April">{{ item.April }}</a>
-                            <span ng-show="isEditableColumn(item.ComponentName)==false" ng-bind="item.April"></span>
+                            <a href="#" buttons="no" ng-show="isEditableColumn(item.SCDescription)" editable-text="item.April">{{ item.April | currency:'&#8377;':0}}</a>
+                            <span ng-show="isEditableColumn(item.SCDescription)==false" ng-bind="item.April"></span>
                         </td>
                         <td>
-                            <a href="#" buttons="no" ng-show="isEditableColumn(item.ComponentName)" editable-text="item.May">{{ item.May}}</a>
-                            <span ng-show="isEditableColumn(item.ComponentName)==false" ng-bind="item.May"></span>
+                            <a href="#" buttons="no" ng-show="isEditableColumn(item.SCDescription)" editable-text="item.May">{{ item.May | currency:'&#8377;':0}}</a>
+                            <span ng-show="isEditableColumn(item.SCDescription)==false" ng-bind="item.May"></span>
                         </td>
                         <td>
-                            <a href="#" buttons="no" ng-show="isEditableColumn(item.ComponentName)" editable-text="item.June">{{ item.June}}</a>
-                            <span ng-show="isEditableColumn(item.ComponentName)==false" ng-bind="item.June"></span>
+                            <a href="#" buttons="no" ng-show="isEditableColumn(item.SCDescription)" editable-text="item.June">{{ item.June | currency:'&#8377;':0}}</a>
+                            <span ng-show="isEditableColumn(item.SCDescription)==false" ng-bind="item.June"></span>
                         </td>
                         <td>
-                            <a href="#" buttons="no" ng-show="isEditableColumn(item.ComponentName)" editable-text="item.July">{{ item.July}}</a>
-                            <span ng-show="isEditableColumn(item.ComponentName)==false" ng-bind="item.July"></span>
+                            <a href="#" buttons="no" ng-show="isEditableColumn(item.SCDescription)" editable-text="item.July">{{ item.July | currency:'&#8377;':0}}</a>
+                            <span ng-show="isEditableColumn(item.SCDescription)==false" ng-bind="item.July"></span>
                         </td>
                         <td>
-                            <a href="#" buttons="no" ng-show="isEditableColumn(item.ComponentName)" editable-text="item.August">{{ item.August}}</a>
-                            <span ng-show="isEditableColumn(item.ComponentName)==false" ng-bind="item.August"></span>
+                            <a href="#" buttons="no" ng-show="isEditableColumn(item.SCDescription)" editable-text="item.August">{{ item.August | currency:'&#8377;':0}}</a>
+                            <span ng-show="isEditableColumn(item.SCDescription)==false" ng-bind="item.August"></span>
                         </td>
                         <td>
-                            <a href="#" buttons="no" ng-show="isEditableColumn(item.ComponentName)" editable-text="item.September">{{ item.September}}</a>
-                            <span ng-show="isEditableColumn(item.ComponentName)==false" ng-bind="item.September"></span>
+                            <a href="#" buttons="no" ng-show="isEditableColumn(item.SCDescription)" editable-text="item.September">{{ item.September | currency:'&#8377;':0}}</a>
+                            <span ng-show="isEditableColumn(item.SCDescription)==false" ng-bind="item.September"></span>
                         </td>
                         <td>
-                            <a href="#" buttons="no" ng-show="isEditableColumn(item.ComponentName)" editable-text="item.October">{{ item.October}}</a>
-                            <span ng-show="isEditableColumn(item.ComponentName)==false" ng-bind="item.October"></span>
+                            <a href="#" buttons="no" ng-show="isEditableColumn(item.SCDescription)" editable-text="item.October">{{ item.October | currency:'&#8377;':0}}</a>
+                            <span ng-show="isEditableColumn(item.SCDescription)==false" ng-bind="item.October"></span>
                         </td>
                         <td>
-                            <a href="#" buttons="no" ng-show="isEditableColumn(item.ComponentName)" editable-text="item.November">{{ item.November}}</a>
-                            <span ng-show="isEditableColumn(item.ComponentName)==false" ng-bind="item.November"></span>
+                            <a href="#" buttons="no" ng-show="isEditableColumn(item.SCDescription)" editable-text="item.November">{{ item.November | currency:'&#8377;':0}}</a>
+                            <span ng-show="isEditableColumn(item.SCDescription)==false" ng-bind="item.November"></span>
                         </td>
                         <td>
-                            <a href="#" buttons="no" ng-show="isEditableColumn(item.ComponentName)" editable-text="item.December">{{ item.December}}</a>
-                            <span ng-show="isEditableColumn(item.ComponentName)==false" ng-bind="item.December"></span>
+                            <a href="#" buttons="no" ng-show="isEditableColumn(item.SCDescription)" editable-text="item.December">{{ item.December | currency:'&#8377;':0}}</a>
+                            <span ng-show="isEditableColumn(item.SCDescription)==false" ng-bind="item.December"></span>
                         </td>
                         <td>
-                            <a href="#" buttons="no" ng-show="isEditableColumn(item.ComponentName)" editable-text="item.January">{{ item.January}}</a>
-                            <span ng-show="isEditableColumn(item.ComponentName)==false" ng-bind="item.January"></span>
+                            <a href="#" buttons="no" ng-show="isEditableColumn(item.SCDescription)" editable-text="item.January">{{ item.January | currency:'&#8377;':0}}</a>
+                            <span ng-show="isEditableColumn(item.SCDescription)==false" ng-bind="item.January"></span>
                         </td>
                         <td>
-                            <a href="#" buttons="no" ng-show="isEditableColumn(item.ComponentName)" editable-text="item.February">{{ item.February}}</a>
-                            <span ng-show="isEditableColumn(item.ComponentName)==false" ng-bind="item.February"></span>
+                            <a href="#" buttons="no" ng-show="isEditableColumn(item.SCDescription)" editable-text="item.February">{{ item.February | currency:'&#8377;':0}}</a>
+                            <span ng-show="isEditableColumn(item.SCDescription)==false" ng-bind="item.February"></span>
                         </td>
                         <td>
-                            <a href="#" buttons="no" ng-show="isEditableColumn(item.ComponentName)" editable-text="item.March">{{ item.March}}</a>
-                            <span ng-show="isEditableColumn(item.ComponentName)==false" ng-bind="item.March"></span>
+                            <a href="#" buttons="no" ng-show="isEditableColumn(item.SCDescription)" editable-text="item.March">{{ item.March | currency:'&#8377;':0}}</a>
+                            <span ng-show="isEditableColumn(item.SCDescription)==false" ng-bind="item.March"></span>
                         </td>
-                        <td class="text-bold">{{getCurrentComponentTotal(item)}}</td>
+                        <td class="text-bold">{{getCurrentComponentTotal(item) | currency:'&#8377;':0}}</td>
+                    </tr>
+                    <tr ng-show="item.SCDescription=='Special Allowance'">
+                        <td class="text-right"><strong>{{item.SCDescription | currency:'&#8377;':0}}</strong></td>
+                        <td>{{paysheets|specialAllowanceByMonth:'April' | currency:'&#8377;':0}}</td>
+                        <td>{{paysheets|specialAllowanceByMonth:'May' | currency:'&#8377;':0}}</td>
+                        <td>{{paysheets|specialAllowanceByMonth:'June' | currency:'&#8377;':0}}</td>
+                        <td>{{paysheets|specialAllowanceByMonth:'July' | currency:'&#8377;':0}}</td>
+                        <td>{{paysheets|specialAllowanceByMonth:'August' | currency:'&#8377;':0}}</td>
+                        <td>{{paysheets|specialAllowanceByMonth:'September' | currency:'&#8377;':0}}</td>
+                        <td>{{paysheets|specialAllowanceByMonth:'October' | currency:'&#8377;':0}}</td>
+                        <td>{{paysheets|specialAllowanceByMonth:'November' | currency:'&#8377;':0}}</td>
+                        <td>{{paysheets|specialAllowanceByMonth:'December' | currency:'&#8377;':0}}</td>
+                        <td>{{paysheets|specialAllowanceByMonth:'January' | currency:'&#8377;':0}}</td>
+                        <td>{{paysheets|specialAllowanceByMonth:'February' | currency:'&#8377;':0}}</td>
+                        <td>{{paysheets|specialAllowanceByMonth:'March' | currency:'&#8377;':0}}</td>
+                        <td class="text-bold">{{getCurrentComponentTotal(item) | currency:'&#8377;':0}}</td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr class="success">
                         <th>Total</th>
-                        <th>{{paysheets|sumByMonth:'April'}}</th>
-                        <th>{{paysheets|sumByMonth:'May'}}</th>
-                        <th>{{paysheets|sumByMonth:'June'}}</th>
-                        <th>{{paysheets|sumByMonth:'July'}}</th>
-                        <th>{{paysheets|sumByMonth:'August'}}</th>
-                        <th>{{paysheets|sumByMonth:'September'}}</th>
-                        <th>{{paysheets|sumByMonth:'October'}}</th>
-                        <th>{{paysheets|sumByMonth:'November'}}</th>
-                        <th>{{paysheets|sumByMonth:'December'}}</th>
-                        <th>{{paysheets|sumByMonth:'January'}}</th>
-                        <th>{{paysheets|sumByMonth:'February'}}</th>
-                        <th>{{paysheets|sumByMonth:'March'}}</th>
+                        <th>{{paysheets|sumByMonth:'April' | currency:'&#8377;':0}}</th>
+                        <th>{{paysheets|sumByMonth:'May' | currency:'&#8377;':0}}</th>
+                        <th>{{paysheets|sumByMonth:'June' | currency:'&#8377;':0}}</th>
+                        <th>{{paysheets|sumByMonth:'July' | currency:'&#8377;':0}}</th>
+                        <th>{{paysheets|sumByMonth:'August' | currency:'&#8377;':0}}</th>
+                        <th>{{paysheets|sumByMonth:'September' | currency:'&#8377;':0}}</th>
+                        <th>{{paysheets|sumByMonth:'October' | currency:'&#8377;':0}}</th>
+                        <th>{{paysheets|sumByMonth:'November' | currency:'&#8377;':0}}</th>
+                        <th>{{paysheets|sumByMonth:'December' | currency:'&#8377;':0}}</th>
+                        <th>{{paysheets|sumByMonth:'January' | currency:'&#8377;':0}}</th>
+                        <th>{{paysheets|sumByMonth:'February' | currency:'&#8377;':0}}</th>
+                        <th>{{paysheets|sumByMonth:'March' | currency:'&#8377;':0}}</th>
                         <th>&nbsp;</th>
                     </tr>
                     <tr class="info">
@@ -131,8 +150,7 @@
 <div class="row" ng-show="paysheets.length > 0 && selectedFinancialYear==currentYear">
     <div class="col-lg-12">
         <div class="form-group pull-right">
-            <button type="reset" class="btn btn-default">Reset</button>
-            <button type="submit" class="btn btn-success">Save</button>
+            <button type="submit" class="btn btn-success" ng-click="updateYearlyPaySheet()">Save</button>
         </div>
     </div>
 </div>

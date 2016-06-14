@@ -210,7 +210,7 @@
           <Property Name="EmpSalaryStructureId" Type="int" Nullable="false" />
           <Property Name="MonthId" Type="int" Nullable="false" />
           <Property Name="Year" Type="int" />
-          <Property Name="Amount" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="numeric" Precision="19" Scale="0" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -224,11 +224,11 @@
           <Property Name="EmpSalaryStructureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="ParentId" Type="int" />
-          <Property Name="CTC" Type="numeric" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="MonthlyCabDeductions" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="MonthlyProjectIncentive" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="MonthlyCarLease" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="MonthlyFoodCoupons" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="CTC" Type="numeric" Precision="19" Scale="0" Nullable="false" />
+          <Property Name="MonthlyCabDeductions" Type="numeric" Precision="19" Scale="0" />
+          <Property Name="MonthlyProjectIncentive" Type="numeric" Precision="19" Scale="0" />
+          <Property Name="MonthlyCarLease" Type="numeric" Precision="19" Scale="0" />
+          <Property Name="MonthlyFoodCoupons" Type="numeric" Precision="19" Scale="0" />
           <Property Name="EffectiveFrom" Type="datetime" Nullable="false" />
           <Property Name="EffectiveTo" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -380,39 +380,6 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="PaySheet">
-          <Key>
-            <PropertyRef Name="PaySheetId" />
-          </Key>
-          <Property Name="PaySheetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EmployeeId" Type="int" Nullable="false" />
-          <Property Name="CTCPerMonth" Type="numeric" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Basic" Type="numeric" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="HRA" Type="numeric" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Conveyance" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="SpecialAllowance" Type="numeric" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="PerformanceIncentive" Type="numeric" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="LeaveEncashment" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="SalaryArrears" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="CabDeductions" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="OtherDeduction" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="Commission" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="Others" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="Medical" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="FoodCoupons" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="ProjectIncentive" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="CarLease" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="LTC" Type="numeric" Precision="19" Scale="4" />
-          <Property Name="PF" Type="numeric" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Mediclaim" Type="numeric" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Gratuity" Type="numeric" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Month" Type="int" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedDate" Type="datetime" />
-        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -430,7 +397,7 @@
           <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Code" Type="varchar" MaxLength="6" />
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="DefaultAmount" Type="numeric" Precision="19" Scale="2" />
+          <Property Name="DefaultAmount" Type="numeric" Precision="19" Scale="0" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
@@ -898,7 +865,6 @@
           <EntitySet Name="Membership" EntityType="Self.Membership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OAuthMembership" EntityType="Self.OAuthMembership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfficeBranch" EntityType="Self.OfficeBranch" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PaySheet" EntityType="Self.PaySheet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalaryComponent" EntityType="Self.SalaryComponent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Salutation" EntityType="Self.Salutation" Schema="dbo" store:Type="Tables" />
@@ -1074,6 +1040,9 @@
             <Parameter Name="FinancialYearFrom" Mode="In" Type="Int32" />
             <Parameter Name="FinancialYearTo" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetEmpAppraisalHistory" ReturnType="Collection(VservAccountingDBModel.GetEmpAppraisalHistory_Result)">
+          <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="AddressTypes" EntityType="VservAccountingDBModel.AddressType" />
           <EntitySet Name="ApplicationLogs" EntityType="VservAccountingDBModel.ApplicationLog" />
           <EntitySet Name="Banks" EntityType="VservAccountingDBModel.Bank" />
@@ -1093,7 +1062,6 @@
           <EntitySet Name="Memberships" EntityType="VservAccountingDBModel.Membership" />
           <EntitySet Name="OAuthMemberships" EntityType="VservAccountingDBModel.OAuthMembership" />
           <EntitySet Name="OfficeBranches" EntityType="VservAccountingDBModel.OfficeBranch" />
-          <EntitySet Name="PaySheets" EntityType="VservAccountingDBModel.PaySheet" />
           <EntitySet Name="Roles" EntityType="VservAccountingDBModel.Role" />
           <EntitySet Name="SalaryComponents" EntityType="VservAccountingDBModel.SalaryComponent" />
           <EntitySet Name="Salutations" EntityType="VservAccountingDBModel.Salutation" />
@@ -1190,9 +1158,6 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
-          <FunctionImport Name="GetEmpAppraisalHistory" ReturnType="Collection(VservAccountingDBModel.GetEmpAppraisalHistory_Result)">
-            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
-          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="ArchiveEmployee_Result">
           <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
@@ -1204,21 +1169,33 @@
         </ComplexType>
         <ComplexType Name="GetEmployeeSalaryDetail_Result">
           <Property Type="Int32" Name="EmployeeId" Nullable="true" />
-          <Property Type="String" Name="ComponentName" Nullable="true" MaxLength="250" />
-          <Property Type="Int32" Name="Year" Nullable="true" />
           <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
-          <Property Type="Decimal" Name="April" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="May" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="June" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="July" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="August" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="September" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="October" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="November" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="December" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="January" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="February" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Decimal" Name="March" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Decimal" Name="April" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="May" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="June" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="July" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="August" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="September" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="October" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="November" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="December" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="January" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="February" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="March" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Int32" Name="EmpSalaryStructureId" Nullable="true" />
+          <Property Type="String" Name="SCName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SCCode" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="SCDescription" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="GetEmpAppraisalHistory_Result">
+          <Property Type="Int32" Name="EmpSalaryStructureId" Nullable="false" />
+          <Property Type="Decimal" Name="CurrentCTC" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="DateTime" Name="CurrentEffectiveFrom" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="CurrentEffectiveTo" Nullable="false" Precision="23" />
+          <Property Type="Decimal" Name="PrevCTC" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="DateTime" Name="PrevEffectiveFrom" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="PrevEffectiveTo" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="PercentageGrowth" Nullable="true" />
         </ComplexType>
         <EntityType Name="AddressType">
           <Key>
@@ -1445,7 +1422,7 @@
           <Property Name="EmpSalaryStructureId" Type="Int32" Nullable="false" />
           <Property Name="MonthId" Type="Int32" Nullable="false" />
           <Property Name="Year" Type="Int32" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="0" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1459,11 +1436,12 @@
           </Key>
           <Property Name="EmpSalaryStructureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
-          <Property Name="CTC" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="MonthlyCabDeductions" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MonthlyProjectIncentive" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MonthlyCarLease" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="MonthlyFoodCoupons" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="CTC" Type="Decimal" Nullable="false" Precision="19" Scale="0" />
+          <Property Name="MonthlyCabDeductions" Type="Decimal" Precision="19" Scale="0" />
+          <Property Name="MonthlyProjectIncentive" Type="Decimal" Precision="19" Scale="0" />
+          <Property Name="MonthlyCarLease" Type="Decimal" Precision="19" Scale="0" />
+          <Property Name="MonthlyFoodCoupons" Type="Decimal" Precision="19" Scale="0" />
           <Property Name="EffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EffectiveTo" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
@@ -1472,7 +1450,6 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="EmployeeSalaryDetails" Relationship="VservAccountingDBModel.FK_EmployeeSalaryDetail_EmployeeSalaryDetail" FromRole="EmpSalaryStructure" ToRole="EmployeeSalaryDetail" />
-          <Property Name="ParentId" Type="Int32" />
         </EntityType>
         <EntityType Name="EPFNumber">
           <Key>
@@ -1623,39 +1600,6 @@
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="OfficeBranch" ToRole="Employee" />
           <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_OfficeBranch" FromRole="OfficeBranch" ToRole="EmployeeArchive" />
         </EntityType>
-        <EntityType Name="PaySheet">
-          <Key>
-            <PropertyRef Name="PaySheetId" />
-          </Key>
-          <Property Name="PaySheetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
-          <Property Name="CTCPerMonth" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Basic" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="HRA" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Conveyance" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="SpecialAllowance" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="PerformanceIncentive" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="LeaveEncashment" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="SalaryArrears" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CabDeductions" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="OtherDeduction" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Commission" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Others" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Medical" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="FoodCoupons" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ProjectIncentive" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CarLease" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="LTC" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="PF" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Mediclaim" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Gratuity" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Month" Type="Int32" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -1674,7 +1618,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Code" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="DefaultAmount" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="DefaultAmount" Type="Decimal" Precision="19" Scale="0" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -2038,16 +1982,6 @@
           <End Type="VservAccountingDBModel.Role" Role="Role" Multiplicity="*" />
           <End Type="VservAccountingDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
-        <ComplexType Name="GetEmpAppraisalHistory_Result">
-          <Property Type="Int32" Name="EmpSalaryStructureId" Nullable="false" />
-          <Property Type="Decimal" Name="CurrentCTC" Nullable="false" Precision="19" Scale="4" />
-          <Property Type="DateTime" Name="CurrentEffectiveFrom" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="CurrentEffectiveTo" Nullable="false" Precision="23" />
-          <Property Type="Decimal" Name="PrevCTC" Nullable="true" Precision="19" Scale="4" />
-          <Property Type="DateTime" Name="PrevEffectiveFrom" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="PrevEffectiveTo" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="PercentageGrowth" Nullable="true" />
-        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2063,8 +1997,6 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="VservAccountingDBModel.GetEmployeeSalaryDetail_Result">
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="April" ColumnName="April" />
                 <ScalarProperty Name="May" ColumnName="May" />
@@ -2078,6 +2010,24 @@
                 <ScalarProperty Name="January" ColumnName="January" />
                 <ScalarProperty Name="February" ColumnName="February" />
                 <ScalarProperty Name="March" ColumnName="March" />
+                <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
+                <ScalarProperty Name="SCName" ColumnName="SCName" />
+                <ScalarProperty Name="SCCode" ColumnName="SCCode" />
+                <ScalarProperty Name="SCDescription" ColumnName="SCDescription" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetEmpAppraisalHistory" FunctionName="VservAccountingDBModel.Store.GetEmpAppraisalHistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.GetEmpAppraisalHistory_Result">
+                <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
+                <ScalarProperty Name="CurrentCTC" ColumnName="CurrentCTC" />
+                <ScalarProperty Name="CurrentEffectiveFrom" ColumnName="CurrentEffectiveFrom" />
+                <ScalarProperty Name="CurrentEffectiveTo" ColumnName="CurrentEffectiveTo" />
+                <ScalarProperty Name="PrevCTC" ColumnName="PrevCTC" />
+                <ScalarProperty Name="PrevEffectiveFrom" ColumnName="PrevEffectiveFrom" />
+                <ScalarProperty Name="PrevEffectiveTo" ColumnName="PrevEffectiveTo" />
+                <ScalarProperty Name="PercentageGrowth" ColumnName="PercentageGrowth" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2305,7 +2255,6 @@
           <EntitySetMapping Name="EmpSalaryStructures">
             <EntityTypeMapping TypeName="VservAccountingDBModel.EmpSalaryStructure">
               <MappingFragment StoreEntitySet="EmpSalaryStructure">
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
@@ -2318,6 +2267,7 @@
                 <ScalarProperty Name="MonthlyProjectIncentive" ColumnName="MonthlyProjectIncentive" />
                 <ScalarProperty Name="MonthlyCabDeductions" ColumnName="MonthlyCabDeductions" />
                 <ScalarProperty Name="CTC" ColumnName="CTC" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
               </MappingFragment>
@@ -2474,40 +2424,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PaySheets">
-            <EntityTypeMapping TypeName="VservAccountingDBModel.PaySheet">
-              <MappingFragment StoreEntitySet="PaySheet">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="Gratuity" ColumnName="Gratuity" />
-                <ScalarProperty Name="Mediclaim" ColumnName="Mediclaim" />
-                <ScalarProperty Name="PF" ColumnName="PF" />
-                <ScalarProperty Name="LTC" ColumnName="LTC" />
-                <ScalarProperty Name="CarLease" ColumnName="CarLease" />
-                <ScalarProperty Name="ProjectIncentive" ColumnName="ProjectIncentive" />
-                <ScalarProperty Name="FoodCoupons" ColumnName="FoodCoupons" />
-                <ScalarProperty Name="Medical" ColumnName="Medical" />
-                <ScalarProperty Name="Others" ColumnName="Others" />
-                <ScalarProperty Name="Commission" ColumnName="Commission" />
-                <ScalarProperty Name="OtherDeduction" ColumnName="OtherDeduction" />
-                <ScalarProperty Name="CabDeductions" ColumnName="CabDeductions" />
-                <ScalarProperty Name="SalaryArrears" ColumnName="SalaryArrears" />
-                <ScalarProperty Name="LeaveEncashment" ColumnName="LeaveEncashment" />
-                <ScalarProperty Name="PerformanceIncentive" ColumnName="PerformanceIncentive" />
-                <ScalarProperty Name="SpecialAllowance" ColumnName="SpecialAllowance" />
-                <ScalarProperty Name="Conveyance" ColumnName="Conveyance" />
-                <ScalarProperty Name="HRA" ColumnName="HRA" />
-                <ScalarProperty Name="Basic" ColumnName="Basic" />
-                <ScalarProperty Name="CTCPerMonth" ColumnName="CTCPerMonth" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="PaySheetId" ColumnName="PaySheetId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="VservAccountingDBModel.Role">
               <MappingFragment StoreEntitySet="Roles">
@@ -2634,20 +2550,6 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="GetEmpAppraisalHistory" FunctionName="VservAccountingDBModel.Store.GetEmpAppraisalHistory">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="VservAccountingDBModel.GetEmpAppraisalHistory_Result">
-                <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
-                <ScalarProperty Name="CurrentCTC" ColumnName="CurrentCTC" />
-                <ScalarProperty Name="CurrentEffectiveFrom" ColumnName="CurrentEffectiveFrom" />
-                <ScalarProperty Name="CurrentEffectiveTo" ColumnName="CurrentEffectiveTo" />
-                <ScalarProperty Name="PrevCTC" ColumnName="PrevCTC" />
-                <ScalarProperty Name="PrevEffectiveFrom" ColumnName="PrevEffectiveFrom" />
-                <ScalarProperty Name="PrevEffectiveTo" ColumnName="PrevEffectiveTo" />
-                <ScalarProperty Name="PercentageGrowth" ColumnName="PercentageGrowth" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -144,14 +144,14 @@ namespace Vserv.Accounting.Web.Helpers
 
         private HtmlTag GetDateTimeHtmlTag(string expression, string name, ModelMetadata metadata)
         {
-            string uniqueName = String.IsNullOrEmpty(expression) ? String.Empty : expression.Replace(".", String.Empty);
+            //string uniqueName = String.IsNullOrEmpty(expression) ? String.Empty : expression.Replace(".", String.Empty);
             var inputGroup = new HtmlTag("div").AddClass("input-group");
 
             var span = new HtmlTag("span").AddClass("input-group-btn");
 
             var button = new HtmlTag("button")
             .Attr("type", "button")
-            .Attr("ng-click", String.Format("open{0}()", uniqueName))
+            .Attr("ng-click", String.Format("open{0}()", name))
            .AddClasses("btn", "btn-default");
 
             var iconTag = new HtmlTag("i").AddClasses("glyphicon", "glyphicon-calendar");
@@ -161,10 +161,10 @@ namespace Vserv.Accounting.Web.Helpers
             var inputControl = new HtmlTag("input")
             .Attr("type", "text")
             .Attr("uib-datepicker-popup", "dd/MM/yyyy")
-            //.Attr("uib-datepicker-popup", "")
+            .Attr("readonly", "")
             .Attr("ng-model", expression)
-            .Attr("is-open", String.Format("popup{0}.opened", uniqueName))
-            .Attr("datepicker-options", "dateOptions")
+            .Attr("is-open", String.Format("popup{0}.opened", name))
+            .Attr("datepicker-options", String.Format("dateOptions{0}", name))
             .Attr("close-text", "Close")
             .Attr("name", name)
             .Attr("id", name)

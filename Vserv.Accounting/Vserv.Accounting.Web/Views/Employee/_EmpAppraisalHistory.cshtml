@@ -22,7 +22,7 @@
                 <tbody>
                     <tr ng-repeat="history in employeeAppraisalHistory">
                         <td>{{history.CurrentEffectiveFrom}}</td>
-                        <td>{{history.CurrentCTC}}</td>
+                        <td>{{history.CurrentCTC | currency:'&#8377;':0}}</td>
                         <td>{{history.PercentageGrowth}}</td>
                         <td><a class="btn btn-xs btn-block btn-primary" href="#" title="View">View</a></td>
                     </tr>

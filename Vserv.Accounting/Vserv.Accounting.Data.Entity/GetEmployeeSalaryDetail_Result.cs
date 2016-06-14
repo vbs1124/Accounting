@@ -14,8 +14,6 @@ namespace Vserv.Accounting.Data.Entity
     public partial class GetEmployeeSalaryDetail_Result
     {
         public Nullable<int> EmployeeId { get; set; }
-        public string ComponentName { get; set; }
-        public Nullable<int> Year { get; set; }
         public Nullable<int> DisplayOrder { get; set; }
         public Nullable<decimal> April { get; set; }
         public Nullable<decimal> May { get; set; }
@@ -29,5 +27,9 @@ namespace Vserv.Accounting.Data.Entity
         public Nullable<decimal> January { get; set; }
         public Nullable<decimal> February { get; set; }
         public Nullable<decimal> March { get; set; }
+        public Nullable<int> EmpSalaryStructureId { get; set; }
+        public string SCName { get; set; }
+        public string SCCode { get; set; }
+        public string SCDescription { get; set; }
     }
 }

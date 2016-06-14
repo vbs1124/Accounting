@@ -474,6 +474,7 @@
     <Content Include="Scripts\App\Utility\InputValidationIconsDirective.js" />
     <Content Include="Scripts\App\Utility\MvcGridDirective.js" />
     <Content Include="Scripts\App\Utility\ParseDateFilter.js" />
+    <Content Include="Scripts\App\Utility\specialAllowanceByMonthFilter.js" />
     <Content Include="Scripts\App\Utility\SumByMonthFilter.js" />
     <Content Include="Scripts\base\flot-data.js" />
     <Content Include="Scripts\base\google-places.js" />
