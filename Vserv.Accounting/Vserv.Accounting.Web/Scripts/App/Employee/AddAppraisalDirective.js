@@ -1,12 +1,43 @@
 ﻿(function () {
     "use strict";
     window.app.directive('addAppraisal', addAppraisal);
+
+    function addAppraisal() {
+        return {
+            templateUrl: '/employee/template/addAppraisal.tmpl.cshtml',
+            controller: controller,
+            controllerAs: 'vm'
+        }
+    }
+
     controller.$inject = ['$scope', 'employeeService'];
 
     function controller($scope, employeeService) {
         var vm = this;
+        vm.employeeId = parseInt($("#EmployeeId").val());
+        vm.addEmployeeSalaryDetail = addEmployeeSalaryDetail;
+        vm.saving = false;
+        vm.errorMessage = null;
+        vm.isEditableEffectiveFrom = true;
+        vm.empSalaryStructureModel = {
+            effectiveFrom: setEffectiveFrom()
+        };
+        vm.paySheetParameter = {
+            EmployeeId: $("#EmployeeId").val(),
+            FinancialYearFrom: moment().year(),
+            FinancialYearTo: moment().year() + 1
+        };
 
-        function add() {
+        function setEffectiveFrom() {
+            if (employeeService.employeeAppraisalHistory.length > 0) {
+                return new Date();
+            } else {
+                vm.isEditableEffectiveFrom = false;
+                return new Date($("#JoiningDate").val()) // Set the default "Effective From" to joining date of the employee.
+            }
+        }
+
+        function addEmployeeSalaryDetail() {
             var monthlyCTC = vm.empSalaryStructureModel.ctc / 12;
 
             if (vm.empSalaryStructureModel.cabDeductions > monthlyCTC) {
@@ -30,9 +61,17 @@
             }
 
             vm.saving = true;
-            employeeService.addEmployeeSalaryDetail(vm.empSalaryStructureModel, $("#EmployeeId").val()).then(function (resp) {
+            employeeService.addEmployeeSalaryDetail(vm.empSalaryStructureModel, vm.employeeId).then(function (resp) {
                 if (resp.businessException == null) {
                     $.showToastrMessage("success", 'Salary breakup generated successfully.', "Success!");
+                    employeeService.loadEmployeeAppraisalHistory(vm.employeeId);
+
+                    // Activate "Salary Breakup" tab.
+                    if (moment(vm.empSalaryStructureModel.effectiveFrom).year() == moment().year()) {
+                        employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(moment().year()), parseInt(moment().year()) + 1);
+                        activateTab("tabs-manage-employee", "emp-salary-breakup");
+                    }
+
                     //Close the modal
                     $scope.$close();
                 }
@@ -44,33 +83,28 @@
             return false;
         }
 
-        vm.add = add;
-
-        vm.saving = false;
-        vm.empSalaryStructureModel = {};
-        vm.errorMessage = null;
-
         //-------------------------
         $scope.dateOptionsEffectiveFrom = {
             formatYear: 'yyyy',
-            startingDay: 1
+            startingDay: 1,
         };
 
         $scope.openEffectiveFrom = function () {
-            $scope.popupEffectiveFrom.opened = true;
+            if (vm.isEditableEffectiveFrom) {
+                $scope.popupEffectiveFrom.opened = true;
+            } else {
+                $.showToastrMessage("error", "Not allowed..", "Error!");
+            }
         };
 
         $scope.popupEffectiveFrom = {
             opened: false
         };
+
         //---------------------------
     }
 
-    function addAppraisal() {
-        return {
-            templateUrl: '/employee/template/addAppraisal.tmpl.cshtml',
-            controller: controller,
-            controllerAs: 'vm'
-        }
-    }
+    function activateTab(tabId, tab) {
+        $('#' + tabId + ' a[href="#' + tab + '"]').tab('show');
+    };
 })();

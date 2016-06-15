@@ -233,3 +233,10 @@ $.showToastrMessage = function (messageType, message, title, optionsOverride) {
         toastr.warning(message, title, optionsOverride);
     }
 };
+
+$.vbsParseFloat = function (value) {
+    if (isNaN(value) || value == "") {
+        return 0;
+    }
+    return parseFloat(value);;
+}

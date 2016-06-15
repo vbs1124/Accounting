@@ -28,12 +28,12 @@
                 var currentcomp = data[i]["SCCode"];
 
                 if (currentcomp === "SCCTCM" && !isNaN(data[i][month])) {
-                    monthlyCTCAmount = parseFloat(data[i][month]);
+                    monthlyCTCAmount = $.vbsParseFloat(data[i][month]);
                 }
 
                 if ($.inArray(currentcomp, deductedComponentFromMonthlyCTC) !== -1) {
                     if (!isNaN(data[i][month])) {
-                        deductedSum += parseFloat(data[i][month]);
+                        deductedSum += $.vbsParseFloat(data[i][month]);
                     }
                 }
             }

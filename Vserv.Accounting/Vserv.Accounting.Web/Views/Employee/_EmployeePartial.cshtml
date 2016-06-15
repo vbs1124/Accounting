@@ -1,279 +1,284 @@
 ﻿@model Vserv.Accounting.Web.Models.EmployeeModel
-<div class="row">
-    <div class="col-lg-4">
-        <div class="form-group">
-            @Html.LabelFor(m => m.VBS_Id, new { @class = "control-label required-field" })
-            <div class="input-group">
-                <span class="input-group-addon">vbs</span>
-                @if (Model.EmployeeId > 0)
-                {
-                    @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @disabled = "disabled", @maxlength = "4" })
-                }
-                else
-                {
-                    @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @maxlength = "4" })
-                }
-            </div>
-            @Html.ValidationMessageFor(m => m.VBS_Id)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.SalutationId, new { @class = "control-label" })
-            @Html.DropDownListFor(m => m.SalutationId, new SelectList(ViewBag.Salutations, "Value", "Text"), new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.SalutationId)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.FirstName, new { @class = "control-label required-field" })
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @maxlength = "35" })
-            @Html.ValidationMessageFor(m => m.FirstName)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.MiddleName, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", @maxlength = "35" })
-            @Html.ValidationMessageFor(m => m.MiddleName)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @maxlength = "35" })
-            @Html.ValidationMessageFor(m => m.LastName)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.FatherName, new { @class = "control-label required-field" })
-            @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control", @maxlength = "35" })
-            @Html.ValidationMessageFor(m => m.FatherName)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.MotherName, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.MotherName, new { @class = "form-control", @maxlength = "35" })
-            @Html.ValidationMessageFor(m => m.MotherName)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.GenderId, new { @class = "control-label" })
-            @Html.DropDownListFor(m => m.GenderId, new SelectList(ViewBag.Genders, "Value", "Text"), new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.GenderId)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.MobileNumber, new { @class = "control-label required-field" })
-            @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", @maxlength = "10" })
-            @Html.ValidationMessageFor(m => m.MobileNumber)
-        </div>
-
-    </div>
-    <div class="col-lg-4">
-        <div class="form-group">
-            @Html.LabelFor(m => m.PermanentAccountNumber, new { @class = "control-label required-field" })
-            @Html.TextBoxFor(m => m.PermanentAccountNumber, new { @class = "form-control", @maxlength = "10" })
-            @Html.ValidationMessageFor(m => m.PermanentAccountNumber)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.UniversalAccountNumber, new { @class = "control-label required-field" })
-            @Html.TextBoxFor(m => m.UniversalAccountNumber, new { @class = "form-control", @maxlength = "12" })
-            @Html.ValidationMessageFor(m => m.UniversalAccountNumber)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.EPFNumber, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.EPFNumber, new { @class = "form-control", @maxlength = "12" })
-            @Html.ValidationMessageFor(m => m.EPFNumber)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.AADHAARNumber, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.AADHAARNumber, new { @class = "form-control", @maxlength = "12" })
-            @Html.ValidationMessageFor(m => m.AADHAARNumber)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.ESINumber, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.ESINumber, new { @class = "form-control", @maxlength = "15" })
-            @Html.ValidationMessageFor(m => m.ESINumber)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.BankAccountNumber, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.BankAccountNumber, new { @class = "form-control", @maxlength = "15" })
-            @Html.ValidationMessageFor(m => m.BankAccountNumber)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.BankId, new { @class = "control-label" })
-            @Html.DropDownListFor(m => m.BankId, new SelectList(ViewBag.Banks, "Value", "Text"), new { @class = "form-control", id = "cmbBanks" })
-            @Html.ValidationMessageFor(m => m.BankId)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.BankIFSCCode, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.BankIFSCCode, new { @class = "form-control", @maxlength = "11" })
-            @Html.ValidationMessageFor(m => m.BankIFSCCode)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.BankMICRCode, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.BankMICRCode, new { @class = "form-control", @maxlength = "11" })
-            @Html.ValidationMessageFor(m => m.BankMICRCode)
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="form-group">
-            @Html.LabelFor(m => m.OfficialEmailAddress, new { @class = "control-label required-field" })
-            @Html.TextBoxFor(m => m.OfficialEmailAddress, new { @class = "form-control", @maxlength = "35" })
-            @Html.ValidationMessageFor(m => m.OfficialEmailAddress)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.PersonalEmailAddress, new { @class = "control-label required-field" })
-            @Html.TextBoxFor(m => m.PersonalEmailAddress, new { @class = "form-control", @maxlength = "35" })
-            @Html.ValidationMessageFor(m => m.PersonalEmailAddress)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.OfficeBranchId, new { @class = "control-label" })
-            @Html.DropDownListFor(m => m.OfficeBranchId, new SelectList(ViewBag.OfficeBranches, "Value", "Text"), new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.OfficeBranchId)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.DesignationId, new { @class = "control-label" })
-            <a href="#"><i class="fa fa-plus-circle" title="Add Designation" data-toggle="modal" data-target="#modal-add-designation" aria-hidden="true"></i></a>
-            @Html.DropDownListFor(m => m.DesignationId, new SelectList(ViewBag.Designations, "Value", "Text"), new { @class = "form-control", id = "cmbDesignation" })
-            @Html.ValidationMessageFor(m => m.DesignationId)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.BirthDay, new { @class = "control-label required-field" })
-            <div class='input-group date' id="dp-birth-date">
-                @Html.TextBoxFor(m => m.BirthDay, new { @class = "form-control" })
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-            @Html.ValidationMessageFor(m => m.BirthDay)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.JoiningDate, new { @class = "control-label required-field" })
-            <div class='input-group date' id="dp-joining-date">
-                @Html.TextBoxFor(m => m.JoiningDate, new { @class = "form-control" })
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-            @Html.ValidationMessageFor(m => m.JoiningDate)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.ResignationDate, new { @class = "control-label" })
-            <div class='input-group date' id="dp-resignation-date">
-                @Html.TextBoxFor(m => m.ResignationDate, new { @class = "form-control" })
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-                @Html.ValidationMessageFor(m => m.ResignationDate)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.RelievingDate, new { @class = "control-label" })
-            <div class='input-group date' id="dp-relieving-date">
-                @Html.TextBoxFor(m => m.RelievingDate, new { @class = "form-control" })
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-                @Html.ValidationMessageFor(m => m.RelievingDate)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="checkbox">
-                <label>
-                    @Html.CheckBoxFor(m => m.IsActive) Active Employee
-                </label>
-            </div>
-        </div>
-    </div>
-</div>
 <fieldset id="fieldset-permanent-address">
-    <legend>Permanent Address</legend>
+    <legend>Basic Information</legend>
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                @Html.LabelFor(m => m.PermanentAddress1, new { @class = "control-label required-field" })
-                @Html.TextAreaFor(m => m.PermanentAddress1, new { @class = "form-control permanent-geo-field", data_geo = "address_components", placeholder = "", @rows = 4, @maxlength = "200" })
-                @Html.ValidationMessageFor(m => m.PermanentAddress1)
+                @Html.LabelFor(m => m.VBS_Id, new { @class = "control-label required-field" })
+                <div class="input-group">
+                    <span class="input-group-addon">vbs</span>
+                    @*@if (Model.EmployeeId > 0)
+                        {
+                            @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @disabled = "disabled", @maxlength = "4" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @maxlength = "4" })
+                        }*@
+
+                    @Html.TextBoxFor(m => m.VBS_Id, new { @class = "form-control", @maxlength = "4" })
+                </div>
+                @Html.ValidationMessageFor(m => m.VBS_Id)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.SalutationId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.SalutationId, new SelectList(ViewBag.Salutations, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.SalutationId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName, new { @class = "control-label required-field" })
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @maxlength = "35" })
+                @Html.ValidationMessageFor(m => m.FirstName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MiddleName, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", @maxlength = "35" })
+                @Html.ValidationMessageFor(m => m.MiddleName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @maxlength = "35" })
+                @Html.ValidationMessageFor(m => m.LastName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FatherName, new { @class = "control-label required-field" })
+                @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control", @maxlength = "35" })
+                @Html.ValidationMessageFor(m => m.FatherName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MotherName, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.MotherName, new { @class = "form-control", @maxlength = "35" })
+                @Html.ValidationMessageFor(m => m.MotherName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.GenderId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.GenderId, new SelectList(ViewBag.Genders, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GenderId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MobileNumber, new { @class = "control-label required-field" })
+                @Html.TextBoxFor(m => m.MobileNumber, new { @class = "form-control", @maxlength = "10" })
+                @Html.ValidationMessageFor(m => m.MobileNumber)
+            </div>
+
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                @Html.LabelFor(m => m.PermanentAccountNumber, new { @class = "control-label required-field" })
+                @Html.TextBoxFor(m => m.PermanentAccountNumber, new { @class = "form-control", @maxlength = "10" })
+                @Html.ValidationMessageFor(m => m.PermanentAccountNumber)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.UniversalAccountNumber, new { @class = "control-label required-field" })
+                @Html.TextBoxFor(m => m.UniversalAccountNumber, new { @class = "form-control", @maxlength = "12" })
+                @Html.ValidationMessageFor(m => m.UniversalAccountNumber)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EPFNumber, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.EPFNumber, new { @class = "form-control", @maxlength = "12" })
+                @Html.ValidationMessageFor(m => m.EPFNumber)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AADHAARNumber, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.AADHAARNumber, new { @class = "form-control", @maxlength = "12" })
+                @Html.ValidationMessageFor(m => m.AADHAARNumber)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ESINumber, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.ESINumber, new { @class = "form-control", @maxlength = "15" })
+                @Html.ValidationMessageFor(m => m.ESINumber)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.BankAccountNumber, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.BankAccountNumber, new { @class = "form-control", @maxlength = "15" })
+                @Html.ValidationMessageFor(m => m.BankAccountNumber)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.BankId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.BankId, new SelectList(ViewBag.Banks, "Value", "Text"), new { @class = "form-control", id = "cmbBanks" })
+                @Html.ValidationMessageFor(m => m.BankId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.BankIFSCCode, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.BankIFSCCode, new { @class = "form-control", @maxlength = "11" })
+                @Html.ValidationMessageFor(m => m.BankIFSCCode)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.BankMICRCode, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.BankMICRCode, new { @class = "form-control", @maxlength = "11" })
+                @Html.ValidationMessageFor(m => m.BankMICRCode)
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                @Html.LabelFor(m => m.PermanentAddress2, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.PermanentAddress2, new { @class = "form-control permanent-geo-field", data_geo = "sublocality", placeholder = "", @maxlength = "200" })
-                @Html.ValidationMessageFor(m => m.PermanentAddress2)
+                @Html.LabelFor(m => m.OfficialEmailAddress, new { @class = "control-label required-field" })
+                @Html.TextBoxFor(m => m.OfficialEmailAddress, new { @class = "form-control", @maxlength = "35" })
+                @Html.ValidationMessageFor(m => m.OfficialEmailAddress)
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.PermanentZipCode, new { @class = "control-label required-field" })
-                @Html.TextBoxFor(m => m.PermanentZipCode, new { @class = "form-control permanent-geo-field", data_geo = "postal_code", placeholder = "", @maxlength = "6" })
-                @Html.ValidationMessageFor(m => m.PermanentZipCode)
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                @Html.LabelFor(m => m.PermanentCity, new { @class = "control-label required-field" })
-                @Html.TextBoxFor(m => m.PermanentCity, new { @class = "form-control permanent-geo-field", data_geo = "locality", placeholder = "", @maxlength = "35" })
-                @Html.ValidationMessageFor(m => m.PermanentCity)
+                @Html.LabelFor(m => m.PersonalEmailAddress, new { @class = "control-label required-field" })
+                @Html.TextBoxFor(m => m.PersonalEmailAddress, new { @class = "form-control", @maxlength = "35" })
+                @Html.ValidationMessageFor(m => m.PersonalEmailAddress)
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.PermanentStateId, new { @class = "control-label" })
-                @Html.DropDownListFor(m => m.PermanentStateId, new SelectList(ViewBag.States, "Value", "Text"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.PermanentStateId)
-            </div>
-        </div>
-    </div>
-</fieldset>
-<fieldset id="fieldset-mailing-address">
-    <legend>
-        Mailing Address
-    </legend>
-    <div class="row">
-        <div class="col-lg-6 text-success">
-            <label>
-                <input type="checkbox" id="chk-copy-permanent-address" onchange="onchange_copyPermanentAdds(this);"> Copy from Permanent Address
-            </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="form-group">
-                @Html.LabelFor(m => m.MailingAddress1, new { @class = "control-label required-field" })
-                @Html.TextAreaFor(m => m.MailingAddress1, new { @class = "form-control mailing-geo-field", data_geo = "address_components", placeholder = "", @resize = "none", @rows = 3, @maxlength = "200" })
-                @Html.ValidationMessageFor(m => m.MailingAddress1)
+                @Html.LabelFor(m => m.OfficeBranchId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.OfficeBranchId, new SelectList(ViewBag.OfficeBranches, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.OfficeBranchId)
             </div>
             <div class="form-group">
-                <div class="radio">
-                    <label class="radio-inline">
-                        @Html.RadioButtonFor(model => model.IsMetro, "True") Metro
-                    </label>
-                    <label class="radio-inline">
-                        @Html.RadioButtonFor(model => model.IsMetro, "false") Non Metro
+                @Html.LabelFor(m => m.DesignationId, new { @class = "control-label" })
+                <a href="#"><i class="fa fa-plus-circle" title="Add Designation" data-toggle="modal" data-target="#modal-add-designation" aria-hidden="true"></i></a>
+                @Html.DropDownListFor(m => m.DesignationId, new SelectList(ViewBag.Designations, "Value", "Text"), new { @class = "form-control", id = "cmbDesignation" })
+                @Html.ValidationMessageFor(m => m.DesignationId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.BirthDay, new { @class = "control-label required-field" })
+                <div class='input-group date' id="dp-birth-date">
+                    @Html.TextBoxFor(m => m.BirthDay, new { @class = "form-control" })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                @Html.ValidationMessageFor(m => m.BirthDay)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.JoiningDate, new { @class = "control-label required-field" })
+                <div class='input-group date' id="dp-joining-date">
+                    @Html.TextBoxFor(m => m.JoiningDate, new { @class = "form-control" })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                @Html.ValidationMessageFor(m => m.JoiningDate)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ResignationDate, new { @class = "control-label" })
+                <div class='input-group date' id="dp-resignation-date">
+                    @Html.TextBoxFor(m => m.ResignationDate, new { @class = "form-control" })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    @Html.ValidationMessageFor(m => m.ResignationDate)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.RelievingDate, new { @class = "control-label" })
+                <div class='input-group date' id="dp-relieving-date">
+                    @Html.TextBoxFor(m => m.RelievingDate, new { @class = "form-control" })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    @Html.ValidationMessageFor(m => m.RelievingDate)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.IsActive) Active Employee
                     </label>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                @Html.LabelFor(m => m.MailingAddress2, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.MailingAddress2, new { @class = "form-control mailing-geo-field", data_geo = "sublocality", placeholder = "", @maxlength = "200" })
-                @Html.ValidationMessageFor(m => m.MailingAddress2)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MailingZipCode, new { @class = "control-label required-field" })
-                @Html.TextBoxFor(m => m.MailingZipCode, new { @class = "form-control mailing-geo-field", data_geo = "postal_code", placeholder = "", @maxlength = "6" })
-                @Html.ValidationMessageFor(m => m.MailingZipCode)
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                @Html.LabelFor(m => m.MailingCity, new { @class = "control-label required-field" })
-                @Html.TextBoxFor(m => m.MailingCity, new { @class = "form-control mailing-geo-field", data_geo = "locality", placeholder = "", @maxlength = "35" })
-                @Html.ValidationMessageFor(m => m.MailingCity)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MailingStateId, new { @class = "control-label" })
-                @Html.DropDownListFor(m => m.MailingStateId, new SelectList(ViewBag.States, "Value", "Text"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.MailingStateId)
-            </div>
-        </div>
     </div>
 </fieldset>
-@Html.HiddenFor(emp => emp.EmployeeId)
+    <fieldset id="fieldset-permanent-address">
+        <legend>Permanent Address</legend>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PermanentAddress1, new { @class = "control-label required-field" })
+                    @Html.TextAreaFor(m => m.PermanentAddress1, new { @class = "form-control permanent-geo-field", data_geo = "address_components", placeholder = "", @rows = 4, @maxlength = "200" })
+                    @Html.ValidationMessageFor(m => m.PermanentAddress1)
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PermanentAddress2, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.PermanentAddress2, new { @class = "form-control permanent-geo-field", data_geo = "sublocality", placeholder = "", @maxlength = "200" })
+                    @Html.ValidationMessageFor(m => m.PermanentAddress2)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PermanentZipCode, new { @class = "control-label required-field" })
+                    @Html.TextBoxFor(m => m.PermanentZipCode, new { @class = "form-control permanent-geo-field", data_geo = "postal_code", placeholder = "", @maxlength = "6" })
+                    @Html.ValidationMessageFor(m => m.PermanentZipCode)
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PermanentCity, new { @class = "control-label required-field" })
+                    @Html.TextBoxFor(m => m.PermanentCity, new { @class = "form-control permanent-geo-field", data_geo = "locality", placeholder = "", @maxlength = "35" })
+                    @Html.ValidationMessageFor(m => m.PermanentCity)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PermanentStateId, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.PermanentStateId, new SelectList(ViewBag.States, "Value", "Text"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PermanentStateId)
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset id="fieldset-mailing-address">
+        <legend>
+            Mailing Address
+        </legend>
+        <div class="row">
+            <div class="col-lg-6 text-success">
+                <label>
+                    <input type="checkbox" id="chk-copy-permanent-address" onchange="onchange_copyPermanentAdds(this);"> Copy from Permanent Address
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MailingAddress1, new { @class = "control-label required-field" })
+                    @Html.TextAreaFor(m => m.MailingAddress1, new { @class = "form-control mailing-geo-field", data_geo = "address_components", placeholder = "", @resize = "none", @rows = 3, @maxlength = "200" })
+                    @Html.ValidationMessageFor(m => m.MailingAddress1)
+                </div>
+                <div class="form-group">
+                    <div class="radio">
+                        <label class="radio-inline">
+                            @Html.RadioButtonFor(model => model.IsMetro, "True") Metro
+                        </label>
+                        <label class="radio-inline">
+                            @Html.RadioButtonFor(model => model.IsMetro, "false") Non Metro
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MailingAddress2, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.MailingAddress2, new { @class = "form-control mailing-geo-field", data_geo = "sublocality", placeholder = "", @maxlength = "200" })
+                    @Html.ValidationMessageFor(m => m.MailingAddress2)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MailingZipCode, new { @class = "control-label required-field" })
+                    @Html.TextBoxFor(m => m.MailingZipCode, new { @class = "form-control mailing-geo-field", data_geo = "postal_code", placeholder = "", @maxlength = "6" })
+                    @Html.ValidationMessageFor(m => m.MailingZipCode)
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MailingCity, new { @class = "control-label required-field" })
+                    @Html.TextBoxFor(m => m.MailingCity, new { @class = "form-control mailing-geo-field", data_geo = "locality", placeholder = "", @maxlength = "35" })
+                    @Html.ValidationMessageFor(m => m.MailingCity)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MailingStateId, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.MailingStateId, new SelectList(ViewBag.States, "Value", "Text"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.MailingStateId)
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    @Html.HiddenFor(emp => emp.EmployeeId)
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="form-group pull-right">
-            <button type="reset" class="btn btn-default">Reset</button>
-            <button type="submit" class="btn btn-success">Save</button>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group pull-right">
+                <button type="reset" class="btn btn-default">Reset</button>
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
         </div>
     </div>
-</div>

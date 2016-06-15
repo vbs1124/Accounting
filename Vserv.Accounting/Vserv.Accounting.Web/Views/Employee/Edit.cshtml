@@ -4,7 +4,7 @@
 }
 <div class="row" ng-controller="EmployeeController as vm" ng-init="initialize(@Model.EmployeeId)">
     <div class="col-md-12">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" id="tabs-manage-employee">
             <li class="active"><a href="#edit-employee" data-toggle="tab">@ViewBag.Title</a></li>
             <li class=""><a href="#emp-salary-summary" data-toggle="tab" aria-expanded="false">Salary Summary</a></li>
             <li class=""><a href="#emp-salary-breakup" data-toggle="tab" aria-expanded="false">Salary Breakup</a></li>

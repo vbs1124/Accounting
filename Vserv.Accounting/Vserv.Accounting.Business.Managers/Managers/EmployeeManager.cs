@@ -512,18 +512,24 @@ namespace Vserv.Accounting.Business.Managers
             foreach (SalaryComponent salaryComponent in salaryComponents)
             {
                 var salaryComponentEnum = (SalaryComponentEnum)Enum.Parse(typeof(SalaryComponentEnum), salaryComponent.Name);
+                Decimal? amount = 0;
 
                 if (!salaryComponentEnum.Equals(SalaryComponentEnum.SpecialAllowance))
                 {
+                    amount = GetAmountBySalaryComponent(empSalaryStructure, salaryComponent.DefaultAmount, salaryComponentEnum, monthId);
+
+                    if (amount.IsNotNull() && amount.HasValue)
+                    {
+                        amount = Math.Round(amount.Value, 0);
+                    }
+
                     employeeSalaryDetail = new EmployeeSalaryDetail
                     {
                         EmployeeId = empSalaryStructure.EmployeeId,
                         SalaryComponentId = salaryComponent.SalaryComponentId,
                         MonthId = monthId,
                         Year = year,
-                        Amount =
-                            GetAmountBySalaryComponent(empSalaryStructure, salaryComponent.DefaultAmount,
-                                salaryComponentEnum, monthId),
+                        Amount = amount,
                         IsActive = true,
                         CreatedBy = empSalaryStructure.CreatedBy,
                         CreatedDate = DateTime.Now
@@ -547,7 +553,7 @@ namespace Vserv.Accounting.Business.Managers
                 SalaryComponentId = Convert.ToInt32(SalaryComponentEnum.SpecialAllowance),
                 MonthId = monthId,
                 Year = year,
-                Amount = (empSalaryStructure.CTC / 12) - deductedAmountfromCTC,
+                Amount = Math.Round((empSalaryStructure.CTC / 12), 0) - deductedAmountfromCTC,
                 IsActive = true,
                 CreatedBy = empSalaryStructure.CreatedBy,
                 CreatedDate = DateTime.Now
@@ -605,7 +611,7 @@ namespace Vserv.Accounting.Business.Managers
                 case SalaryComponentEnum.Mediclaim:
                     return GetCalculatedMediclaimByMonth(ctcMonthly, monthId);
                 case SalaryComponentEnum.Gratuity:
-                    return basic * 15 / 26 / 12;
+                    return (((basic * 15) / 26) / 12);
                 default:
                     return 0;
             }

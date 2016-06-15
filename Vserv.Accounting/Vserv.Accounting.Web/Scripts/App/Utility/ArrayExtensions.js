@@ -11,4 +11,7 @@
 		this.push.apply(this, target);
 	};
 
+	Array.prototype.removeAll = function () {
+	    this.splice(0, this.count);
+	};
 })();

@@ -25,11 +25,11 @@
             for (var i = data.length - 1; i >= 0; i--) {
                 var currentcomp = data[i]["SCCode"];
                 if ($.inArray(currentcomp, componentForFooterTotal) !== -1) {
-                    sum += parseFloat(data[i][month]);
+                    sum += $.vbsParseFloat(data[i][month]);
                 }
             }
 
-            return sum.toFixed(0);
+            return sum;
         };
     }
 })();

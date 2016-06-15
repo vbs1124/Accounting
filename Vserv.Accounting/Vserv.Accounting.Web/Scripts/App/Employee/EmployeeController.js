@@ -6,92 +6,67 @@
     function employeeController($scope, $modal, employeeService) {
         var vm = this;
 
-        function add() {
+        vm.employeeId = $("#EmployeeId").val();
+        vm.addNewSalaryStructure = addNewSalaryStructure;
+        vm.empSalaryStructureModel = employeeService.empSalaryStructureModel;
+        vm.financialYears = employeeService.getFinancialYears();
+        vm.selectedFinancialYear = moment().year().toString();
+
+        vm.loadEmployeeAppraisalHistory = employeeService.loadEmployeeAppraisalHistory(vm.employeeId);
+        vm.employeeAppraisalHistory = employeeService.employeeAppraisalHistory;
+
+        vm.loadEmployeePaySheet = employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(vm.selectedFinancialYear), parseInt(vm.selectedFinancialYear) + 1);
+        vm.employeePaySheet = employeeService.employeePaySheet;
+
+        vm.viewSelectedSalaryBreakup = viewSelectedSalaryBreakup;
+
+        function addNewSalaryStructure() {
             $modal.open({
                 template: '<add-appraisal />'
             });
         }
 
-        vm.add = add;
-        vm.empSalaryStructureModel = employeeService.empSalaryStructureModel;
-
-        $scope.employeeAppraisalHistory = [];
-        $scope.employeeId = $("#EmployeeId").val();
-
-        $scope.loadEmployeeAppraisalHistory = function (employeeId) {
-            employeeService.loadEmployeeAppraisalHistory(employeeId).then(function (resp) {
-                if (resp.businessException == null) {
-
-                    $.map(resp.result, function (val, i) {
-                        val.CurrentEffectiveFrom = moment(val.CurrentEffectiveFrom).format("DD/MM/YYYY");
-                    });
-                    $scope.employeeAppraisalHistory = resp.result;
-                }
-                else {
-                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
-                }
-            });
+        function viewSelectedSalaryBreakup() {
+            $.showToastrMessage('info', "Functionality not implemented yet..!", "Information!")
         }
 
-        $scope.employeeAppraisalHistoryGridOptions = {
-            data: "employeeAppraisalHistory",
-            enableRowSelection: true,
-            multiSelect: false,
-            columnDefs: [
-              { field: 'CurrentEffectiveFrom', displayName: 'Effective From', width: 150 },
-              { field: 'CurrentCTC', displayName: 'Cost to Company(CTC)', width: 150 },
-              { field: 'PercentageGrowth', displayName: '% Growth', width: 150 },
-            ]
-        };
-
         //---------------- Salary Breakup Starts here -----------
-        $scope.paysheets = [];
-        $scope.FinancialYears = employeeService.getFinancialYears();
-        $scope.currentYear = moment().year().toString();
-        $scope.selectedFinancialYear = $scope.currentYear;
+        //  $scope.paysheets = [];
+        //  $scope.FinancialYears = employeeService.getFinancialYears();
+        //$scope.currentYear = moment().year().toString();
+        //$scope.selectedFinancialYear = $scope.currentYear;
 
-        $scope.paySheetParameter = {
-            EmployeeId: null,
-            FinancialYearFrom: null,
-            FinancialYearTo: null
-        };
+        //$scope.paySheetParameter = {
+        //    EmployeeId: $location.search().employeeId,
+        //    FinancialYearFrom: null,
+        //    FinancialYearTo: null
+        //};
 
         $scope.onChangeFinancialYear = function () {
-            $scope.loadYearlyPaySheet();
+            employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(vm.selectedFinancialYear), parseInt(vm.selectedFinancialYear) + 1);
         }
 
         //Method Initialize
         $scope.initialize = function (employeeId) {
-            $scope.employeeId = employeeId;
-            $scope.loadEmployeeAppraisalHistory(employeeId);
-            $scope.loadYearlyPaySheet(employeeId);
+            // $scope.loadEmployeeAppraisalHistory(employeeId);
+            //   $scope.loadYearlyPaySheet(employeeId);
         };
 
         // Method loadSiteFeatures
-        $scope.loadYearlyPaySheet = function (employeeId) {
+        //$scope.loadYearlyPaySheet = function (employeeId) {
 
-            if (employeeId) {
-                $scope.paySheetParameter.EmployeeId = employeeId;
-            } else {
-                $scope.paySheetParameter.EmployeeId = $("#EmployeeId").val();
-            }
+        //    $scope.paySheetParameter.FinancialYearFrom = $scope.selectedFinancialYear;
+        //    $scope.paySheetParameter.FinancialYearTo = parseInt($scope.selectedFinancialYear) + 1;
 
-            $scope.paySheetParameter.FinancialYearFrom = $scope.selectedFinancialYear;
-            $scope.paySheetParameter.FinancialYearTo = parseInt($scope.selectedFinancialYear) + 1;
-
-            employeeService.loadYearlyPaySheet($scope.paySheetParameter).then(function (resp) {
-                if (resp.businessException == null) {
-                    $scope.paysheets = resp.result;
-                }
-                else {
-                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
-                }
-            });
-        };
-
-        $scope.parseFloat = function (value) {
-            return parseFloat(value);
-        }
+        //    employeeService.loadYearlyPaySheet($scope.paySheetParameter).then(function (resp) {
+        //        if (resp.businessException == null) {
+        //            $scope.paysheets = resp.result;
+        //        }
+        //        else {
+        //            $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+        //        }
+        //    });
+        //};
 
         $scope.getCurrentComponentTotal = function (item) {
 
@@ -101,33 +76,64 @@
             var result = 0;
 
             if (!isNaN(item.April))
-                result = result + item.April;
+                result = result + $.vbsParseFloat(item.April);
             if (!isNaN(item.May))
-                result = result + item.May;
+                result = result + $.vbsParseFloat(item.May);
             if (!isNaN(item.June))
-                result = result + item.June;
+                result = result + $.vbsParseFloat(item.June);
             if (!isNaN(item.July))
-                result = result + item.July;
+                result = result + $.vbsParseFloat(item.July);
             if (!isNaN(item.August))
-                result = result + item.August;
+                result = result + $.vbsParseFloat(item.August);
             if (!isNaN(item.September))
-                result = result + item.September;
+                result = result + $.vbsParseFloat(item.September);
             if (!isNaN(item.October))
-                result = result + item.October;
+                result = result + $.vbsParseFloat(item.October);
             if (!isNaN(item.November))
-                result = result + item.November;
+                result = result + $.vbsParseFloat(item.November);
             if (!isNaN(item.December))
-                result = result + item.December;
+                result = result + $.vbsParseFloat(item.December);
             if (!isNaN(item.January))
-                result = result + item.January;
+                result = result + $.vbsParseFloat(item.January);
             if (!isNaN(item.February))
-                result = result + item.February;
+                result = result + $.vbsParseFloat(item.February);
             if (!isNaN(item.March))
-                result = result + item.March;
+                result = result + $.vbsParseFloat(item.March);
 
-            result = result.toFixed(0);
-            return result;
+            return $.vbsParseFloat(result);
         };
+
+        $scope.getCurrentMonthTotal = function (data, month) {
+            console.log("getCurrentMonthTotal fired....");
+            if (typeof (data) === "undefined" || typeof (month) === "undefined") {
+                return 0;
+            }
+
+            var componentForFooterTotal = [
+                                            "SCBASC",
+                                            "SCSHRA",
+                                            "SCCONV",
+                                            "SCSPCL",
+                                            "SCPERF",
+                                            "SCLECM",
+                                            "SCSALA",
+                                            "SCCABD",
+                                            "SCODN",
+                                            "SCCOMN",
+                                            "SCOTHR",
+                                            "SCMEDC",
+                                            "SCFCPN"];
+
+            var sum = 0;
+            for (var i = data.length - 1; i >= 0; i--) {
+                var currentcomp = data[i]["SCCode"];
+                if ($.inArray(currentcomp, componentForFooterTotal) !== -1) {
+                    sum += $.vbsParseFloat(data[i][month]);
+                }
+            }
+
+            return sum.toFixed(0);
+        }
 
         $scope.nonEditableComponents = [
             "SCCTCM",
@@ -141,18 +147,18 @@
             "SCMEDM",
             "SCGRAT"];
 
-        $scope.isEditableColumn = function (componentName) {
-            return $.inArray(componentName, $scope.nonEditableComponents) === -1;
+        $scope.isEditableColumn = function (componentCode) {
+            return $.inArray(componentCode, $scope.nonEditableComponents) === -1;
         }
 
         $scope.updateYearlyPaySheet = function () {
-            employeeService.updateYearlyPaySheet($scope.paysheets).then(function (resp) {
-                if (resp.businessException == null) {
-                }
-                else {
-                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
-                }
-            });
+            //employeeService.updateYearlyPaySheet($scope.paysheets).then(function (resp) {
+            //    if (resp.businessException == null) {
+            //    }
+            //    else {
+            //        $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+            //    }
+            //});
         }
 
         //---------------- Salary Breakup Ends here -----------

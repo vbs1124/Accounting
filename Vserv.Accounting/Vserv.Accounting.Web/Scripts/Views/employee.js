@@ -23,33 +23,33 @@
 
     //Initialize any date pickers
     $("#dp-birth-date").datetimepicker({
-        format: "MM/DD/YYYY",
+        format: "DD/MM/YYYY",
         showTodayButton: true,
         showClear: true,
         showClose: true,
-        maxDate: moment().subtract(18, "months")
+        // maxDate: moment().subtract(18, "months")
     });
 
     $("#dp-relieving-date").datetimepicker({
-        format: "MM/DD/YYYY",
+        format: "DD/MM/YYYY",
         showTodayButton: true,
         showClear: true,
         showClose: true
     });
 
     $("#dp-resignation-date").datetimepicker({
-        format: "MM/DD/YYYY",
+        format: "DD/MM/YYYY",
         showTodayButton: true,
         showClear: true,
         showClose: true
     });
 
     $("#dp-joining-date").datetimepicker({
-        format: "MM/DD/YYYY",
+        format: "DD/MM/YYYY",
         showTodayButton: true,
         showClear: true,
         showClose: true,
-        maxDate: moment()
+        // maxDate: moment()
     });
 
     $("#dp-joining-date").on("dp.change", function (e) {

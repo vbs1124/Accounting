@@ -877,7 +877,6 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Employee\_ViewEmployeesPartial.cshtml" />
-    <Content Include="Views\Employee\EmpSalaryBreakup.cshtml" />
     <Content Include="Views\Employee\_SalaryBreakup.cshtml" />
     <Content Include="Views\Employee\_SalarySummary.cshtml" />
     <Content Include="Views\Employee\_EmpAppraisalHistory.cshtml" />
