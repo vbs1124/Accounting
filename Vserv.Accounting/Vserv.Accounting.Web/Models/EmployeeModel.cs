@@ -122,6 +122,7 @@ namespace Vserv.Accounting.Web.Models
         /// </value>
         [Required(ErrorMessage = "Date of Birth is required.")]
         [Display(Name = "Date of Birth")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? BirthDay { get; set; }
 
         /// <summary>
@@ -132,6 +133,7 @@ namespace Vserv.Accounting.Web.Models
         /// </value>
         [Display(Name = "Joining Date")]
         [Required(ErrorMessage = "Joining Date is required.")]
+        [DataType(DataType.DateTime)]
         public DateTime? JoiningDate { get; set; }
 
         /// <summary>

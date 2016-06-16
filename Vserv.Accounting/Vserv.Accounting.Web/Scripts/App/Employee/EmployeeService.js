@@ -9,7 +9,7 @@
 
         var svc = {
             addEmployeeSalaryDetail: addEmployeeSalaryDetail,
-            getFinancialYears: getFinancialYears,
+            getEmpFinancialYears: getEmpFinancialYears,
             getEmployee: getEmployee,
 
             loadEmployeeAppraisalHistory: loadEmployeeAppraisalHistory,
@@ -69,12 +69,15 @@
             return serviceHandler.executePostService('/Employee/UpdateYearlyPaySheet', paysheets);
         }
 
-        function getFinancialYears() {
-            var currentYear = moment().year();
+        function getEmpFinancialYears(joiningDate) {
+            var currentYear = parseInt(moment().year());
+            var joiningYear = parseInt(moment(joiningDate).year());
             var financialYears = [];
-            for (var i = currentYear + 1 ; i > currentYear - 9; i--) {
-                financialYears.push({ currentYear: i - 1, financialYear: i - 1 + '-' + i });
+
+            for (var i = currentYear; i >= joiningYear; i--) {
+                financialYears.push({ currentYear: i, financialYear: i + '-' + (i + 1) });
             }
+
             return financialYears;
         }
     }

@@ -9,7 +9,7 @@
         vm.employeeId = $("#EmployeeId").val();
         vm.addNewSalaryStructure = addNewSalaryStructure;
         vm.empSalaryStructureModel = employeeService.empSalaryStructureModel;
-        vm.financialYears = employeeService.getFinancialYears();
+        vm.financialYears = employeeService.getEmpFinancialYears(new Date($("#JoiningDate").val()));
         vm.selectedFinancialYear = moment().year().toString();
 
         vm.loadEmployeeAppraisalHistory = employeeService.loadEmployeeAppraisalHistory(vm.employeeId);
@@ -30,43 +30,13 @@
             $.showToastrMessage('info', "Functionality not implemented yet..!", "Information!")
         }
 
-        //---------------- Salary Breakup Starts here -----------
-        //  $scope.paysheets = [];
-        //  $scope.FinancialYears = employeeService.getFinancialYears();
-        //$scope.currentYear = moment().year().toString();
-        //$scope.selectedFinancialYear = $scope.currentYear;
-
-        //$scope.paySheetParameter = {
-        //    EmployeeId: $location.search().employeeId,
-        //    FinancialYearFrom: null,
-        //    FinancialYearTo: null
-        //};
-
         $scope.onChangeFinancialYear = function () {
             employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(vm.selectedFinancialYear), parseInt(vm.selectedFinancialYear) + 1);
         }
 
         //Method Initialize
         $scope.initialize = function (employeeId) {
-            // $scope.loadEmployeeAppraisalHistory(employeeId);
-            //   $scope.loadYearlyPaySheet(employeeId);
         };
-
-        // Method loadSiteFeatures
-        //$scope.loadYearlyPaySheet = function (employeeId) {
-
-        //    $scope.paySheetParameter.FinancialYearFrom = $scope.selectedFinancialYear;
-        //    $scope.paySheetParameter.FinancialYearTo = parseInt($scope.selectedFinancialYear) + 1;
-
-        //    employeeService.loadYearlyPaySheet($scope.paySheetParameter).then(function (resp) {
-        //        if (resp.businessException == null) {
-        //            $scope.paysheets = resp.result;
-        //        }
-        //        else {
-        //            $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
-        //        }
-        //    });
-        //};
 
         $scope.getCurrentComponentTotal = function (item) {
 

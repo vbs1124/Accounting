@@ -134,7 +134,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.BirthDay, new { @class = "control-label required-field" })
                 <div class='input-group date' id="dp-birth-date">
-                    @Html.TextBoxFor(m => m.BirthDay, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.BirthDay, "{0:MM/dd/yyyy}", new { @class = "form-control" })
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -144,7 +144,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.JoiningDate, new { @class = "control-label required-field" })
                 <div class='input-group date' id="dp-joining-date">
-                    @Html.TextBoxFor(m => m.JoiningDate, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.JoiningDate, "{0:MM/dd/yyyy}", new { @class = "form-control" })
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -154,7 +154,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ResignationDate, new { @class = "control-label" })
                 <div class='input-group date' id="dp-resignation-date">
-                    @Html.TextBoxFor(m => m.ResignationDate, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.ResignationDate, "{0:MM/dd/yyyy}", new { @class = "form-control" })
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -164,7 +164,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.RelievingDate, new { @class = "control-label" })
                 <div class='input-group date' id="dp-relieving-date">
-                    @Html.TextBoxFor(m => m.RelievingDate, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.RelievingDate, "{0:MM/dd/yyyy}", new { @class = "form-control" })
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>

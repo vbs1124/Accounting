@@ -38,9 +38,9 @@ namespace Vserv.Accounting.Web.Helpers
                 .GetMethod("FormGroupFor");
 
             var wrapperTag = new HtmlTag("div").NoTag();
+            var modelProperties = typeof(TModel).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-            foreach (var prop in typeof(TModel)
-                .GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            foreach (var prop in modelProperties)
             {
                 if (prop.GetCustomAttributes().OfType<HiddenInputAttribute>().Any()) continue;
 

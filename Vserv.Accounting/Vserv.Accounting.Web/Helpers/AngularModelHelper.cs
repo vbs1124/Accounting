@@ -81,10 +81,16 @@ namespace Vserv.Accounting.Web.Helpers
             var labelText = metadata.DisplayName ?? name.Humanize(LetterCasing.Title);
 
             //Creates <label class="control-label" for="Name">Name</label>
-            var label = new HtmlTag("label")
-                .AddClass("control-label")
-                .Attr("for", name)
-                .Text(labelText);
+            var label = new HtmlTag("label").Attr("for", name).Text(labelText);
+
+            if (metadata.IsRequired)
+            {
+                label.AddClasses("control-label", "required-field");
+            }
+            else
+            {
+                label.AddClass("control-label");
+            }
 
             var tagName = String.Empty;
 

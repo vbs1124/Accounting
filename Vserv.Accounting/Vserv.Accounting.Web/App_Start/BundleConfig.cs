@@ -25,8 +25,7 @@ namespace Vserv.Accounting.Web
                 .Include("~/Scripts/bootbox.js")
                 .Include("~/Scripts/respond.js")
                 .Include("~/Scripts/bootstrap-select.js")
-                .Include("~/scripts/bootstrap-datepicker.js")
-                .Include("~/scripts/bootstrap-datetimepicker.js"));
+                .Include("~/scripts/bootstrap-datepicker.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/app").Include("~/Scripts/common.js"));
 
@@ -73,8 +72,7 @@ namespace Vserv.Accounting.Web
                 .Include("~/Content/bootstrap-overrides.css")
                 .Include("~/Content/bootstrap-select.css")
                 .Include("~/Content/bootstrap-responsive.css")
-                .Include("~/Content/bootstrap-datepicker.css")
-                .Include("~/Content/bootstrap-datetimepicker.css"));
+                .Include("~/Content/bootstrap-datepicker.css"));
 
             bundles.Add(new StyleBundle("~/Content/toastr").Include("~/Content/toastr.css"));
 

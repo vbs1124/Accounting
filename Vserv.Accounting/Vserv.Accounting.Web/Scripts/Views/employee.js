@@ -1,4 +1,5 @@
 ﻿$(function () {
+
     //$(".mailing-geo-field").geocomplete({
     //    details: "#fieldset-mailing-address",
     //    detailsAttribute: "data-geo"
@@ -22,45 +23,62 @@
     //});
 
     //Initialize any date pickers
-    $("#dp-birth-date").datetimepicker({
-        format: "DD/MM/YYYY",
-        showTodayButton: true,
-        showClear: true,
-        showClose: true,
-        // maxDate: moment().subtract(18, "months")
+    $('#dp-birth-date').datepicker({
+        autoclose: true,
+        clearBtn: true,
+        enableOnReadonly: false,
+        assumeNearbyYear: true,
+        endDate: new Date(moment().subtract(18, "years"))
+    });
+    $('#dp-relieving-date').datepicker({
+        autoclose: true
+    });
+    $('#dp-resignation-date').datepicker({
+        autoclose: true
+    });
+    $('#dp-joining-date').datepicker({
+        autoclose: true
     });
 
-    $("#dp-relieving-date").datetimepicker({
-        format: "DD/MM/YYYY",
-        showTodayButton: true,
-        showClear: true,
-        showClose: true
-    });
+    //$("#dp-birth-date").datetimepicker({
+    //    format: "DD/MM/YYYY",
+    //    showTodayButton: true,
+    //    showClear: true,
+    //    showClose: true,
+    //    // maxDate: moment().subtract(18, "months")
+    //});
 
-    $("#dp-resignation-date").datetimepicker({
-        format: "DD/MM/YYYY",
-        showTodayButton: true,
-        showClear: true,
-        showClose: true
-    });
+    //$("#dp-relieving-date").datetimepicker({
+    //    format: "DD/MM/YYYY",
+    //    showTodayButton: true,
+    //    showClear: true,
+    //    showClose: true
+    //});
 
-    $("#dp-joining-date").datetimepicker({
-        format: "DD/MM/YYYY",
-        showTodayButton: true,
-        showClear: true,
-        showClose: true,
-        // maxDate: moment()
-    });
+    //$("#dp-resignation-date").datetimepicker({
+    //    format: "DD/MM/YYYY",
+    //    showTodayButton: true,
+    //    showClear: true,
+    //    showClose: true
+    //});
 
-    $("#dp-joining-date").on("dp.change", function (e) {
-        $("#dp-relieving-date").data("DateTimePicker").minDate(e.date);
-        $("#dp-relieving-date").data("DateTimePicker").clear();
-    });
+    //$("#dp-joining-date").datetimepicker({
+    //    format: "DD/MM/YYYY",
+    //    showTodayButton: true,
+    //    showClear: true,
+    //    showClose: true,
+    //    // maxDate: moment()
+    //});
 
-    $("#dp-relieving-date").on("dp.change", function (e) {
-        $("#dp-joining-date").data("DateTimePicker").maxDate(e.date);
-        $("#dp-resignation-date").data("DateTimePicker").maxDate(e.date);
-    });
+    //$("#dp-joining-date").on("dp.change", function (e) {
+    //    $("#dp-relieving-date").data("DateTimePicker").minDate(e.date);
+    //    $("#dp-relieving-date").data("DateTimePicker").clear();
+    //});
+
+    //$("#dp-relieving-date").on("dp.change", function (e) {
+    //    $("#dp-joining-date").data("DateTimePicker").maxDate(e.date);
+    //    $("#dp-resignation-date").data("DateTimePicker").maxDate(e.date);
+    //});
 
     // Reset form controls once the modal is closed.
     $("#modal-add-designation").on("hidden.bs.modal", function () {
