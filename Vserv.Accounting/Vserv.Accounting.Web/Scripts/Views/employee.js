@@ -30,55 +30,27 @@
         assumeNearbyYear: true,
         endDate: new Date(moment().subtract(18, "years"))
     });
+
     $('#dp-relieving-date').datepicker({
         autoclose: true
+    }).on("changeDate", function (e) {
+        var endDate = new Date(e.date.valueOf());
+        $("#dp-joining-date").datepicker("setEndDate", endDate);
+        $("#dp-resignation-date").datepicker("setEndDate", endDate);
     });
+
     $('#dp-resignation-date').datepicker({
         autoclose: true
     });
+
     $('#dp-joining-date').datepicker({
         autoclose: true
+    }).on("changeDate", function (e) {
+        var minDate = new Date(e.date.valueOf());
+        $("#dp-relieving-date").datepicker("setStartDate", minDate);
+        $("#dp-resignation-date").datepicker("setStartDate", minDate);
+        //    $("#dp-relieving-date").data("DateTimePicker").clear();
     });
-
-    //$("#dp-birth-date").datetimepicker({
-    //    format: "DD/MM/YYYY",
-    //    showTodayButton: true,
-    //    showClear: true,
-    //    showClose: true,
-    //    // maxDate: moment().subtract(18, "months")
-    //});
-
-    //$("#dp-relieving-date").datetimepicker({
-    //    format: "DD/MM/YYYY",
-    //    showTodayButton: true,
-    //    showClear: true,
-    //    showClose: true
-    //});
-
-    //$("#dp-resignation-date").datetimepicker({
-    //    format: "DD/MM/YYYY",
-    //    showTodayButton: true,
-    //    showClear: true,
-    //    showClose: true
-    //});
-
-    //$("#dp-joining-date").datetimepicker({
-    //    format: "DD/MM/YYYY",
-    //    showTodayButton: true,
-    //    showClear: true,
-    //    showClose: true,
-    //    // maxDate: moment()
-    //});
-
-    //$("#dp-joining-date").on("dp.change", function (e) {
-    //    $("#dp-relieving-date").data("DateTimePicker").minDate(e.date);
-    //    $("#dp-relieving-date").data("DateTimePicker").clear();
-    //});
-
-    //$("#dp-relieving-date").on("dp.change", function (e) {
-    //    $("#dp-joining-date").data("DateTimePicker").maxDate(e.date);
-    //    $("#dp-resignation-date").data("DateTimePicker").maxDate(e.date);
-    //});
 
     // Reset form controls once the modal is closed.
     $("#modal-add-designation").on("hidden.bs.modal", function () {

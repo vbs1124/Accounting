@@ -26,6 +26,12 @@
             });
         }
 
+        function employeeChangeHistoryModal() {
+            $modal.open({
+                template: '<emp-history />'
+            });
+        }
+
         function viewSelectedSalaryBreakup() {
             $.showToastrMessage('info', "Functionality not implemented yet..!", "Information!")
         }
