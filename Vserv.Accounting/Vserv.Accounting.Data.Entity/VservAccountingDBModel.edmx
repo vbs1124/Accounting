@@ -1170,18 +1170,18 @@
         <ComplexType Name="GetEmployeeSalaryDetail_Result">
           <Property Type="Int32" Name="EmployeeId" Nullable="true" />
           <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
-          <Property Type="Decimal" Name="April" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="May" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="June" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="July" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="August" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="September" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="October" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="November" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="December" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="January" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="February" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="March" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="String" Name="April" Nullable="true" />
+          <Property Type="String" Name="May" Nullable="true" />
+          <Property Type="String" Name="June" Nullable="true" />
+          <Property Type="String" Name="July" Nullable="true" />
+          <Property Type="String" Name="August" Nullable="true" />
+          <Property Type="String" Name="September" Nullable="true" />
+          <Property Type="String" Name="October" Nullable="true" />
+          <Property Type="String" Name="November" Nullable="true" />
+          <Property Type="String" Name="December" Nullable="true" />
+          <Property Type="String" Name="January" Nullable="true" />
+          <Property Type="String" Name="February" Nullable="true" />
+          <Property Type="String" Name="March" Nullable="true" />
           <Property Type="Int32" Name="EmpSalaryStructureId" Nullable="true" />
           <Property Type="String" Name="SCName" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="SCCode" Nullable="true" MaxLength="6" />

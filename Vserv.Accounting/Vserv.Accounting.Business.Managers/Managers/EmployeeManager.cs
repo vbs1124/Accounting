@@ -697,11 +697,25 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
-        public List<GetEmployeeSalaryDetail_Result> UpdateYearlyPaySheet(List<GetEmployeeSalaryDetail_Result> paySheet)
+        public List<EmployeeSalaryDetail> UpdateYearlyPaySheet(List<EmployeeSalaryDetail> paySheet, string userName)
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                return new List<GetEmployeeSalaryDetail_Result>(); //TODO: need to implement the paySheet update logic.
+                IEmployeeSalaryDetailRepo repo = DataRepositoryFactory.GetDataRepository<IEmployeeSalaryDetailRepo>();
+                string[] nonEditableComponents = { "SCCTCM", "SCBASC", "SCSHRA", "SCCONV", "SCSPCL", "SCPERF", "SCMEDC", "SCEPFO", "SCMEDM", "SCGRAT" };
+                foreach (var item in paySheet)
+                {
+                    var existingEmployeeSalaryDetail = repo.Get(item.EmployeeSalaryDetailId);
+                    if (existingEmployeeSalaryDetail.IsNotNull())
+                    {
+                        existingEmployeeSalaryDetail.Amount = item.Amount;
+                        existingEmployeeSalaryDetail.UpdatedBy = userName;
+                        existingEmployeeSalaryDetail.UpdatedDate = DateTime.Now;
+                        repo.Update(existingEmployeeSalaryDetail, userName);
+                    }
+                }
+
+                return paySheet;
             });
         }
 

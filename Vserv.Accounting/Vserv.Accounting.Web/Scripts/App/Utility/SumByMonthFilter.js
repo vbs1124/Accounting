@@ -25,7 +25,7 @@
             for (var i = data.length - 1; i >= 0; i--) {
                 var currentcomp = data[i]["SCCode"];
                 if ($.inArray(currentcomp, componentForFooterTotal) !== -1) {
-                    sum += $.vbsParseFloat(data[i][month]);
+                    sum += $.vbsParseFloat(data[i][month].Amount);
                 }
             }
 

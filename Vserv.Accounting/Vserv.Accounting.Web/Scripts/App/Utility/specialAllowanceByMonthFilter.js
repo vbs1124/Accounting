@@ -27,13 +27,13 @@
             for (var i = data.length - 1; i >= 0; i--) {
                 var currentcomp = data[i]["SCCode"];
 
-                if (currentcomp === "SCCTCM" && !isNaN(data[i][month])) {
-                    monthlyCTCAmount = $.vbsParseFloat(data[i][month]);
+                if (currentcomp === "SCCTCM" && !isNaN(data[i][month].Amount)) {
+                    monthlyCTCAmount = $.vbsParseFloat(data[i][month].Amount);
                 }
 
                 if ($.inArray(currentcomp, deductedComponentFromMonthlyCTC) !== -1) {
-                    if (!isNaN(data[i][month])) {
-                        deductedSum += $.vbsParseFloat(data[i][month]);
+                    if (!isNaN(data[i][month].Amount)) {
+                        deductedSum += $.vbsParseFloat(data[i][month].Amount);
                     }
                 }
             }

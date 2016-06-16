@@ -105,6 +105,7 @@
     <Build Include="StoredProcedures\dbo.InsertErrorLog.sql" />
     <Build Include="StoredProcedures\dbo.InsertInfoLog.sql" />
     <Build Include="StoredProcedures\dbo.InsertMvcErrorLog.sql" />
+    <Build Include="Tables\dbo.EmpSalaryStructure.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeploymentScript.sql" />
