@@ -12,9 +12,14 @@ namespace Vserv.Accounting.Data.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class EmployeeSalaryDetail
+    public partial class EmpSalaryDetail
     {
-        public int EmployeeSalaryDetailId { get; set; }
+        public EmpSalaryDetail()
+        {
+            this.EmpSalaryDetailArchives = new HashSet<EmpSalaryDetailArchive>();
+        }
+    
+        public int EmpSalaryDetailId { get; set; }
         public int EmployeeId { get; set; }
         public int SalaryComponentId { get; set; }
         public int EmpSalaryStructureId { get; set; }
@@ -28,5 +33,8 @@ namespace Vserv.Accounting.Data.Entity
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
         public virtual EmpSalaryStructure EmpSalaryStructure { get; set; }
+        public virtual LookupMonth LookupMonth { get; set; }
+        public virtual SalaryComponent SalaryComponent { get; set; }
+        public virtual ICollection<EmpSalaryDetailArchive> EmpSalaryDetailArchives { get; set; }
     }
 }

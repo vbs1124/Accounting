@@ -108,30 +108,3 @@
         $('#' + tabId + ' a[href="#' + tab + '"]').tab('show');
     };
 })();
-
-(function () {
-    "use strict";
-    window.app.directive('empHistory', empHistory);
-    function empHistory() {
-        return {
-            templateUrl: '/employee/template/empHistory.tmpl.cshtml',
-            controller: empHistorycontroller,
-            controllerAs: 'vm'
-        }
-    }
-
-    empHistorycontroller.$inject = ['$scope', 'employeeService'];
-
-    function empHistorycontroller($scope, employeeService) {
-        var vm = this;
-        var empChangeHistory = [];
-        vm.employeeId = null;
-        vm.loadEmployeeChangeHistory = loadEmployeeChangeHistory;
-        vm.empChangeHistory = empChangeHistory;
-
-        function loadEmployeeChangeHistory(employeeId) {
-
-        }
-    }
-
-})();

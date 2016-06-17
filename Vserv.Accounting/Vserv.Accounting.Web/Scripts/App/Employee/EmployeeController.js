@@ -8,9 +8,13 @@
 
         vm.employeeId = $("#EmployeeId").val();
         vm.addNewSalaryStructure = addNewSalaryStructure;
+        vm.employeeChangeHistoryModal = employeeChangeHistoryModal;
         vm.empSalaryStructureModel = employeeService.empSalaryStructureModel;
-        vm.financialYears = employeeService.getEmpFinancialYears(new Date($("#JoiningDate").val()));
-        vm.selectedFinancialYear = moment().year().toString();
+        vm.relievingDate = new Date($("#RelievingDate").val());
+        vm.joiningDate = new Date($("#JoiningDate").val());
+        vm.financialYears = employeeService.getEmpFinancialYears(vm.joiningDate, vm.relievingDate);
+        vm.selectedFinancialYear = vm.relievingDate == null || vm.relievingDate == 'Invalid Date' ? moment().year().toString() : moment(vm.relievingDate).year().toString();
+        vm.currentYear = moment().year().toString();
 
         vm.loadEmployeeAppraisalHistory = employeeService.loadEmployeeAppraisalHistory(vm.employeeId);
         vm.employeeAppraisalHistory = employeeService.employeeAppraisalHistory;
@@ -51,29 +55,40 @@
             }
             var result = 0;
 
-            if (!isNaN(item.April.Amount))
+            if (item.April != null && !isNaN(item.April.Amount))
                 result = result + $.vbsParseFloat(item.April.Amount);
-            if (!isNaN(item.May.Amount))
+
+            if (item.May != null && !isNaN(item.May.Amount))
                 result = result + $.vbsParseFloat(item.May.Amount);
-            if (!isNaN(item.June.Amount))
+
+            if (item.June != null && !isNaN(item.June.Amount))
                 result = result + $.vbsParseFloat(item.June.Amount);
-            if (!isNaN(item.July.Amount))
+
+            if (item.July != null && !isNaN(item.July.Amount))
                 result = result + $.vbsParseFloat(item.July.Amount);
-            if (!isNaN(item.August.Amount))
+
+            if (item.August != null && !isNaN(item.August.Amount))
                 result = result + $.vbsParseFloat(item.August.Amount);
-            if (!isNaN(item.September.Amount))
+
+            if (item.September != null && !isNaN(item.September.Amount))
                 result = result + $.vbsParseFloat(item.September.Amount);
-            if (!isNaN(item.October.Amount))
+
+            if (item.October != null && !isNaN(item.October.Amount))
                 result = result + $.vbsParseFloat(item.October.Amount);
-            if (!isNaN(item.November.Amount))
+
+            if (item.November != null && !isNaN(item.November.Amount))
                 result = result + $.vbsParseFloat(item.November.Amount);
-            if (!isNaN(item.December.Amount))
+
+            if (item.December != null && !isNaN(item.December.Amount))
                 result = result + $.vbsParseFloat(item.December.Amount);
-            if (!isNaN(item.January.Amount))
+
+            if (item.January != null && !isNaN(item.January.Amount))
                 result = result + $.vbsParseFloat(item.January.Amount);
-            if (!isNaN(item.February.Amount))
+
+            if (item.February != null && !isNaN(item.February.Amount))
                 result = result + $.vbsParseFloat(item.February.Amount);
-            if (!isNaN(item.March.Amount))
+
+            if (item.March != null && !isNaN(item.March.Amount))
                 result = result + $.vbsParseFloat(item.March.Amount);
 
             return $.vbsParseFloat(result);

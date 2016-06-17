@@ -6,6 +6,7 @@
     function employeeService(serviceHandler) {
         var employeePaySheet = [];
         var employeeAppraisalHistory = [];
+        var employeeChangeHistory = [];
 
         var svc = {
             addEmployeeSalaryDetail: addEmployeeSalaryDetail,
@@ -16,7 +17,11 @@
             employeeAppraisalHistory: employeeAppraisalHistory,
             loadEmployeePaySheet: loadEmployeePaySheet,
             employeePaySheet: employeePaySheet,
-            updateYearlyPaySheet: updateYearlyPaySheet
+            updateYearlyPaySheet: updateYearlyPaySheet,
+
+            loadEmployeeChangeHistory: loadEmployeeChangeHistory,
+            employeeChangeHistory: employeeChangeHistory,
+
         };
 
         return svc;
@@ -69,8 +74,8 @@
             return serviceHandler.executePostService('/Employee/UpdateYearlyPaySheet', paysheets);
         }
 
-        function getEmpFinancialYears(joiningDate) {
-            var currentYear = parseInt(moment().year());
+        function getEmpFinancialYears(joiningDate, relievingDate) {
+            var currentYear = relievingDate == null || relievingDate == 'Invalid Date' ? parseInt(moment().year()) : parseInt(moment(relievingDate).year());
             var joiningYear = parseInt(moment(joiningDate).year());
             var financialYears = [];
 
@@ -79,6 +84,24 @@
             }
 
             return financialYears;
+        }
+
+        function loadEmployeeChangeHistory(employeeId) {
+            serviceHandler.executePostService('/Employee/LoadEmployeeChangeHistory?employeeId=' + employeeId).then(function (resp) {
+                if (resp.businessException == null) {
+                    if (resp.result.length > 0) {
+                        employeeChangeHistory.removeAll();// clear all the existing items.
+                        $.map(resp.result, function (val, i) {
+                            val.UpdatedDate = moment(val.UpdatedDate).format("DD/MM/YYYY");
+                        });
+
+                        employeeChangeHistory.addRange(resp.result);
+                    }
+                }
+                else {
+                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                }
+            });
         }
     }
 })();

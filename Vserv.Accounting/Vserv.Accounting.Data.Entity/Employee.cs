@@ -14,6 +14,11 @@ namespace Vserv.Accounting.Data.Entity
     
     public partial class Employee
     {
+        public Employee()
+        {
+            this.EmpSalaryStructures = new HashSet<EmpSalaryStructure>();
+        }
+    
         public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -67,5 +72,6 @@ namespace Vserv.Accounting.Data.Entity
         public virtual OfficeBranch OfficeBranch { get; set; }
         public virtual State State1 { get; set; }
         public virtual Salutation Salutation { get; set; }
+        public virtual ICollection<EmpSalaryStructure> EmpSalaryStructures { get; set; }
     }
 }

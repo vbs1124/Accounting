@@ -264,6 +264,12 @@ namespace Vserv.Accounting.Web.Controllers
             return CustomJson(employeeModel);
         }
 
+        public JsonResult LoadEmployeeChangeHistory(int employeeId)
+        {
+            List<EmployeeArchive> employees = EmployeeManager.GetEmployeeHistory(employeeId);
+            return Json(employees, JsonRequestBehavior.AllowGet);
+        }
+
         #region Salary Management
 
         public JsonResult SaveEmployeeSalaryDetail(EmpSalaryStructureModel empSalaryStructureModel, int employeeId)
@@ -304,8 +310,8 @@ namespace Vserv.Accounting.Web.Controllers
         {
             EmployeeManager _manager = new EmployeeManager();
             List<GetEmployeeSalaryDetail_Result> updatedPaySheet = new List<GetEmployeeSalaryDetail_Result>();
-            
-            List<EmployeeSalaryDetail> empSalaryDetails = ConvertToEmployeeSalaryDetails(paySheets);
+
+            List<EmpSalaryDetail> empSalaryDetails = ConvertToEmployeeSalaryDetails(paySheets);
             var result = _manager.UpdateYearlyPaySheet(empSalaryDetails, User.Identity.Name);
             return Json("success", JsonRequestBehavior.AllowGet);
         }
@@ -720,24 +726,24 @@ namespace Vserv.Accounting.Web.Controllers
             return null;
         }
 
-        private List<EmployeeSalaryDetail> ConvertToEmployeeSalaryDetails(List<EmployeePaySheet> paySheets)
+        private List<EmpSalaryDetail> ConvertToEmployeeSalaryDetails(List<EmployeePaySheet> paySheets)
         {
-            List<EmployeeSalaryDetail> employeeSalaryDetails = new List<EmployeeSalaryDetail>();
+            List<EmpSalaryDetail> employeeSalaryDetails = new List<EmpSalaryDetail>();
 
             foreach (var item in paySheets)
             {
-                employeeSalaryDetails.Add(new EmployeeSalaryDetail { Amount = item.April.Amount, EmployeeSalaryDetailId = item.April.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmployeeSalaryDetail { Amount = item.May.Amount, EmployeeSalaryDetailId = item.May.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmployeeSalaryDetail { Amount = item.June.Amount, EmployeeSalaryDetailId = item.June.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmployeeSalaryDetail { Amount = item.July.Amount, EmployeeSalaryDetailId = item.July.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmployeeSalaryDetail { Amount = item.August.Amount, EmployeeSalaryDetailId = item.August.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmployeeSalaryDetail { Amount = item.September.Amount, EmployeeSalaryDetailId = item.September.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmployeeSalaryDetail { Amount = item.October.Amount, EmployeeSalaryDetailId = item.October.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmployeeSalaryDetail { Amount = item.November.Amount, EmployeeSalaryDetailId = item.November.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmployeeSalaryDetail { Amount = item.December.Amount, EmployeeSalaryDetailId = item.December.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmployeeSalaryDetail { Amount = item.January.Amount, EmployeeSalaryDetailId = item.January.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmployeeSalaryDetail { Amount = item.February.Amount, EmployeeSalaryDetailId = item.February.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmployeeSalaryDetail { Amount = item.March.Amount, EmployeeSalaryDetailId = item.March.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.April.Amount, EmpSalaryDetailId = item.April.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.May.Amount, EmpSalaryDetailId = item.May.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.June.Amount, EmpSalaryDetailId = item.June.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.July.Amount, EmpSalaryDetailId = item.July.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.August.Amount, EmpSalaryDetailId = item.August.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.September.Amount, EmpSalaryDetailId = item.September.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.October.Amount, EmpSalaryDetailId = item.October.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.November.Amount, EmpSalaryDetailId = item.November.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.December.Amount, EmpSalaryDetailId = item.December.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.January.Amount, EmpSalaryDetailId = item.January.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.February.Amount, EmpSalaryDetailId = item.February.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.March.Amount, EmpSalaryDetailId = item.March.EmployeeSalaryDetailId });
             }
 
             return employeeSalaryDetails;

@@ -20,6 +20,7 @@ namespace Vserv.Accounting.Data.Entity
         public VservAccountingDBEntities()
             : base("name=VservAccountingDBEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -35,7 +36,8 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<Designation> Designations { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeArchive> EmployeeArchives { get; set; }
-        public virtual DbSet<EmployeeSalaryDetail> EmployeeSalaryDetails { get; set; }
+        public virtual DbSet<EmpSalaryDetail> EmpSalaryDetails { get; set; }
+        public virtual DbSet<EmpSalaryDetailArchive> EmpSalaryDetailArchives { get; set; }
         public virtual DbSet<EmpSalaryStructure> EmpSalaryStructures { get; set; }
         public virtual DbSet<EPFNumber> EPFNumbers { get; set; }
         public virtual DbSet<EPFOffice> EPFOffices { get; set; }
@@ -316,6 +318,19 @@ namespace Vserv.Accounting.Data.Entity
                 new ObjectParameter("EmployeeId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmpAppraisalHistory_Result>("GetEmpAppraisalHistory", employeeIdParameter);
+        }
+    
+        public virtual ObjectResult<ArchiveEmpSalaryDetail_Result> ArchiveEmpSalaryDetail(Nullable<int> empSalaryDetailId, string updatedByUserName)
+        {
+            var empSalaryDetailIdParameter = empSalaryDetailId.HasValue ?
+                new ObjectParameter("EmpSalaryDetailId", empSalaryDetailId) :
+                new ObjectParameter("EmpSalaryDetailId", typeof(int));
+    
+            var updatedByUserNameParameter = updatedByUserName != null ?
+                new ObjectParameter("UpdatedByUserName", updatedByUserName) :
+                new ObjectParameter("UpdatedByUserName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ArchiveEmpSalaryDetail_Result>("ArchiveEmpSalaryDetail", empSalaryDetailIdParameter, updatedByUserNameParameter);
         }
     }
 }

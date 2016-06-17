@@ -12,25 +12,25 @@ namespace Vserv.Accounting.Data.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class LookupMonth
+    public partial class EmpSalaryDetailArchive
     {
-        public LookupMonth()
-        {
-            this.EmpSalaryDetails = new HashSet<EmpSalaryDetail>();
-            this.EmpSalaryDetailArchives = new HashSet<EmpSalaryDetailArchive>();
-        }
-    
+        public int EmpSalaryDetailArchiveId { get; set; }
+        public Nullable<int> EmpSalaryDetailId { get; set; }
+        public int EmployeeId { get; set; }
+        public int SalaryComponentId { get; set; }
+        public int EmpSalaryStructureId { get; set; }
         public int MonthId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public Nullable<int> DisplayOrder { get; set; }
+        public Nullable<int> Year { get; set; }
+        public Nullable<decimal> Amount { get; set; }
         public bool IsActive { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
-        public virtual ICollection<EmpSalaryDetail> EmpSalaryDetails { get; set; }
-        public virtual ICollection<EmpSalaryDetailArchive> EmpSalaryDetailArchives { get; set; }
+        public virtual EmpSalaryDetail EmpSalaryDetail { get; set; }
+        public virtual EmpSalaryStructure EmpSalaryStructure { get; set; }
+        public virtual LookupMonth LookupMonth { get; set; }
+        public virtual SalaryComponent SalaryComponent { get; set; }
     }
 }

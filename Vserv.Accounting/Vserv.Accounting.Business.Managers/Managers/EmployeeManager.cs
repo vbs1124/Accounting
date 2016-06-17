@@ -452,7 +452,7 @@ namespace Vserv.Accounting.Business.Managers
             {
                 if (empSalaryStructure.CTC.IsNotNull())
                 {
-                    List<EmployeeSalaryDetail> employeeSalaryDetails = CalculateSalaryComponents(empSalaryStructure, userName);
+                    List<EmpSalaryDetail> employeeSalaryDetails = CalculateSalaryComponents(empSalaryStructure, userName);
                     // Push record for input fields from the form.
                     IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
 
@@ -464,7 +464,7 @@ namespace Vserv.Accounting.Business.Managers
 
                     empSalaryStructure.CreatedDate = DateTime.Now;
                     empSalaryStructure.IsActive = true;
-                    empSalaryStructure.EmployeeSalaryDetails = employeeSalaryDetails;
+                    empSalaryStructure.EmpSalaryDetails = employeeSalaryDetails;
                     empSalaryStructureRepo.Add(empSalaryStructure, userName);
                 }
 
@@ -472,9 +472,9 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
-        private List<EmployeeSalaryDetail> CalculateSalaryComponents(EmpSalaryStructure empSalaryStructure, string userName)
+        private List<EmpSalaryDetail> CalculateSalaryComponents(EmpSalaryStructure empSalaryStructure, string userName)
         {
-            List<EmployeeSalaryDetail> employeeSalaryDetails = new List<EmployeeSalaryDetail>();
+            List<EmpSalaryDetail> employeeSalaryDetails = new List<EmpSalaryDetail>();
             Dictionary<int, int> financialYearMonths = GetFinancialYearMonths(empSalaryStructure.EffectiveFrom);
 
             foreach (var item in financialYearMonths)
@@ -499,15 +499,15 @@ namespace Vserv.Accounting.Business.Managers
             return employeeSalaryDetails;
         }
 
-        private List<EmployeeSalaryDetail> CalculateSalaryComponent(EmpSalaryStructure empSalaryStructure, int monthId, int year)
+        private List<EmpSalaryDetail> CalculateSalaryComponent(EmpSalaryStructure empSalaryStructure, int monthId, int year)
         {
-            List<EmployeeSalaryDetail> employeeSalaryDetails = new List<EmployeeSalaryDetail>();
+            List<EmpSalaryDetail> employeeSalaryDetails = new List<EmpSalaryDetail>();
             var salaryComponents = GetSalaryComponents();
 
             Decimal? deductedAmountfromCTC = 0;
 
             String[] deductedComponentFromCTC = { "Basic", "HRA", "Conveyance", "PerformanceIncentive", "Medical", "FoodCoupons", "ProjectIncentive", "CarLease", "LTC", "PF", "Mediclaim", "Gratuity", "CabDeductions", };
-            EmployeeSalaryDetail employeeSalaryDetail;
+            EmpSalaryDetail employeeSalaryDetail;
 
             foreach (SalaryComponent salaryComponent in salaryComponents)
             {
@@ -523,7 +523,7 @@ namespace Vserv.Accounting.Business.Managers
                         amount = Math.Round(amount.Value, 0);
                     }
 
-                    employeeSalaryDetail = new EmployeeSalaryDetail
+                    employeeSalaryDetail = new EmpSalaryDetail
                     {
                         EmployeeId = empSalaryStructure.EmployeeId,
                         SalaryComponentId = salaryComponent.SalaryComponentId,
@@ -547,7 +547,7 @@ namespace Vserv.Accounting.Business.Managers
             // Update value for SpecialAllowance based on below rules.
             // CTC -(Basic + HRA + Conveyance)- Performance Incentive - 
             // (Medical + Food Coupons + Project Incentive + Car Lease + LTC + PF + Mediclaim + Gratuity) - (Cab Deductions)
-            employeeSalaryDetail = new EmployeeSalaryDetail
+            employeeSalaryDetail = new EmpSalaryDetail
             {
                 EmployeeId = empSalaryStructure.EmployeeId,
                 SalaryComponentId = Convert.ToInt32(SalaryComponentEnum.SpecialAllowance),
@@ -697,7 +697,7 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
-        public List<EmployeeSalaryDetail> UpdateYearlyPaySheet(List<EmployeeSalaryDetail> paySheet, string userName)
+        public List<EmpSalaryDetail> UpdateYearlyPaySheet(List<EmpSalaryDetail> paySheet, string userName)
         {
             return ExecuteFaultHandledOperation(() =>
             {
@@ -705,7 +705,7 @@ namespace Vserv.Accounting.Business.Managers
                 string[] nonEditableComponents = { "SCCTCM", "SCBASC", "SCSHRA", "SCCONV", "SCSPCL", "SCPERF", "SCMEDC", "SCEPFO", "SCMEDM", "SCGRAT" };
                 foreach (var item in paySheet)
                 {
-                    var existingEmployeeSalaryDetail = repo.Get(item.EmployeeSalaryDetailId);
+                    var existingEmployeeSalaryDetail = repo.Get(item.EmpSalaryDetailId);
                     if (existingEmployeeSalaryDetail.IsNotNull())
                     {
                         existingEmployeeSalaryDetail.Amount = item.Amount;
