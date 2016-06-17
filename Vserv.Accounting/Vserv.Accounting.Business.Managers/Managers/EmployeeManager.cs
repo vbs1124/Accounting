@@ -7,6 +7,7 @@ using Vserv.Accounting.Common;
 using Vserv.Accounting.Common.Enums;
 using Vserv.Accounting.Data;
 using Vserv.Accounting.Data.Entity;
+using Vserv.Accounting.Data.Entity.Models;
 using Vserv.Common.Contracts;
 
 #endregion
@@ -453,18 +454,13 @@ namespace Vserv.Accounting.Business.Managers
                 if (empSalaryStructure.CTC.IsNotNull())
                 {
                     List<EmpSalaryDetail> employeeSalaryDetails = CalculateSalaryComponents(empSalaryStructure, userName);
-                    // Push record for input fields from the form.
-                    IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
-
-                    EmpSalaryStructure currentEmpSalaryStructure = empSalaryStructureRepo.GetCurrentEmpSalaryStructure(empSalaryStructure.EmployeeId);
-                    if (currentEmpSalaryStructure.IsNotNull())
-                    {
-                        empSalaryStructure.ParentId = currentEmpSalaryStructure.EmpSalaryStructureId;
-                    }
 
                     empSalaryStructure.CreatedDate = DateTime.Now;
+                    empSalaryStructure.CreatedBy = userName;
                     empSalaryStructure.IsActive = true;
                     empSalaryStructure.EmpSalaryDetails = employeeSalaryDetails;
+
+                    IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
                     empSalaryStructureRepo.Add(empSalaryStructure, userName);
                 }
 
@@ -474,26 +470,40 @@ namespace Vserv.Accounting.Business.Managers
 
         private List<EmpSalaryDetail> CalculateSalaryComponents(EmpSalaryStructure empSalaryStructure, string userName)
         {
+            IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
+            EmpSalaryStructure currentEmpSalaryStructure = empSalaryStructureRepo.GetCurrentEmpSalaryStructure(empSalaryStructure.EmployeeId);
+
+            List<FinancialPeriod> retainExistingMonths = new List<FinancialPeriod>();
+
+
+            FinancialPeriod appraisalMonth = new FinancialPeriod();
+            List<FinancialPeriod> updateEntryMonths = new List<FinancialPeriod>();
+
+            if (currentEmpSalaryStructure.IsNotNull())
+            {
+                empSalaryStructure.ParentId = currentEmpSalaryStructure.EmpSalaryStructureId;
+            }
+
             List<EmpSalaryDetail> employeeSalaryDetails = new List<EmpSalaryDetail>();
-            Dictionary<int, int> financialYearMonths = GetFinancialYearMonths(empSalaryStructure.EffectiveFrom);
+            List<FinancialPeriod> financialYearMonths = GetFinancialYearMonths(empSalaryStructure.EffectiveFrom);
 
             foreach (var item in financialYearMonths)
             {
-                if (empSalaryStructure.EffectiveFrom.Month == item.Key && empSalaryStructure.EffectiveFrom.Day > 1)
+                if (empSalaryStructure.EffectiveFrom.Month == item.Month && empSalaryStructure.EffectiveFrom.Day > 1)
                 {
-                    employeeSalaryDetails.AddRange(CalculateSalaryComponent(empSalaryStructure, item.Key, item.Value)); //TODO: need to calculate on pro data basis.
+                    employeeSalaryDetails.AddRange(CalculateSalaryComponent(empSalaryStructure, item.Month, item.Year)); //TODO: need to calculate on pro data basis.
                 }
                 else
                 {
-                    employeeSalaryDetails.AddRange(CalculateSalaryComponent(empSalaryStructure, item.Key, item.Value));
+                    employeeSalaryDetails.AddRange(CalculateSalaryComponent(empSalaryStructure, item.Month, item.Year));
                 }
             }
 
-            var result = financialYearMonths.OrderByDescending(order => order.Value).ThenByDescending(then => then.Key).FirstOrDefault();
+            var result = financialYearMonths.OrderByDescending(order => order.Year).ThenByDescending(then => then.Month).FirstOrDefault();
 
             if (result.IsNotNull())
             {
-                empSalaryStructure.EffectiveTo = new DateTime(result.Value, result.Key, empSalaryStructure.EffectiveFrom.Day);
+                empSalaryStructure.EffectiveTo = new DateTime(result.Year, result.Month, empSalaryStructure.EffectiveFrom.Day);
             }
 
             return employeeSalaryDetails;
@@ -657,9 +667,9 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
-        private Dictionary<int, int> GetFinancialYearMonths(DateTime inputDate)
+        private List<FinancialPeriod> GetFinancialYearMonths(DateTime inputDate)
         {
-            Dictionary<int, int> monthsInfo = new Dictionary<int, int>();
+            List<FinancialPeriod> monthsInfo = new List<FinancialPeriod>();
 
             var currentMonthId = inputDate.Month;
             var currentYear = inputDate.Year;
@@ -669,12 +679,13 @@ namespace Vserv.Accounting.Business.Managers
                 // Months of Current Year
                 for (var i = currentMonthId; i <= 12; i++)
                 {
-                    monthsInfo.Add(i, currentYear);
+                    monthsInfo.Add(new FinancialPeriod { Month = i, Year = currentYear });
                 }
 
                 for (var i = 1; i <= 3; i++)
                 {
-                    monthsInfo.Add(i, currentYear + 1);
+                    //monthsInfo.Add(i, currentYear + 1);
+                    monthsInfo.Add(new FinancialPeriod { Month = i, Year = currentYear + 1 });
                 }
             }
             else
@@ -682,7 +693,8 @@ namespace Vserv.Accounting.Business.Managers
                 // Months of Current Year
                 for (var i = currentMonthId; i <= 3; i++)
                 {
-                    monthsInfo.Add(i, currentYear);
+                    //monthsInfo.Add(i, currentYear);
+                    monthsInfo.Add(new FinancialPeriod { Month = i, Year = currentYear });
                 }
             }
             return monthsInfo;
