@@ -133,6 +133,28 @@ namespace Vserv.Accounting.Common
                 return DateTime.MinValue;
             }
         }
+
+        public static Dictionary<int, int> GetFinancialYearMonths(this DateTime inputDate)
+        {
+            Dictionary<int, int> monthsInfo = new Dictionary<int, int>();
+            var currentMonthId = inputDate.Month;
+            var currentYear = inputDate.Year;
+            var nextYear = currentMonthId >= 4 ? currentYear + 1 : currentYear;
+            DateTime end = new DateTime(nextYear, 4, 1);
+            var diffMonths = (end.Month + end.Year * 12) - (inputDate.Month + inputDate.Year * 12);
+
+            for (int i = 0; i < diffMonths; i++)
+            {
+                int cmonth = currentMonthId + i;
+                int cyear = cmonth > 12 ? nextYear : currentYear;
+                cmonth = cmonth > 12 ? cmonth % 12 : cmonth;
+
+                monthsInfo.Add(cmonth, cyear);
+            }
+
+            return monthsInfo;
+        }
+
         #endregion
 
         #region String

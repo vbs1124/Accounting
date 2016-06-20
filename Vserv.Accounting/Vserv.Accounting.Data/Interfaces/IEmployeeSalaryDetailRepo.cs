@@ -5,6 +5,6 @@ namespace Vserv.Accounting.Data
 {
     public interface IEmployeeSalaryDetailRepo : IDataRepository<EmpSalaryDetail>
     {
-        bool ArchiveEmpSalaryDetail(int empSalaryDetailId, string updatedByUserName);
+        bool ArchiveEmpSalaryDetail(int empSalaryStructureId, string updatedByUserName);
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.Composition;
+﻿using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using Vserv.Accounting.Data.Entity;
+using System.Linq;
 
 namespace Vserv.Accounting.Data
 {
@@ -7,11 +9,11 @@ namespace Vserv.Accounting.Data
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class EmployeeSalaryDetailRepo : DataRepositoryBase<EmpSalaryDetail>, IEmployeeSalaryDetailRepo
     {
-        public bool ArchiveEmpSalaryDetail(int empSalaryDetailId, string updatedByUserName)
+        public bool ArchiveEmpSalaryDetail(int empSalaryStructureId, string updatedByUserName)
         {
             using (VservAccountingDBEntities context = new VservAccountingDBEntities())
             {
-                context.ArchiveEmpSalaryDetail(empSalaryDetailId, updatedByUserName);
+                context.ArchiveEmpSalaryDetail(empSalaryStructureId, updatedByUserName);
             }
 
             return true;

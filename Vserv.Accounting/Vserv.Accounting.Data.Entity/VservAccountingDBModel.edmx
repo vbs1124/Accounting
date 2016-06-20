@@ -893,7 +893,7 @@
           <Parameter Name="UpdatedByUserName" Type="varchar" Mode="In" />
         </Function>
         <Function Name="ArchiveEmpSalaryDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EmpSalaryDetailId" Type="int" Mode="In" />
+          <Parameter Name="EmpSalaryStructureId" Type="int" Mode="In" />
           <Parameter Name="UpdatedByUserName" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetEmpAppraisalHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1343,7 +1343,7 @@
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
           <FunctionImport Name="ArchiveEmpSalaryDetail" ReturnType="Collection(VservAccountingDBModel.ArchiveEmpSalaryDetail_Result)">
-            <Parameter Name="EmpSalaryDetailId" Mode="In" Type="Int32" />
+            <Parameter Name="EmpSalaryStructureId" Mode="In" Type="Int32" />
             <Parameter Name="UpdatedByUserName" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
