@@ -298,8 +298,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\angular-toastr.css" />
-    <Content Include="Content\angular-toastr.min.css" />
     <Content Include="Content\base\font-awesome.css" />
     <Content Include="Content\base\font-awesome.min.css" />
     <Content Include="Content\base\metisMenu.css" />
@@ -430,6 +428,8 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\loading-bar.css" />
     <Content Include="Content\loading-bar.min.css" />
+    <Content Include="Content\nv.d3.css" />
+    <Content Include="Content\nv.d3.min.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
@@ -447,6 +447,8 @@
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-nvd3.js" />
+    <Content Include="Scripts\angular-nvd3.min.js" />
     <Content Include="Scripts\angular-touch.js" />
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
@@ -609,6 +611,10 @@
     <Content Include="Scripts\App\Employee\templates\addAppraisal.tmpl.cshtml" />
     <Content Include="Scripts\App\web.config" />
     <Content Include="Scripts\App\Employee\templates\empHistory.tmpl.cshtml" />
+    <Content Include="Scripts\d3\d3.js" />
+    <Content Include="Scripts\d3\d3.min.js" />
+    <Content Include="Scripts\d3\LICENSE" />
+    <Content Include="nvd3.license.md" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -820,6 +826,8 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\nv.d3.js" />
+    <Content Include="Scripts\nv.d3.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />

@@ -18,11 +18,44 @@
 
         vm.loadEmployeeAppraisalHistory = employeeService.loadEmployeeAppraisalHistory(vm.employeeId);
         vm.employeeAppraisalHistory = employeeService.employeeAppraisalHistory;
-
+        vm.empAppraisalGraphValues = employeeService.empAppraisalGraphValues;
         vm.loadEmployeePaySheet = employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(vm.selectedFinancialYear), parseInt(vm.selectedFinancialYear) + 1);
         vm.employeePaySheet = employeeService.employeePaySheet;
 
         vm.viewSelectedSalaryBreakup = viewSelectedSalaryBreakup;
+
+        vm.appraisalHistoryGraphOptions = {
+            chart: {
+                type: 'discreteBarChart',
+                height: 295,
+                width: 600,
+                margin: {
+                    top: 5,
+                    right: 5,
+                    bottom: 40,
+                    left: 60
+                },
+                x: function (d) { return d.label; },
+                y: function (d) { return d.value; },
+                showValues: true,
+                valueFormat: function (d) {
+                    return d3.format(',')(d);
+                },
+                transitionDuration: 500,
+                xAxis: {
+                    axisLabel: 'Financial Year'
+                },
+                yAxis: {
+                    axisLabel: '% Growth',
+                    //axisLabelDistance: 2
+                }
+            }
+        };
+
+        vm.appraisalHistoryGraphData = [{
+            key: "Appraisal History",
+            values: vm.empAppraisalGraphValues
+        }];
 
         function addNewSalaryStructure() {
             $modal.open({
@@ -126,6 +159,7 @@
             var selected = $filter('filter')($scope.foodCoupons, { value: amount });
             return (amount && selected.length) ? selected[0].text : '0';
         };
+
         //---------------- Salary Breakup Ends here -----------
     }
 })();

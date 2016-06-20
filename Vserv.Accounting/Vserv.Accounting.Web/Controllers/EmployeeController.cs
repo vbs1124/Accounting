@@ -82,13 +82,15 @@ namespace Vserv.Accounting.Web.Controllers
             {
                 Employee employee = ConvertTo(employeeModel);
                 EmployeeManager.AddEmployee(employee);
-
-                Dictionary<string, string> message = new Dictionary<string, string>
-                {
-                    {CommonConstants.MESSAGE, "Employee added successfully."}
-                };
-                return RedirectToAction("Success", "Home", new { successMessage = message.ToEncryptedString() });
+                TempData["Message"] = String.Format("Employee <vbs{0}> added successfully.", employeeModel.VBS_Id);
+                return RedirectToAction("list", "employee");
+                //Dictionary<string, string> message = new Dictionary<string, string>
+                //{
+                //    {CommonConstants.MESSAGE, "Employee added successfully."}
+                //};
+                //return RedirectToAction("Success", "Home", new { successMessage = message.ToEncryptedString() });
             }
+
             ModelState.AddModelError("emp_errors", @"Please fill the required fields...");
             SetDropdownValues();
             return View(employeeModel);
@@ -131,12 +133,8 @@ namespace Vserv.Accounting.Web.Controllers
                 EmployeeManager.ArchiveEmployee(employeeModel.EmployeeId, User.Identity.Name);
 
                 EmployeeManager.EditEmployee(employee);
-                Dictionary<string, string> message = new Dictionary<string, string>
-                {
-                    {CommonConstants.MESSAGE, "Employee updated successfully."}
-                };
-                string encryptedMessage = message.ToEncryptedString();
-                return RedirectToAction("Success", "Home", new { successMessage = encryptedMessage });
+                TempData["Message"] = String.Format("Employee <vbs{0}> updated successfully.", employeeModel.VBS_Id);
+                return RedirectToAction("list", "employee");
             }
 
             SetDropdownValues();

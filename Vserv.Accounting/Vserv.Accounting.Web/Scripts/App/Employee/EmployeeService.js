@@ -7,21 +7,24 @@
         var employeePaySheet = [];
         var employeeAppraisalHistory = [];
         var employeeChangeHistory = [];
+        var empAppraisalGraphValues = [];
 
         var svc = {
             addEmployeeSalaryDetail: addEmployeeSalaryDetail,
             getEmpFinancialYears: getEmpFinancialYears,
             getEmployee: getEmployee,
 
+            loadEmployeeAppraisalHistoryForGraph: loadEmployeeAppraisalHistoryForGraph,
             loadEmployeeAppraisalHistory: loadEmployeeAppraisalHistory,
             employeeAppraisalHistory: employeeAppraisalHistory,
+            empAppraisalGraphValues: empAppraisalGraphValues,
+
             loadEmployeePaySheet: loadEmployeePaySheet,
             employeePaySheet: employeePaySheet,
             updateYearlyPaySheet: updateYearlyPaySheet,
 
             loadEmployeeChangeHistory: loadEmployeeChangeHistory,
             employeeChangeHistory: employeeChangeHistory,
-
         };
 
         return svc;
@@ -32,19 +35,28 @@
 
         function loadEmployeeAppraisalHistory(employeeId) {
             serviceHandler.executePostService('/Employee/GetEmployeeAppraisalHistory?employeeId=' + employeeId).then(function (resp) {
+                var graphValues = [];
                 if (resp.businessException == null) {
 
                     $.map(resp.result, function (val, i) {
                         val.CurrentEffectiveFrom = moment(val.CurrentEffectiveFrom).format("DD/MM/YYYY");
+                        graphValues.push({ label: val.CurrentEffectiveFrom, value: val.PercentageGrowth });
                     });
 
-                    if (resp.result.length > 0)
+                    if (resp.result.length > 0) {
                         angular.extend(employeeAppraisalHistory, resp.result);
+                        angular.extend(empAppraisalGraphValues, graphValues);
+                    }
                 }
                 else {
                     $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
                 }
             });
+        }
+
+
+        function loadEmployeeAppraisalHistoryForGraph(employeeId) {
+            return serviceHandler.executePostService('/Employee/GetEmployeeAppraisalHistory?employeeId=' + employeeId);
         }
 
         function getEmployee(employeeId) {

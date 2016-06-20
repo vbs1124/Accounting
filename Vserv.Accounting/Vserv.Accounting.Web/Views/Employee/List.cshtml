@@ -3,6 +3,13 @@
 @{
     ViewBag.Title = "View Employees";
 }
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Success!</strong> @TempData["Message"]
+    </div>
+}
 
 <ul class="nav nav-tabs">
     <li class="active"><a href="#list-employee" data-toggle="tab">@ViewBag.Title</a></li>
