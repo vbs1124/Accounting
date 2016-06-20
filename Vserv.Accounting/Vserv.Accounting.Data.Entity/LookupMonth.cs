@@ -14,6 +14,12 @@ namespace Vserv.Accounting.Data.Entity
     
     public partial class LookupMonth
     {
+        public LookupMonth()
+        {
+            this.EmpSalaryDetails = new HashSet<EmpSalaryDetail>();
+            this.EmpSalaryDetailArchives = new HashSet<EmpSalaryDetailArchive>();
+        }
+    
         public int MonthId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -23,5 +29,8 @@ namespace Vserv.Accounting.Data.Entity
         public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+    
+        public virtual ICollection<EmpSalaryDetail> EmpSalaryDetails { get; set; }
+        public virtual ICollection<EmpSalaryDetailArchive> EmpSalaryDetailArchives { get; set; }
     }
 }

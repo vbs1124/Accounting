@@ -3,157 +3,160 @@
 @{
     ViewBag.Title = "Dashboard";
 }
-<div class="row">
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-green">
-            <a href="@Url.Action("list","employee")">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-users fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">@Model.EmployeeCount</div>
-                            <div>Employees</div>
+<fieldset ng-controller="dashboardController as vm">
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <a href="@Url.Action("list","employee")">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-users fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">@Model.EmployeeCount</div>
+                                <div>Employees</div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </a>
+                </a>
+            </div>
         </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-red">
-            @*<a href="@Url.Action("salary","employee")">*@
-            <a href="#">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-money fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">12</div>
-                            <div>Salary</div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                @*<a href="@Url.Action("salary","employee")">*@
+                <a href="#">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-money fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">12</div>
+                                <div>Salary</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-yellow">
-            @*<a href="@Url.Action("taxation","employee")">*@
-            <a href="#">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-inr fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">1245.54</div>
-                            <div>Taxation</div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                @*<a href="@Url.Action("taxation","employee")">*@
+                <a href="#">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-inr fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">1245.54</div>
+                                <div>Taxation</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-blue">
-            @*<a href="@Url.Action("banking","employee")">*@
-            <a href="#">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-university fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">13</div>
-                            <div>Banking</div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-blue">
+                @*<a href="@Url.Action("banking","employee")">*@
+                <a href="#">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-university fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">13</div>
+                                <div>Banking</div>
+                            </div>
                         </div>
                     </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bar-chart-o fa-fw"></i> Expense Chart
                 </div>
-            </a>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    @*<div id="morris-area-chart"></div>*@
+                    <nvd3 options="vm.expenseChartOptions" data="vm.expenseChartData"></nvd3>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
         </div>
-    </div>
-</div>
-<!-- /.row -->
-<div class="row">
-    <div class="col-lg-8">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <i class="fa fa-bar-chart-o fa-fw"></i> Expense Chart
-            </div>
-            <!-- /.panel-heading -->
-            <div class="panel-body">
-                <div id="morris-area-chart"></div>
-            </div>
-            <!-- /.panel-body -->
-        </div>
-        <!-- /.panel -->
-    </div>
-    <!-- /.col-lg-8 -->
-    <div class="col-lg-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <i class="fa fa-bell fa-fw"></i> Notifications
-            </div>
-            <!-- /.panel-heading -->
-            <div class="panel-body">
-                <div class="list-group">
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> Notifications
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="list-group">
 
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-envelope fa-fw"></i> Message Sent
-                        <span class="pull-right text-muted small">
-                            <em>27 minutes ago</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-tasks fa-fw"></i> New Task
-                        <span class="pull-right text-muted small">
-                            <em>43 minutes ago</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                        <span class="pull-right text-muted small">
-                            <em>11:32 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-bolt fa-fw"></i> Server Crashed!
-                        <span class="pull-right text-muted small">
-                            <em>11:13 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-warning fa-fw"></i> Server Not Responding
-                        <span class="pull-right text-muted small">
-                            <em>10:57 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
-                        <span class="pull-right text-muted small">
-                            <em>9:49 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-money fa-fw"></i> Payment Received
-                        <span class="pull-right text-muted small">
-                            <em>Yesterday</em>
-                        </span>
-                    </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-envelope fa-fw"></i> Message Sent
+                            <span class="pull-right text-muted small">
+                                <em>27 minutes ago</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-tasks fa-fw"></i> New Task
+                            <span class="pull-right text-muted small">
+                                <em>43 minutes ago</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                            <span class="pull-right text-muted small">
+                                <em>11:32 AM</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-bolt fa-fw"></i> Server Crashed!
+                            <span class="pull-right text-muted small">
+                                <em>11:13 AM</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-warning fa-fw"></i> Server Not Responding
+                            <span class="pull-right text-muted small">
+                                <em>10:57 AM</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
+                            <span class="pull-right text-muted small">
+                                <em>9:49 AM</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-money fa-fw"></i> Payment Received
+                            <span class="pull-right text-muted small">
+                                <em>Yesterday</em>
+                            </span>
+                        </a>
+                    </div>
+                    <!-- /.list-group -->
+                    <a href="#" class="btn btn-default btn-block">View All Alerts</a>
                 </div>
-                <!-- /.list-group -->
-                <a href="#" class="btn btn-default btn-block">View All Alerts</a>
+                <!-- /.panel-body -->
             </div>
-            <!-- /.panel-body -->
-        </div>
-        <!-- /.panel -->
+            <!-- /.panel -->
 
+        </div>
+        <!-- /.col-lg-4 -->
     </div>
-    <!-- /.col-lg-4 -->
-</div>
-<!-- /.row -->
+    <!-- /.row -->
+</fieldset>
 @Scripts.Render("~/Scripts/morris")

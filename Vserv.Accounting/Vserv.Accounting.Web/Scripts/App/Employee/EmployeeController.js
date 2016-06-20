@@ -1,24 +1,61 @@
 ﻿(function () {
     'use strict';
     window.app.controller('EmployeeController', employeeController);
-    employeeController.$inject = ['$scope', '$uibModal', 'employeeService'];
+    employeeController.$inject = ['$scope', '$uibModal', '$filter', 'employeeService'];
 
-    function employeeController($scope, $modal, employeeService) {
+    function employeeController($scope, $modal, $filter, employeeService) {
         var vm = this;
 
         vm.employeeId = $("#EmployeeId").val();
         vm.addNewSalaryStructure = addNewSalaryStructure;
+        vm.employeeChangeHistoryModal = employeeChangeHistoryModal;
         vm.empSalaryStructureModel = employeeService.empSalaryStructureModel;
-        vm.financialYears = employeeService.getEmpFinancialYears(new Date($("#JoiningDate").val()));
-        vm.selectedFinancialYear = moment().year().toString();
+        vm.relievingDate = new Date($("#RelievingDate").val());
+        vm.joiningDate = new Date($("#JoiningDate").val());
+        vm.financialYears = employeeService.getEmpFinancialYears(vm.joiningDate, vm.relievingDate);
+        vm.selectedFinancialYear = vm.relievingDate == null || vm.relievingDate == 'Invalid Date' ? moment().year().toString() : moment(vm.relievingDate).year().toString();
+        vm.currentYear = moment().year().toString();
 
         vm.loadEmployeeAppraisalHistory = employeeService.loadEmployeeAppraisalHistory(vm.employeeId);
         vm.employeeAppraisalHistory = employeeService.employeeAppraisalHistory;
-
+        vm.empAppraisalGraphValues = employeeService.empAppraisalGraphValues;
         vm.loadEmployeePaySheet = employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(vm.selectedFinancialYear), parseInt(vm.selectedFinancialYear) + 1);
         vm.employeePaySheet = employeeService.employeePaySheet;
 
         vm.viewSelectedSalaryBreakup = viewSelectedSalaryBreakup;
+
+        vm.appraisalHistoryGraphOptions = {
+            chart: {
+                type: 'discreteBarChart',
+                height: 295,
+                width: 600,
+                margin: {
+                    top: 5,
+                    right: 5,
+                    bottom: 40,
+                    left: 60
+                },
+                x: function (d) { return d.label; },
+                y: function (d) { return d.value; },
+                showValues: true,
+                valueFormat: function (d) {
+                    return d3.format(',')(d);
+                },
+                transitionDuration: 500,
+                xAxis: {
+                    axisLabel: 'Financial Year'
+                },
+                yAxis: {
+                    axisLabel: '% Growth',
+                    //axisLabelDistance: 2
+                }
+            }
+        };
+
+        vm.appraisalHistoryGraphData = [{
+            key: "Appraisal History",
+            values: vm.empAppraisalGraphValues
+        }];
 
         function addNewSalaryStructure() {
             $modal.open({
@@ -26,8 +63,14 @@
             });
         }
 
+        function employeeChangeHistoryModal() {
+            $modal.open({
+                template: '<emp-history />'
+            });
+        }
+
         function viewSelectedSalaryBreakup() {
-            $.showToastrMessage('info', "Functionality not implemented yet..!", "Information!")
+            $.showToastrMessage('info', "Functionality not implemented yet..!", "Information!");
         }
 
         $scope.onChangeFinancialYear = function () {
@@ -45,65 +88,44 @@
             }
             var result = 0;
 
-            if (!isNaN(item.April))
-                result = result + $.vbsParseFloat(item.April);
-            if (!isNaN(item.May))
-                result = result + $.vbsParseFloat(item.May);
-            if (!isNaN(item.June))
-                result = result + $.vbsParseFloat(item.June);
-            if (!isNaN(item.July))
-                result = result + $.vbsParseFloat(item.July);
-            if (!isNaN(item.August))
-                result = result + $.vbsParseFloat(item.August);
-            if (!isNaN(item.September))
-                result = result + $.vbsParseFloat(item.September);
-            if (!isNaN(item.October))
-                result = result + $.vbsParseFloat(item.October);
-            if (!isNaN(item.November))
-                result = result + $.vbsParseFloat(item.November);
-            if (!isNaN(item.December))
-                result = result + $.vbsParseFloat(item.December);
-            if (!isNaN(item.January))
-                result = result + $.vbsParseFloat(item.January);
-            if (!isNaN(item.February))
-                result = result + $.vbsParseFloat(item.February);
-            if (!isNaN(item.March))
-                result = result + $.vbsParseFloat(item.March);
+            if (item.April != null && !isNaN(item.April.Amount))
+                result = result + $.vbsParseFloat(item.April.Amount);
+
+            if (item.May != null && !isNaN(item.May.Amount))
+                result = result + $.vbsParseFloat(item.May.Amount);
+
+            if (item.June != null && !isNaN(item.June.Amount))
+                result = result + $.vbsParseFloat(item.June.Amount);
+
+            if (item.July != null && !isNaN(item.July.Amount))
+                result = result + $.vbsParseFloat(item.July.Amount);
+
+            if (item.August != null && !isNaN(item.August.Amount))
+                result = result + $.vbsParseFloat(item.August.Amount);
+
+            if (item.September != null && !isNaN(item.September.Amount))
+                result = result + $.vbsParseFloat(item.September.Amount);
+
+            if (item.October != null && !isNaN(item.October.Amount))
+                result = result + $.vbsParseFloat(item.October.Amount);
+
+            if (item.November != null && !isNaN(item.November.Amount))
+                result = result + $.vbsParseFloat(item.November.Amount);
+
+            if (item.December != null && !isNaN(item.December.Amount))
+                result = result + $.vbsParseFloat(item.December.Amount);
+
+            if (item.January != null && !isNaN(item.January.Amount))
+                result = result + $.vbsParseFloat(item.January.Amount);
+
+            if (item.February != null && !isNaN(item.February.Amount))
+                result = result + $.vbsParseFloat(item.February.Amount);
+
+            if (item.March != null && !isNaN(item.March.Amount))
+                result = result + $.vbsParseFloat(item.March.Amount);
 
             return $.vbsParseFloat(result);
         };
-
-        $scope.getCurrentMonthTotal = function (data, month) {
-            console.log("getCurrentMonthTotal fired....");
-            if (typeof (data) === "undefined" || typeof (month) === "undefined") {
-                return 0;
-            }
-
-            var componentForFooterTotal = [
-                                            "SCBASC",
-                                            "SCSHRA",
-                                            "SCCONV",
-                                            "SCSPCL",
-                                            "SCPERF",
-                                            "SCLECM",
-                                            "SCSALA",
-                                            "SCCABD",
-                                            "SCODN",
-                                            "SCCOMN",
-                                            "SCOTHR",
-                                            "SCMEDC",
-                                            "SCFCPN"];
-
-            var sum = 0;
-            for (var i = data.length - 1; i >= 0; i--) {
-                var currentcomp = data[i]["SCCode"];
-                if ($.inArray(currentcomp, componentForFooterTotal) !== -1) {
-                    sum += $.vbsParseFloat(data[i][month]);
-                }
-            }
-
-            return sum.toFixed(0);
-        }
 
         $scope.nonEditableComponents = [
             "SCCTCM",
@@ -122,14 +144,21 @@
         }
 
         $scope.updateYearlyPaySheet = function () {
-            //employeeService.updateYearlyPaySheet($scope.paysheets).then(function (resp) {
-            //    if (resp.businessException == null) {
-            //    }
-            //    else {
-            //        $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
-            //    }
-            //});
+            employeeService.updateYearlyPaySheet(vm.employeePaySheet).then(function (resp) {
+                if (resp.businessException == null) {
+                    $.showToastrMessage("success", "Salary Breakup for current financial year updated successfully.");
+                }
+                else {
+                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                }
+            });
         }
+
+        $scope.foodCoupons = [{ value: 0, text: '0' }, { value: 1100, text: '1100' }, { value: 2200, text: '2200' }];
+        $scope.showfoodCoupon = function (amount) {
+            var selected = $filter('filter')($scope.foodCoupons, { value: amount });
+            return (amount && selected.length) ? selected[0].text : '0';
+        };
 
         //---------------- Salary Breakup Ends here -----------
     }

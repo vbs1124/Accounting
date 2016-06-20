@@ -13,31 +13,36 @@ BEGIN
 
 	DECLARE @tmpTable TABLE (
 		EmployeeId		INT,
-		ComponentName	VARCHAR(250), 
-		Amount			NUMERIC(19, 2), 
+		EmpSalaryStructureId INT,
+		SCName			VARCHAR(250), 
+		SCCode			VARCHAR(6), 
+		SCDescription	VARCHAR(250), 
+		Amount			VARCHAR(MAX), 
 		[Month]			VARCHAR(250),
-		[Year]			INT,  
 		DisplayOrder	INT)
 
 	INSERT INTO @tmpTable
 	SELECT esd.EmployeeId, 
+		EmployeeSalaryDetail.EmpSalaryStructureId,
+		sc.[Name],
+		sc.[Code],
 		sc.[Description],
-		esd.Amount,
+		--esd.Amount,
+		CONVERT(VARCHAR, esd.EmployeeSalaryDetailId)+'#'	+Convert(VARCHAR, esd.Amount) AS Amount,
 		lm.Name,
-		2016,
 		sc.DisplayOrder
 	FROM EmployeeSalaryDetail esd
 	LEFT JOIN SalaryComponent sc on sc.SalaryComponentId = esd.SalaryComponentId
 	LEFT JOIN LookupMonth lm on lm.MonthId= esd.MonthId
-	WHERE EmployeeId = @EmployeeId AND 
-		(([Year] = @FinancialYearFrom AND esd.MonthId < 10) OR ([Year] = @FinancialYearTo AND esd.MonthId > 9))
+	WHERE esd.EmployeeId = @EmployeeId AND esd.IsActive = 1 AND
+		(([Year] = @FinancialYearFrom AND esd.MonthId IN(4,5,6,7,8,9,10,11,12)) OR ([Year] = @FinancialYearTo AND esd.MonthId IN(1,2,3)))
 	ORDER BY sc.DisplayOrder;
-
+	--select * from @tmpTable;
 	WITH YearlySalaryBreakup
 	AS
 	(	SELECT *
 		FROM @tmpTable
-		PIVOT(SUM(Amount) FOR [Month]
+		PIVOT(MAX(Amount) FOR [Month]
 		IN([April]
 			, [May]
 			, [June]
@@ -51,24 +56,25 @@ BEGIN
 			, [February]
 			, [March])) AS YearlySalaryBreakupPivot)
 	SELECT EmployeeId
-		, ComponentName
-		, [Year]
+		, EmpSalaryStructureId
+		, SCName
+		, SCCode
+		, SCDescription
 		, DisplayOrder
-		, ISNULL(April, 0)		AS April
-		, ISNULL(May, 0)		AS May
-		, ISNULL(June, 0)		AS June
-		, ISNULL(July, 0)		AS July
-		, ISNULL(August, 0)		AS August
-		, ISNULL(September, 0)	AS September
-		, ISNULL(October, 0)	AS October
-		, ISNULL(November, 0)	AS November
-		, ISNULL(December, 0)	AS December
-		, ISNULL(January, 0)	AS January
-		, ISNULL(February, 0)	AS February
-		, ISNULL(March, 0)		AS March
-	FROM YearlySalaryBreakup
-	ORDER BY YearlySalaryBreakup.DisplayOrder
+		, April
+		, May
+		, June
+		, July
+		, August
+		, September
+		, October
+		, November
+		, December
+		, January
+		, February
+		, March
+	FROM YearlySalaryBreakup ysb
+	ORDER BY ysb.DisplayOrder
 END
-
 GO
 

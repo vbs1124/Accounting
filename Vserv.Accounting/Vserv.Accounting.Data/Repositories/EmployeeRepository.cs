@@ -201,7 +201,7 @@ namespace Vserv.Accounting.Data
         {
             using (var context = new VservAccountingDBEntities())
             {
-                return context.EmployeeArchives.AsNoTracking().Where(emp => emp.EmployeeId == employeeId).OrderByDescending(order => order.EmployeeArchiveId).ToList();
+                return context.EmployeeArchives.Where(emp => emp.EmployeeId == employeeId).OrderByDescending(order => order.EmployeeArchiveId).ToList();
             }
         }
 
