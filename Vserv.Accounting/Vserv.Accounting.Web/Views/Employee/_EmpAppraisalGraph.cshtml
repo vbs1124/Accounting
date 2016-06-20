@@ -1,65 +1,9 @@
 ﻿<div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Appraisal Graph</h3>
+        <h3 class="panel-title"><i class="fa fa-pie-chart fa-fw"></i> Appraisal Graph</h3>
     </div>
     <!-- /.panel-heading -->
     <div class="panel-body">
-        <div id="morris-bar-chart"></div>
-
-        @*<div class="dataTable_wrapper">
-                <table class="table table-striped table-bordered table-hover" id="dataTables-emp-appraisal-graph">
-                    <thead>
-                        <tr>
-                            <th title=" ">Year From</th>
-                            <th title=" ">Year To</th>
-                            <th title=" ">Previous</th>
-                            <th title="">Current</th>
-                            <th title=" ">View Breakup</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="odd gradeX">
-                            <td>2016</td>
-                            <td>2017</td>
-                            <td>720000</td>
-                            <td>875000</td>
-                            <td><a class="btn btn-xs btn-block btn-primary" href="#" title="View">View</a></td>
-                        </tr>
-                        <tr class="odd gradeX">
-                            <td>2015</td>
-                            <td>2016</td>
-                            <td>520000</td>
-                            <td>720000</td>
-                            <td><a class="btn btn-xs btn-block btn-primary" href="#" title="View">View</a></td>
-                        </tr>
-                        <tr class="odd gradeX">
-                            <td>2014</td>
-                            <td>2015</td>
-                            <td>480000</td>
-                            <td>520000</td>
-                            <td><a class="btn btn-xs btn-block btn-primary" href="#" title="View">View</a></td>
-                        </tr>
-                        <tr class="odd gradeX">
-                            <td>2013</td>
-                            <td>2014</td>
-                            <td>320000</td>
-                            <td>480000</td>
-                            <td><a class="btn btn-xs btn-block btn-primary" href="#" title="View">View</a></td>
-                        </tr>
-                        <tr class="odd gradeX">
-                            <td>2012</td>
-                            <td>2013</td>
-                            <td>280000</td>
-                            <td>320000</td>
-                            <td><a class="btn btn-xs btn-block btn-primary" href="#" title="View">View</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>*@
-        <!-- /.table-responsive -->
+        <nvd3 options='vm.appraisalHistoryGraphOptions' data='vm.appraisalHistoryGraphData'></nvd3>
     </div>
-    <!-- /.panel-body -->
 </div>
-<!-- /.panel -->
-
-

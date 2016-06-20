@@ -200,11 +200,29 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="EmployeeSalaryDetail">
+        <EntityType Name="EmpSalaryDetail">
           <Key>
-            <PropertyRef Name="EmployeeSalaryDetailId" />
+            <PropertyRef Name="EmpSalaryDetailId" />
           </Key>
-          <Property Name="EmployeeSalaryDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpSalaryDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="SalaryComponentId" Type="int" Nullable="false" />
+          <Property Name="EmpSalaryStructureId" Type="int" Nullable="false" />
+          <Property Name="MonthId" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Amount" Type="numeric" Precision="19" Scale="0" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EmpSalaryDetailArchive">
+          <Key>
+            <PropertyRef Name="EmpSalaryDetailArchiveId" />
+          </Key>
+          <Property Name="EmpSalaryDetailArchiveId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpSalaryDetailId" Type="int" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="SalaryComponentId" Type="int" Nullable="false" />
           <Property Name="EmpSalaryStructureId" Type="int" Nullable="false" />
@@ -678,15 +696,111 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EmployeeSalaryDetail_EmployeeSalaryDetail">
+        <Association Name="FK_EmpSalaryDetail_EmpSalaryStructure">
           <End Role="EmpSalaryStructure" Type="Self.EmpSalaryStructure" Multiplicity="1" />
-          <End Role="EmployeeSalaryDetail" Type="Self.EmployeeSalaryDetail" Multiplicity="*" />
+          <End Role="EmpSalaryDetail" Type="Self.EmpSalaryDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EmpSalaryStructure">
               <PropertyRef Name="EmpSalaryStructureId" />
             </Principal>
-            <Dependent Role="EmployeeSalaryDetail">
+            <Dependent Role="EmpSalaryDetail">
               <PropertyRef Name="EmpSalaryStructureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryDetail_LookupMonth">
+          <End Role="LookupMonth" Type="Self.LookupMonth" Multiplicity="1" />
+          <End Role="EmpSalaryDetail" Type="Self.EmpSalaryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LookupMonth">
+              <PropertyRef Name="MonthId" />
+            </Principal>
+            <Dependent Role="EmpSalaryDetail">
+              <PropertyRef Name="MonthId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryDetail_SalaryComponent">
+          <End Role="SalaryComponent" Type="Self.SalaryComponent" Multiplicity="1" />
+          <End Role="EmpSalaryDetail" Type="Self.EmpSalaryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalaryComponent">
+              <PropertyRef Name="SalaryComponentId" />
+            </Principal>
+            <Dependent Role="EmpSalaryDetail">
+              <PropertyRef Name="SalaryComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryDetailArchive_EmpSalaryDetail">
+          <End Role="EmpSalaryDetail" Type="Self.EmpSalaryDetail" Multiplicity="0..1" />
+          <End Role="EmpSalaryDetailArchive" Type="Self.EmpSalaryDetailArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpSalaryDetail">
+              <PropertyRef Name="EmpSalaryDetailId" />
+            </Principal>
+            <Dependent Role="EmpSalaryDetailArchive">
+              <PropertyRef Name="EmpSalaryDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryDetailArchive_EmpSalaryStructure">
+          <End Role="EmpSalaryStructure" Type="Self.EmpSalaryStructure" Multiplicity="1" />
+          <End Role="EmpSalaryDetailArchive" Type="Self.EmpSalaryDetailArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpSalaryStructure">
+              <PropertyRef Name="EmpSalaryStructureId" />
+            </Principal>
+            <Dependent Role="EmpSalaryDetailArchive">
+              <PropertyRef Name="EmpSalaryStructureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryDetailArchive_LookupMonth">
+          <End Role="LookupMonth" Type="Self.LookupMonth" Multiplicity="1" />
+          <End Role="EmpSalaryDetailArchive" Type="Self.EmpSalaryDetailArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LookupMonth">
+              <PropertyRef Name="MonthId" />
+            </Principal>
+            <Dependent Role="EmpSalaryDetailArchive">
+              <PropertyRef Name="MonthId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryDetailArchive_SalaryComponent">
+          <End Role="SalaryComponent" Type="Self.SalaryComponent" Multiplicity="1" />
+          <End Role="EmpSalaryDetailArchive" Type="Self.EmpSalaryDetailArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalaryComponent">
+              <PropertyRef Name="SalaryComponentId" />
+            </Principal>
+            <Dependent Role="EmpSalaryDetailArchive">
+              <PropertyRef Name="SalaryComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryStructure_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmpSalaryStructure" Type="Self.EmpSalaryStructure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmpSalaryStructure">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryStructure_EmpSalaryStructure">
+          <End Role="EmpSalaryStructure" Type="Self.EmpSalaryStructure" Multiplicity="0..1" />
+          <End Role="EmpSalaryStructure1" Type="Self.EmpSalaryStructure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpSalaryStructure">
+              <PropertyRef Name="EmpSalaryStructureId" />
+            </Principal>
+            <Dependent Role="EmpSalaryStructure1">
+              <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -778,6 +892,10 @@
           <Parameter Name="EmployeeID" Type="int" Mode="In" />
           <Parameter Name="UpdatedByUserName" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ArchiveEmpSalaryDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpSalaryDetailId" Type="int" Mode="In" />
+          <Parameter Name="UpdatedByUserName" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetEmpAppraisalHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmployeeId" Type="int" Mode="In" />
         </Function>
@@ -854,7 +972,8 @@
           <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeArchive" EntityType="Self.EmployeeArchive" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EmployeeSalaryDetail" EntityType="Self.EmployeeSalaryDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpSalaryDetail" EntityType="Self.EmpSalaryDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpSalaryDetailArchive" EntityType="Self.EmpSalaryDetailArchive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpSalaryStructure" EntityType="Self.EmpSalaryStructure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EPFNumber" EntityType="Self.EPFNumber" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EPFOffice" EntityType="Self.EPFOffice" Schema="dbo" store:Type="Tables" />
@@ -934,9 +1053,41 @@
             <End Role="Salutation" EntitySet="Salutation" />
             <End Role="EmployeeArchive" EntitySet="EmployeeArchive" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmployeeSalaryDetail_EmployeeSalaryDetail" Association="Self.FK_EmployeeSalaryDetail_EmployeeSalaryDetail">
+          <AssociationSet Name="FK_EmpSalaryDetail_EmpSalaryStructure" Association="Self.FK_EmpSalaryDetail_EmpSalaryStructure">
             <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructure" />
-            <End Role="EmployeeSalaryDetail" EntitySet="EmployeeSalaryDetail" />
+            <End Role="EmpSalaryDetail" EntitySet="EmpSalaryDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryDetail_LookupMonth" Association="Self.FK_EmpSalaryDetail_LookupMonth">
+            <End Role="LookupMonth" EntitySet="LookupMonth" />
+            <End Role="EmpSalaryDetail" EntitySet="EmpSalaryDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryDetail_SalaryComponent" Association="Self.FK_EmpSalaryDetail_SalaryComponent">
+            <End Role="SalaryComponent" EntitySet="SalaryComponent" />
+            <End Role="EmpSalaryDetail" EntitySet="EmpSalaryDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryDetailArchive_EmpSalaryDetail" Association="Self.FK_EmpSalaryDetailArchive_EmpSalaryDetail">
+            <End Role="EmpSalaryDetail" EntitySet="EmpSalaryDetail" />
+            <End Role="EmpSalaryDetailArchive" EntitySet="EmpSalaryDetailArchive" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryDetailArchive_EmpSalaryStructure" Association="Self.FK_EmpSalaryDetailArchive_EmpSalaryStructure">
+            <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructure" />
+            <End Role="EmpSalaryDetailArchive" EntitySet="EmpSalaryDetailArchive" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryDetailArchive_LookupMonth" Association="Self.FK_EmpSalaryDetailArchive_LookupMonth">
+            <End Role="LookupMonth" EntitySet="LookupMonth" />
+            <End Role="EmpSalaryDetailArchive" EntitySet="EmpSalaryDetailArchive" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryDetailArchive_SalaryComponent" Association="Self.FK_EmpSalaryDetailArchive_SalaryComponent">
+            <End Role="SalaryComponent" EntitySet="SalaryComponent" />
+            <End Role="EmpSalaryDetailArchive" EntitySet="EmpSalaryDetailArchive" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryStructure_Employee" Association="Self.FK_EmpSalaryStructure_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructure" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryStructure_EmpSalaryStructure" Association="Self.FK_EmpSalaryStructure_EmpSalaryStructure">
+            <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructure" />
+            <End Role="EmpSalaryStructure1" EntitySet="EmpSalaryStructure" />
           </AssociationSet>
           <AssociationSet Name="FK_Feature_Feature" Association="Self.FK_Feature_Feature">
             <End Role="Feature" EntitySet="Feature" />
@@ -971,7 +1122,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VservAccountingDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="VservAccountingDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="VservAccountingDBEntities" annotation:LazyLoadingEnabled="false">
           <FunctionImport Name="InsertErrorLog">
             <Parameter Name="appdomain" Mode="In" Type="String" />
             <Parameter Name="exception" Mode="In" Type="String" />
@@ -1051,7 +1202,8 @@
           <EntitySet Name="Designations" EntityType="VservAccountingDBModel.Designation" />
           <EntitySet Name="Employees" EntityType="VservAccountingDBModel.Employee" />
           <EntitySet Name="EmployeeArchives" EntityType="VservAccountingDBModel.EmployeeArchive" />
-          <EntitySet Name="EmployeeSalaryDetails" EntityType="VservAccountingDBModel.EmployeeSalaryDetail" />
+          <EntitySet Name="EmpSalaryDetails" EntityType="VservAccountingDBModel.EmpSalaryDetail" />
+          <EntitySet Name="EmpSalaryDetailArchives" EntityType="VservAccountingDBModel.EmpSalaryDetailArchive" />
           <EntitySet Name="EmpSalaryStructures" EntityType="VservAccountingDBModel.EmpSalaryStructure" />
           <EntitySet Name="EPFNumbers" EntityType="VservAccountingDBModel.EPFNumber" />
           <EntitySet Name="EPFOffices" EntityType="VservAccountingDBModel.EPFOffice" />
@@ -1114,6 +1266,10 @@
             <End Role="Salutation" EntitySet="Salutations" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryStructure_Employee" Association="VservAccountingDBModel.FK_EmpSalaryStructure_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructures" />
+          </AssociationSet>
           <AssociationSet Name="FK_EmployeeArchive_Gender" Association="VservAccountingDBModel.FK_EmployeeArchive_Gender">
             <End Role="Gender" EntitySet="Genders" />
             <End Role="EmployeeArchive" EntitySet="EmployeeArchives" />
@@ -1134,9 +1290,37 @@
             <End Role="Salutation" EntitySet="Salutations" />
             <End Role="EmployeeArchive" EntitySet="EmployeeArchives" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmployeeSalaryDetail_EmployeeSalaryDetail" Association="VservAccountingDBModel.FK_EmployeeSalaryDetail_EmployeeSalaryDetail">
+          <AssociationSet Name="FK_EmpSalaryDetail_EmpSalaryStructure" Association="VservAccountingDBModel.FK_EmpSalaryDetail_EmpSalaryStructure">
             <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructures" />
-            <End Role="EmployeeSalaryDetail" EntitySet="EmployeeSalaryDetails" />
+            <End Role="EmpSalaryDetail" EntitySet="EmpSalaryDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryDetail_LookupMonth" Association="VservAccountingDBModel.FK_EmpSalaryDetail_LookupMonth">
+            <End Role="LookupMonth" EntitySet="LookupMonths" />
+            <End Role="EmpSalaryDetail" EntitySet="EmpSalaryDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryDetail_SalaryComponent" Association="VservAccountingDBModel.FK_EmpSalaryDetail_SalaryComponent">
+            <End Role="SalaryComponent" EntitySet="SalaryComponents" />
+            <End Role="EmpSalaryDetail" EntitySet="EmpSalaryDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryDetailArchive_EmpSalaryDetail" Association="VservAccountingDBModel.FK_EmpSalaryDetailArchive_EmpSalaryDetail">
+            <End Role="EmpSalaryDetail" EntitySet="EmpSalaryDetails" />
+            <End Role="EmpSalaryDetailArchive" EntitySet="EmpSalaryDetailArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryDetailArchive_EmpSalaryStructure" Association="VservAccountingDBModel.FK_EmpSalaryDetailArchive_EmpSalaryStructure">
+            <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructures" />
+            <End Role="EmpSalaryDetailArchive" EntitySet="EmpSalaryDetailArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryDetailArchive_LookupMonth" Association="VservAccountingDBModel.FK_EmpSalaryDetailArchive_LookupMonth">
+            <End Role="LookupMonth" EntitySet="LookupMonths" />
+            <End Role="EmpSalaryDetailArchive" EntitySet="EmpSalaryDetailArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryDetailArchive_SalaryComponent" Association="VservAccountingDBModel.FK_EmpSalaryDetailArchive_SalaryComponent">
+            <End Role="SalaryComponent" EntitySet="SalaryComponents" />
+            <End Role="EmpSalaryDetailArchive" EntitySet="EmpSalaryDetailArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryStructure_EmpSalaryStructure" Association="VservAccountingDBModel.FK_EmpSalaryStructure_EmpSalaryStructure">
+            <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructures" />
+            <End Role="EmpSalaryStructure1" EntitySet="EmpSalaryStructures" />
           </AssociationSet>
           <AssociationSet Name="FK_Feature_Feature" Association="VservAccountingDBModel.FK_Feature_Feature">
             <End Role="Feature" EntitySet="Features" />
@@ -1158,6 +1342,10 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
+          <FunctionImport Name="ArchiveEmpSalaryDetail" ReturnType="Collection(VservAccountingDBModel.ArchiveEmpSalaryDetail_Result)">
+            <Parameter Name="EmpSalaryDetailId" Mode="In" Type="Int32" />
+            <Parameter Name="UpdatedByUserName" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="ArchiveEmployee_Result">
           <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
@@ -1170,18 +1358,18 @@
         <ComplexType Name="GetEmployeeSalaryDetail_Result">
           <Property Type="Int32" Name="EmployeeId" Nullable="true" />
           <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
-          <Property Type="Decimal" Name="April" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="May" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="June" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="July" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="August" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="September" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="October" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="November" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="December" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="January" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="February" Nullable="true" Precision="38" Scale="0" />
-          <Property Type="Decimal" Name="March" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="String" Name="April" Nullable="true" />
+          <Property Type="String" Name="May" Nullable="true" />
+          <Property Type="String" Name="June" Nullable="true" />
+          <Property Type="String" Name="July" Nullable="true" />
+          <Property Type="String" Name="August" Nullable="true" />
+          <Property Type="String" Name="September" Nullable="true" />
+          <Property Type="String" Name="October" Nullable="true" />
+          <Property Type="String" Name="November" Nullable="true" />
+          <Property Type="String" Name="December" Nullable="true" />
+          <Property Type="String" Name="January" Nullable="true" />
+          <Property Type="String" Name="February" Nullable="true" />
+          <Property Type="String" Name="March" Nullable="true" />
           <Property Type="Int32" Name="EmpSalaryStructureId" Nullable="true" />
           <Property Type="String" Name="SCName" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="SCCode" Nullable="true" MaxLength="6" />
@@ -1353,6 +1541,7 @@
           <NavigationProperty Name="OfficeBranch" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="Employee" ToRole="OfficeBranch" />
           <NavigationProperty Name="State1" Relationship="VservAccountingDBModel.FK_Employee_PermanentState" FromRole="Employee" ToRole="State" />
           <NavigationProperty Name="Salutation" Relationship="VservAccountingDBModel.FK_Employee_Salutation" FromRole="Employee" ToRole="Salutation" />
+          <NavigationProperty Name="EmpSalaryStructures" Relationship="VservAccountingDBModel.FK_EmpSalaryStructure_Employee" FromRole="Employee" ToRole="EmpSalaryStructure" />
         </EntityType>
         <EntityType Name="EmployeeArchive">
           <Key>
@@ -1412,11 +1601,11 @@
           <NavigationProperty Name="State1" Relationship="VservAccountingDBModel.FK_EmployeeArchive_PermanentState" FromRole="EmployeeArchive" ToRole="State" />
           <NavigationProperty Name="Salutation" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Salutation" FromRole="EmployeeArchive" ToRole="Salutation" />
         </EntityType>
-        <EntityType Name="EmployeeSalaryDetail">
+        <EntityType Name="EmpSalaryDetail">
           <Key>
-            <PropertyRef Name="EmployeeSalaryDetailId" />
+            <PropertyRef Name="EmpSalaryDetailId" />
           </Key>
-          <Property Name="EmployeeSalaryDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpSalaryDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="SalaryComponentId" Type="Int32" Nullable="false" />
           <Property Name="EmpSalaryStructureId" Type="Int32" Nullable="false" />
@@ -1428,7 +1617,32 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="EmpSalaryStructure" Relationship="VservAccountingDBModel.FK_EmployeeSalaryDetail_EmployeeSalaryDetail" FromRole="EmployeeSalaryDetail" ToRole="EmpSalaryStructure" />
+          <NavigationProperty Name="EmpSalaryStructure" Relationship="VservAccountingDBModel.FK_EmpSalaryDetail_EmpSalaryStructure" FromRole="EmpSalaryDetail" ToRole="EmpSalaryStructure" />
+          <NavigationProperty Name="LookupMonth" Relationship="VservAccountingDBModel.FK_EmpSalaryDetail_LookupMonth" FromRole="EmpSalaryDetail" ToRole="LookupMonth" />
+          <NavigationProperty Name="SalaryComponent" Relationship="VservAccountingDBModel.FK_EmpSalaryDetail_SalaryComponent" FromRole="EmpSalaryDetail" ToRole="SalaryComponent" />
+          <NavigationProperty Name="EmpSalaryDetailArchives" Relationship="VservAccountingDBModel.FK_EmpSalaryDetailArchive_EmpSalaryDetail" FromRole="EmpSalaryDetail" ToRole="EmpSalaryDetailArchive" />
+        </EntityType>
+        <EntityType Name="EmpSalaryDetailArchive">
+          <Key>
+            <PropertyRef Name="EmpSalaryDetailArchiveId" />
+          </Key>
+          <Property Name="EmpSalaryDetailArchiveId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpSalaryDetailId" Type="Int32" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="SalaryComponentId" Type="Int32" Nullable="false" />
+          <Property Name="EmpSalaryStructureId" Type="Int32" Nullable="false" />
+          <Property Name="MonthId" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EmpSalaryDetail" Relationship="VservAccountingDBModel.FK_EmpSalaryDetailArchive_EmpSalaryDetail" FromRole="EmpSalaryDetailArchive" ToRole="EmpSalaryDetail" />
+          <NavigationProperty Name="EmpSalaryStructure" Relationship="VservAccountingDBModel.FK_EmpSalaryDetailArchive_EmpSalaryStructure" FromRole="EmpSalaryDetailArchive" ToRole="EmpSalaryStructure" />
+          <NavigationProperty Name="LookupMonth" Relationship="VservAccountingDBModel.FK_EmpSalaryDetailArchive_LookupMonth" FromRole="EmpSalaryDetailArchive" ToRole="LookupMonth" />
+          <NavigationProperty Name="SalaryComponent" Relationship="VservAccountingDBModel.FK_EmpSalaryDetailArchive_SalaryComponent" FromRole="EmpSalaryDetailArchive" ToRole="SalaryComponent" />
         </EntityType>
         <EntityType Name="EmpSalaryStructure">
           <Key>
@@ -1449,7 +1663,11 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="EmployeeSalaryDetails" Relationship="VservAccountingDBModel.FK_EmployeeSalaryDetail_EmployeeSalaryDetail" FromRole="EmpSalaryStructure" ToRole="EmployeeSalaryDetail" />
+          <NavigationProperty Name="Employee" Relationship="VservAccountingDBModel.FK_EmpSalaryStructure_Employee" FromRole="EmpSalaryStructure" ToRole="Employee" />
+          <NavigationProperty Name="EmpSalaryDetails" Relationship="VservAccountingDBModel.FK_EmpSalaryDetail_EmpSalaryStructure" FromRole="EmpSalaryStructure" ToRole="EmpSalaryDetail" />
+          <NavigationProperty Name="EmpSalaryDetailArchives" Relationship="VservAccountingDBModel.FK_EmpSalaryDetailArchive_EmpSalaryStructure" FromRole="EmpSalaryStructure" ToRole="EmpSalaryDetailArchive" />
+          <NavigationProperty Name="EmpSalaryStructure1" Relationship="VservAccountingDBModel.FK_EmpSalaryStructure_EmpSalaryStructure" FromRole="EmpSalaryStructure" ToRole="EmpSalaryStructure1" />
+          <NavigationProperty Name="EmpSalaryStructure2" Relationship="VservAccountingDBModel.FK_EmpSalaryStructure_EmpSalaryStructure" FromRole="EmpSalaryStructure1" ToRole="EmpSalaryStructure" />
         </EntityType>
         <EntityType Name="EPFNumber">
           <Key>
@@ -1546,6 +1764,8 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EmpSalaryDetails" Relationship="VservAccountingDBModel.FK_EmpSalaryDetail_LookupMonth" FromRole="LookupMonth" ToRole="EmpSalaryDetail" />
+          <NavigationProperty Name="EmpSalaryDetailArchives" Relationship="VservAccountingDBModel.FK_EmpSalaryDetailArchive_LookupMonth" FromRole="LookupMonth" ToRole="EmpSalaryDetailArchive" />
         </EntityType>
         <EntityType Name="Membership">
           <Key>
@@ -1625,6 +1845,8 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EmpSalaryDetails" Relationship="VservAccountingDBModel.FK_EmpSalaryDetail_SalaryComponent" FromRole="SalaryComponent" ToRole="EmpSalaryDetail" />
+          <NavigationProperty Name="EmpSalaryDetailArchives" Relationship="VservAccountingDBModel.FK_EmpSalaryDetailArchive_SalaryComponent" FromRole="SalaryComponent" ToRole="EmpSalaryDetailArchive" />
         </EntityType>
         <EntityType Name="Salutation">
           <Key>
@@ -1858,6 +2080,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmpSalaryStructure_Employee">
+          <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmpSalaryStructure" Role="EmpSalaryStructure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmpSalaryStructure">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmployeeArchive_Gender">
           <End Type="VservAccountingDBModel.Gender" Role="Gender" Multiplicity="1" />
           <End Type="VservAccountingDBModel.EmployeeArchive" Role="EmployeeArchive" Multiplicity="*" />
@@ -1918,15 +2152,99 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EmployeeSalaryDetail_EmployeeSalaryDetail">
+        <Association Name="FK_EmpSalaryDetail_EmpSalaryStructure">
           <End Type="VservAccountingDBModel.EmpSalaryStructure" Role="EmpSalaryStructure" Multiplicity="1" />
-          <End Type="VservAccountingDBModel.EmployeeSalaryDetail" Role="EmployeeSalaryDetail" Multiplicity="*" />
+          <End Type="VservAccountingDBModel.EmpSalaryDetail" Role="EmpSalaryDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EmpSalaryStructure">
               <PropertyRef Name="EmpSalaryStructureId" />
             </Principal>
-            <Dependent Role="EmployeeSalaryDetail">
+            <Dependent Role="EmpSalaryDetail">
               <PropertyRef Name="EmpSalaryStructureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryDetail_LookupMonth">
+          <End Type="VservAccountingDBModel.LookupMonth" Role="LookupMonth" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmpSalaryDetail" Role="EmpSalaryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LookupMonth">
+              <PropertyRef Name="MonthId" />
+            </Principal>
+            <Dependent Role="EmpSalaryDetail">
+              <PropertyRef Name="MonthId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryDetail_SalaryComponent">
+          <End Type="VservAccountingDBModel.SalaryComponent" Role="SalaryComponent" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmpSalaryDetail" Role="EmpSalaryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalaryComponent">
+              <PropertyRef Name="SalaryComponentId" />
+            </Principal>
+            <Dependent Role="EmpSalaryDetail">
+              <PropertyRef Name="SalaryComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryDetailArchive_EmpSalaryDetail">
+          <End Type="VservAccountingDBModel.EmpSalaryDetail" Role="EmpSalaryDetail" Multiplicity="0..1" />
+          <End Type="VservAccountingDBModel.EmpSalaryDetailArchive" Role="EmpSalaryDetailArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpSalaryDetail">
+              <PropertyRef Name="EmpSalaryDetailId" />
+            </Principal>
+            <Dependent Role="EmpSalaryDetailArchive">
+              <PropertyRef Name="EmpSalaryDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryDetailArchive_EmpSalaryStructure">
+          <End Type="VservAccountingDBModel.EmpSalaryStructure" Role="EmpSalaryStructure" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmpSalaryDetailArchive" Role="EmpSalaryDetailArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpSalaryStructure">
+              <PropertyRef Name="EmpSalaryStructureId" />
+            </Principal>
+            <Dependent Role="EmpSalaryDetailArchive">
+              <PropertyRef Name="EmpSalaryStructureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryDetailArchive_LookupMonth">
+          <End Type="VservAccountingDBModel.LookupMonth" Role="LookupMonth" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmpSalaryDetailArchive" Role="EmpSalaryDetailArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LookupMonth">
+              <PropertyRef Name="MonthId" />
+            </Principal>
+            <Dependent Role="EmpSalaryDetailArchive">
+              <PropertyRef Name="MonthId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryDetailArchive_SalaryComponent">
+          <End Type="VservAccountingDBModel.SalaryComponent" Role="SalaryComponent" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmpSalaryDetailArchive" Role="EmpSalaryDetailArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalaryComponent">
+              <PropertyRef Name="SalaryComponentId" />
+            </Principal>
+            <Dependent Role="EmpSalaryDetailArchive">
+              <PropertyRef Name="SalaryComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpSalaryStructure_EmpSalaryStructure">
+          <End Type="VservAccountingDBModel.EmpSalaryStructure" Role="EmpSalaryStructure" Multiplicity="0..1" />
+          <End Type="VservAccountingDBModel.EmpSalaryStructure" Role="EmpSalaryStructure1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpSalaryStructure">
+              <PropertyRef Name="EmpSalaryStructureId" />
+            </Principal>
+            <Dependent Role="EmpSalaryStructure1">
+              <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1982,6 +2300,14 @@
           <End Type="VservAccountingDBModel.Role" Role="Role" Multiplicity="*" />
           <End Type="VservAccountingDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
+        <ComplexType Name="ArchiveEmpSalaryDetail_Result">
+          <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
+          <Property Type="Int32" Name="ErrorSeverity" Nullable="true" />
+          <Property Type="Int32" Name="ErrorState" Nullable="true" />
+          <Property Type="String" Name="ErrorProcedure" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="ErrorLine" Nullable="true" />
+          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="4000" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2234,9 +2560,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EmployeeSalaryDetails">
-            <EntityTypeMapping TypeName="VservAccountingDBModel.EmployeeSalaryDetail">
-              <MappingFragment StoreEntitySet="EmployeeSalaryDetail">
+          <EntitySetMapping Name="EmpSalaryDetails">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.EmpSalaryDetail">
+              <MappingFragment StoreEntitySet="EmpSalaryDetail">
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
@@ -2248,7 +2574,26 @@
                 <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
                 <ScalarProperty Name="SalaryComponentId" ColumnName="SalaryComponentId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="EmployeeSalaryDetailId" ColumnName="EmployeeSalaryDetailId" />
+                <ScalarProperty Name="EmpSalaryDetailId" ColumnName="EmpSalaryDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpSalaryDetailArchives">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.EmpSalaryDetailArchive">
+              <MappingFragment StoreEntitySet="EmpSalaryDetailArchive">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="MonthId" ColumnName="MonthId" />
+                <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
+                <ScalarProperty Name="SalaryComponentId" ColumnName="SalaryComponentId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmpSalaryDetailId" ColumnName="EmpSalaryDetailId" />
+                <ScalarProperty Name="EmpSalaryDetailArchiveId" ColumnName="EmpSalaryDetailArchiveId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2550,6 +2895,18 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="ArchiveEmpSalaryDetail" FunctionName="VservAccountingDBModel.Store.ArchiveEmpSalaryDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.ArchiveEmpSalaryDetail_Result">
+                <ScalarProperty Name="ErrorNumber" ColumnName="ErrorNumber" />
+                <ScalarProperty Name="ErrorSeverity" ColumnName="ErrorSeverity" />
+                <ScalarProperty Name="ErrorState" ColumnName="ErrorState" />
+                <ScalarProperty Name="ErrorProcedure" ColumnName="ErrorProcedure" />
+                <ScalarProperty Name="ErrorLine" ColumnName="ErrorLine" />
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

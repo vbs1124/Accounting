@@ -15,18 +15,18 @@ namespace Vserv.Accounting.Data.Entity
     {
         public Nullable<int> EmployeeId { get; set; }
         public Nullable<int> DisplayOrder { get; set; }
-        public Nullable<decimal> April { get; set; }
-        public Nullable<decimal> May { get; set; }
-        public Nullable<decimal> June { get; set; }
-        public Nullable<decimal> July { get; set; }
-        public Nullable<decimal> August { get; set; }
-        public Nullable<decimal> September { get; set; }
-        public Nullable<decimal> October { get; set; }
-        public Nullable<decimal> November { get; set; }
-        public Nullable<decimal> December { get; set; }
-        public Nullable<decimal> January { get; set; }
-        public Nullable<decimal> February { get; set; }
-        public Nullable<decimal> March { get; set; }
+        public string April { get; set; }
+        public string May { get; set; }
+        public string June { get; set; }
+        public string July { get; set; }
+        public string August { get; set; }
+        public string September { get; set; }
+        public string October { get; set; }
+        public string November { get; set; }
+        public string December { get; set; }
+        public string January { get; set; }
+        public string February { get; set; }
+        public string March { get; set; }
         public Nullable<int> EmpSalaryStructureId { get; set; }
         public string SCName { get; set; }
         public string SCCode { get; set; }

@@ -6,17 +6,25 @@
     function employeeService(serviceHandler) {
         var employeePaySheet = [];
         var employeeAppraisalHistory = [];
+        var employeeChangeHistory = [];
+        var empAppraisalGraphValues = [];
 
         var svc = {
             addEmployeeSalaryDetail: addEmployeeSalaryDetail,
             getEmpFinancialYears: getEmpFinancialYears,
             getEmployee: getEmployee,
 
+            loadEmployeeAppraisalHistoryForGraph: loadEmployeeAppraisalHistoryForGraph,
             loadEmployeeAppraisalHistory: loadEmployeeAppraisalHistory,
             employeeAppraisalHistory: employeeAppraisalHistory,
+            empAppraisalGraphValues: empAppraisalGraphValues,
+
             loadEmployeePaySheet: loadEmployeePaySheet,
             employeePaySheet: employeePaySheet,
-            updateYearlyPaySheet: updateYearlyPaySheet
+            updateYearlyPaySheet: updateYearlyPaySheet,
+
+            loadEmployeeChangeHistory: loadEmployeeChangeHistory,
+            employeeChangeHistory: employeeChangeHistory,
         };
 
         return svc;
@@ -27,19 +35,28 @@
 
         function loadEmployeeAppraisalHistory(employeeId) {
             serviceHandler.executePostService('/Employee/GetEmployeeAppraisalHistory?employeeId=' + employeeId).then(function (resp) {
+                var graphValues = [];
                 if (resp.businessException == null) {
 
                     $.map(resp.result, function (val, i) {
                         val.CurrentEffectiveFrom = moment(val.CurrentEffectiveFrom).format("DD/MM/YYYY");
+                        graphValues.push({ label: val.CurrentEffectiveFrom, value: val.PercentageGrowth });
                     });
 
-                    if (resp.result.length > 0)
+                    if (resp.result.length > 0) {
                         angular.extend(employeeAppraisalHistory, resp.result);
+                        angular.extend(empAppraisalGraphValues, graphValues);
+                    }
                 }
                 else {
                     $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
                 }
             });
+        }
+
+
+        function loadEmployeeAppraisalHistoryForGraph(employeeId) {
+            return serviceHandler.executePostService('/Employee/GetEmployeeAppraisalHistory?employeeId=' + employeeId);
         }
 
         function getEmployee(employeeId) {
@@ -69,8 +86,8 @@
             return serviceHandler.executePostService('/Employee/UpdateYearlyPaySheet', paysheets);
         }
 
-        function getEmpFinancialYears(joiningDate) {
-            var currentYear = parseInt(moment().year());
+        function getEmpFinancialYears(joiningDate, relievingDate) {
+            var currentYear = relievingDate == null || relievingDate == 'Invalid Date' ? parseInt(moment().year()) : parseInt(moment(relievingDate).year());
             var joiningYear = parseInt(moment(joiningDate).year());
             var financialYears = [];
 
@@ -79,6 +96,24 @@
             }
 
             return financialYears;
+        }
+
+        function loadEmployeeChangeHistory(employeeId) {
+            serviceHandler.executePostService('/Employee/LoadEmployeeChangeHistory?employeeId=' + employeeId).then(function (resp) {
+                if (resp.businessException == null) {
+                    if (resp.result.length > 0) {
+                        employeeChangeHistory.removeAll();// clear all the existing items.
+                        $.map(resp.result, function (val, i) {
+                            val.UpdatedDate = moment(val.UpdatedDate).format("DD/MM/YYYY");
+                        });
+
+                        employeeChangeHistory.addRange(resp.result);
+                    }
+                }
+                else {
+                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                }
+            });
         }
     }
 })();

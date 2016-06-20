@@ -51,22 +51,9 @@ namespace Vserv.Accounting.Web.Code
             if (value != null)
             {
                 string VBS_Id = value.ToString().ToLower();
-
-                if (VBS_Id.StartsWith("vbs"))
-                {
-                    EmployeeManager employeeManager = new EmployeeManager();
-                    Boolean isexists = employeeManager.IsEmployeeIdAlreadyRegistered(VBS_Id, ((EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
-
-                    if (isexists)
-                    {
-                        return new ValidationResult("Employee Id already registered.");
-                    }
-                    return ValidationResult.Success;
-                }
-                else
-                {
-                    return new ValidationResult("Employee Id should start with VBS.");
-                }
+                EmployeeManager employeeManager = new EmployeeManager();
+                Boolean isExists = employeeManager.IsEmployeeIdAlreadyRegistered(VBS_Id, ((EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
+                return isExists ? new ValidationResult("Employee Id already registered.") : ValidationResult.Success;
             }
             else
             {

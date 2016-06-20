@@ -61,6 +61,12 @@ namespace Vserv.Accounting.Web
                 .Include("~/Scripts/App/app.js")
                 .IncludeDirectory("~/Scripts/App/", "*.js", true)
                 );
+
+            bundles.Add(new ScriptBundle("~/scripts/Angular-nvD3")
+                .Include("~/scripts/d3/d3.js")
+                .Include("~/scripts/nv.d3.js")
+                .Include("~/scripts/angular-nvd3.js"));
+
             // **************Section For ScriptBundle END **************
 
             // **************Section For StyleBundle START **************
@@ -93,6 +99,8 @@ namespace Vserv.Accounting.Web
             .Include("~/Content/xeditable.css")
             );
 
+            bundles.Add(new StyleBundle("~/content/Angular-nvD3")
+               .Include("~/Content/nv.d3.css"));
             // **************Section For StyleBundle  END **************
         }
     }

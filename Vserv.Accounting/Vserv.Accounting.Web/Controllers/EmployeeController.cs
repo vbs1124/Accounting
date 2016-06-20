@@ -82,13 +82,15 @@ namespace Vserv.Accounting.Web.Controllers
             {
                 Employee employee = ConvertTo(employeeModel);
                 EmployeeManager.AddEmployee(employee);
-
-                Dictionary<string, string> message = new Dictionary<string, string>
-                {
-                    {CommonConstants.MESSAGE, "Employee added successfully."}
-                };
-                return RedirectToAction("Success", "Home", new { successMessage = message.ToEncryptedString() });
+                TempData["Message"] = String.Format("Employee <vbs{0}> added successfully.", employeeModel.VBS_Id);
+                return RedirectToAction("list", "employee");
+                //Dictionary<string, string> message = new Dictionary<string, string>
+                //{
+                //    {CommonConstants.MESSAGE, "Employee added successfully."}
+                //};
+                //return RedirectToAction("Success", "Home", new { successMessage = message.ToEncryptedString() });
             }
+
             ModelState.AddModelError("emp_errors", @"Please fill the required fields...");
             SetDropdownValues();
             return View(employeeModel);
@@ -131,12 +133,8 @@ namespace Vserv.Accounting.Web.Controllers
                 EmployeeManager.ArchiveEmployee(employeeModel.EmployeeId, User.Identity.Name);
 
                 EmployeeManager.EditEmployee(employee);
-                Dictionary<string, string> message = new Dictionary<string, string>
-                {
-                    {CommonConstants.MESSAGE, "Employee updated successfully."}
-                };
-                string encryptedMessage = message.ToEncryptedString();
-                return RedirectToAction("Success", "Home", new { successMessage = encryptedMessage });
+                TempData["Message"] = String.Format("Employee <vbs{0}> updated successfully.", employeeModel.VBS_Id);
+                return RedirectToAction("list", "employee");
             }
 
             SetDropdownValues();
@@ -214,8 +212,47 @@ namespace Vserv.Accounting.Web.Controllers
         {
             EmployeeManager manager = new EmployeeManager();
             var result = manager.GetYearlyPaySheet(paySheetParameter.EmployeeId, paySheetParameter.FinancialYearFrom, paySheetParameter.FinancialYearTo);
-            var paySheet = result.AsQueryable().ProjectTo<EmployeePaySheet>();
+
+            var paySheet = ConvertToEmployeePaySheet(result);
+
+            //var paySheet = result.AsQueryable().ProjectTo<EmployeePaySheet>();
             return Json(paySheet, JsonRequestBehavior.AllowGet);
+        }
+
+        private List<EmployeePaySheet> ConvertToEmployeePaySheet(List<GetEmployeeSalaryDetail_Result> result)
+        {
+            return result.Select(item => new EmployeePaySheet
+            {
+                EmployeeId = item.EmployeeId,
+                DisplayOrder = item.DisplayOrder,
+                April = ConvertToLookupAmount(item.April),
+                May = ConvertToLookupAmount(item.May),
+                June = ConvertToLookupAmount(item.June),
+                July = ConvertToLookupAmount(item.July),
+                August = ConvertToLookupAmount(item.August),
+                September = ConvertToLookupAmount(item.September),
+                October = ConvertToLookupAmount(item.October),
+                November = ConvertToLookupAmount(item.November),
+                December = ConvertToLookupAmount(item.December),
+                January = ConvertToLookupAmount(item.January),
+                February = ConvertToLookupAmount(item.February),
+                March = ConvertToLookupAmount(item.March),
+                EmpSalaryStructureId = item.EmpSalaryStructureId,
+                SCName = item.SCName,
+                SCCode = item.SCCode,
+                SCDescription = item.SCDescription,
+            }).ToList();
+        }
+
+        private LookupAmount ConvertToLookupAmount(string month)
+        {
+            if (month.IsNull())
+            {
+                return null;
+            }
+
+            var result = month.Split('#');
+            return new LookupAmount { EmployeeSalaryDetailId = Convert.ToInt32(result[0]), Amount = Convert.ToDecimal(result[1]) };
         }
 
         public JsonResult GetEmployee(int employeeId)
@@ -223,6 +260,12 @@ namespace Vserv.Accounting.Web.Controllers
             var employee = EmployeeManager.GetEmployee(employeeId);
             EmployeeModel employeeModel = ConvertTo(employee);
             return CustomJson(employeeModel);
+        }
+
+        public JsonResult LoadEmployeeChangeHistory(int employeeId)
+        {
+            List<EmployeeArchive> employees = EmployeeManager.GetEmployeeHistory(employeeId);
+            return Json(employees, JsonRequestBehavior.AllowGet);
         }
 
         #region Salary Management
@@ -265,31 +308,9 @@ namespace Vserv.Accounting.Web.Controllers
         {
             EmployeeManager _manager = new EmployeeManager();
             List<GetEmployeeSalaryDetail_Result> updatedPaySheet = new List<GetEmployeeSalaryDetail_Result>();
-            foreach (var item in paySheets)
-            {
-                updatedPaySheet.Add(new GetEmployeeSalaryDetail_Result
-                {
-                    EmployeeId = item.EmployeeId,
-                    SCName = item.SCName,
-                    SCDescription = item.SCDescription,
-                    SCCode = item.SCCode,
-                    DisplayOrder = item.DisplayOrder,
-                    April = item.April,
-                    May = item.May,
-                    June = item.June,
-                    July = item.July,
-                    August = item.August,
-                    September = item.September,
-                    October = item.October,
-                    November = item.November,
-                    December = item.December,
-                    January = item.January,
-                    February = item.February,
-                    March = item.March
-                });
-            }
 
-            var result = _manager.UpdateYearlyPaySheet(updatedPaySheet);
+            List<EmpSalaryDetail> empSalaryDetails = ConvertToEmployeeSalaryDetails(paySheets);
+            var result = _manager.UpdateYearlyPaySheet(empSalaryDetails, User.Identity.Name);
             return Json("success", JsonRequestBehavior.AllowGet);
         }
 
@@ -701,6 +722,29 @@ namespace Vserv.Accounting.Web.Controllers
                 return EmployeeManager.GetEmployees(employeeFilter);
             }
             return null;
+        }
+
+        private List<EmpSalaryDetail> ConvertToEmployeeSalaryDetails(List<EmployeePaySheet> paySheets)
+        {
+            List<EmpSalaryDetail> employeeSalaryDetails = new List<EmpSalaryDetail>();
+
+            foreach (var item in paySheets)
+            {
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.April.Amount, EmpSalaryDetailId = item.April.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.May.Amount, EmpSalaryDetailId = item.May.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.June.Amount, EmpSalaryDetailId = item.June.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.July.Amount, EmpSalaryDetailId = item.July.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.August.Amount, EmpSalaryDetailId = item.August.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.September.Amount, EmpSalaryDetailId = item.September.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.October.Amount, EmpSalaryDetailId = item.October.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.November.Amount, EmpSalaryDetailId = item.November.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.December.Amount, EmpSalaryDetailId = item.December.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.January.Amount, EmpSalaryDetailId = item.January.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.February.Amount, EmpSalaryDetailId = item.February.EmployeeSalaryDetailId });
+                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.March.Amount, EmpSalaryDetailId = item.March.EmployeeSalaryDetailId });
+            }
+
+            return employeeSalaryDetails;
         }
 
         #endregion Private Methods
