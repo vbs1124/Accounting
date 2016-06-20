@@ -154,3 +154,20 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-ar_AR.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-ar_AR.min.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-bg_BG.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-bg_BG.min.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-fa_IR.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-fa_IR.min.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-ko_KR.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-ko_KR.min.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-ru_RU.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-ru_RU.min.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-tr_TR.min.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-ua_UA.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-ua_UA.min.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-zh_CN.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-zh_CN.min.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-zh_TW.js
+Vserv.Accounting/packages/bootstrap-select.1.10.0/content/Scripts/i18n/defaults-zh_TW.min.js
