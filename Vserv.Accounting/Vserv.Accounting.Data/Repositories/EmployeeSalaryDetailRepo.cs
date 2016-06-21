@@ -3,6 +3,7 @@ using System.ComponentModel.Composition;
 using Vserv.Accounting.Data.Entity;
 using System.Linq;
 using Vserv.Accounting.Common;
+using System.Data.SqlClient;
 namespace Vserv.Accounting.Data
 {
     [Export(typeof(IEmployeeSalaryDetailRepo))]
@@ -13,7 +14,12 @@ namespace Vserv.Accounting.Data
         {
             using (VservAccountingDBEntities context = new VservAccountingDBEntities())
             {
-                context.ArchiveEmpSalaryDetail(empSalaryStructureId, updatedByUserName);
+                //var sqlQuery = string.Format("EXECUTE [dbo].[ArchiveEmpSalaryDetail] {0}, {1}", "@EmpSalaryStructureId", "@UpdatedByUserName");
+                //var results = context.Database.SqlQuery<Employee>(sqlQuery, new SqlParameter("EmpSalaryStructureId", empSalaryStructureId), new SqlParameter("UpdatedByUserName", updatedByUserName));
+
+                context.Database.ExecuteSqlCommand("EXECUTE [dbo].[ArchiveEmpSalaryDetail] @EmpSalaryStructureId, @UpdatedByUserName",
+                          new SqlParameter("@EmpSalaryStructureId", empSalaryStructureId),
+                          new SqlParameter("@UpdatedByUserName", updatedByUserName));
             }
 
             return true;
