@@ -40,7 +40,7 @@
 
                     $.map(resp.result, function (val, i) {
                         val.CurrentEffectiveFrom = moment(val.CurrentEffectiveFrom).format("DD/MM/YYYY");
-                        graphValues.push({ label: val.CurrentEffectiveFrom, value: val.PercentageGrowth });
+                        graphValues.push({ label: val.CurrentEffectiveFrom, value: val.CurrentCTC });
                     });
 
                     if (resp.result.length > 0) {

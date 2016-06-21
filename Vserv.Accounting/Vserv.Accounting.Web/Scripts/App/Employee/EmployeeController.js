@@ -43,10 +43,10 @@
                 },
                 transitionDuration: 500,
                 xAxis: {
-                    axisLabel: 'Financial Year'
+                    // axisLabel: 'Financial Year'
                 },
                 yAxis: {
-                    axisLabel: '% Growth',
+                    // axisLabel: '% Growth',
                     //axisLabelDistance: 2
                 }
             }

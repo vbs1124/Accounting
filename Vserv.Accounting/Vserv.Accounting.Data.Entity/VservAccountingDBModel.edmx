@@ -893,7 +893,7 @@
           <Parameter Name="UpdatedByUserName" Type="varchar" Mode="In" />
         </Function>
         <Function Name="ArchiveEmpSalaryDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EmpSalaryDetailId" Type="int" Mode="In" />
+          <Parameter Name="EmpSalaryStructureId" Type="int" Mode="In" />
           <Parameter Name="UpdatedByUserName" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetEmpAppraisalHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -955,6 +955,9 @@
           <Parameter Name="thread" Type="varchar" Mode="In" />
           <Parameter Name="type" Type="varchar" Mode="In" />
           <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ResetEmpSalaryStructureId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpSalaryStructureId" Type="int" Mode="In" />
         </Function>
         <Function Name="ValidateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
@@ -1343,8 +1346,11 @@
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
           <FunctionImport Name="ArchiveEmpSalaryDetail" ReturnType="Collection(VservAccountingDBModel.ArchiveEmpSalaryDetail_Result)">
-            <Parameter Name="EmpSalaryDetailId" Mode="In" Type="Int32" />
+            <Parameter Name="EmpSalaryStructureId" Mode="In" Type="Int32" />
             <Parameter Name="UpdatedByUserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ResetEmpSalaryStructureId">
+            <Parameter Name="EmpSalaryStructureId" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="ArchiveEmployee_Result">
@@ -2907,6 +2913,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ResetEmpSalaryStructureId" FunctionName="VservAccountingDBModel.Store.ResetEmpSalaryStructureId" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -26,6 +26,9 @@ namespace Vserv.Common.Contracts
         /// <param name="user">The user.</param>
         /// <returns></returns>
         T Add(T entity, string user);
+
+        void AddOrUpdate(T entity, string user);
+
         /// <summary>
         /// Removes the specified entity.
         /// </summary>
