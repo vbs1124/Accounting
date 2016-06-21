@@ -455,38 +455,56 @@ namespace Vserv.Accounting.Business.Managers
                 {
                     IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
                     List<EmpSalaryDetail> employeeSalaryDetails = CalculateSalaryComponents(empSalaryStructure, userName);
+                    //empSalaryStructureRepo.SaveEmpSalaryStructure(empSalaryStructure, employeeSalaryDetails, userName);
 
-                    // Archive Existing EmpSalaryStructure.
-                    IEmployeeSalaryDetailRepo employeeSalaryDetailRepo = DataRepositoryFactory.GetDataRepository<IEmployeeSalaryDetailRepo>();
-
-                    //Records to Insert.
-
-                    var recordsToInsert = employeeSalaryDetails.Where(condition => condition.EmpSalaryDetailId <= 0).ToList();
-
-                    if (recordsToInsert.IsNotNull() && recordsToInsert.Any())
+                    if (employeeSalaryDetails.IsNotNull() && employeeSalaryDetails.Any())
                     {
+                        // Archive Existing EmpSalaryStructure.
+                        IEmployeeSalaryDetailRepo employeeSalaryDetailRepo = DataRepositoryFactory.GetDataRepository<IEmployeeSalaryDetailRepo>();
+
+                        List<EmpSalaryDetail> recordsToInsert = employeeSalaryDetails.Where(condition => condition.EmpSalaryDetailId <= 0).ToList();
+                        List<EmpSalaryDetail> recordsToUpate = employeeSalaryDetails.Except(recordsToInsert).ToList();
+
+                        // Insert EmpSalaryStructure
+                        EmpSalaryStructure currentEmpSalaryStructureInserted = empSalaryStructureRepo.GetCurrentEmpSalaryStructure(empSalaryStructure.EmployeeId);
                         empSalaryStructure.CreatedDate = DateTime.Now;
                         empSalaryStructure.CreatedBy = userName;
                         empSalaryStructure.IsActive = true;
-                        empSalaryStructure.EmpSalaryDetails = recordsToInsert;
 
-                        empSalaryStructureRepo.Add(empSalaryStructure, userName);
-                    }
-
-                    // Records to Update.
-                    EmpSalaryStructure existingtEmpSalaryStructure = empSalaryStructureRepo.GetCurrentEmpSalaryStructure(empSalaryStructure.EmployeeId);
-                    var recordsToUpate = employeeSalaryDetails.Except(recordsToInsert).ToList();
-
-                    if (recordsToUpate.IsNotNull() && recordsToUpate.Any())
-                    {
-                        foreach (var item in recordsToUpate)
+                        if (currentEmpSalaryStructureInserted.IsNotNull())
                         {
-                            item.UpdatedBy = userName;
-                            item.UpdatedDate = DateTime.Now;
-                            item.EmpSalaryStructureId = existingtEmpSalaryStructure.EmpSalaryStructureId;
-
-                            employeeSalaryDetailRepo.Update(item, userName);
+                            empSalaryStructure.ParentId = currentEmpSalaryStructureInserted.EmpSalaryStructureId;
                         }
+
+                        //empSalaryStructureRepo.Add(empSalaryStructure, userName);
+                        empSalaryStructureRepo.InsertEmpSalaryStructure(empSalaryStructure);
+
+                        currentEmpSalaryStructureInserted = empSalaryStructureRepo.GetCurrentEmpSalaryStructure(empSalaryStructure.EmployeeId);
+
+                        // Update the existing Record
+                        if (recordsToUpate.IsNotNull() && recordsToUpate.Any())
+                        {
+                            foreach (var item in recordsToUpate)
+                            {
+                                item.UpdatedBy = userName;
+                                item.UpdatedDate = DateTime.Now;
+                                //item.EmpSalaryStructureId = currentEmpSalaryStructureInserted.EmpSalaryStructureId;
+                                employeeSalaryDetailRepo.Update(item, userName);
+                            }
+                        }
+
+                        // Insert new records against the currently generated EmpSalaryStructure.
+                        if (recordsToInsert.IsNotNull() && recordsToInsert.Any())
+                        {
+                            foreach (var item in recordsToInsert)
+                            {
+                                item.EmpSalaryStructureId = currentEmpSalaryStructureInserted.EmpSalaryStructureId;
+                                employeeSalaryDetailRepo.Add(item, userName);
+                            }
+                        }
+
+                        // Update EmpSalaryStructureId of those breakups which were updated.
+                        employeeSalaryDetailRepo.ResetEmpSalaryStructureId(currentEmpSalaryStructureInserted.EmpSalaryStructureId);
                     }
                 }
 
@@ -534,7 +552,11 @@ namespace Vserv.Accounting.Business.Managers
                 {
                     foreach (var item in empSalaryDetailsToUpdate)
                     {
-                        var toUpdateRecord = updatedEmpSalaryDetail.FirstOrDefault(condition => condition.MonthId == item.MonthId && item.Year == condition.Year);
+                        var toUpdateRecord = updatedEmpSalaryDetail
+                            .FirstOrDefault(condition => condition.EmployeeId == item.EmployeeId &&
+                                condition.MonthId == item.MonthId &&
+                                condition.Year == condition.Year &&
+                                condition.SalaryComponentId == item.SalaryComponentId);
                         if (toUpdateRecord.IsNotNull())
                         {
                             item.Amount = toUpdateRecord.Amount;

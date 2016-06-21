@@ -332,5 +332,14 @@ namespace Vserv.Accounting.Data.Entity
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ArchiveEmpSalaryDetail_Result>("ArchiveEmpSalaryDetail", empSalaryStructureIdParameter, updatedByUserNameParameter);
         }
+    
+        public virtual int ResetEmpSalaryStructureId(Nullable<int> empSalaryStructureId)
+        {
+            var empSalaryStructureIdParameter = empSalaryStructureId.HasValue ?
+                new ObjectParameter("EmpSalaryStructureId", empSalaryStructureId) :
+                new ObjectParameter("EmpSalaryStructureId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ResetEmpSalaryStructureId", empSalaryStructureIdParameter);
+        }
     }
 }

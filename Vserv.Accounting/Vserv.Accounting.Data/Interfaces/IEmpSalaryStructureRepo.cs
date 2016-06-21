@@ -13,5 +13,7 @@ namespace Vserv.Accounting.Data
         EmpSalaryStructure SaveEmpSalaryStructure(EmpSalaryStructure empSalaryStructure);
         List<GetEmpAppraisalHistory_Result> GetEmployeeAppraisalHistory(int employeeId);
         EmpSalaryStructure GetCurrentEmpSalaryStructure(int employeeId);
+        bool SaveEmpSalaryStructure(EmpSalaryStructure empSalaryStructure, List<EmpSalaryDetail> employeeSalaryDetails, string userName);
+        bool InsertEmpSalaryStructure(EmpSalaryStructure empSalaryStructure);
     }
 }

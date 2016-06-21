@@ -47,6 +47,8 @@ namespace Vserv.Common.Data
         /// <param name="user">The user.</param>
         protected abstract void UpdateEntity(TContext entityContext, TEntity entity, string user);
 
+        protected abstract void AddOrUpdateEntity(TContext entityContext, TEntity entity, string user);
+
         /// <summary>
         /// Gets the entities.
         /// </summary>
@@ -122,6 +124,15 @@ namespace Vserv.Common.Data
                 var addedEntity = AddEntity(entityContext, entity, user);
                 entityContext.SaveChanges();
                 return addedEntity;
+            }
+        }
+
+        public virtual void AddOrUpdate(TEntity entity, string user)
+        {
+            using (var entityContext = new TContext())
+            {
+                AddOrUpdateEntity(entityContext, entity, user);
+                entityContext.SaveChanges();
             }
         }
 
