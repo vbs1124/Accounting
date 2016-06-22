@@ -42,9 +42,6 @@ namespace Vserv.Accounting.Web
                 .Include("~/Scripts/DataTables/jquery.dataTables.js")
                 .Include("~/Scripts/DataTables/dataTables.bootstrap.js"));
 
-
-            bundles.Add(new ScriptBundle("~/Scripts/morris").Include("~/Scripts/base/morris.js").Include("~/Scripts/base/morris-data.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/places").Include("~/Scripts/base/google-places.js"));
             bundles.Add(new ScriptBundle("~/bundles/geocomplete").Include("~/Scripts/base/jquery.geocomplete.js"));
 
@@ -89,8 +86,7 @@ namespace Vserv.Accounting.Web
 
             bundles.Add(new StyleBundle("~/Content/base")
             .Include("~/Content/base/metisMenu.min.css")
-            .Include("~/Content/base/timeline.css")
-            .Include("~/Content/base/morris.css"));
+            .Include("~/Content/base/timeline.css"));
 
 
             bundles.Add(new StyleBundle("~/content/angular")

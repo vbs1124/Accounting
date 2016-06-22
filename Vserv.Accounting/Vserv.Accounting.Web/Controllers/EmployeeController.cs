@@ -4,12 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using AutoMapper.QueryableExtensions;
 using Vserv.Accounting.Business.Managers;
 using Vserv.Accounting.Common;
 using Vserv.Accounting.Data.Entity;
 using Vserv.Accounting.Web.Models;
-using AutoMapper;
 
 #endregion
 
@@ -24,6 +22,9 @@ namespace Vserv.Accounting.Web.Controllers
     {
         public EmployeeManager EmployeeManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EmployeeController"/> class.
+        /// </summary>
         public EmployeeController()
         {
             EmployeeManager = new EmployeeManager();
@@ -50,6 +51,11 @@ namespace Vserv.Accounting.Web.Controllers
             return View(GetEmployees(filterChoice));
         }
 
+        /// <summary>
+        /// Gets the filtered employees.
+        /// </summary>
+        /// <param name="filterChoice">The filter choice.</param>
+        /// <returns></returns>
         public ActionResult GetFilteredEmployees(int? filterChoice)
         {
             return PartialView("_ViewEmployeesPartial", GetEmployees(filterChoice));
@@ -99,13 +105,12 @@ namespace Vserv.Accounting.Web.Controllers
         /// <summary>
         /// Edits the specified employee identifier.
         /// </summary>
-        /// <param name="employeeId">The employee identifier.</param>
+        /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        //[Route("employee/edit/{employeeId}")]
-        public ActionResult Edit(int employeeId)
+        [Route("employee/{id}/edit")]
+        public ActionResult Edit(string id)
         {
-
-            var employee = EmployeeManager.GetEmployee(employeeId);
+            var employee = EmployeeManager.GetEmployee(id.ToDecryptedInt());
             EmployeeModel employeeModel = ConvertTo(employee);
             SetDropdownValues();
             return View(employeeModel);
@@ -117,24 +122,26 @@ namespace Vserv.Accounting.Web.Controllers
         /// <param name="employeeModel">The employee model.</param>
         /// <returns></returns>
         [HttpPost]
-        //[Route("employee/edit/")]
+        [Route("employee/{id}/edit")]
         public ActionResult Edit(EmployeeModel employeeModel)
         {
-
-            employeeModel.UpdatedBy = User.Identity.Name;
-            employeeModel.UpdatedDate = DateTime.Now;
-
-            // Perform Save for Employee
-            if (ModelState.IsValid)
+            if (employeeModel.IsNotNull())
             {
-                Employee employee = ConvertTo(employeeModel);
+                employeeModel.UpdatedBy = User.Identity.Name;
+                employeeModel.UpdatedDate = DateTime.Now;
 
-                // Archive Existing Employee information before going for an update.
-                EmployeeManager.ArchiveEmployee(employeeModel.EmployeeId, User.Identity.Name);
+                // Perform Save for Employee
+                if (ModelState.IsValid)
+                {
+                    Employee employee = ConvertTo(employeeModel);
 
-                EmployeeManager.EditEmployee(employee);
-                TempData["Message"] = String.Format("Employee <vbs{0}> updated successfully.", employeeModel.VBS_Id);
-                return RedirectToAction("list", "employee");
+                    // Archive Existing Employee information before going for an update.
+                    EmployeeManager.ArchiveEmployee(employeeModel.EmployeeId, User.Identity.Name);
+
+                    EmployeeManager.EditEmployee(employee);
+                    TempData["Message"] = String.Format("Employee <vbs{0}> updated successfully.", employeeModel.VBS_Id);
+                    return RedirectToAction("list", "employee");
+                }
             }
 
             SetDropdownValues();
@@ -180,12 +187,22 @@ namespace Vserv.Accounting.Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Employees the history.
+        /// </summary>
+        /// <param name="employeeId">The employee identifier.</param>
+        /// <returns></returns>
         public ActionResult EmployeeHistory(int employeeId)
         {
             List<EmployeeArchive> employees = EmployeeManager.GetEmployeeHistory(employeeId);
             return PartialView("_employeehistory", employees);
         }
 
+        /// <summary>
+        /// Employees the compare result.
+        /// </summary>
+        /// <param name="employeeArchiveId">The employee archive identifier.</param>
+        /// <returns></returns>
         [Route("employee/{employeeArchiveId}/compare")]
         public ActionResult EmployeeCompareResult(int employeeArchiveId)
         {
@@ -194,6 +211,11 @@ namespace Vserv.Accounting.Web.Controllers
             return View("_employeecompare", compareEmployeeModel);
         }
 
+        /// <summary>
+        /// Gets the name of the state by city.
+        /// </summary>
+        /// <param name="cityName">Name of the city.</param>
+        /// <returns></returns>
         [HttpGet]
         public JsonResult GetStateByCityName(string cityName)
         {
@@ -208,6 +230,11 @@ namespace Vserv.Accounting.Web.Controllers
             return Json(stateId, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Gets the yearly pay sheet.
+        /// </summary>
+        /// <param name="paySheetParameter">The pay sheet parameter.</param>
+        /// <returns></returns>
         public JsonResult GetYearlyPaySheet(PaySheetParameter paySheetParameter)
         {
             EmployeeManager manager = new EmployeeManager();
@@ -219,6 +246,11 @@ namespace Vserv.Accounting.Web.Controllers
             return Json(paySheet, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Converts to employee pay sheet.
+        /// </summary>
+        /// <param name="result">The result.</param>
+        /// <returns></returns>
         private List<EmployeePaySheet> ConvertToEmployeePaySheet(List<GetEmployeeSalaryDetail_Result> result)
         {
             return result.Select(item => new EmployeePaySheet
@@ -244,6 +276,11 @@ namespace Vserv.Accounting.Web.Controllers
             }).ToList();
         }
 
+        /// <summary>
+        /// Converts to lookup amount.
+        /// </summary>
+        /// <param name="month">The month.</param>
+        /// <returns></returns>
         private LookupAmount ConvertToLookupAmount(string month)
         {
             if (month.IsNull())
@@ -262,6 +299,11 @@ namespace Vserv.Accounting.Web.Controllers
             return CustomJson(employeeModel);
         }
 
+        /// <summary>
+        /// Loads the employee change history.
+        /// </summary>
+        /// <param name="employeeId">The employee identifier.</param>
+        /// <returns></returns>
         public JsonResult LoadEmployeeChangeHistory(int employeeId)
         {
             List<EmployeeArchive> employees = EmployeeManager.GetEmployeeHistory(employeeId);
@@ -270,6 +312,12 @@ namespace Vserv.Accounting.Web.Controllers
 
         #region Salary Management
 
+        /// <summary>
+        /// Saves the employee salary detail.
+        /// </summary>
+        /// <param name="empSalaryStructureModel">The emp salary structure model.</param>
+        /// <param name="employeeId">The employee identifier.</param>
+        /// <returns></returns>
         public JsonResult SaveEmployeeSalaryDetail(EmpSalaryStructureModel empSalaryStructureModel, int employeeId)
         {
             EmployeeManager manager = new EmployeeManager();
@@ -289,6 +337,10 @@ namespace Vserv.Accounting.Web.Controllers
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Gets the emp salary structure model.
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public JsonResult GetEmpSalaryStructureModel()
         {
@@ -297,6 +349,11 @@ namespace Vserv.Accounting.Web.Controllers
             return Json(empSalaryStructureModel, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Gets the employee appraisal history.
+        /// </summary>
+        /// <param name="employeeId">The employee identifier.</param>
+        /// <returns></returns>
         [HttpPost]
         public JsonResult GetEmployeeAppraisalHistory(int employeeId)
         {
@@ -304,13 +361,16 @@ namespace Vserv.Accounting.Web.Controllers
             return Json(manager.GetEmployeeAppraisalHistory(employeeId), JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Updates the yearly pay sheet.
+        /// </summary>
+        /// <param name="paySheets">The pay sheets.</param>
+        /// <returns></returns>
         public JsonResult UpdateYearlyPaySheet(List<EmployeePaySheet> paySheets)
         {
-            EmployeeManager _manager = new EmployeeManager();
-            List<GetEmployeeSalaryDetail_Result> updatedPaySheet = new List<GetEmployeeSalaryDetail_Result>();
-
+            EmployeeManager manager = new EmployeeManager();
             List<EmpSalaryDetail> empSalaryDetails = ConvertToEmployeeSalaryDetails(paySheets);
-            var result = _manager.UpdateYearlyPaySheet(empSalaryDetails, User.Identity.Name);
+            manager.UpdateYearlyPaySheet(empSalaryDetails, User.Identity.Name);
             return Json("success", JsonRequestBehavior.AllowGet);
         }
 
@@ -335,6 +395,11 @@ namespace Vserv.Accounting.Web.Controllers
             return designationModels;
         }
 
+        /// <summary>
+        /// Converts to designation model.
+        /// </summary>
+        /// <param name="list">The list.</param>
+        /// <returns></returns>
         private List<DesignationModel> ConvertToDesignationModel(List<Designation> list)
         {
             List<DesignationModel> designationModels = new List<DesignationModel>();
@@ -356,6 +421,10 @@ namespace Vserv.Accounting.Web.Controllers
             return designationModels;
         }
 
+        /// <summary>
+        /// Gets the office branches.
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetOfficeBranches()
         {
             var officeBranches = EmployeeManager.GetOfficeBranches();
@@ -369,6 +438,10 @@ namespace Vserv.Accounting.Web.Controllers
             return Json(new SelectList(officeBranchesSelectListItems, "Value", "Text", "1"), JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Gets the salutations.
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetSalutations()
         {
             IEnumerable<SelectListItem> officeBranchesSelectListItems = null;
@@ -383,6 +456,10 @@ namespace Vserv.Accounting.Web.Controllers
             return Json(new SelectList(officeBranchesSelectListItems, "Value", "Text", "1"), JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Gets the states.
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetStates()
         {
             IEnumerable<SelectListItem> statesSelectListItems = null;
@@ -590,6 +667,11 @@ namespace Vserv.Accounting.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="banks">The banks.</param>
+        /// <returns></returns>
         private List<SelectListItem> ConvertTo(List<Bank> banks)
         {
             var result = new List<SelectListItem>();
@@ -609,7 +691,7 @@ namespace Vserv.Accounting.Web.Controllers
         /// <summary>
         /// Converts to.
         /// </summary>
-        /// <param name="employeeModel"></param>
+        /// <param name="employeeModel">The employee model.</param>
         /// <returns></returns>
         private EmployeeModel ConvertTo(Employee employeeModel)
         {
@@ -667,6 +749,11 @@ namespace Vserv.Accounting.Web.Controllers
             };
         }
 
+        /// <summary>
+        /// Converts to.
+        /// </summary>
+        /// <param name="designations">The designations.</param>
+        /// <returns></returns>
         private List<SelectListItem> ConvertTo(List<Designation> designations)
         {
             var result = new List<SelectListItem>();
@@ -683,6 +770,10 @@ namespace Vserv.Accounting.Web.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Gets the employee filters.
+        /// </summary>
+        /// <returns></returns>
         private List<SelectListItem> GetEmployeeFilters()
         {
             List<SelectListItem> listItems = new List<SelectListItem>
@@ -708,6 +799,11 @@ namespace Vserv.Accounting.Web.Controllers
             return listItems;
         }
 
+        /// <summary>
+        /// Gets the employees.
+        /// </summary>
+        /// <param name="filterChoice">The filter choice.</param>
+        /// <returns></returns>
         private List<Employee> GetEmployees(int? filterChoice)
         {
             if (filterChoice.IsNull())
@@ -724,24 +820,41 @@ namespace Vserv.Accounting.Web.Controllers
             return null;
         }
 
+        /// <summary>
+        /// Converts to employee salary details.
+        /// </summary>
+        /// <param name="paySheets">The pay sheets.</param>
+        /// <returns></returns>
         private List<EmpSalaryDetail> ConvertToEmployeeSalaryDetails(List<EmployeePaySheet> paySheets)
         {
             List<EmpSalaryDetail> employeeSalaryDetails = new List<EmpSalaryDetail>();
 
             foreach (var item in paySheets)
             {
-                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.April.Amount, EmpSalaryDetailId = item.April.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.May.Amount, EmpSalaryDetailId = item.May.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.June.Amount, EmpSalaryDetailId = item.June.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.July.Amount, EmpSalaryDetailId = item.July.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.August.Amount, EmpSalaryDetailId = item.August.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.September.Amount, EmpSalaryDetailId = item.September.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.October.Amount, EmpSalaryDetailId = item.October.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.November.Amount, EmpSalaryDetailId = item.November.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.December.Amount, EmpSalaryDetailId = item.December.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.January.Amount, EmpSalaryDetailId = item.January.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.February.Amount, EmpSalaryDetailId = item.February.EmployeeSalaryDetailId });
-                employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.March.Amount, EmpSalaryDetailId = item.March.EmployeeSalaryDetailId });
+                if (item.April.IsNotNull())
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.April.Amount, EmpSalaryDetailId = item.April.EmployeeSalaryDetailId });
+                if (item.May.IsNotNull())
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.May.Amount, EmpSalaryDetailId = item.May.EmployeeSalaryDetailId });
+                if (item.June.IsNotNull())
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.June.Amount, EmpSalaryDetailId = item.June.EmployeeSalaryDetailId });
+                if (item.July.IsNotNull())
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.July.Amount, EmpSalaryDetailId = item.July.EmployeeSalaryDetailId });
+                if (item.August.IsNotNull())
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.August.Amount, EmpSalaryDetailId = item.August.EmployeeSalaryDetailId });
+                if (item.September.IsNotNull())
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.September.Amount, EmpSalaryDetailId = item.September.EmployeeSalaryDetailId });
+                if (item.October.IsNotNull())
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.October.Amount, EmpSalaryDetailId = item.October.EmployeeSalaryDetailId });
+                if (item.November.IsNotNull())
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.November.Amount, EmpSalaryDetailId = item.November.EmployeeSalaryDetailId });
+                if (item.December.IsNotNull())
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.December.Amount, EmpSalaryDetailId = item.December.EmployeeSalaryDetailId });
+                if (item.January.IsNotNull())
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.January.Amount, EmpSalaryDetailId = item.January.EmployeeSalaryDetailId });
+                if (item.February.IsNotNull())
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.February.Amount, EmpSalaryDetailId = item.February.EmployeeSalaryDetailId });
+                if (item.March.IsNotNull())
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.March.Amount, EmpSalaryDetailId = item.March.EmployeeSalaryDetailId });
             }
 
             return employeeSalaryDetails;

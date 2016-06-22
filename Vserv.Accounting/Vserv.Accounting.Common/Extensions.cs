@@ -5,7 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -20,6 +22,20 @@ namespace Vserv.Accounting.Common
     /// </summary>
     public static class Extensions
     {
+        #region Variables
+
+        // Change the following keys to ensure uniqueness
+        // Must be 8 bytes
+        public static Byte[] KeyBytes = { 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18 };
+
+        // Must be at least 8 characters
+        public static String KeyString = "ABC12345";
+
+        // Name for checksum value (unlikely to be used as arguments by user)
+        public static String ChecksumKey = "__$$";
+
+        #endregion
+
         #region Integer
         /// <summary>
         /// Converts an object to an int.
@@ -145,8 +161,8 @@ namespace Vserv.Accounting.Common
 
             for (int i = 0; i < diffMonths; i++)
             {
-                int cmonth = currentMonthId + i;
-                int cyear = cmonth > 12 ? nextYear : currentYear;
+                var cmonth = currentMonthId + i;
+                var cyear = cmonth > 12 ? nextYear : currentYear;
                 cmonth = cmonth > 12 ? cmonth % 12 : cmonth;
 
                 monthsInfo.Add(cmonth, cyear);
@@ -355,6 +371,102 @@ namespace Vserv.Accounting.Common
         public static String SplitCamelCase(this String str)
         {
             return Regex.Replace(Regex.Replace(str, @"(\P{Ll})(\P{Ll}\p{Ll})", "$1 $2"), @"(\p{Ll})(\P{Ll})", "$1 $2");
+        }
+
+        public static String ToEncryptedString(this String inputString)
+        {
+            return EncryptString(inputString);
+        }
+
+        public static String ToDecryptedString(this String inputString)
+        {
+            return DecryptString(inputString);
+        }
+
+        public static String ToEncryptedString(this int value)
+        {
+            return EncryptString(Convert.ToString(value));
+        }
+
+        public static int ToDecryptedInt(this String value)
+        {
+            var result = DecryptString(value);
+            return String.IsNullOrWhiteSpace(result) ? 0 : Convert.ToInt32(result);
+        }
+
+        /// <summary>
+        /// Converts a Byte array to a String of hex characters
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private static String GetString(Byte[] data)
+        {
+            StringBuilder results = new StringBuilder();
+
+            foreach (Byte b in data)
+            {
+                results.Append(b.ToString("X2"));
+            }
+
+            return results.ToString();
+        }
+
+        /// <summary>
+        /// Converts a String of hex characters to a Byte array
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private static Byte[] GetBytes(String data)
+        {
+            // GetString() encodes the hex-numbers with two digits
+            Byte[] results = new Byte[data.Length / 2];
+
+            for (Int32 count = 0; count < data.Length; count += 2)
+                results[count / 2] = Convert.ToByte(data.Substring(count, 2), 16);
+
+            return results;
+        }
+
+        private static string EncryptString(String inputString)
+        {
+            try
+            {
+                Byte[] keyData = Encoding.UTF8.GetBytes(KeyString.Substring(0, 8));
+                DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+                Byte[] textData = Encoding.UTF8.GetBytes(inputString);
+                MemoryStream ms = new MemoryStream();
+                CryptoStream cs = new CryptoStream(ms,
+                  des.CreateEncryptor(keyData, KeyBytes), CryptoStreamMode.Write);
+                cs.Write(textData, 0, textData.Length);
+                cs.FlushFinalBlock();
+
+                return GetString(ms.ToArray());
+            }
+            catch (Exception)
+            {
+                return String.Empty;
+            }
+        }
+
+        private static string DecryptString(String inputString)
+        {
+            try
+            {
+                Byte[] keyData = Encoding.UTF8.GetBytes(KeyString.Substring(0, 8));
+                DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+                Byte[] textData = GetBytes(inputString);
+                MemoryStream ms = new MemoryStream();
+                CryptoStream cs = new CryptoStream(ms,
+                  des.CreateDecryptor(keyData, KeyBytes), CryptoStreamMode.Write);
+                cs.Write(textData, 0, textData.Length);
+                cs.FlushFinalBlock();
+
+                return Encoding.UTF8.GetString(ms.ToArray());
+            }
+            catch (Exception)
+            {
+                return String.Empty;
+            }
         }
 
         #endregion

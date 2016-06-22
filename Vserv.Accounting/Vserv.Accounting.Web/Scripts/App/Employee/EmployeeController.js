@@ -159,7 +159,7 @@
             var selected = $filter('filter')($scope.foodCoupons, { value: amount });
             return (amount && selected.length) ? selected[0].text : '0';
         };
-
+        
         //---------------- Salary Breakup Ends here -----------
     }
 })();

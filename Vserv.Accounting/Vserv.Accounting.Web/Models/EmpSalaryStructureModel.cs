@@ -12,22 +12,22 @@ namespace Vserv.Accounting.Web.Models
         [DataType(DataType.Currency)]
         public string CTC { get; set; }
 
-        [Display(Name = "Cab Deductions (monthly)")]
+        [Display(Name = "Cab Deductions (Mmonthly)")]
         [MaxLength(20)]
         [DataType(DataType.Currency)]
         public string CabDeductions { get; set; }
 
-        [Display(Name = "Project Incentive (monthly)")]
+        [Display(Name = "Project Incentive (Monthly)")]
         [MaxLength(20)]
         [DataType(DataType.Currency)]
         public string ProjectIncentive { get; set; }
 
-        [Display(Name = "Car Lease (monthly)")]
+        [Display(Name = "Car Lease (Monthly)")]
         [MaxLength(20)]
         [DataType(DataType.Currency)]
         public string CarLease { get; set; }
 
-        [Display(Name = "Food Coupons (monthly)")]
+        [Display(Name = "Food Coupons (Monthly)")]
         [MaxLength(20)]
         [DataType(DataType.Currency)]
         public string FoodCoupons { get; set; }
