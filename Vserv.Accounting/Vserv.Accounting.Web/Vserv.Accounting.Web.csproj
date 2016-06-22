@@ -457,6 +457,7 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\Account\accountController.js" />
     <Content Include="Scripts\App\Account\accountService.js" />
     <Content Include="Scripts\App\Account\securityQuestionsController.js" />
     <Content Include="Scripts\App\app.js" />

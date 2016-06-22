@@ -3,11 +3,6 @@
 @{
     ViewBag.Title = "Sign In";
 }
-@*<div class="row">
-        <div class="col-md-4 col-md-offset-4 text-center">
-            <h4>Sign In</h4>
-        </div>
-    </div>*@
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <div class="panel panel-default">
@@ -22,13 +17,10 @@
                         <fieldset>
                             @Html.ValidationSummary(true)
                             <div class="form-group">
-                                @*@Html.LabelFor(m => m.UserName, new { @class = "control-label" })*@
                                 @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "User name" })
                                 @Html.ValidationMessageFor(m => m.UserName)
                             </div>
                             <div class="form-group">
-                                @*@Html.LabelFor(m => m.Password, new { @class = "control-label" })*@
-                                @*<span class="pull-right">@Html.ActionLink("Forgot Password?", "accounts/recovery", null, new { @class = "btn btn-link" })</span>*@
                                 @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
                                 @Html.ValidationMessageFor(m => m.Password)
                             </div>
@@ -39,7 +31,6 @@
                                 </label>
                             </div>
                             <input type="submit" class="btn btn-primary btn-block" value="Sign In" />
-                            @*<span class="pull-right">@Html.ActionLink("Create account", "register", "account", null, new { @class = "btn btn-link" })</span>*@
                             <span class="pull-right"><a href="accounts/recovery" class="btn btn-link">Forgot Password?</a></span>
                         </fieldset>
                     </form>
