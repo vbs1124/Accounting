@@ -1,15 +1,19 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using Vserv.Accounting.Data.Entity;
-using System.Linq;
-using Vserv.Accounting.Common;
+﻿using System.ComponentModel.Composition;
 using System.Data.SqlClient;
+using Vserv.Accounting.Data.Entity;
+
 namespace Vserv.Accounting.Data
 {
     [Export(typeof(IEmployeeSalaryDetailRepo))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class EmployeeSalaryDetailRepo : DataRepositoryBase<EmpSalaryDetail>, IEmployeeSalaryDetailRepo
     {
+        /// <summary>
+        /// Archives the emp salary detail.
+        /// </summary>
+        /// <param name="empSalaryStructureId">The emp salary structure identifier.</param>
+        /// <param name="updatedByUserName">Name of the updated by user.</param>
+        /// <returns></returns>
         public bool ArchiveEmpSalaryDetail(int empSalaryStructureId, string updatedByUserName)
         {
             using (VservAccountingDBEntities context = new VservAccountingDBEntities())
@@ -25,6 +29,11 @@ namespace Vserv.Accounting.Data
             return true;
         }
 
+        /// <summary>
+        /// Resets the emp salary structure identifier.
+        /// </summary>
+        /// <param name="updatedEmpSalaryStructureId">The updated emp salary structure identifier.</param>
+        /// <returns></returns>
         public int ResetEmpSalaryStructureId(int updatedEmpSalaryStructureId)
         {
             using (VservAccountingDBEntities context = new VservAccountingDBEntities())

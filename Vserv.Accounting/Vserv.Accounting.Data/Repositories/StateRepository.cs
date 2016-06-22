@@ -46,12 +46,7 @@ namespace Vserv.Accounting.Data
             {
                 var city = context.Cities.AsNoTracking().Include("State").FirstOrDefault(condition => condition.Name == cityName);
 
-                if (city.IsNotNull())
-                {
-                    return city.State;
-                }
-
-                return null;
+                return city.IsNotNull() ? city.State : null;
             }
         }
     }

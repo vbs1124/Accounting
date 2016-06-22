@@ -161,8 +161,8 @@ namespace Vserv.Accounting.Common
 
             for (int i = 0; i < diffMonths; i++)
             {
-                int cmonth = currentMonthId + i;
-                int cyear = cmonth > 12 ? nextYear : currentYear;
+                var cmonth = currentMonthId + i;
+                var cyear = cmonth > 12 ? nextYear : currentYear;
                 cmonth = cmonth > 12 ? cmonth % 12 : cmonth;
 
                 monthsInfo.Add(cmonth, cyear);

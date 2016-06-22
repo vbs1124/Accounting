@@ -14,6 +14,11 @@ namespace Vserv.Accounting.Data.Repositories
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class EmpSalaryStructureRepo : DataRepositoryBase<EmpSalaryStructure>, IEmpSalaryStructureRepo
     {
+        /// <summary>
+        /// Saves the emp salary structure.
+        /// </summary>
+        /// <param name="empSalaryStructure">The emp salary structure.</param>
+        /// <returns></returns>
         public EmpSalaryStructure SaveEmpSalaryStructure(EmpSalaryStructure empSalaryStructure)
         {
             using (var context = new VservAccountingDBEntities())
@@ -24,6 +29,11 @@ namespace Vserv.Accounting.Data.Repositories
             }
         }
 
+        /// <summary>
+        /// Gets the employee appraisal history.
+        /// </summary>
+        /// <param name="employeeId">The employee identifier.</param>
+        /// <returns></returns>
         public List<GetEmpAppraisalHistory_Result> GetEmployeeAppraisalHistory(int employeeId)
         {
             using (var context = new VservAccountingDBEntities())
@@ -33,6 +43,11 @@ namespace Vserv.Accounting.Data.Repositories
             }
         }
 
+        /// <summary>
+        /// Gets the current emp salary structure.
+        /// </summary>
+        /// <param name="employeeId">The employee identifier.</param>
+        /// <returns></returns>
         public EmpSalaryStructure GetCurrentEmpSalaryStructure(int employeeId)
         {
             using (var context = new VservAccountingDBEntities())
@@ -42,6 +57,11 @@ namespace Vserv.Accounting.Data.Repositories
             }
         }
 
+        /// <summary>
+        /// Inserts the emp salary structure.
+        /// </summary>
+        /// <param name="empSalaryStructure">The emp salary structure.</param>
+        /// <returns></returns>
         public bool InsertEmpSalaryStructure(EmpSalaryStructure empSalaryStructure)
         {
             using (var context = new VservAccountingDBEntities())
@@ -51,6 +71,13 @@ namespace Vserv.Accounting.Data.Repositories
             }
         }
 
+        /// <summary>
+        /// Saves the emp salary structure.
+        /// </summary>
+        /// <param name="empSalaryStructure">The emp salary structure.</param>
+        /// <param name="employeeSalaryDetails">The employee salary details.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
         public bool SaveEmpSalaryStructure(EmpSalaryStructure empSalaryStructure, List<EmpSalaryDetail> employeeSalaryDetails, string userName)
         {
             using (var context = new VservAccountingDBEntities())
