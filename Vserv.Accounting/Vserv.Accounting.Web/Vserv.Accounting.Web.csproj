@@ -302,7 +302,6 @@
     <Content Include="Content\base\font-awesome.min.css" />
     <Content Include="Content\base\metisMenu.css" />
     <Content Include="Content\base\metisMenu.min.css" />
-    <Content Include="Content\base\morris.css" />
     <Content Include="Content\base\timeline.css" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker.min.css" />
@@ -487,9 +486,6 @@
     <Content Include="Scripts\base\jquery.geocomplete.js" />
     <Content Include="Scripts\base\metisMenu.js" />
     <Content Include="Scripts\base\metisMenu.min.js" />
-    <Content Include="Scripts\base\morris-data.js" />
-    <Content Include="Scripts\base\morris.js" />
-    <Content Include="Scripts\base\morris.min.js" />
     <Content Include="Scripts\base\raphael-min.js" />
     <Content Include="Scripts\base\raphael.js" />
     <Content Include="Scripts\bootbox.js" />

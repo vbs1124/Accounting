@@ -16,13 +16,13 @@
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/DataTables")
     @Styles.Render("~/Content/base")
-    
     <!-- jQuery -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Scripts/toastr")
     @Scripts.Render("~/Scripts/moment")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/scripts/app/angular")
+
     @Scripts.Render("~/scripts/Angular-nvD3")
     <script type="text/javascript">
         // singleton WorkCenter object
@@ -52,6 +52,10 @@
             @RenderBody()
             @Scripts.Render("~/Scripts/base")
             @Scripts.Render("~/Scripts/app")
+            <script src="http://swimlane.github.io/angular-data-table/lib/dataTable.helpers.js"></script>
+            <link rel="stylesheet" href="https://cdn.rawgit.com/Swimlane/angular-data-table/gh-pages/lib/dataTable.css" />
+            <link rel="stylesheet" href="https://cdn.rawgit.com/Swimlane/angular-data-table/gh-pages/lib/material.css" />
+            <link rel="stylesheet" href="http://fontastic.s3.amazonaws.com/Jnf54BZCm7mSjGCxNRbfp3/icons.css" />
             <script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
             @*@Scripts.Render("~/bundles/places")*@
             @Scripts.Render("~/bundles/geocomplete")
