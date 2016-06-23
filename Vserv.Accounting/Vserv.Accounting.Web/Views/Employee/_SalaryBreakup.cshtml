@@ -221,7 +221,7 @@
     </div>
 </fieldset>
 
-<div class="row" ng-show="vm.employeePaySheet.length > 0 && vm.selectedFinancialYear==vm.currentYear">
+<div class="row" ng-if="@(Model.RelievingDate != null)" ng-show="vm.employeePaySheet.length > 0 && vm.selectedFinancialYear==vm.currentYear">
     <div class="col-lg-12">
         <div class="form-group pull-right">
             <button type="submit" class="btn btn-success" ng-click="updateYearlyPaySheet()">Save</button>

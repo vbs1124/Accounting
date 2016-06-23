@@ -1,26 +1,26 @@
 ﻿$(function () {
 
-    $(".mailing-geo-field").geocomplete({
-        details: "#fieldset-mailing-address",
-        detailsAttribute: "data-geo"
-    }).bind("geocode:result", function (event, result) {
-        //console.log(result);
-        var selectedMailingCity = $("#MailingCity").val();
-        if (selectedMailingCity) {
-            $.selectMailingStateByCityName(selectedMailingCity);
-        }
-    });
+    //$(".mailing-geo-field").geocomplete({
+    //    details: "#fieldset-mailing-address",
+    //    detailsAttribute: "data-geo"
+    //}).bind("geocode:result", function (event, result) {
+    //    //console.log(result);
+    //    var selectedMailingCity = $("#MailingCity").val();
+    //    if (selectedMailingCity) {
+    //        $.selectMailingStateByCityName(selectedMailingCity);
+    //    }
+    //});
 
-    $(".permanent-geo-field").geocomplete({
-        details: "#fieldset-permanent-address",
-        detailsAttribute: "data-geo"
-    }).bind("geocode:result", function (event, result) {
-        //console.log(result);
-        var selectedPermanentCity = $("#PermanentCity").val();
-        if (selectedPermanentCity) {
-            $.selectPermanentStateByCityName(selectedPermanentCity);
-        }
-    });
+    //$(".permanent-geo-field").geocomplete({
+    //    details: "#fieldset-permanent-address",
+    //    detailsAttribute: "data-geo"
+    //}).bind("geocode:result", function (event, result) {
+    //    //console.log(result);
+    //    var selectedPermanentCity = $("#PermanentCity").val();
+    //    if (selectedPermanentCity) {
+    //        $.selectPermanentStateByCityName(selectedPermanentCity);
+    //    }
+    //});
 
     //Initialize any date pickers
     $('#dp-birth-date').datepicker({

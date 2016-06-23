@@ -1,5 +1,5 @@
 ﻿@model Vserv.Accounting.Web.Models.EmployeeModel
-<fieldset id="fieldset-permanent-address">
+<fieldset id="fieldset-permanent-address" @(Model.RelievingDate != null ? "disabled" : "")>
     <legend>Basic Information</legend>
     <div class="row">
         <div class="col-lg-4">
@@ -125,7 +125,13 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.DesignationId, new { @class = "control-label" })
-                <a href="#"><i class="fa fa-plus-circle" title="Add Designation" data-toggle="modal" data-target="#modal-add-designation" aria-hidden="true"></i></a>
+                @if (Model.RelievingDate == null)
+                {
+                    <a href="#">
+                        <i class="fa fa-plus-circle" title="Add Designation" data-toggle="modal" data-target="#modal-add-designation" aria-hidden="true"></i>
+                    </a>
+                }
+
                 @Html.DropDownListFor(m => m.DesignationId, new SelectList(ViewBag.Designations, "Value", "Text"), new { @class = "form-control", id = "cmbDesignation" })
                 @Html.ValidationMessageFor(m => m.DesignationId)
             </div>
@@ -186,7 +192,7 @@
         </div>
     </div>
 </fieldset>
-<fieldset id="fieldset-permanent-address">
+<fieldset id="fieldset-permanent-address" @(Model.RelievingDate != null ? "disabled" : "")>
     <legend>Permanent Address</legend>
     <div class="row">
         <div class="col-lg-4">
@@ -222,7 +228,7 @@
         </div>
     </div>
 </fieldset>
-<fieldset id="fieldset-mailing-address">
+<fieldset id="fieldset-mailing-address" @(Model.RelievingDate != null ? "disabled" : "")>
     <legend>
         Mailing Address
     </legend>
@@ -283,8 +289,8 @@
     <div class="col-md-12">
         <div class="form-group pull-right">
             <button type="reset" class="btn btn-info" ng-show="vm.employeeId > 0" ng-click="vm.employeeChangeHistoryModal()">View Change History</button>
-            <button type="reset" class="btn btn-warning">Reset</button>
-            <button type="submit" class="btn btn-success">Save</button>
+            <button type="reset" class="btn btn-warning" ng-if="@(Model.RelievingDate != null)">Reset</button>
+            <button type="submit" class="btn btn-success" ng-if="@(Model.RelievingDate != null)">Save</button>
         </div>
     </div>
 </div>

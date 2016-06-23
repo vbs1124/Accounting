@@ -111,7 +111,46 @@ namespace Vserv.Accounting.Business.Managers
             return ExecuteFaultHandledOperation(() =>
             {
                 var employeeRepository = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+
+                if (!employee.IsActive && employee.RelievingDate.IsNotNull() && employee.RelievingDate.HasValue)
+                {
+                    //Trigger Full and Final Process for relieved Employee.
+                    PerformEmployeeFNF(employee);
+                }
+
                 return employeeRepository.EditEmployee(employee);
+            });
+        }
+
+        private bool PerformEmployeeFNF(Employee employee)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
+                IEmployeeSalaryDetailRepo employeeSalaryDetailRepo = DataRepositoryFactory.GetDataRepository<IEmployeeSalaryDetailRepo>();
+                EmpSalaryStructure dbEmpSalaryStructure = empSalaryStructureRepo.GetCurrentEmpSalaryStructure(employee.EmployeeId);
+
+                // Archive existing Breakup.
+                employeeSalaryDetailRepo.ArchiveEmpSalaryDetail(dbEmpSalaryStructure.EmpSalaryStructureId, employee.UpdatedBy);
+
+                foreach (var empSalaryDetail in dbEmpSalaryStructure.EmpSalaryDetails)
+                {
+                    if (new DateTime(empSalaryDetail.Year.Value, empSalaryDetail.MonthId, 1) > employee.RelievingDate.Value)
+                    {
+                        empSalaryDetail.Amount = null; //Reset Amount for all the future Months.
+                        employeeSalaryDetailRepo.Update(empSalaryDetail, employee.UpdatedBy);
+                    }
+                    else if (empSalaryDetail.MonthId.Equals(employee.RelievingDate.Value.Month) && empSalaryDetail.Year.Equals(employee.RelievingDate.Value.Year))
+                    {
+                        // Go For Pro Data based Calculations.
+                        empSalaryDetail.Amount = empSalaryDetail.Amount.IsNotNull() && empSalaryDetail.Amount.HasValue ? Math.Round(empSalaryDetail.Amount.Value * employee.RelievingDate.Value.Day / 30, 0) : 0M;
+                        employeeSalaryDetailRepo.Update(empSalaryDetail, employee.UpdatedBy);
+                    }
+                }
+
+                dbEmpSalaryStructure.EffectiveTo = employee.RelievingDate.Value; //Update the EffectiveTo to the RelievingDate of the employee
+                empSalaryStructureRepo.Update(dbEmpSalaryStructure, employee.UpdatedBy);
+                return true;
             });
         }
 
@@ -563,16 +602,26 @@ namespace Vserv.Accounting.Business.Managers
         {
             return ExecuteFaultHandledOperation(() =>
             {
-                IEmployeeSalaryDetailRepo repo = DataRepositoryFactory.GetDataRepository<IEmployeeSalaryDetailRepo>();
-                foreach (var item in paySheet)
+                IEmployeeSalaryDetailRepo employeeSalaryDetailRepo = DataRepositoryFactory.GetDataRepository<IEmployeeSalaryDetailRepo>();
+                IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
+
+                if (paySheet.IsNotNull() && paySheet.Any())
                 {
-                    var existingEmployeeSalaryDetail = repo.Get(item.EmpSalaryDetailId);
-                    if (existingEmployeeSalaryDetail.IsNotNull())
+                    EmpSalaryStructure dbEmpSalaryStructure = empSalaryStructureRepo.Get(paySheet.FirstOrDefault().EmpSalaryStructureId);
+
+                    // Archive existing Breakup.
+                    employeeSalaryDetailRepo.ArchiveEmpSalaryDetail(dbEmpSalaryStructure.EmpSalaryStructureId, userName);
+
+                    foreach (var item in paySheet)
                     {
-                        existingEmployeeSalaryDetail.Amount = item.Amount;
-                        existingEmployeeSalaryDetail.UpdatedBy = userName;
-                        existingEmployeeSalaryDetail.UpdatedDate = DateTime.Now;
-                        repo.Update(existingEmployeeSalaryDetail, userName);
+                        var existingEmployeeSalaryDetail = employeeSalaryDetailRepo.Get(item.EmpSalaryDetailId);
+                        if (existingEmployeeSalaryDetail.IsNotNull())
+                        {
+                            existingEmployeeSalaryDetail.Amount = item.Amount;
+                            existingEmployeeSalaryDetail.UpdatedBy = userName;
+                            existingEmployeeSalaryDetail.UpdatedDate = DateTime.Now;
+                            employeeSalaryDetailRepo.Update(existingEmployeeSalaryDetail, userName);
+                        }
                     }
                 }
 
@@ -601,7 +650,7 @@ namespace Vserv.Accounting.Business.Managers
 
             foreach (var period in newFinancialPeriods)
             {
-                // Appraisal Month: Build Salary Component's informaiton on Pro data basis.
+                // Appraisal Month: Build Salary Component's information on Pro data basis.
                 if (period.Month.Equals(empSalaryStructure.EffectiveFrom.Month) && period.Year.Equals(empSalaryStructure.EffectiveFrom.Year))
                 {
                     updatedEmpSalaryDetail.AddRange(CalculateSalaryComponentForAppraisalMonth(empSalaryStructure));
@@ -630,9 +679,9 @@ namespace Vserv.Accounting.Business.Managers
 
                 // Get all the existing Salary Details Which has to be updated.
                 var empSalaryDetailsToUpdate = (from esd in existingtEmpSalaryStructure.EmpSalaryDetails
-                    let year = esd.Year
-                    where year != null
-                    join fp in matchingPeriods on new { Month = esd.MonthId, Year = year.Value } equals new {fp.Month, fp.Year }
+                                                let year = esd.Year
+                                                where year != null
+                                                join fp in matchingPeriods on new { Month = esd.MonthId, Year = year.Value } equals new { fp.Month, fp.Year }
                                                 select esd).ToList();
 
 
@@ -654,7 +703,7 @@ namespace Vserv.Accounting.Business.Managers
             IEnumerable<FinancialPeriod> newPeriods = newFinancialPeriods.Except(matchingPeriods); // These records has to be inserted.
 
             // Filter the new records which has to be inserted.
-            List<EmpSalaryDetail> empSalaryDetailsToInsert = (updatedEmpSalaryDetail.Join(newPeriods, esd => esd.Year != null ? new {Month = esd.MonthId, Year = esd.Year.Value} : null, fp => new {fp.Month, fp.Year}, (esd, fp) => esd)).ToList();
+            List<EmpSalaryDetail> empSalaryDetailsToInsert = (updatedEmpSalaryDetail.Join(newPeriods, esd => esd.Year != null ? new { Month = esd.MonthId, Year = esd.Year.Value } : null, fp => new { fp.Month, fp.Year }, (esd, fp) => esd)).ToList();
 
             if (empSalaryDetailsToInsert.IsNotNull() && empSalaryDetailsToInsert.Any())
             {
@@ -944,13 +993,13 @@ namespace Vserv.Accounting.Business.Managers
                 case SalaryComponentEnum.ProjectIncentive:
                     return GetSalaryComponentAmountByDays(empSalaryStructure.MonthlyProjectIncentive, numberOfDays);
                 case SalaryComponentEnum.CarLease:
-                    return empSalaryStructure.MonthlyCarLease;
+                    return GetSalaryComponentAmountByDays(empSalaryStructure.MonthlyCarLease, numberOfDays);
                 case SalaryComponentEnum.LTC:
                     return 0;
                 case SalaryComponentEnum.PF:
-                    return 12 * basic / 100;
+                    return GetSalaryComponentAmountByDays(12 * basic / 100, numberOfDays); // TBD on the rules.
                 case SalaryComponentEnum.Mediclaim:
-                    return GetSalaryComponentAmountByDays(GetCalculatedMediclaimByMonth(ctcMonthly, empSalaryStructure.EffectiveFrom.Month), numberOfDays);
+                    return GetSalaryComponentAmountByDays(GetCalculatedMediclaimByMonth(ctcMonthly, empSalaryStructure.EffectiveFrom.Month), numberOfDays); // TBD on the rules.
                 case SalaryComponentEnum.Gratuity:
                     return GetSalaryComponentAmountByDays((((basic * 15) / 26) / 12), numberOfDays);
                 default:
@@ -976,7 +1025,7 @@ namespace Vserv.Accounting.Business.Managers
         /// <returns></returns>
         private decimal? GetPerformanceIncentive(EmpSalaryStructure empSalaryStructure)
         {
-            // 5 % of CTC paid Anually or (25% of increment in June and 25% in December)
+            // 5 % of CTC paid Annually or (25% of increment in June and 25% in December)
             return 5 * empSalaryStructure.CTC / 12 / 100;
         }
 

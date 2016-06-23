@@ -52,7 +52,7 @@ namespace Vserv.Accounting.Data.Repositories
         {
             using (var context = new VservAccountingDBEntities())
             {
-                var result = context.EmpSalaryStructures.Include("EmpSalaryDetails").OrderByDescending(order => order.CreatedDate).FirstOrDefault(structure => structure.EmployeeId == employeeId);
+                var result = context.EmpSalaryStructures.Include("EmpSalaryDetails.SalaryComponent").OrderByDescending(order => order.CreatedDate).FirstOrDefault(structure => structure.EmployeeId == employeeId);
                 return result;
             }
         }
