@@ -59,6 +59,9 @@
             values: vm.empAppraisalGraphValues
         }];
 
+        vm.isEditableSalaryBreakup = function () {
+            return vm.employeePaySheet.length > 0 && $.vbsParseFloat(vm.selectedFinancialYear) >= $.vbsParseFloat(vm.currentYear) && (vm.relievingDate == 'Invalid Date' || vm.relievingDate == null);
+        }
         function addNewSalaryStructure() {
             $modal.open({
                 template: '<add-appraisal />'

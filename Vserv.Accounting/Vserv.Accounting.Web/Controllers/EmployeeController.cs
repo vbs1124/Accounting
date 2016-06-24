@@ -839,29 +839,29 @@ namespace Vserv.Accounting.Web.Controllers
             foreach (var item in paySheets)
             {
                 if (item.April.IsNotNull())
-                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.April.Amount, EmpSalaryDetailId = item.April.EmployeeSalaryDetailId });
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { EmpSalaryStructureId = item.EmpSalaryStructureId.Value, Amount = item.April.Amount, EmpSalaryDetailId = item.April.EmployeeSalaryDetailId });
                 if (item.May.IsNotNull())
-                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.May.Amount, EmpSalaryDetailId = item.May.EmployeeSalaryDetailId });
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { EmpSalaryStructureId = item.EmpSalaryStructureId.Value, Amount = item.May.Amount, EmpSalaryDetailId = item.May.EmployeeSalaryDetailId });
                 if (item.June.IsNotNull())
-                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.June.Amount, EmpSalaryDetailId = item.June.EmployeeSalaryDetailId });
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { EmpSalaryStructureId = item.EmpSalaryStructureId.Value, Amount = item.June.Amount, EmpSalaryDetailId = item.June.EmployeeSalaryDetailId });
                 if (item.July.IsNotNull())
-                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.July.Amount, EmpSalaryDetailId = item.July.EmployeeSalaryDetailId });
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { EmpSalaryStructureId = item.EmpSalaryStructureId.Value, Amount = item.July.Amount, EmpSalaryDetailId = item.July.EmployeeSalaryDetailId });
                 if (item.August.IsNotNull())
-                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.August.Amount, EmpSalaryDetailId = item.August.EmployeeSalaryDetailId });
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { EmpSalaryStructureId = item.EmpSalaryStructureId.Value, Amount = item.August.Amount, EmpSalaryDetailId = item.August.EmployeeSalaryDetailId });
                 if (item.September.IsNotNull())
-                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.September.Amount, EmpSalaryDetailId = item.September.EmployeeSalaryDetailId });
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { EmpSalaryStructureId = item.EmpSalaryStructureId.Value, Amount = item.September.Amount, EmpSalaryDetailId = item.September.EmployeeSalaryDetailId });
                 if (item.October.IsNotNull())
-                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.October.Amount, EmpSalaryDetailId = item.October.EmployeeSalaryDetailId });
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { EmpSalaryStructureId = item.EmpSalaryStructureId.Value, Amount = item.October.Amount, EmpSalaryDetailId = item.October.EmployeeSalaryDetailId });
                 if (item.November.IsNotNull())
-                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.November.Amount, EmpSalaryDetailId = item.November.EmployeeSalaryDetailId });
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { EmpSalaryStructureId = item.EmpSalaryStructureId.Value, Amount = item.November.Amount, EmpSalaryDetailId = item.November.EmployeeSalaryDetailId });
                 if (item.December.IsNotNull())
-                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.December.Amount, EmpSalaryDetailId = item.December.EmployeeSalaryDetailId });
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { EmpSalaryStructureId = item.EmpSalaryStructureId.Value, Amount = item.December.Amount, EmpSalaryDetailId = item.December.EmployeeSalaryDetailId });
                 if (item.January.IsNotNull())
-                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.January.Amount, EmpSalaryDetailId = item.January.EmployeeSalaryDetailId });
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { EmpSalaryStructureId = item.EmpSalaryStructureId.Value, Amount = item.January.Amount, EmpSalaryDetailId = item.January.EmployeeSalaryDetailId });
                 if (item.February.IsNotNull())
-                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.February.Amount, EmpSalaryDetailId = item.February.EmployeeSalaryDetailId });
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { EmpSalaryStructureId = item.EmpSalaryStructureId.Value, Amount = item.February.Amount, EmpSalaryDetailId = item.February.EmployeeSalaryDetailId });
                 if (item.March.IsNotNull())
-                    employeeSalaryDetails.Add(new EmpSalaryDetail { Amount = item.March.Amount, EmpSalaryDetailId = item.March.EmployeeSalaryDetailId });
+                    employeeSalaryDetails.Add(new EmpSalaryDetail { EmpSalaryStructureId = item.EmpSalaryStructureId.Value, Amount = item.March.Amount, EmpSalaryDetailId = item.March.EmployeeSalaryDetailId });
             }
 
             return employeeSalaryDetails;
