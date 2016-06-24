@@ -375,6 +375,12 @@ namespace Vserv.Accounting.Web.Controllers
             return Json("success", JsonRequestBehavior.AllowGet);
         }
 
+        [Route("employee/salary/{empSalaryStructureId}/changeHistory")]
+        public JsonResult GetSalaryStructureChangeHistory(int empSalaryStructureId)
+        {
+            return Json(EmployeeManager.GetSalaryStructureChangeHistory(empSalaryStructureId), JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region dropdownlist

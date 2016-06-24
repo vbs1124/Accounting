@@ -7,8 +7,10 @@
         var vm = this;
 
         vm.employeeId = $("#EmployeeId").val();
+        vm.empSalaryStructureId = 186;
         vm.addNewSalaryStructure = addNewSalaryStructure;
         vm.employeeChangeHistoryModal = employeeChangeHistoryModal;
+        vm.empSalaryStructureChangeHistoryModal = empSalaryStructureChangeHistoryModal;
         vm.empSalaryStructureModel = employeeService.empSalaryStructureModel;
         vm.relievingDate = new Date($("#RelievingDate").val());
         vm.joiningDate = new Date($("#JoiningDate").val());
@@ -66,6 +68,13 @@
         function employeeChangeHistoryModal() {
             $modal.open({
                 template: '<emp-history />'
+            });
+        }
+
+        function empSalaryStructureChangeHistoryModal() {
+            $modal.open({
+                template: '<emp-salary-structure-history empSalaryStructureId="empSalaryStructureId" />',
+                scope: angular.extend($scope.$new(true), { empSalaryStructureId: vm.empSalaryStructureId })
             });
         }
 
@@ -159,7 +168,10 @@
             var selected = $filter('filter')($scope.foodCoupons, { value: amount });
             return (amount && selected.length) ? selected[0].text : '0';
         };
-        
+
+        $scope.vbsParseFloat = function (value) {
+            return $.vbsParseFloat(value);
+        }
         //---------------- Salary Breakup Ends here -----------
     }
 })();

@@ -36,7 +36,7 @@
                             <th>Total</th>
                         </tr>
                     </thead>
-                    <tbody ng-repeat="item in vm.employeePaySheet">
+                    <tbody ng-repeat="item in vm.employeePaySheet" ng-switch="item.SCCode" ng-if="vbsParseFloat(vm.selectedFinancialYear) >= vbsParseFloat(vm.currentYear)">
                         <tr class="warning" ng-show="item.SCCode=='SCMEDC'">
                             <td colspan="14">
                                 <strong>Reimbursments:</strong>
@@ -47,59 +47,8 @@
                                 &nbsp;
                             </td>
                         </tr>
-                        <tr ng-hide="item.SCCode=='SCSPCL' || item.SCCode=='SCFCPN'">
-                            <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.April.Amount">{{ item.April.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.April.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.May.Amount">{{ item.May.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.May.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.June.Amount">{{ item.June.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.June.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.July.Amount">{{ item.July.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.July.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.August.Amount">{{ item.August.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.August.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.September.Amount">{{ item.September.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.September.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.October.Amount">{{ item.October.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.October.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.November.Amount">{{ item.November.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.November.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.December.Amount">{{ item.December.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.December.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.January.Amount">{{ item.January.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.January.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.February.Amount">{{ item.February.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.February.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.March.Amount">{{ item.March.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.March.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-bold text-right"><span ng-bind="getCurrentComponentTotal(item) | currency:'&#8377;':0"></span></td>
-                        </tr>
-                        <tr ng-show="item.SCCode=='SCFCPN'">
+                        <!-- Food Coupon fields-->
+                        <tr ng-switch-when="SCFCPN">
                             <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
                             <td class="text-right">
                                 <a href="#" editable-select="item.April.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
@@ -163,8 +112,10 @@
                             </td>
                             <td class="text-bold text-right"><span ng-bind="getCurrentComponentTotal(item) | currency:'&#8377;':0"></span></td>
                         </tr>
-                        <tr ng-show="item.SCCode=='SCSPCL'">
-                            <td class="text-right" class="text-right"><strong>{{item.SCDescription}}</strong></td>
+                        <!-- /Food Coupon fields-->
+                        <!-- Special Allowance fields-->
+                        <tr ng-switch-when="SCSPCL">
+                            <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
                             <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'April' | currency:'&#8377;':0}}</td>
                             <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'May' | currency:'&#8377;':0}}</td>
                             <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'June' | currency:'&#8377;':0}}</td>
@@ -179,6 +130,115 @@
                             <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'March' | currency:'&#8377;':0}}</td>
                             <td class="text-bold text-right">{{getCurrentComponentTotal(item) | currency:'&#8377;':0}}</td>
                         </tr>
+                        <!-- /Special Allowance fields-->
+                        <!-- Default fields-->
+                        <tr ng-switch-default>
+                            <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
+                            <td class="text-right">
+                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.April.Amount">{{ item.April.Amount || '0' | currency:'&#8377;':0}}</a>
+                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.April.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.May.Amount">{{ item.May.Amount || '0' | currency:'&#8377;':0}}</a>
+                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.May.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.June.Amount">{{ item.June.Amount || '0' | currency:'&#8377;':0}}</a>
+                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.June.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.July.Amount">{{ item.July.Amount || '0' | currency:'&#8377;':0}}</a>
+                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.July.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.August.Amount">{{ item.August.Amount || '0' | currency:'&#8377;':0}}</a>
+                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.August.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.September.Amount">{{ item.September.Amount || '0' | currency:'&#8377;':0}}</a>
+                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.September.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.October.Amount">{{ item.October.Amount || '0' | currency:'&#8377;':0}}</a>
+                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.October.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.November.Amount">{{ item.November.Amount || '0' | currency:'&#8377;':0}}</a>
+                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.November.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.December.Amount">{{ item.December.Amount || '0' | currency:'&#8377;':0}}</a>
+                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.December.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.January.Amount">{{ item.January.Amount || '0' | currency:'&#8377;':0}}</a>
+                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.January.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.February.Amount">{{ item.February.Amount || '0' | currency:'&#8377;':0}}</a>
+                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.February.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.March.Amount">{{ item.March.Amount || '0' | currency:'&#8377;':0}}</a>
+                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.March.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-bold text-right"><span ng-bind="getCurrentComponentTotal(item) | currency:'&#8377;':0"></span></td>
+                        </tr>
+                        <!-- /Default fields-->
+                    </tbody>
+                    <tbody ng-repeat="item in vm.employeePaySheet" ng-show="vbsParseFloat(vm.selectedFinancialYear) < vbsParseFloat(vm.currentYear)">
+                        <tr class="warning" ng-show="item.SCCode=='SCMEDC'">
+                            <td colspan="14">
+                                <strong>Reimbursments:</strong>
+                            </td>
+                        </tr>
+                        <tr class="active" ng-show="item.SCCode=='SCEPFO'">
+                            <td colspan="14">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <!-- Show all fields as no editable-->
+                        <tr>
+                            <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
+                            <td class="text-right">
+                                <span ng-bind="item.April.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <span ng-bind="item.May.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <span ng-bind="item.June.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <span ng-bind="item.July.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <span ng-bind="item.August.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <span ng-bind="item.September.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <span ng-bind="item.October.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <span ng-bind="item.November.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <span ng-bind="item.December.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <span ng-bind="item.January.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <span ng-bind="item.February.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right">
+                                <span ng-bind="item.March.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-bold text-right"><span ng-bind="getCurrentComponentTotal(item) | currency:'&#8377;':0"></span></td>
+                        </tr>
+                        <!-- /Show all fields as no editable-->
                     </tbody>
                     <tfoot>
                         <tr class="success">
@@ -224,6 +284,7 @@
 <div class="row" ng-if="@(Model.RelievingDate != null)" ng-show="vm.employeePaySheet.length > 0 && vm.selectedFinancialYear==vm.currentYear">
     <div class="col-lg-12">
         <div class="form-group pull-right">
+            <button type="button" class="btn btn-info" ng-click="vm.empSalaryStructureChangeHistoryModal()">View Change History</button>
             <button type="submit" class="btn btn-success" ng-click="updateYearlyPaySheet()">Save</button>
         </div>
     </div>

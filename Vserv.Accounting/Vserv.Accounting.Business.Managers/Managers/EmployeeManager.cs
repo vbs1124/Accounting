@@ -629,6 +629,19 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
+        /// <summary>
+        /// Fetch the change history against any Salary Structure.
+        /// </summary>
+        /// <param name="empSalaryStructureId"></param>
+        /// <returns></returns>
+        public List<EmpSalaryDetailArchive> GetSalaryStructureChangeHistory(int empSalaryStructureId)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                IEmployeeSalaryDetailRepo employeeSalaryDetailRepo = DataRepositoryFactory.GetDataRepository<IEmployeeSalaryDetailRepo>();
+                return employeeSalaryDetailRepo.GetSalaryStructureChangeHistory(empSalaryStructureId);
+            });
+        }
         #endregion
 
         #endregion
