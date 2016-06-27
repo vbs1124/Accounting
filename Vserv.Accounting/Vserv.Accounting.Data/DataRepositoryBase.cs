@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
@@ -56,6 +57,12 @@ namespace Vserv.Accounting.Data
             //  SetAuditValues(entityContext, entity, user);
         }
 
+        protected override void AddOrUpdateEntity(VservAccountingDBEntities entityContext, T entity, string user)
+        {
+            Dbset = entityContext.Set<T>();
+            Dbset.AddOrUpdate(entity);
+        }
+
         /// <summary>
         /// Gets the entities.
         /// </summary>
@@ -103,7 +110,7 @@ namespace Vserv.Accounting.Data
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 if (query != null)
-                    query = includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+                    query = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
             }
             return orderBy != null ? orderBy(query).Skip(skip).Take(take).ToArray().ToList() : query.OrderBy(a => 1).Skip(skip).Take(take).ToArray().ToList();
         }
@@ -130,7 +137,7 @@ namespace Vserv.Accounting.Data
             count = query.Count();
             if (!string.IsNullOrEmpty(includeProperties))
             {
-                query = includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+                query = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
             }
             if (!string.IsNullOrWhiteSpace(orderBy) && orderby != null && orderby.Length > 0)
             {
@@ -171,7 +178,7 @@ namespace Vserv.Accounting.Data
             count = query.Count();
             if (!string.IsNullOrEmpty(includeProperties))
             {
-                query = includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+                query = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
             }
             if (string.IsNullOrWhiteSpace(orderBy) || @orderby == null || @orderby.Length <= 0)
                 return query.OrderBy(a => 1).ToArray().ToList();
@@ -204,7 +211,7 @@ namespace Vserv.Accounting.Data
             DbQuery<T> query = context.Set<T>();
             if (!string.IsNullOrEmpty(includeProperties))
             {
-                query = includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+                query = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
             }
             return query.Count(key) > 0 ? query.First(key) : null;
         }

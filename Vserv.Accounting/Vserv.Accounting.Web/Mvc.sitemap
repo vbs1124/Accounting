@@ -7,7 +7,7 @@
     <mvcSiteMapNode title="Dashboard" controller="dashboard" action="index"/>
     <mvcSiteMapNode title="Employees" controller="employee" action="list">
       <mvcSiteMapNode title="Add Employee" controller="employee" action="add"/>
-      <mvcSiteMapNode title="Edit Employee" controller="employee" action="edit" >
+      <mvcSiteMapNode title="Edit Employee" controller="employee" action="edit" preservedRouteParameters="id" >
       </mvcSiteMapNode>
       <mvcSiteMapNode title="Compare Employees" controller="employee" action="EmployeeCompareResult"/>
     </mvcSiteMapNode>

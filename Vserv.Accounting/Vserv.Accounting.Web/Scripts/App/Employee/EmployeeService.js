@@ -8,6 +8,7 @@
         var employeeAppraisalHistory = [];
         var employeeChangeHistory = [];
         var empAppraisalGraphValues = [];
+        var empSalaryStructureHistory = [];
         var investmentDeclarationResult = {};
         var investmentCatogories = [];
 
@@ -27,6 +28,9 @@
 
             loadEmployeeChangeHistory: loadEmployeeChangeHistory,
             employeeChangeHistory: employeeChangeHistory,
+
+            loadEmpSalaryStructureHistory: loadEmpSalaryStructureHistory,
+            empSalaryStructureHistory: empSalaryStructureHistory
 
             // Investment Declaration.
             loadInvestmentByEmployeeId: loadInvestmentByEmployeeId,
@@ -49,7 +53,7 @@
 
                     $.map(resp.result, function (val, i) {
                         val.CurrentEffectiveFrom = moment(val.CurrentEffectiveFrom).format("DD/MM/YYYY");
-                        graphValues.push({ label: val.CurrentEffectiveFrom, value: val.PercentageGrowth });
+                        graphValues.push({ label: val.CurrentEffectiveFrom, value: val.CurrentCTC });
                     });
 
                     if (resp.result.length > 0) {
@@ -122,6 +126,27 @@
                     $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
                 }
             });
+        }
+
+        function loadEmpSalaryStructureHistory(empSalaryStructureId) {
+            empSalaryStructureId = 186;
+            if (empSalaryStructureId) {
+                serviceHandler.executePostService("/employee/salary/" + empSalaryStructureId + "/changeHistory").then(function (resp) {
+                    if (resp.businessException == null) {
+                        if (resp.result.length > 0) {
+                            empSalaryStructureHistory.removeAll();// clear all the existing items.
+                            $.map(resp.result, function (val, i) {
+                                val.UpdatedDate = moment(val.UpdatedDate).format("DD/MM/YYYY");
+                            });
+
+                            empSalaryStructureHistory.addRange(resp.result);
+                        }
+                    }
+                    else {
+                        $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                    }
+                });
+            }
         }
 
         // Investment Declaration.

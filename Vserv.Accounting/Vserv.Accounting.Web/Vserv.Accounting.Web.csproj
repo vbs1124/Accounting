@@ -303,7 +303,6 @@
     <Content Include="Content\base\font-awesome.min.css" />
     <Content Include="Content\base\metisMenu.css" />
     <Content Include="Content\base\metisMenu.min.css" />
-    <Content Include="Content\base\morris.css" />
     <Content Include="Content\base\timeline.css" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker.min.css" />
@@ -458,6 +457,7 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\Account\accountController.js" />
     <Content Include="Scripts\App\Account\accountService.js" />
     <Content Include="Scripts\App\Account\securityQuestionsController.js" />
     <Content Include="Scripts\App\app.js" />
@@ -466,6 +466,7 @@
     <Content Include="Scripts\App\Designation\designationController.js" />
     <Content Include="Scripts\App\Designation\designationService.js" />
     <Content Include="Scripts\App\Employee\addAppraisalDirective.js" />
+    <Content Include="Scripts\App\Employee\empSalaryStructureHistoryDirective.js" />
     <Content Include="Scripts\App\Employee\empHistoryDirective.js" />
     <Content Include="Scripts\App\Employee\employeeController.js" />
     <Content Include="Scripts\App\Employee\employeeService.js" />
@@ -487,9 +488,6 @@
     <Content Include="Scripts\base\jquery.geocomplete.js" />
     <Content Include="Scripts\base\metisMenu.js" />
     <Content Include="Scripts\base\metisMenu.min.js" />
-    <Content Include="Scripts\base\morris-data.js" />
-    <Content Include="Scripts\base\morris.js" />
-    <Content Include="Scripts\base\morris.min.js" />
     <Content Include="Scripts\base\raphael-min.js" />
     <Content Include="Scripts\base\raphael.js" />
     <Content Include="Scripts\bootbox.js" />
@@ -616,6 +614,7 @@
     <Content Include="Scripts\d3\d3.min.js" />
     <Content Include="Scripts\d3\LICENSE" />
     <Content Include="nvd3.license.md" />
+    <Content Include="Scripts\App\Employee\templates\empSalaryStructureHistory.tmpl.cshtml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
