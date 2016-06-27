@@ -8,6 +8,8 @@
         var employeeAppraisalHistory = [];
         var employeeChangeHistory = [];
         var empAppraisalGraphValues = [];
+        var investmentDeclarationResult = {};
+        var investmentCatogories = [];
 
         var svc = {
             addEmployeeSalaryDetail: addEmployeeSalaryDetail,
@@ -25,6 +27,13 @@
 
             loadEmployeeChangeHistory: loadEmployeeChangeHistory,
             employeeChangeHistory: employeeChangeHistory,
+
+            // Investment Declaration.
+            loadInvestmentByEmployeeId: loadInvestmentByEmployeeId,
+            investmentDeclarationResult: investmentDeclarationResult,
+
+            loadInvestmentCatogories: loadInvestmentCatogories,
+            investmentCatogories: investmentCatogories
         };
 
         return svc;
@@ -53,7 +62,6 @@
                 }
             });
         }
-
 
         function loadEmployeeAppraisalHistoryForGraph(employeeId) {
             return serviceHandler.executePostService('/Employee/GetEmployeeAppraisalHistory?employeeId=' + employeeId);
@@ -114,6 +122,35 @@
                     $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
                 }
             });
+        }
+
+        // Investment Declaration.
+        function loadInvestmentByEmployeeId(employeeId) {
+            serviceHandler.executePostService('/Employee/GetInvestmentByEmployeeId?employeeId=' + employeeId).then(function (resp) {
+                if (resp.businessException == null) {
+                    if (resp.result) {
+                        angular.extend(investmentDeclarationResult, resp.result);
+                    }
+                }
+                else {
+                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                }
+            });
+        }
+
+        function loadInvestmentCatogories(financialYear) {
+            if (financialYear) {
+                serviceHandler.executePostService('/Employee/GetInvestmentCatogories?financialYear=' + financialYear).then(function (resp) {
+                    if (resp.businessException == null) {
+                        if (resp.result) {
+                            angular.extend(investmentCatogories, resp.result);
+                        }
+                    }
+                    else {
+                        $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                    }
+                });
+            }
         }
     }
 })();

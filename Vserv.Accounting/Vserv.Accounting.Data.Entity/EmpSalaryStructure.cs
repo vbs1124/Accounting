@@ -16,6 +16,7 @@ namespace Vserv.Accounting.Data.Entity
     {
         public EmpSalaryStructure()
         {
+            this.EmployeeSalaryDetails = new HashSet<EmployeeSalaryDetail>();
             this.EmpSalaryDetails = new HashSet<EmpSalaryDetail>();
             this.EmpSalaryDetailArchives = new HashSet<EmpSalaryDetailArchive>();
             this.EmpSalaryStructure1 = new HashSet<EmpSalaryStructure>();
@@ -38,6 +39,7 @@ namespace Vserv.Accounting.Data.Entity
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
         public virtual Employee Employee { get; set; }
+        public virtual ICollection<EmployeeSalaryDetail> EmployeeSalaryDetails { get; set; }
         public virtual ICollection<EmpSalaryDetail> EmpSalaryDetails { get; set; }
         public virtual ICollection<EmpSalaryDetailArchive> EmpSalaryDetailArchives { get; set; }
         public virtual ICollection<EmpSalaryStructure> EmpSalaryStructure1 { get; set; }

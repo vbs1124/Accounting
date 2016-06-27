@@ -82,6 +82,9 @@
     <Compile Include="EmployeeArchive.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeSalaryDetail.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EmpSalaryDetail.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
@@ -107,6 +110,15 @@
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GetEmployeeSalaryDetail_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InvestmentCategory.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InvestmentSubCategory.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InvtDeclarationComponent.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="LookupFrequency.cs">

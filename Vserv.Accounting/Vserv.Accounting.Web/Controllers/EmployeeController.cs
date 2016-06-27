@@ -316,6 +316,33 @@ namespace Vserv.Accounting.Web.Controllers
 
         #endregion
 
+
+        #region Investments
+
+        public JsonResult GetInvestmentByEmployeeId(int employeeId)
+        {
+            InvestmentDeclarationModel investmentDeclarationModel = new InvestmentDeclarationModel
+            {
+                April = 20000,
+            };
+            return Json(investmentDeclarationModel, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetInvestmentCatogories(int financialYear)
+        {
+            List<InvestmentCategory> investmentCatogories = EmployeeManager.GetInvestmentCatogories(financialYear);// This will have the values frm DB
+            foreach (var item in investmentCatogories)
+            {
+                item.InvestmentSubCategories.ForEach(subCat => subCat.InvestmentCategory = null);
+            }
+
+            return Json(investmentCatogories, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        #endregion
+
         #region dropdownlist
 
         /// <summary>

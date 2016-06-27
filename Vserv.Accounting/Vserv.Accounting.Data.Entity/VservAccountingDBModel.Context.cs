@@ -36,6 +36,7 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<Designation> Designations { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeArchive> EmployeeArchives { get; set; }
+        public virtual DbSet<EmployeeSalaryDetail> EmployeeSalaryDetails { get; set; }
         public virtual DbSet<EmpSalaryDetail> EmpSalaryDetails { get; set; }
         public virtual DbSet<EmpSalaryDetailArchive> EmpSalaryDetailArchives { get; set; }
         public virtual DbSet<EmpSalaryStructure> EmpSalaryStructures { get; set; }
@@ -43,6 +44,9 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<EPFOffice> EPFOffices { get; set; }
         public virtual DbSet<Feature> Features { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
+        public virtual DbSet<InvestmentCategory> InvestmentCategories { get; set; }
+        public virtual DbSet<InvestmentSubCategory> InvestmentSubCategories { get; set; }
+        public virtual DbSet<InvtDeclarationComponent> InvtDeclarationComponents { get; set; }
         public virtual DbSet<LookupFrequency> LookupFrequencies { get; set; }
         public virtual DbSet<LookupMonth> LookupMonths { get; set; }
         public virtual DbSet<Membership> Memberships { get; set; }
@@ -320,17 +324,17 @@ namespace Vserv.Accounting.Data.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmpAppraisalHistory_Result>("GetEmpAppraisalHistory", employeeIdParameter);
         }
     
-        public virtual ObjectResult<ArchiveEmpSalaryDetail_Result> ArchiveEmpSalaryDetail(Nullable<int> empSalaryDetailId, string updatedByUserName)
+        public virtual ObjectResult<ArchiveEmpSalaryDetail_Result> ArchiveEmpSalaryDetail(Nullable<int> empSalaryStructureId, string updatedByUserName)
         {
-            var empSalaryDetailIdParameter = empSalaryDetailId.HasValue ?
-                new ObjectParameter("EmpSalaryDetailId", empSalaryDetailId) :
-                new ObjectParameter("EmpSalaryDetailId", typeof(int));
+            var empSalaryStructureIdParameter = empSalaryStructureId.HasValue ?
+                new ObjectParameter("EmpSalaryStructureId", empSalaryStructureId) :
+                new ObjectParameter("EmpSalaryStructureId", typeof(int));
     
             var updatedByUserNameParameter = updatedByUserName != null ?
                 new ObjectParameter("UpdatedByUserName", updatedByUserName) :
                 new ObjectParameter("UpdatedByUserName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ArchiveEmpSalaryDetail_Result>("ArchiveEmpSalaryDetail", empSalaryDetailIdParameter, updatedByUserNameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ArchiveEmpSalaryDetail_Result>("ArchiveEmpSalaryDetail", empSalaryStructureIdParameter, updatedByUserNameParameter);
         }
     }
 }

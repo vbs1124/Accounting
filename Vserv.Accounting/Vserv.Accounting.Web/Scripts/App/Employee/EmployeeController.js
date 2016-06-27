@@ -14,15 +14,25 @@
         vm.joiningDate = new Date($("#JoiningDate").val());
         vm.financialYears = employeeService.getEmpFinancialYears(vm.joiningDate, vm.relievingDate);
         vm.selectedFinancialYear = vm.relievingDate == null || vm.relievingDate == 'Invalid Date' ? moment().year().toString() : moment(vm.relievingDate).year().toString();
+        vm.selectedInvestmentFinancialYear = vm.relievingDate == null || vm.relievingDate == 'Invalid Date' ? moment().year().toString() : moment(vm.relievingDate).year().toString();
         vm.currentYear = moment().year().toString();
 
         vm.loadEmployeeAppraisalHistory = employeeService.loadEmployeeAppraisalHistory(vm.employeeId);
         vm.employeeAppraisalHistory = employeeService.employeeAppraisalHistory;
+
         vm.empAppraisalGraphValues = employeeService.empAppraisalGraphValues;
         vm.loadEmployeePaySheet = employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(vm.selectedFinancialYear), parseInt(vm.selectedFinancialYear) + 1);
         vm.employeePaySheet = employeeService.employeePaySheet;
 
         vm.viewSelectedSalaryBreakup = viewSelectedSalaryBreakup;
+
+        // Investment Declaration.
+        vm.loadInvestmentByEmployeeId = employeeService.loadInvestmentByEmployeeId(vm.employeeId);
+        vm.investmentDeclarationResult = employeeService.investmentDeclarationResult;
+
+        vm.loadInvestmentCatogories = employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear);
+        vm.investmentCatogories = employeeService.investmentCatogories;
+
 
         vm.appraisalHistoryGraphOptions = {
             chart: {
@@ -76,10 +86,25 @@
         $scope.onChangeFinancialYear = function () {
             employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(vm.selectedFinancialYear), parseInt(vm.selectedFinancialYear) + 1);
         }
+        $scope.onChangeInvestmentFinancialYear = function () {
+            //alert(">>>>");
+            employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear);
+        }
 
         //Method Initialize
         $scope.initialize = function (employeeId) {
         };
+        $scope.vbsParseFloat = function (value) {
+            return $.vbsParseFloat(value);
+        }
+
+        $scope.getHRALabel = function (subCategory) {
+            if (subCategory.Name == 'January' || subCategory.Name == 'February' || subCategory.Name == 'March') {
+                return subCategory.Name + " " + ($.vbsParseFloat(vm.selectedInvestmentFinancialYear) + 1).toString();
+            } else {
+                return subCategory.Name + " " + vm.selectedInvestmentFinancialYear;
+            }
+        }
 
         $scope.getCurrentComponentTotal = function (item) {
 

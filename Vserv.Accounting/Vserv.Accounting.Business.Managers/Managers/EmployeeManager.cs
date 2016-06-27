@@ -733,6 +733,19 @@ namespace Vserv.Accounting.Business.Managers
 
         #endregion
 
+        #region  Investments
+
+        public List<InvestmentCategory> GetInvestmentCatogories(int financialYear)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                IInvestmentCategoryRepo _repository = DataRepositoryFactory.GetDataRepository<IInvestmentCategoryRepo>();
+                return _repository.GetInvestmentCatogories(financialYear);
+            });
+        }
+
+        #endregion
+
         #endregion
     }
 }
