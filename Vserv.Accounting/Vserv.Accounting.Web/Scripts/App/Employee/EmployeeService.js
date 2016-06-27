@@ -8,6 +8,7 @@
         var employeeAppraisalHistory = [];
         var employeeChangeHistory = [];
         var empAppraisalGraphValues = [];
+        var empSalaryStructureHistory = [];
 
         var svc = {
             addEmployeeSalaryDetail: addEmployeeSalaryDetail,
@@ -25,6 +26,9 @@
 
             loadEmployeeChangeHistory: loadEmployeeChangeHistory,
             employeeChangeHistory: employeeChangeHistory,
+
+            loadEmpSalaryStructureHistory: loadEmpSalaryStructureHistory,
+            empSalaryStructureHistory: empSalaryStructureHistory
         };
 
         return svc;
@@ -114,6 +118,27 @@
                     $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
                 }
             });
+        }
+
+        function loadEmpSalaryStructureHistory(empSalaryStructureId) {
+            empSalaryStructureId = 186;
+            if (empSalaryStructureId) {
+                serviceHandler.executePostService("/employee/salary/" + empSalaryStructureId + "/changeHistory").then(function (resp) {
+                    if (resp.businessException == null) {
+                        if (resp.result.length > 0) {
+                            empSalaryStructureHistory.removeAll();// clear all the existing items.
+                            $.map(resp.result, function (val, i) {
+                                val.UpdatedDate = moment(val.UpdatedDate).format("DD/MM/YYYY");
+                            });
+
+                            empSalaryStructureHistory.addRange(resp.result);
+                        }
+                    }
+                    else {
+                        $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                    }
+                });
+            }
         }
     }
 })();

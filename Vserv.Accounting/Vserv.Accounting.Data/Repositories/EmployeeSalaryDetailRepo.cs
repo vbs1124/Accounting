@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.Composition;
 using System.Data.SqlClient;
 using Vserv.Accounting.Data.Entity;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Vserv.Accounting.Data
 {
@@ -39,6 +41,16 @@ namespace Vserv.Accounting.Data
             using (VservAccountingDBEntities context = new VservAccountingDBEntities())
             {
                 return context.ResetEmpSalaryStructureId(updatedEmpSalaryStructureId);
+            }
+        }
+
+        public List<EmpSalaryDetailArchive> GetSalaryStructureChangeHistory(int empSalaryStructureId)
+        {
+            using (VservAccountingDBEntities dbEntities = new VservAccountingDBEntities())
+            {
+                List<EmpSalaryDetailArchive> result = dbEntities.EmpSalaryDetailArchives
+                    .Where(condition => condition.EmpSalaryStructureId == empSalaryStructureId).ToList();
+                return result;
             }
         }
     }

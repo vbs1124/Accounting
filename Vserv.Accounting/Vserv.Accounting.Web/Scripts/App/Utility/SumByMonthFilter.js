@@ -31,7 +31,7 @@
                 }
             }
 
-            return sum;
+            return sum == 0 ? null : sum;
         };
     }
 })();
