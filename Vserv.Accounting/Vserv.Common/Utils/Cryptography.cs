@@ -67,19 +67,17 @@ namespace Vserv.Common.Utils
             {
                 Int32 counter = arg.IndexOf('=');
 
-                if (!counter.Equals(-1))
-                {
-                    String key = arg.Substring(0, counter);
-                    String value = arg.Substring(counter + 1);
+                if (counter.Equals(-1)) continue;
+                String key = arg.Substring(0, counter);
+                String value = arg.Substring(counter + 1);
 
-                    if (key.Equals(ChecksumKey))
-                    {
-                        checksum = value;
-                    }
-                    else
-                    {
-                        Add(key: HttpUtility.UrlDecode(key), value: HttpUtility.UrlDecode(value));
-                    }
+                if (key.Equals(ChecksumKey))
+                {
+                    checksum = value;
+                }
+                else
+                {
+                    Add(HttpUtility.UrlDecode(key), HttpUtility.UrlDecode(value));
                 }
             }
 

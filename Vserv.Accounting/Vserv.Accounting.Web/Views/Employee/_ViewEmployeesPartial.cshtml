@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Vserv.Accounting.Data.Entity.Employee>
+@using Vserv.Accounting.Common
 <div class="panel panel-default">
     <!-- /.panel-heading -->
     <div class="panel-body">
@@ -13,13 +14,13 @@
                         <th title="Mobile Number">Mobile Number</th>
                         <th title="Email Address">Email Address</th>
                         <th title="Date of Joining">Date of Joining</th>
-                    </tr>   
+                    </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
                         <tr class="odd gradeX">
-                            <td>@Html.ActionLink(item.VBS_Id, "edit", "employee", new { employeeId = item.EmployeeId }, new { @class = (item.IsActive ? "btn btn-xs btn-block btn-success" : "btn btn-xs btn-block btn-danger"), title = "Click to Edit" })</td>
+                            <td>@Html.ActionLink(item.VBS_Id, "edit", "employee", new { id = item.EmployeeId.ToEncryptedString() }, new { @class = (item.IsActive ? "btn btn-xs btn-block btn-success" : "btn btn-xs btn-block btn-danger"), title = "Click to Edit" })</td>
                             <td>@String.Format("{0} {1} {2}", item.FirstName, item.MiddleName, item.LastName) </td>
                             <td>@item.OfficeBranch.Name </td>
                             <td>@(item.Designation != null ? item.Designation.Name : String.Empty)</td>

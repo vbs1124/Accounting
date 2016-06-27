@@ -7,8 +7,10 @@
         var vm = this;
 
         vm.employeeId = $("#EmployeeId").val();
+        vm.empSalaryStructureId = 186;
         vm.addNewSalaryStructure = addNewSalaryStructure;
         vm.employeeChangeHistoryModal = employeeChangeHistoryModal;
+        vm.empSalaryStructureChangeHistoryModal = empSalaryStructureChangeHistoryModal;
         vm.empSalaryStructureModel = employeeService.empSalaryStructureModel;
         vm.relievingDate = new Date($("#RelievingDate").val());
         vm.joiningDate = new Date($("#JoiningDate").val());
@@ -43,10 +45,10 @@
                 },
                 transitionDuration: 500,
                 xAxis: {
-                    axisLabel: 'Financial Year'
+                    // axisLabel: 'Financial Year'
                 },
                 yAxis: {
-                    axisLabel: '% Growth',
+                    // axisLabel: '% Growth',
                     //axisLabelDistance: 2
                 }
             }
@@ -57,6 +59,9 @@
             values: vm.empAppraisalGraphValues
         }];
 
+        vm.isEditableSalaryBreakup = function () {
+            return vm.employeePaySheet.length > 0 && $.vbsParseFloat(vm.selectedFinancialYear) >= $.vbsParseFloat(vm.currentYear) && (vm.relievingDate == 'Invalid Date' || vm.relievingDate == null);
+        }
         function addNewSalaryStructure() {
             $modal.open({
                 template: '<add-appraisal />'
@@ -66,6 +71,13 @@
         function employeeChangeHistoryModal() {
             $modal.open({
                 template: '<emp-history />'
+            });
+        }
+
+        function empSalaryStructureChangeHistoryModal() {
+            $modal.open({
+                template: '<emp-salary-structure-history empSalaryStructureId="empSalaryStructureId" />',
+                scope: angular.extend($scope.$new(true), { empSalaryStructureId: vm.empSalaryStructureId })
             });
         }
 
@@ -160,6 +172,9 @@
             return (amount && selected.length) ? selected[0].text : '0';
         };
 
+        $scope.vbsParseFloat = function (value) {
+            return $.vbsParseFloat(value);
+        }
         //---------------- Salary Breakup Ends here -----------
     }
 })();
