@@ -648,6 +648,16 @@ namespace Vserv.Accounting.Business.Managers
                 return employeeSalaryDetailRepo.GetSalaryStructureChangeHistory(empSalaryStructureId);
             });
         }
+
+        public List<EmpSalaryCompareResult> GetEmpSalaryStructureComparisonList(int employeeId, int financialYearFrom, Guid uniqueChangeId)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                IEmpSalaryStructureRepo repository = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
+                return repository.GetEmpSalaryStructureComparisonList(employeeId, financialYearFrom, uniqueChangeId);
+            });
+        }
+
         #endregion
 
         #endregion

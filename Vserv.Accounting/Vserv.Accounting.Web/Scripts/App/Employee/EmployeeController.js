@@ -25,6 +25,7 @@
         vm.empsalarystructureid = employeeService.empsalarystructureid;
         vm.viewSelectedSalaryBreakup = viewSelectedSalaryBreakup;
 
+
         vm.appraisalHistoryGraphOptions = {
             chart: {
                 type: 'discreteBarChart',
@@ -64,20 +65,23 @@
 
         function addNewSalaryStructure() {
             $modal.open({
-                template: '<add-appraisal />'
+                template: '<add-appraisal />',
+                animation: true
             });
         }
 
         function employeeChangeHistoryModal() {
             $modal.open({
-                template: '<emp-history />'
+                template: '<emp-history />',
+                animation: true,
             });
         }
 
         function empSalaryStructureChangeHistoryModal(empsalarystructureid) {
             $modal.open({
                 template: '<emp-salary-structure-history empsalarystructureid="empsalarystructureid" />',
-                scope: angular.extend($scope.$new(true), { empsalarystructureid: empsalarystructureid })
+                scope: angular.extend($scope.$new(true), { empsalarystructureid: empsalarystructureid }),
+                animation: true
             });
         }
 
@@ -179,6 +183,7 @@
         $scope.vbsParseFloat = function (value) {
             return $.vbsParseFloat(value);
         }
+
         //---------------- Salary Breakup Ends here -----------
     }
 })();

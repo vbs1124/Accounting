@@ -6,7 +6,7 @@
             </div>
             <label for="" class="col-md-2 control-label">Financial Year</label>
             <div class="col-md-2">
-                <select class="form-control" ng-model="vm.selectedFinancialYear" ng-change="onChangeFinancialYear()">
+                <select class="form-control" id="cmb-financial-year" ng-model="vm.selectedFinancialYear" ng-change="onChangeFinancialYear()">
                     <option ng-repeat="x in vm.financialYears" value="{{x.currentYear}}">{{x.financialYear}}</option>
                 </select>
             </div>

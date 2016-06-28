@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Vserv.Accounting.Business.Managers;
 using Vserv.Accounting.Common;
 using Vserv.Accounting.Data.Entity;
+using Vserv.Accounting.Data.Entity.Models;
 using Vserv.Accounting.Web.Models;
 
 #endregion
@@ -379,6 +380,19 @@ namespace Vserv.Accounting.Web.Controllers
         public JsonResult GetSalaryStructureChangeHistory(int empSalaryStructureId)
         {
             return Json(EmployeeManager.GetSalaryStructureChangeHistory(empSalaryStructureId), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetEmpSalaryStructureComparisonList(SalaryComparisonParameter salaryComparisonParameter)
+        {
+            List<EmpSalaryCompareResult> result = EmployeeManager.GetEmpSalaryStructureComparisonList(salaryComparisonParameter.EmployeeId, salaryComparisonParameter.FinancialYearFrom, salaryComparisonParameter.UniqueChangeId);
+
+            List<EmpSalaryCompareModel> empSalaryCompareModel = new List<EmpSalaryCompareModel>();
+            foreach (EmpSalaryCompareResult item in result)
+            {
+                empSalaryCompareModel.Add(ConvertToEmpSalaryCompareModel(item));
+            }
+
+            return Json(empSalaryCompareModel, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -865,6 +879,54 @@ namespace Vserv.Accounting.Web.Controllers
             }
 
             return employeeSalaryDetails;
+        }
+
+        private EmpSalaryCompareModel ConvertToEmpSalaryCompareModel(EmpSalaryCompareResult empSalaryCompareResult)
+        {
+            return new EmpSalaryCompareModel
+            {
+                EmployeeId = empSalaryCompareResult.EmployeeId,
+                EmpSalaryStructureId = empSalaryCompareResult.EmpSalaryStructureId,
+                SCName = empSalaryCompareResult.SCName,
+                SCCode = empSalaryCompareResult.SCCode,
+                SCDescription = empSalaryCompareResult.SCDescription,
+                DisplayOrder = empSalaryCompareResult.DisplayOrder,
+                April = ConvertToSalaryComponentDetail(empSalaryCompareResult.April),
+                May = ConvertToSalaryComponentDetail(empSalaryCompareResult.May),
+                June = ConvertToSalaryComponentDetail(empSalaryCompareResult.June),
+                July = ConvertToSalaryComponentDetail(empSalaryCompareResult.July),
+                August = ConvertToSalaryComponentDetail(empSalaryCompareResult.August),
+                September = ConvertToSalaryComponentDetail(empSalaryCompareResult.September),
+                October = ConvertToSalaryComponentDetail(empSalaryCompareResult.October),
+                November = ConvertToSalaryComponentDetail(empSalaryCompareResult.November),
+                December = ConvertToSalaryComponentDetail(empSalaryCompareResult.December),
+                January = ConvertToSalaryComponentDetail(empSalaryCompareResult.January),
+                February = ConvertToSalaryComponentDetail(empSalaryCompareResult.February),
+                March = ConvertToSalaryComponentDetail(empSalaryCompareResult.March),
+            };
+        }
+
+        private SalaryComponentDetail ConvertToSalaryComponentDetail(string value)
+        {
+            if (String.IsNullOrWhiteSpace(value))
+            {
+                return new SalaryComponentDetail();
+            }
+
+            string[] amounts = value.Split(':');
+            string[] amount = amounts[0].Split('#');
+            string[] currentAmount = amounts[1].Split('#');
+
+            SalaryComponentDetail salaryComponentDetail = new SalaryComponentDetail
+            {
+                CurrentAmount = Convert.ToInt32(currentAmount[1]),
+                CurrentEmpSalaryDetailId = Convert.ToInt32(currentAmount[0]),
+                Amount = Convert.ToInt32(amount[1]),
+                EmpSalaryDetailId = Convert.ToInt32(amount[0]),
+            };
+
+            salaryComponentDetail.IsDirty = !salaryComponentDetail.CurrentAmount.Equals(salaryComponentDetail.Amount);
+            return salaryComponentDetail;
         }
 
         #endregion Private Methods

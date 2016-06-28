@@ -10,6 +10,7 @@
         var empAppraisalGraphValues = [];
         var empSalaryStructureHistory = [];
         var empsalarystructureid = null;
+
         var svc = {
             addEmployeeSalaryDetail: addEmployeeSalaryDetail,
             getEmpFinancialYears: getEmpFinancialYears,
@@ -30,7 +31,9 @@
             employeeChangeHistory: employeeChangeHistory,
 
             loadEmpSalaryStructureHistory: loadEmpSalaryStructureHistory,
-            empSalaryStructureHistory: empSalaryStructureHistory
+            empSalaryStructureHistory: empSalaryStructureHistory,
+
+            getEmpSalaryStructureComparisonList: getEmpSalaryStructureComparisonList,
         };
 
         return svc;
@@ -142,6 +145,10 @@
                     }
                 });
             }
+        }
+
+        function getEmpSalaryStructureComparisonList(salaryComparisonParameter) {
+            return serviceHandler.executePostService('/Employee/GetEmpSalaryStructureComparisonList', salaryComparisonParameter);
         }
     }
 })();

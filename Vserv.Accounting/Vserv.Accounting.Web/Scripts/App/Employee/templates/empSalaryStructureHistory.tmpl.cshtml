@@ -5,12 +5,12 @@
     </div>
     <div class="modal-body">
         <div class="row" ng-show="vm.empSalaryStructureHistory.length > 0">
-            <div class="col-lg-12">
+            <div class="col-md-12">
                 <div class="dataTable_wrapper">
                     <table class="table table-bordered table-hover" id="tbl-salary-structure-change-history" style="width:100%">
                         <thead>
                             <tr>
-                                <th>History Id</th>
+                                @*<th>History Id</th>*@
                                 <th>Updated By</th>
                                 <th>Updated On</th>
                                 <th>Action <i class="fa fa-gear fa-fw"></i></th>
@@ -18,17 +18,17 @@
                         </thead>
                         <tbody ng-repeat="item in vm.empSalaryStructureHistory">
                             <tr class="odd gradeX">
-                                <td>{{item.HistoryId}}</td>
+                                @*<td>{{item.HistoryId}}</td>*@
                                 <td>{{item.UpdatedBy}}</td>
                                 <td>{{item.UpdatedDate}}</td>
-                                <td>@*<a ng-href="/employee/{{item.UniqueChangeId}}/compare" target="_blank">Compare with Current</a>*@</td>
+                                <td><a class="btn btn-link btn-sm" ng-click="openEmpSalaryChangeHistoryModal(item)">Compare with Current</a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <!-- /.table-responsive -->
             </div>
-            <!-- /.col-lg-12 -->
+            <!-- /.col-md-12 -->
         </div>
         <!-- /.row -->
         <div class="alert alert-dismissible alert-info" ng-hide="vm.empSalaryStructureHistory.length > 0">

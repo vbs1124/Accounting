@@ -128,6 +128,7 @@
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CompareEmployeeModel.cs" />
+    <Compile Include="Models\EmpSalaryCompareResult.cs" />
     <Compile Include="Models\FinancialPeriod.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\Membership.cs" />
