@@ -87,6 +87,8 @@
         $scope.dateOptionsEffectiveFrom = {
             formatYear: 'yyyy',
             startingDay: 1,
+            minDate: new Date(2009, 1, 1),
+            maxDate: new Date(moment().year(), 12, 31)
         };
 
         $scope.openEffectiveFrom = function () {

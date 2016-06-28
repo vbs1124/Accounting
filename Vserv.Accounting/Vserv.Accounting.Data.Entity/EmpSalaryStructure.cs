@@ -22,6 +22,7 @@ namespace Vserv.Accounting.Data.Entity
         }
     
         public int EmpSalaryStructureId { get; set; }
+        public int SalaryStructureTypeId { get; set; }
         public int EmployeeId { get; set; }
         public Nullable<int> ParentId { get; set; }
         public decimal CTC { get; set; }
@@ -42,5 +43,6 @@ namespace Vserv.Accounting.Data.Entity
         public virtual ICollection<EmpSalaryDetailArchive> EmpSalaryDetailArchives { get; set; }
         public virtual ICollection<EmpSalaryStructure> EmpSalaryStructure1 { get; set; }
         public virtual EmpSalaryStructure EmpSalaryStructure2 { get; set; }
+        public virtual SalaryStructureType SalaryStructureType { get; set; }
     }
 }

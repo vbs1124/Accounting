@@ -48,6 +48,7 @@
     <Compile Include="Enums\FilterOperator.cs" />
     <Compile Include="Enums\MonthEnum.cs" />
     <Compile Include="Enums\SalaryComponentEnum.cs" />
+    <Compile Include="Enums\SalaryStructureTypeEnum.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -43,6 +43,9 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<EPFOffice> EPFOffices { get; set; }
         public virtual DbSet<Feature> Features { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
+        public virtual DbSet<InvestmentCategory> InvestmentCategories { get; set; }
+        public virtual DbSet<InvestmentSubCategory> InvestmentSubCategories { get; set; }
+        public virtual DbSet<InvtDeclarationComponent> InvtDeclarationComponents { get; set; }
         public virtual DbSet<LookupFrequency> LookupFrequencies { get; set; }
         public virtual DbSet<LookupMonth> LookupMonths { get; set; }
         public virtual DbSet<Membership> Memberships { get; set; }
@@ -50,6 +53,7 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<OfficeBranch> OfficeBranches { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SalaryComponent> SalaryComponents { get; set; }
+        public virtual DbSet<SalaryStructureType> SalaryStructureTypes { get; set; }
         public virtual DbSet<Salutation> Salutations { get; set; }
         public virtual DbSet<SecurityQuestion> SecurityQuestions { get; set; }
         public virtual DbSet<State> States { get; set; }
@@ -340,6 +344,15 @@ namespace Vserv.Accounting.Data.Entity
                 new ObjectParameter("EmpSalaryStructureId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ResetEmpSalaryStructureId", empSalaryStructureIdParameter);
+        }
+    
+        public virtual ObjectResult<SalaryStructureChangeHistory_Result> SalaryStructureChangeHistory(Nullable<int> empSalaryStructureId)
+        {
+            var empSalaryStructureIdParameter = empSalaryStructureId.HasValue ?
+                new ObjectParameter("EmpSalaryStructureId", empSalaryStructureId) :
+                new ObjectParameter("EmpSalaryStructureId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SalaryStructureChangeHistory_Result>("SalaryStructureChangeHistory", empSalaryStructureIdParameter);
         }
     }
 }
