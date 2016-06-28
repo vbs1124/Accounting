@@ -222,6 +222,7 @@
             <PropertyRef Name="EmpSalaryDetailArchiveId" />
           </Key>
           <Property Name="EmpSalaryDetailArchiveId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UniqueChangeId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="EmpSalaryDetailId" Type="int" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="SalaryComponentId" Type="int" Nullable="false" />
@@ -240,6 +241,7 @@
             <PropertyRef Name="EmpSalaryStructureId" />
           </Key>
           <Property Name="EmpSalaryStructureId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SalaryStructureTypeId" Type="int" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="ParentId" Type="int" />
           <Property Name="CTC" Type="numeric" Precision="19" Scale="0" Nullable="false" />
@@ -313,6 +315,53 @@
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="InvestmentCategory">
+          <Key>
+            <PropertyRef Name="InvestmentCategoryId" />
+          </Key>
+          <Property Name="InvestmentCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="MappingId" Type="uniqueidentifier" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="InvestmentSubCategory">
+          <Key>
+            <PropertyRef Name="InvestmentSubCategoryId" />
+          </Key>
+          <Property Name="InvestmentSubCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvestmentCategoryId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="MaximumLimit" Type="varchar(max)" />
+          <Property Name="Remark" Type="varchar(max)" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="InvtDeclarationComponent">
+          <Key>
+            <PropertyRef Name="InvtDeclarationComponentId" />
+          </Key>
+          <Property Name="InvtDeclarationComponentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MappingId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -416,6 +465,21 @@
           <Property Name="Code" Type="varchar" MaxLength="6" />
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DefaultAmount" Type="numeric" Precision="19" Scale="0" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SalaryStructureType">
+          <Key>
+            <PropertyRef Name="SalaryStructureTypeId" />
+          </Key>
+          <Property Name="SalaryStructureTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
@@ -804,6 +868,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmpSalaryStructure_SalaryStructureType">
+          <End Role="SalaryStructureType" Type="Self.SalaryStructureType" Multiplicity="1" />
+          <End Role="EmpSalaryStructure" Type="Self.EmpSalaryStructure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalaryStructureType">
+              <PropertyRef Name="SalaryStructureTypeId" />
+            </Principal>
+            <Dependent Role="EmpSalaryStructure">
+              <PropertyRef Name="SalaryStructureTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Feature_Feature">
           <End Role="Feature" Type="Self.Feature" Multiplicity="1" />
           <End Role="Feature1" Type="Self.Feature" Multiplicity="0..1" />
@@ -813,6 +889,18 @@
             </Principal>
             <Dependent Role="Feature1">
               <PropertyRef Name="FeatureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InvestmentSubCategory_InvestmentCategory">
+          <End Role="InvestmentCategory" Type="Self.InvestmentCategory" Multiplicity="1" />
+          <End Role="InvestmentSubCategory" Type="Self.InvestmentSubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InvestmentCategory">
+              <PropertyRef Name="InvestmentCategoryId" />
+            </Principal>
+            <Dependent Role="InvestmentSubCategory">
+              <PropertyRef Name="InvestmentCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -959,6 +1047,9 @@
         <Function Name="ResetEmpSalaryStructureId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpSalaryStructureId" Type="int" Mode="In" />
         </Function>
+        <Function Name="SalaryStructureChangeHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpSalaryStructureId" Type="int" Mode="In" />
+        </Function>
         <Function Name="ValidateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="SecurityQuestionId" Type="int" Mode="In" />
@@ -982,6 +1073,9 @@
           <EntitySet Name="EPFOffice" EntityType="Self.EPFOffice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feature" EntityType="Self.Feature" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InvestmentCategory" EntityType="Self.InvestmentCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InvestmentSubCategory" EntityType="Self.InvestmentSubCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InvtDeclarationComponent" EntityType="Self.InvtDeclarationComponent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LookupFrequency" EntityType="Self.LookupFrequency" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LookupMonth" EntityType="Self.LookupMonth" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Membership" EntityType="Self.Membership" Schema="dbo" store:Type="Tables" />
@@ -989,6 +1083,7 @@
           <EntitySet Name="OfficeBranch" EntityType="Self.OfficeBranch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalaryComponent" EntityType="Self.SalaryComponent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalaryStructureType" EntityType="Self.SalaryStructureType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Salutation" EntityType="Self.Salutation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SecurityQuestion" EntityType="Self.SecurityQuestion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
@@ -1092,9 +1187,17 @@
             <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructure" />
             <End Role="EmpSalaryStructure1" EntitySet="EmpSalaryStructure" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryStructure_SalaryStructureType" Association="Self.FK_EmpSalaryStructure_SalaryStructureType">
+            <End Role="SalaryStructureType" EntitySet="SalaryStructureType" />
+            <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructure" />
+          </AssociationSet>
           <AssociationSet Name="FK_Feature_Feature" Association="Self.FK_Feature_Feature">
             <End Role="Feature" EntitySet="Feature" />
             <End Role="Feature1" EntitySet="Feature" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InvestmentSubCategory_InvestmentCategory" Association="Self.FK_InvestmentSubCategory_InvestmentCategory">
+            <End Role="InvestmentCategory" EntitySet="InvestmentCategory" />
+            <End Role="InvestmentSubCategory" EntitySet="InvestmentSubCategory" />
           </AssociationSet>
           <AssociationSet Name="fk_RoleId" Association="Self.fk_RoleId">
             <End Role="Roles" EntitySet="Roles" />
@@ -1197,6 +1300,13 @@
           <FunctionImport Name="GetEmpAppraisalHistory" ReturnType="Collection(VservAccountingDBModel.GetEmpAppraisalHistory_Result)">
           <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="ArchiveEmpSalaryDetail" ReturnType="Collection(VservAccountingDBModel.ArchiveEmpSalaryDetail_Result)">
+            <Parameter Name="EmpSalaryStructureId" Mode="In" Type="Int32" />
+            <Parameter Name="UpdatedByUserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ResetEmpSalaryStructureId">
+          <Parameter Name="EmpSalaryStructureId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="AddressTypes" EntityType="VservAccountingDBModel.AddressType" />
           <EntitySet Name="ApplicationLogs" EntityType="VservAccountingDBModel.ApplicationLog" />
           <EntitySet Name="Banks" EntityType="VservAccountingDBModel.Bank" />
@@ -1212,6 +1322,9 @@
           <EntitySet Name="EPFOffices" EntityType="VservAccountingDBModel.EPFOffice" />
           <EntitySet Name="Features" EntityType="VservAccountingDBModel.Feature" />
           <EntitySet Name="Genders" EntityType="VservAccountingDBModel.Gender" />
+          <EntitySet Name="InvestmentCategories" EntityType="VservAccountingDBModel.InvestmentCategory" />
+          <EntitySet Name="InvestmentSubCategories" EntityType="VservAccountingDBModel.InvestmentSubCategory" />
+          <EntitySet Name="InvtDeclarationComponents" EntityType="VservAccountingDBModel.InvtDeclarationComponent" />
           <EntitySet Name="LookupFrequencies" EntityType="VservAccountingDBModel.LookupFrequency" />
           <EntitySet Name="LookupMonths" EntityType="VservAccountingDBModel.LookupMonth" />
           <EntitySet Name="Memberships" EntityType="VservAccountingDBModel.Membership" />
@@ -1219,6 +1332,7 @@
           <EntitySet Name="OfficeBranches" EntityType="VservAccountingDBModel.OfficeBranch" />
           <EntitySet Name="Roles" EntityType="VservAccountingDBModel.Role" />
           <EntitySet Name="SalaryComponents" EntityType="VservAccountingDBModel.SalaryComponent" />
+          <EntitySet Name="SalaryStructureTypes" EntityType="VservAccountingDBModel.SalaryStructureType" />
           <EntitySet Name="Salutations" EntityType="VservAccountingDBModel.Salutation" />
           <EntitySet Name="SecurityQuestions" EntityType="VservAccountingDBModel.SecurityQuestion" />
           <EntitySet Name="States" EntityType="VservAccountingDBModel.State" />
@@ -1325,9 +1439,17 @@
             <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructures" />
             <End Role="EmpSalaryStructure1" EntitySet="EmpSalaryStructures" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmpSalaryStructure_SalaryStructureType" Association="VservAccountingDBModel.FK_EmpSalaryStructure_SalaryStructureType">
+            <End Role="SalaryStructureType" EntitySet="SalaryStructureTypes" />
+            <End Role="EmpSalaryStructure" EntitySet="EmpSalaryStructures" />
+          </AssociationSet>
           <AssociationSet Name="FK_Feature_Feature" Association="VservAccountingDBModel.FK_Feature_Feature">
             <End Role="Feature" EntitySet="Features" />
             <End Role="Feature1" EntitySet="Features" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InvestmentSubCategory_InvestmentCategory" Association="VservAccountingDBModel.FK_InvestmentSubCategory_InvestmentCategory">
+            <End Role="InvestmentCategory" EntitySet="InvestmentCategories" />
+            <End Role="InvestmentSubCategory" EntitySet="InvestmentSubCategories" />
           </AssociationSet>
           <AssociationSet Name="FK_UserSecurityQuestion_SecurityQuestion" Association="VservAccountingDBModel.FK_UserSecurityQuestion_SecurityQuestion">
             <End Role="SecurityQuestion" EntitySet="SecurityQuestions" />
@@ -1345,11 +1467,7 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
-          <FunctionImport Name="ArchiveEmpSalaryDetail" ReturnType="Collection(VservAccountingDBModel.ArchiveEmpSalaryDetail_Result)">
-            <Parameter Name="EmpSalaryStructureId" Mode="In" Type="Int32" />
-            <Parameter Name="UpdatedByUserName" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="ResetEmpSalaryStructureId">
+          <FunctionImport Name="SalaryStructureChangeHistory" ReturnType="Collection(VservAccountingDBModel.SalaryStructureChangeHistory_Result)">
             <Parameter Name="EmpSalaryStructureId" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
@@ -1390,6 +1508,14 @@
           <Property Type="DateTime" Name="PrevEffectiveFrom" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="PrevEffectiveTo" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="PercentageGrowth" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ArchiveEmpSalaryDetail_Result">
+          <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
+          <Property Type="Int32" Name="ErrorSeverity" Nullable="true" />
+          <Property Type="Int32" Name="ErrorState" Nullable="true" />
+          <Property Type="String" Name="ErrorProcedure" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="ErrorLine" Nullable="true" />
+          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="4000" />
         </ComplexType>
         <EntityType Name="AddressType">
           <Key>
@@ -1633,6 +1759,7 @@
             <PropertyRef Name="EmpSalaryDetailArchiveId" />
           </Key>
           <Property Name="EmpSalaryDetailArchiveId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UniqueChangeId" Type="Guid" Nullable="false" />
           <Property Name="EmpSalaryDetailId" Type="Int32" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="SalaryComponentId" Type="Int32" Nullable="false" />
@@ -1655,6 +1782,7 @@
             <PropertyRef Name="EmpSalaryStructureId" />
           </Key>
           <Property Name="EmpSalaryStructureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SalaryStructureTypeId" Type="Int32" Nullable="false" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="ParentId" Type="Int32" />
           <Property Name="CTC" Type="Decimal" Nullable="false" Precision="19" Scale="0" />
@@ -1674,6 +1802,7 @@
           <NavigationProperty Name="EmpSalaryDetailArchives" Relationship="VservAccountingDBModel.FK_EmpSalaryDetailArchive_EmpSalaryStructure" FromRole="EmpSalaryStructure" ToRole="EmpSalaryDetailArchive" />
           <NavigationProperty Name="EmpSalaryStructure1" Relationship="VservAccountingDBModel.FK_EmpSalaryStructure_EmpSalaryStructure" FromRole="EmpSalaryStructure" ToRole="EmpSalaryStructure1" />
           <NavigationProperty Name="EmpSalaryStructure2" Relationship="VservAccountingDBModel.FK_EmpSalaryStructure_EmpSalaryStructure" FromRole="EmpSalaryStructure1" ToRole="EmpSalaryStructure" />
+          <NavigationProperty Name="SalaryStructureType" Relationship="VservAccountingDBModel.FK_EmpSalaryStructure_SalaryStructureType" FromRole="EmpSalaryStructure" ToRole="SalaryStructureType" />
         </EntityType>
         <EntityType Name="EPFNumber">
           <Key>
@@ -1742,6 +1871,55 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Gender" FromRole="Gender" ToRole="Employee" />
           <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Gender" FromRole="Gender" ToRole="EmployeeArchive" />
+        </EntityType>
+        <EntityType Name="InvestmentCategory">
+          <Key>
+            <PropertyRef Name="InvestmentCategoryId" />
+          </Key>
+          <Property Name="InvestmentCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MappingId" Type="Guid" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="InvestmentSubCategories" Relationship="VservAccountingDBModel.FK_InvestmentSubCategory_InvestmentCategory" FromRole="InvestmentCategory" ToRole="InvestmentSubCategory" />
+        </EntityType>
+        <EntityType Name="InvestmentSubCategory">
+          <Key>
+            <PropertyRef Name="InvestmentSubCategoryId" />
+          </Key>
+          <Property Name="InvestmentSubCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvestmentCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MaximumLimit" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayOrder" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="InvestmentCategory" Relationship="VservAccountingDBModel.FK_InvestmentSubCategory_InvestmentCategory" FromRole="InvestmentSubCategory" ToRole="InvestmentCategory" />
+        </EntityType>
+        <EntityType Name="InvtDeclarationComponent">
+          <Key>
+            <PropertyRef Name="InvtDeclarationComponentId" />
+          </Key>
+          <Property Name="InvtDeclarationComponentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MappingId" Type="Guid" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="LookupFrequency">
           <Key>
@@ -1853,6 +2031,22 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="EmpSalaryDetails" Relationship="VservAccountingDBModel.FK_EmpSalaryDetail_SalaryComponent" FromRole="SalaryComponent" ToRole="EmpSalaryDetail" />
           <NavigationProperty Name="EmpSalaryDetailArchives" Relationship="VservAccountingDBModel.FK_EmpSalaryDetailArchive_SalaryComponent" FromRole="SalaryComponent" ToRole="EmpSalaryDetailArchive" />
+        </EntityType>
+        <EntityType Name="SalaryStructureType">
+          <Key>
+            <PropertyRef Name="SalaryStructureTypeId" />
+          </Key>
+          <Property Name="SalaryStructureTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EmpSalaryStructures" Relationship="VservAccountingDBModel.FK_EmpSalaryStructure_SalaryStructureType" FromRole="SalaryStructureType" ToRole="EmpSalaryStructure" />
         </EntityType>
         <EntityType Name="Salutation">
           <Key>
@@ -2254,6 +2448,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmpSalaryStructure_SalaryStructureType">
+          <End Type="VservAccountingDBModel.SalaryStructureType" Role="SalaryStructureType" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmpSalaryStructure" Role="EmpSalaryStructure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalaryStructureType">
+              <PropertyRef Name="SalaryStructureTypeId" />
+            </Principal>
+            <Dependent Role="EmpSalaryStructure">
+              <PropertyRef Name="SalaryStructureTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Feature_Feature">
           <End Type="VservAccountingDBModel.Feature" Role="Feature" Multiplicity="1" />
           <End Type="VservAccountingDBModel.Feature" Role="Feature1" Multiplicity="0..1" />
@@ -2263,6 +2469,18 @@
             </Principal>
             <Dependent Role="Feature1">
               <PropertyRef Name="FeatureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InvestmentSubCategory_InvestmentCategory">
+          <End Type="VservAccountingDBModel.InvestmentCategory" Role="InvestmentCategory" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.InvestmentSubCategory" Role="InvestmentSubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InvestmentCategory">
+              <PropertyRef Name="InvestmentCategoryId" />
+            </Principal>
+            <Dependent Role="InvestmentSubCategory">
+              <PropertyRef Name="InvestmentCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2306,13 +2524,12 @@
           <End Type="VservAccountingDBModel.Role" Role="Role" Multiplicity="*" />
           <End Type="VservAccountingDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
-        <ComplexType Name="ArchiveEmpSalaryDetail_Result">
-          <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
-          <Property Type="Int32" Name="ErrorSeverity" Nullable="true" />
-          <Property Type="Int32" Name="ErrorState" Nullable="true" />
-          <Property Type="String" Name="ErrorProcedure" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="ErrorLine" Nullable="true" />
-          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="4000" />
+        <ComplexType Name="SalaryStructureChangeHistory_Result">
+          <Property Type="Int32" Name="EmployeeId" Nullable="false" />
+          <Property Type="String" Name="UpdatedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="HistoryId" Nullable="true" MaxLength="5" />
+          <Property Type="Guid" Name="UniqueChangeId" Nullable="false" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2363,6 +2580,19 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ArchiveEmpSalaryDetail" FunctionName="VservAccountingDBModel.Store.ArchiveEmpSalaryDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.ArchiveEmpSalaryDetail_Result">
+                <ScalarProperty Name="ErrorNumber" ColumnName="ErrorNumber" />
+                <ScalarProperty Name="ErrorSeverity" ColumnName="ErrorSeverity" />
+                <ScalarProperty Name="ErrorState" ColumnName="ErrorState" />
+                <ScalarProperty Name="ErrorProcedure" ColumnName="ErrorProcedure" />
+                <ScalarProperty Name="ErrorLine" ColumnName="ErrorLine" />
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ResetEmpSalaryStructureId" FunctionName="VservAccountingDBModel.Store.ResetEmpSalaryStructureId" />
           <EntitySetMapping Name="AddressTypes">
             <EntityTypeMapping TypeName="VservAccountingDBModel.AddressType">
               <MappingFragment StoreEntitySet="AddressType">
@@ -2599,6 +2829,7 @@
                 <ScalarProperty Name="SalaryComponentId" ColumnName="SalaryComponentId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="EmpSalaryDetailId" ColumnName="EmpSalaryDetailId" />
+                <ScalarProperty Name="UniqueChangeId" ColumnName="UniqueChangeId" />
                 <ScalarProperty Name="EmpSalaryDetailArchiveId" ColumnName="EmpSalaryDetailArchiveId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2620,6 +2851,7 @@
                 <ScalarProperty Name="CTC" ColumnName="CTC" />
                 <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="SalaryStructureTypeId" ColumnName="SalaryStructureTypeId" />
                 <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2689,6 +2921,56 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InvestmentCategories">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.InvestmentCategory">
+              <MappingFragment StoreEntitySet="InvestmentCategory">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="MappingId" ColumnName="MappingId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="InvestmentCategoryId" ColumnName="InvestmentCategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InvestmentSubCategories">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.InvestmentSubCategory">
+              <MappingFragment StoreEntitySet="InvestmentSubCategory">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="MaximumLimit" ColumnName="MaximumLimit" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="InvestmentCategoryId" ColumnName="InvestmentCategoryId" />
+                <ScalarProperty Name="InvestmentSubCategoryId" ColumnName="InvestmentSubCategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InvtDeclarationComponents">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.InvtDeclarationComponent">
+              <MappingFragment StoreEntitySet="InvtDeclarationComponent">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="MappingId" ColumnName="MappingId" />
+                <ScalarProperty Name="InvtDeclarationComponentId" ColumnName="InvtDeclarationComponentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2802,6 +3084,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SalaryStructureTypes">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.SalaryStructureType">
+              <MappingFragment StoreEntitySet="SalaryStructureType">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SalaryStructureTypeId" ColumnName="SalaryStructureTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Salutations">
             <EntityTypeMapping TypeName="VservAccountingDBModel.Salutation">
               <MappingFragment StoreEntitySet="Salutation">
@@ -2901,19 +3199,17 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="ArchiveEmpSalaryDetail" FunctionName="VservAccountingDBModel.Store.ArchiveEmpSalaryDetail">
+          <FunctionImportMapping FunctionImportName="SalaryStructureChangeHistory" FunctionName="VservAccountingDBModel.Store.SalaryStructureChangeHistory">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="VservAccountingDBModel.ArchiveEmpSalaryDetail_Result">
-                <ScalarProperty Name="ErrorNumber" ColumnName="ErrorNumber" />
-                <ScalarProperty Name="ErrorSeverity" ColumnName="ErrorSeverity" />
-                <ScalarProperty Name="ErrorState" ColumnName="ErrorState" />
-                <ScalarProperty Name="ErrorProcedure" ColumnName="ErrorProcedure" />
-                <ScalarProperty Name="ErrorLine" ColumnName="ErrorLine" />
-                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.SalaryStructureChangeHistory_Result">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
+                <ScalarProperty Name="UniqueChangeId" ColumnName="UniqueChangeId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ResetEmpSalaryStructureId" FunctionName="VservAccountingDBModel.Store.ResetEmpSalaryStructureId" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

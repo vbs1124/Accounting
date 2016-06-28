@@ -8,6 +8,6 @@ namespace Vserv.Accounting.Data
     {
         bool ArchiveEmpSalaryDetail(int empSalaryStructureId, string updatedByUserName);
         int ResetEmpSalaryStructureId(int updatedEmpSalaryStructureId);
-        List<EmpSalaryDetailArchive> GetSalaryStructureChangeHistory(int empSalaryStructureId);
+        List<SalaryStructureChangeHistory_Result> GetSalaryStructureChangeHistory(int empSalaryStructureId);
     }
 }

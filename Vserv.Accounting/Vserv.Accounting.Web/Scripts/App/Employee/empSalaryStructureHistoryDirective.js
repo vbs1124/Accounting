@@ -4,7 +4,7 @@
     function empSalaryStructureHistory() {
         return {
             scope: {
-                empSalaryStructureId: "="
+                empsalarystructureid: "="
             },
             templateUrl: '/employee/template/empSalaryStructureHistory.tmpl.cshtml',
             controller: empSalaryStructureHistorycontroller,
@@ -16,10 +16,10 @@
 
     function empSalaryStructureHistorycontroller($scope, employeeService) {
         var vm = this;
-        vm.loadEmpSalaryStructureHistory = employeeService.loadEmpSalaryStructureHistory($scope.empSalaryStructureId);
+        vm.loadEmpSalaryStructureHistory = employeeService.loadEmpSalaryStructureHistory();
         vm.empSalaryStructureHistory = employeeService.empSalaryStructureHistory;
-        vm.compareWithCurrent = function (empSalaryStructureId) {
-            window.location.href = VservApp.rootPath + "salaryStructure/" + empSalaryStructureId + "/compare";
+        vm.compareWithCurrent = function (empsalarystructureid) {
+            window.location.href = VservApp.rootPath + "salaryStructure/" + empsalarystructureid + "/compare";
         }
     }
 

@@ -1,45 +1,45 @@
 ﻿@using Vserv.Accounting.Common
-
-<div class="modal-header">
-    <h4 class="modal-title">Salary Structure Change History</h4>
-</div>
-<div class="modal-body">
-    <div class="row" ng-show="vm.empSalaryStructureHistory.length > 0">
-        <div class="col-lg-12">
-            <div class="dataTable_wrapper">
-                <table class="table table-striped table-bordered table-hover" id="tbl-salary-structure-change-history" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>History Id</th>
-                            <th>Updated By</th>
-                            <th>Updated On</th>
-                            <th>Action <i class="fa fa-gear fa-fw"></i></th>
-                        </tr>
-                    </thead>
-                    <tbody ng-repeat="item in vm.empSalaryStructureHistory">
-                        <tr class="odd gradeX">
-                            <td>{{item.EmpSalaryDetailArchiveId}}</td>
-                            <td>{{item.UpdatedBy}}</td>
-                            <td>{{item.UpdatedDate}}</td>
-                            <td><a ng-href="/employee/{{item.EmpSalaryStructureId}}/compare" target="_blank">Compare with Current</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+<fieldset>
+    <div class="modal-header">
+        <h4 class="modal-title">Salary Structure Change History</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row" ng-show="vm.empSalaryStructureHistory.length > 0">
+            <div class="col-lg-12">
+                <div class="dataTable_wrapper">
+                    <table class="table table-bordered table-hover" id="tbl-salary-structure-change-history" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>History Id</th>
+                                <th>Updated By</th>
+                                <th>Updated On</th>
+                                <th>Action <i class="fa fa-gear fa-fw"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="item in vm.empSalaryStructureHistory">
+                            <tr class="odd gradeX">
+                                <td>{{item.HistoryId}}</td>
+                                <td>{{item.UpdatedBy}}</td>
+                                <td>{{item.UpdatedDate}}</td>
+                                <td>@*<a ng-href="/employee/{{item.UniqueChangeId}}/compare" target="_blank">Compare with Current</a>*@</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
             </div>
-            <!-- /.table-responsive -->
+            <!-- /.col-lg-12 -->
         </div>
-        <!-- /.col-lg-12 -->
+        <!-- /.row -->
+        <div class="alert alert-dismissible alert-info" ng-hide="vm.empSalaryStructureHistory.length > 0">
+            <strong>Information!</strong> There are no history available for this Salary Structure.
+        </div>
+        <!-- /.row -->
     </div>
-    <!-- /.row -->
-    <div class="alert alert-dismissible alert-info" ng-hide="vm.empSalaryStructureHistory.length > 0">
-        <strong>Information!</strong> There are no history available for this Salary Structure.
+    <div class="modal-footer">
+        <button type="button" class="btn btn-warning" ng-click="$parent.$dismiss()">Close</button>
     </div>
-    <!-- /.row -->
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-warning" ng-click="$dismiss()">Close</button>
-</div>
-
+</fieldset>
 <script type="text/javascript">
     $(function () {
         $('#tbl-salary-structure-change-history').DataTable({

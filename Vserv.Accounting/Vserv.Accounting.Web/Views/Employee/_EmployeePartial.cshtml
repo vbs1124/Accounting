@@ -2,7 +2,7 @@
 <fieldset id="fieldset-permanent-address" @(Model.RelievingDate != null ? "disabled" : "")>
     <legend>Basic Information</legend>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.VBS_Id, new { @class = "control-label required-field" })
                 <div class="input-group">
@@ -60,7 +60,7 @@
             </div>
 
         </div>
-        <div class="col-lg-4">
+        <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.PermanentAccountNumber, new { @class = "control-label required-field" })
                 @Html.TextBoxFor(m => m.PermanentAccountNumber, new { @class = "form-control", @maxlength = "10" })
@@ -107,7 +107,7 @@
                 @Html.ValidationMessageFor(m => m.BankMICRCode)
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.OfficialEmailAddress, new { @class = "control-label required-field" })
                 @Html.TextBoxFor(m => m.OfficialEmailAddress, new { @class = "form-control", @maxlength = "35" })
@@ -195,14 +195,14 @@
 <fieldset id="fieldset-permanent-address" @(Model.RelievingDate != null ? "disabled" : "")>
     <legend>Permanent Address</legend>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.PermanentAddress1, new { @class = "control-label required-field" })
-                @Html.TextAreaFor(m => m.PermanentAddress1, new { @class = "form-control permanent-geo-field", data_geo = "address_components", placeholder = "", @rows = 4, @maxlength = "200" })
+                @Html.TextBoxFor(m => m.PermanentAddress1, new { @class = "form-control permanent-geo-field", data_geo = "address_components", placeholder = "", @rows = 4, @maxlength = "200" })
                 @Html.ValidationMessageFor(m => m.PermanentAddress1)
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.PermanentAddress2, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.PermanentAddress2, new { @class = "form-control permanent-geo-field", data_geo = "sublocality", placeholder = "", @maxlength = "200" })
@@ -214,7 +214,7 @@
                 @Html.ValidationMessageFor(m => m.PermanentZipCode)
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.PermanentCity, new { @class = "control-label required-field" })
                 @Html.TextBoxFor(m => m.PermanentCity, new { @class = "form-control permanent-geo-field", data_geo = "locality", placeholder = "", @maxlength = "35" })
@@ -233,17 +233,17 @@
         Mailing Address
     </legend>
     <div class="row">
-        <div class="col-lg-6 text-success">
+        <div class="col-md-6 text-success">
             <label>
                 <input type="checkbox" id="chk-copy-permanent-address" onchange="onchange_copyPermanentAdds(this);"> Copy from Permanent Address
             </label>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.MailingAddress1, new { @class = "control-label required-field" })
-                @Html.TextAreaFor(m => m.MailingAddress1, new { @class = "form-control mailing-geo-field", data_geo = "address_components", placeholder = "", @resize = "none", @rows = 3, @maxlength = "200" })
+                @Html.TextBoxFor(m => m.MailingAddress1, new { @class = "form-control mailing-geo-field", data_geo = "address_components", placeholder = "", @resize = "none", @rows = 3, @maxlength = "200" })
                 @Html.ValidationMessageFor(m => m.MailingAddress1)
             </div>
             <div class="form-group">
@@ -257,7 +257,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.MailingAddress2, new { @class = "control-label" })
                 @Html.TextBoxFor(m => m.MailingAddress2, new { @class = "form-control mailing-geo-field", data_geo = "sublocality", placeholder = "", @maxlength = "200" })
@@ -269,7 +269,7 @@
                 @Html.ValidationMessageFor(m => m.MailingZipCode)
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.MailingCity, new { @class = "control-label required-field" })
                 @Html.TextBoxFor(m => m.MailingCity, new { @class = "form-control mailing-geo-field", data_geo = "locality", placeholder = "", @maxlength = "35" })
@@ -289,8 +289,10 @@
     <div class="col-md-12">
         <div class="form-group pull-right">
             <button type="button" class="btn btn-info" ng-show="vm.employeeId > 0" ng-click="vm.employeeChangeHistoryModal()">View Change History</button>
-            <button type="reset" class="btn btn-warning" ng-if="@(Model.RelievingDate != null)">Reset</button>
-            <button type="submit" class="btn btn-success" ng-if="@(Model.RelievingDate != null)">Save</button>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-success" ng-if="@(Model.RelievingDate != null)">Save</button>
+                <button type="reset" class="btn btn-default" ng-if="@(Model.RelievingDate != null)">Reset</button>
+            </div>
         </div>
     </div>
 </div>
