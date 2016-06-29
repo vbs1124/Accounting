@@ -99,6 +99,25 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="EmpInvestment">
+          <Key>
+            <PropertyRef Name="EmpInvestmentId" />
+          </Key>
+          <Property Name="EmpInvestmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="DeclaredAmount" Type="numeric" Precision="19" Scale="0" Nullable="false" />
+          <Property Name="ApprovedAmount" Type="numeric" Precision="19" Scale="0" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="SubCategoryId" Type="int" Nullable="false" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+          <Property Name="DocumentId" Type="int" />
+          <Property Name="ApprovedDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -438,6 +457,7 @@
           <Property Name="Code" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="MaximumLimit" Type="varchar(max)" />
+          <Property Name="DefaultAmount" Type="numeric" Precision="18" Scale="0" />
           <Property Name="Remark" Type="varchar(max)" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -680,6 +700,18 @@
             </Principal>
             <Dependent Role="City">
               <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpInvestment_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmpInvestment" Type="Self.EmpInvestment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmpInvestment">
+              <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1168,6 +1200,7 @@
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Config" EntityType="Self.Config" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpInvestment" EntityType="Self.EmpInvestment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeArchive" EntityType="Self.EmployeeArchive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeePaySlip" EntityType="Self.EmployeePaySlip" Schema="dbo" store:Type="Tables" />
@@ -1199,6 +1232,10 @@
           <AssociationSet Name="FK_City_State" Association="Self.FK_City_State">
             <End Role="State" EntitySet="State" />
             <End Role="City" EntitySet="City" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpInvestment_Employee" Association="Self.FK_EmpInvestment_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmpInvestment" EntitySet="EmpInvestment" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_Bank" Association="Self.FK_Employee_Bank">
             <End Role="Bank" EntitySet="Bank" />
@@ -1415,12 +1452,26 @@
           <FunctionImport Name="SalaryStructureChangeHistory" ReturnType="Collection(VservAccountingDBModel.SalaryStructureChangeHistory_Result)">
           <Parameter Name="EmpSalaryStructureId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="EmpSalaryDetailArchiveByUniqueChangeId" ReturnType="Collection(VservAccountingDBModel.EmpSalaryDetailArchiveByUniqueChangeId_Result)">
+          <Parameter Name="UniqueChangeId" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GenerateEmpPaySlip">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="MonthId" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetEmpSalaryStructureComparisonList" ReturnType="Collection(VservAccountingDBModel.GetEmpSalaryStructureComparisonList_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="UniqueChangeId" Mode="In" Type="Guid" />
+            <Parameter Name="FinancialYearFrom" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="AddressTypes" EntityType="VservAccountingDBModel.AddressType" />
           <EntitySet Name="ApplicationLogs" EntityType="VservAccountingDBModel.ApplicationLog" />
           <EntitySet Name="Banks" EntityType="VservAccountingDBModel.Bank" />
           <EntitySet Name="Cities" EntityType="VservAccountingDBModel.City" />
           <EntitySet Name="Configs" EntityType="VservAccountingDBModel.Config" />
           <EntitySet Name="Designations" EntityType="VservAccountingDBModel.Designation" />
+          <EntitySet Name="EmpInvestments" EntityType="VservAccountingDBModel.EmpInvestment" />
           <EntitySet Name="Employees" EntityType="VservAccountingDBModel.Employee" />
           <EntitySet Name="EmployeeArchives" EntityType="VservAccountingDBModel.EmployeeArchive" />
           <EntitySet Name="EmployeePaySlips" EntityType="VservAccountingDBModel.EmployeePaySlip" />
@@ -1471,6 +1522,10 @@
           <AssociationSet Name="FK_EmployeeArchive_Designation" Association="VservAccountingDBModel.FK_EmployeeArchive_Designation">
             <End Role="Designation" EntitySet="Designations" />
             <End Role="EmployeeArchive" EntitySet="EmployeeArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpInvestment_Employee" Association="VservAccountingDBModel.FK_EmpInvestment_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmpInvestment" EntitySet="EmpInvestments" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_Gender" Association="VservAccountingDBModel.FK_Employee_Gender">
             <End Role="Gender" EntitySet="Genders" />
@@ -1576,19 +1631,6 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
-          <FunctionImport Name="EmpSalaryDetailArchiveByUniqueChangeId" ReturnType="Collection(VservAccountingDBModel.EmpSalaryDetailArchiveByUniqueChangeId_Result)">
-            <Parameter Name="UniqueChangeId" Mode="In" Type="Guid" />
-          </FunctionImport>
-          <FunctionImport Name="GenerateEmpPaySlip">
-            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
-            <Parameter Name="MonthId" Mode="In" Type="Int32" />
-            <Parameter Name="Year" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetEmpSalaryStructureComparisonList" ReturnType="Collection(VservAccountingDBModel.GetEmpSalaryStructureComparisonList_Result)">
-            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
-            <Parameter Name="UniqueChangeId" Mode="In" Type="Guid" />
-            <Parameter Name="FinancialYearFrom" Mode="In" Type="Int32" />
-          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="ArchiveEmployee_Result">
           <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
@@ -1642,6 +1684,46 @@
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="HistoryId" Nullable="true" MaxLength="5" />
           <Property Type="Guid" Name="UniqueChangeId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="EmpSalaryDetailArchiveByUniqueChangeId_Result">
+          <Property Type="Int32" Name="EmployeeId" Nullable="true" />
+          <Property Type="Int32" Name="EmpSalaryStructureId" Nullable="true" />
+          <Property Type="String" Name="SCName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SCCode" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="SCDescription" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
+          <Property Type="String" Name="April" Nullable="true" />
+          <Property Type="String" Name="May" Nullable="true" />
+          <Property Type="String" Name="June" Nullable="true" />
+          <Property Type="String" Name="July" Nullable="true" />
+          <Property Type="String" Name="August" Nullable="true" />
+          <Property Type="String" Name="September" Nullable="true" />
+          <Property Type="String" Name="October" Nullable="true" />
+          <Property Type="String" Name="November" Nullable="true" />
+          <Property Type="String" Name="December" Nullable="true" />
+          <Property Type="String" Name="January" Nullable="true" />
+          <Property Type="String" Name="February" Nullable="true" />
+          <Property Type="String" Name="March" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetEmpSalaryStructureComparisonList_Result">
+          <Property Type="Int32" Name="EmployeeId" Nullable="true" />
+          <Property Type="Int32" Name="EmpSalaryStructureId" Nullable="true" />
+          <Property Type="String" Name="SCName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SCCode" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SCDescription" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
+          <Property Type="String" Name="April" Nullable="true" />
+          <Property Type="String" Name="May" Nullable="true" />
+          <Property Type="String" Name="June" Nullable="true" />
+          <Property Type="String" Name="July" Nullable="true" />
+          <Property Type="String" Name="August" Nullable="true" />
+          <Property Type="String" Name="September" Nullable="true" />
+          <Property Type="String" Name="October" Nullable="true" />
+          <Property Type="String" Name="November" Nullable="true" />
+          <Property Type="String" Name="December" Nullable="true" />
+          <Property Type="String" Name="January" Nullable="true" />
+          <Property Type="String" Name="February" Nullable="true" />
+          <Property Type="String" Name="March" Nullable="true" />
         </ComplexType>
         <EntityType Name="AddressType">
           <Key>
@@ -1743,6 +1825,26 @@
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Designation" ToRole="Employee" />
           <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Designation" FromRole="Designation" ToRole="EmployeeArchive" />
         </EntityType>
+        <EntityType Name="EmpInvestment">
+          <Key>
+            <PropertyRef Name="EmpInvestmentId" />
+          </Key>
+          <Property Name="EmpInvestmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="DeclaredAmount" Type="Decimal" Nullable="false" Precision="19" Scale="0" />
+          <Property Name="ApprovedAmount" Type="Decimal" Precision="19" Scale="0" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <Property Name="DocumentId" Type="Int32" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="VservAccountingDBModel.FK_EmpInvestment_Employee" FromRole="EmpInvestment" ToRole="Employee" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -1794,6 +1896,7 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Bank" Relationship="VservAccountingDBModel.FK_Employee_Bank" FromRole="Employee" ToRole="Bank" />
           <NavigationProperty Name="Designation" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Employee" ToRole="Designation" />
+          <NavigationProperty Name="EmpInvestments" Relationship="VservAccountingDBModel.FK_EmpInvestment_Employee" FromRole="Employee" ToRole="EmpInvestment" />
           <NavigationProperty Name="Gender" Relationship="VservAccountingDBModel.FK_Employee_Gender" FromRole="Employee" ToRole="Gender" />
           <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_Employee_MailingState" FromRole="Employee" ToRole="State" />
           <NavigationProperty Name="OfficeBranch" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="Employee" ToRole="OfficeBranch" />
@@ -2116,6 +2219,7 @@
           <Property Name="Code" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="MaximumLimit" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DefaultAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Remark" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
@@ -2437,6 +2541,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmpInvestment_Employee">
+          <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmpInvestment" Role="EmpInvestment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmpInvestment">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_Gender">
           <End Type="VservAccountingDBModel.Gender" Role="Gender" Multiplicity="1" />
           <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
@@ -2741,46 +2857,6 @@
           <End Type="VservAccountingDBModel.Role" Role="Role" Multiplicity="*" />
           <End Type="VservAccountingDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
-        <ComplexType Name="EmpSalaryDetailArchiveByUniqueChangeId_Result">
-          <Property Type="Int32" Name="EmployeeId" Nullable="true" />
-          <Property Type="Int32" Name="EmpSalaryStructureId" Nullable="true" />
-          <Property Type="String" Name="SCName" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="SCCode" Nullable="true" MaxLength="6" />
-          <Property Type="String" Name="SCDescription" Nullable="true" MaxLength="250" />
-          <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
-          <Property Type="String" Name="April" Nullable="true" />
-          <Property Type="String" Name="May" Nullable="true" />
-          <Property Type="String" Name="June" Nullable="true" />
-          <Property Type="String" Name="July" Nullable="true" />
-          <Property Type="String" Name="August" Nullable="true" />
-          <Property Type="String" Name="September" Nullable="true" />
-          <Property Type="String" Name="October" Nullable="true" />
-          <Property Type="String" Name="November" Nullable="true" />
-          <Property Type="String" Name="December" Nullable="true" />
-          <Property Type="String" Name="January" Nullable="true" />
-          <Property Type="String" Name="February" Nullable="true" />
-          <Property Type="String" Name="March" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetEmpSalaryStructureComparisonList_Result">
-          <Property Type="Int32" Name="EmployeeId" Nullable="true" />
-          <Property Type="Int32" Name="EmpSalaryStructureId" Nullable="true" />
-          <Property Type="String" Name="SCName" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="SCCode" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="SCDescription" Nullable="true" MaxLength="250" />
-          <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
-          <Property Type="String" Name="April" Nullable="true" />
-          <Property Type="String" Name="May" Nullable="true" />
-          <Property Type="String" Name="June" Nullable="true" />
-          <Property Type="String" Name="July" Nullable="true" />
-          <Property Type="String" Name="August" Nullable="true" />
-          <Property Type="String" Name="September" Nullable="true" />
-          <Property Type="String" Name="October" Nullable="true" />
-          <Property Type="String" Name="November" Nullable="true" />
-          <Property Type="String" Name="December" Nullable="true" />
-          <Property Type="String" Name="January" Nullable="true" />
-          <Property Type="String" Name="February" Nullable="true" />
-          <Property Type="String" Name="March" Nullable="true" />
-        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2851,6 +2927,55 @@
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="HistoryId" ColumnName="HistoryId" />
                 <ScalarProperty Name="UniqueChangeId" ColumnName="UniqueChangeId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EmpSalaryDetailArchiveByUniqueChangeId" FunctionName="VservAccountingDBModel.Store.EmpSalaryDetailArchiveByUniqueChangeId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.EmpSalaryDetailArchiveByUniqueChangeId_Result">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
+                <ScalarProperty Name="SCName" ColumnName="SCName" />
+                <ScalarProperty Name="SCCode" ColumnName="SCCode" />
+                <ScalarProperty Name="SCDescription" ColumnName="SCDescription" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="April" ColumnName="April" />
+                <ScalarProperty Name="May" ColumnName="May" />
+                <ScalarProperty Name="June" ColumnName="June" />
+                <ScalarProperty Name="July" ColumnName="July" />
+                <ScalarProperty Name="August" ColumnName="August" />
+                <ScalarProperty Name="September" ColumnName="September" />
+                <ScalarProperty Name="October" ColumnName="October" />
+                <ScalarProperty Name="November" ColumnName="November" />
+                <ScalarProperty Name="December" ColumnName="December" />
+                <ScalarProperty Name="January" ColumnName="January" />
+                <ScalarProperty Name="February" ColumnName="February" />
+                <ScalarProperty Name="March" ColumnName="March" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GenerateEmpPaySlip" FunctionName="VservAccountingDBModel.Store.GenerateEmpPaySlip" />
+          <FunctionImportMapping FunctionImportName="GetEmpSalaryStructureComparisonList" FunctionName="VservAccountingDBModel.Store.GetEmpSalaryStructureComparisonList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.GetEmpSalaryStructureComparisonList_Result">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
+                <ScalarProperty Name="SCName" ColumnName="SCName" />
+                <ScalarProperty Name="SCCode" ColumnName="SCCode" />
+                <ScalarProperty Name="SCDescription" ColumnName="SCDescription" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="April" ColumnName="April" />
+                <ScalarProperty Name="May" ColumnName="May" />
+                <ScalarProperty Name="June" ColumnName="June" />
+                <ScalarProperty Name="July" ColumnName="July" />
+                <ScalarProperty Name="August" ColumnName="August" />
+                <ScalarProperty Name="September" ColumnName="September" />
+                <ScalarProperty Name="October" ColumnName="October" />
+                <ScalarProperty Name="November" ColumnName="November" />
+                <ScalarProperty Name="December" ColumnName="December" />
+                <ScalarProperty Name="January" ColumnName="January" />
+                <ScalarProperty Name="February" ColumnName="February" />
+                <ScalarProperty Name="March" ColumnName="March" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2951,6 +3076,26 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpInvestments">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.EmpInvestment">
+              <MappingFragment StoreEntitySet="EmpInvestment">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ApprovedAmount" ColumnName="ApprovedAmount" />
+                <ScalarProperty Name="DeclaredAmount" ColumnName="DeclaredAmount" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmpInvestmentId" ColumnName="EmpInvestmentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3304,6 +3449,7 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="DefaultAmount" ColumnName="DefaultAmount" />
                 <ScalarProperty Name="MaximumLimit" ColumnName="MaximumLimit" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
@@ -3552,55 +3698,6 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="EmpSalaryDetailArchiveByUniqueChangeId" FunctionName="VservAccountingDBModel.Store.EmpSalaryDetailArchiveByUniqueChangeId">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="VservAccountingDBModel.EmpSalaryDetailArchiveByUniqueChangeId_Result">
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
-                <ScalarProperty Name="SCName" ColumnName="SCName" />
-                <ScalarProperty Name="SCCode" ColumnName="SCCode" />
-                <ScalarProperty Name="SCDescription" ColumnName="SCDescription" />
-                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
-                <ScalarProperty Name="April" ColumnName="April" />
-                <ScalarProperty Name="May" ColumnName="May" />
-                <ScalarProperty Name="June" ColumnName="June" />
-                <ScalarProperty Name="July" ColumnName="July" />
-                <ScalarProperty Name="August" ColumnName="August" />
-                <ScalarProperty Name="September" ColumnName="September" />
-                <ScalarProperty Name="October" ColumnName="October" />
-                <ScalarProperty Name="November" ColumnName="November" />
-                <ScalarProperty Name="December" ColumnName="December" />
-                <ScalarProperty Name="January" ColumnName="January" />
-                <ScalarProperty Name="February" ColumnName="February" />
-                <ScalarProperty Name="March" ColumnName="March" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GenerateEmpPaySlip" FunctionName="VservAccountingDBModel.Store.GenerateEmpPaySlip" />
-          <FunctionImportMapping FunctionImportName="GetEmpSalaryStructureComparisonList" FunctionName="VservAccountingDBModel.Store.GetEmpSalaryStructureComparisonList">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="VservAccountingDBModel.GetEmpSalaryStructureComparisonList_Result">
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
-                <ScalarProperty Name="SCName" ColumnName="SCName" />
-                <ScalarProperty Name="SCCode" ColumnName="SCCode" />
-                <ScalarProperty Name="SCDescription" ColumnName="SCDescription" />
-                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
-                <ScalarProperty Name="April" ColumnName="April" />
-                <ScalarProperty Name="May" ColumnName="May" />
-                <ScalarProperty Name="June" ColumnName="June" />
-                <ScalarProperty Name="July" ColumnName="July" />
-                <ScalarProperty Name="August" ColumnName="August" />
-                <ScalarProperty Name="September" ColumnName="September" />
-                <ScalarProperty Name="October" ColumnName="October" />
-                <ScalarProperty Name="November" ColumnName="November" />
-                <ScalarProperty Name="December" ColumnName="December" />
-                <ScalarProperty Name="January" ColumnName="January" />
-                <ScalarProperty Name="February" ColumnName="February" />
-                <ScalarProperty Name="March" ColumnName="March" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
