@@ -12,6 +12,7 @@
         var investmentDeclarationResult = {};
         var empInvestmentDeclarationModel = [];
         var empsalarystructureid = null;
+        var employee = {};
 
         var svc = {
             addEmployeeSalaryDetail: addEmployeeSalaryDetail,
@@ -36,7 +37,6 @@
             empSalaryStructureHistory: empSalaryStructureHistory,
 
             getEmpSalaryStructureComparisonList: getEmpSalaryStructureComparisonList,
-            empSalaryStructureHistory: empSalaryStructureHistory,
 
             // Investment Declaration.
             loadInvestmentByEmployeeId: loadInvestmentByEmployeeId,
@@ -44,7 +44,10 @@
 
             loadInvestmentCatogories: loadInvestmentCatogories,
             empInvestmentDeclarationModel: empInvestmentDeclarationModel,
-            addEmployeeInvestments: addEmployeeInvestments
+            addEmployeeInvestments: addEmployeeInvestments,
+
+            loadEmployee: loadEmployee,
+            employee: employee
         };
 
         return svc;
@@ -53,7 +56,7 @@
             return serviceHandler.executePostService('/Employee/SaveEmployeeSalaryDetail?employeeId=' + employeeId, empSalaryStructureModel);
         }
 
-        function addEmployeeInvestments(employeeId,empInvestmentDeclarationModel) {
+        function addEmployeeInvestments(employeeId, empInvestmentDeclarationModel) {
             return serviceHandler.executePostService('/Employee/SaveEmployeeInvestments?employeeId=' + employeeId, empInvestmentDeclarationModel.InvestmentCategories);
         }
 
@@ -100,7 +103,7 @@
                     employeePaySheet.addRange(resp.result);
                     if (employeePaySheet.length > 0) {
                         empsalarystructureid = employeePaySheet[0].EmpSalaryStructureId;
-                }
+                    }
                 }
                 else {
                     $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
@@ -193,6 +196,19 @@
                     }
                 });
             }
+        }
+
+        function loadEmployee(employeeId) {
+            serviceHandler.executePostService('/Employee/GetEmployee', employeeId).then(function (resp) {
+                if (resp.businessException == null) {
+                    if (resp.result) {
+                        angular.extend(employee, resp.result);
+                    }
+                }
+                else {
+                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                }
+            });
         }
     }
 })();

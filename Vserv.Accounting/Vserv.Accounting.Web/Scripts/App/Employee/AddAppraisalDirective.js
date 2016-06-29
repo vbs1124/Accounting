@@ -60,27 +60,32 @@
                 return false;
             }
 
-            vm.saving = true;
-            employeeService.addEmployeeSalaryDetail(vm.empSalaryStructureModel, vm.employeeId).then(function (resp) {
-                if (resp.businessException == null) {
-                    $.showToastrMessage("success", 'Salary breakup generated successfully.', "Success!");
-                    employeeService.loadEmployeeAppraisalHistory(vm.employeeId);
+            
+            bootbox.confirm("Are you sure that you want to add a new Appraisal?", function (result) {
+                if (result) {
+                    vm.saving = true;
+                    employeeService.addEmployeeSalaryDetail(vm.empSalaryStructureModel, vm.employeeId).then(function (resp) {
+                        if (resp.businessException == null) {
+                            $.showToastrMessage("success", 'Salary breakup generated successfully.', "Success!");
+                            employeeService.loadEmployeeAppraisalHistory(vm.employeeId);
 
-                    // Activate "Salary Breakup" tab.
-                    if (moment(vm.empSalaryStructureModel.effectiveFrom).year() == moment().year()) {
-                        employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(moment().year()), parseInt(moment().year()) + 1);
-                        activateTab("tabs-manage-employee", "emp-salary-breakup");
-                    }
+                            // Activate "Salary Breakup" tab.
+                            if (moment(vm.empSalaryStructureModel.effectiveFrom).year() == moment().year()) {
+                                employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(moment().year()), parseInt(moment().year()) + 1);
+                                activateTab("tabs-manage-employee", "emp-salary-breakup");
+                            }
 
-                    //Close the modal
-                    $scope.$close();
+                            //Close the modal
+                            $scope.$close();
+                        }
+                        else {
+                            vm.errorMessage = 'There was a problem adding the appraisal: ' + data;
+                        }
+                        vm.saving = false;
+                    });
                 }
-                else {
-                    vm.errorMessage = 'There was a problem adding the appraisal: ' + data;
-                }
-                vm.saving = false;
+                vm.saving = true;
             });
-            return false;
         }
 
         //-------------------------
