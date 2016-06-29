@@ -28,10 +28,10 @@
 
         $scope.openEmpSalaryChangeHistoryModal = function (item) {
             $modal.open({
-                template: '<emp-salary-comparison empid="empid" fyf="fyf" ucid ="ucid" />',
+                template: '<emp-salary-comparison empid="empid" updby="updby" updon="updon" fyf="fyf" ucid ="ucid" />',
                 animation: true,
                 size: 'lg',
-                scope: angular.extend($scope.$new(true), { empid: item.EmployeeId, fyf: $("#cmb-financial-year").val(), ucid: item.UniqueChangeId })
+                scope: angular.extend($scope.$new(true), { empid: item.EmployeeId, updby: item.UpdatedBy, updon: item.UpdatedDate, fyf: $("#cmb-financial-year").val(), ucid: item.UniqueChangeId })
             });
         }
     }

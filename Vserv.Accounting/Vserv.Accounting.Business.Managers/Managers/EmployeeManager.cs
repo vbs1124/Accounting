@@ -658,6 +658,14 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
+        public EmployeePaySlip GetEmployeePaySlip(int employeeId, int monthId, int year)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                IEmployeePaySlipRepo repo = DataRepositoryFactory.GetDataRepository<IEmployeePaySlipRepo>();
+                return repo.GetEmployeePaySlip(employeeId, monthId, year);
+            });
+        }
         #endregion
 
         #endregion

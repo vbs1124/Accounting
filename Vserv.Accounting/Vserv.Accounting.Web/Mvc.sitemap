@@ -9,7 +9,7 @@
       <mvcSiteMapNode title="Add Employee" controller="employee" action="add"/>
       <mvcSiteMapNode title="Edit Employee" controller="employee" action="edit" preservedRouteParameters="id" >
       </mvcSiteMapNode>
-      <mvcSiteMapNode title="Compare Employees" controller="employee" action="EmployeeCompareResult"/>
+      <mvcSiteMapNode title="Employee Change History" controller="employee" action="EmployeeCompareResult" preservedRouteParameters="employeeArchiveId"/>
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Designations" controller="designation" action="index">
       <mvcSiteMapNode title="Add Designation" controller="designation" action="add"/>

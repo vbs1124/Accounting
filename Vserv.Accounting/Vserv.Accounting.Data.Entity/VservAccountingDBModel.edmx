@@ -99,25 +99,6 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="EmpInvestment">
-          <Key>
-            <PropertyRef Name="EmpInvestmentId" />
-          </Key>
-          <Property Name="EmpInvestmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EmployeeId" Type="int" Nullable="false" />
-          <Property Name="DeclaredAmount" Type="numeric" Precision="19" Scale="0" Nullable="false" />
-          <Property Name="ApprovedAmount" Type="numeric" Precision="19" Scale="0" />
-          <Property Name="CategoryId" Type="int" Nullable="false" />
-          <Property Name="SubCategoryId" Type="int" Nullable="false" />
-          <Property Name="IsApproved" Type="bit" Nullable="false" />
-          <Property Name="DocumentId" Type="int" />
-          <Property Name="ApprovedDate" Type="datetime" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="UpdatedDate" Type="datetime" />
-        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -213,6 +194,97 @@
           <Property Name="BankId" Type="int" />
           <Property Name="BankIFSCCode" Type="varchar" MaxLength="20" />
           <Property Name="BankMICRCode" Type="varchar" MaxLength="20" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EmployeePaySlip">
+          <Key>
+            <PropertyRef Name="EmployeePaySlipId" />
+          </Key>
+          <Property Name="EmployeePaySlipId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="VBS_Id" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="PersonID" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="EmployeeFullName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="PaySlipMonth" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PaySlipYear" Type="int" Nullable="false" />
+          <Property Name="GeneratedOn" Type="datetime" Nullable="false" />
+          <Property Name="IsApproved" Type="bit" Nullable="false" />
+          <Property Name="ApprovedDate" Type="datetime" />
+          <Property Name="PayPeriod" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Designation" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="JoiningDate" Type="datetime" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PermanentAccountNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UniversalAccountNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EPFNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AADHAARNumber" Type="varchar" MaxLength="20" />
+          <Property Name="ESINumber" Type="varchar" MaxLength="20" />
+          <Property Name="BankAccountNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BankName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Department" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Band" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DaysWorkedInMonth" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LWPCurrentOrPreviousMonth" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SabbaticalLeaveCurrentOrPreviousMon" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StandardBasicSalary" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StandardHRA" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StandardConveyanceAllowance" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StandardCityCompensatoryAllowan" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StandardHolidayAllowance" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StandardMedicalAllowance" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StandardDepAllowOrPerfomInc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EarningsBasicSalary" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EarningsHRA" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EarningsConveyanceAllowance" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EarningsCityCompensatoryAllowan" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EarningsHolidayAllowance" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EarningsMedicalAllowance" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EarningsDepAllowOrPerfomInc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PowerOf1Deduction" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EePFContribution" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProfessionalTax" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IncomeTax" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalStandardSalary" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GrossEarnings" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GrossDeductions" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NetPay" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HRAAnnualExemption" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ConveyanceAnnualExempt" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalExemption" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NMetroHRARcvdOrProj" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NMetroOfBasic" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NMetroRentPaid" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LeastOfMetroOrNMetroIsExempt" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MonthsRemainingTillMarch" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TaxableIncometillPrMonth" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CurrentMthTaxableIncome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProjectedStandardSalary" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TaxableAnnPerks" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AnnualMedicalExemption" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GrossSalary" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ExemptionUS10" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TaxOnEmployment" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IncomeUnderHeadSalary" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="InterestOnHouseProperty" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GrossTotalIncome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AggOfChapterVI" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalIncome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TaxOnTotalIncome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TaxCredit" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EducationCess" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TaxPayable" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TaxDeductedSofar" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BalanceTax" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProvidentFund" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="VoluntaryPF" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PaymentTowardsLifeInsurancePolicy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalContributionUnderChapterVIA" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalMonthlyTaxDeduction" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -366,7 +438,6 @@
           <Property Name="Code" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="MaximumLimit" Type="varchar(max)" />
-          <Property Name="DefaultAmount" Type="numeric" Precision="18" Scale="0" />
           <Property Name="Remark" Type="varchar(max)" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -609,18 +680,6 @@
             </Principal>
             <Dependent Role="City">
               <PropertyRef Name="StateId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmpInvestment_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="EmpInvestment" Type="Self.EmpInvestment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="EmpInvestment">
-              <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1016,7 +1075,14 @@
           <Parameter Name="EmpSalaryStructureId" Type="int" Mode="In" />
           <Parameter Name="UpdatedByUserName" Type="varchar" Mode="In" />
         </Function>
-        
+        <Function Name="EmpSalaryDetailArchiveByUniqueChangeId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UniqueChangeId" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="GenerateEmpPaySlip" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeId" Type="int" Mode="In" />
+          <Parameter Name="MonthId" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetEmpAppraisalHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmployeeId" Type="int" Mode="In" />
         </Function>
@@ -1025,7 +1091,11 @@
           <Parameter Name="FinancialYearFrom" Type="int" Mode="In" />
           <Parameter Name="FinancialYearTo" Type="int" Mode="In" />
         </Function>
-        
+        <Function Name="GetEmpSalaryStructureComparisonList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeId" Type="int" Mode="In" />
+          <Parameter Name="UniqueChangeId" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="FinancialYearFrom" Type="int" Mode="In" />
+        </Function>
         <Function Name="InsertErrorLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="appdomain" Type="varchar" Mode="In" />
           <Parameter Name="exception" Type="varchar(max)" Mode="In" />
@@ -1098,9 +1168,9 @@
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Config" EntityType="Self.Config" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EmpInvestment" EntityType="Self.EmpInvestment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeArchive" EntityType="Self.EmployeeArchive" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeePaySlip" EntityType="Self.EmployeePaySlip" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpSalaryDetail" EntityType="Self.EmpSalaryDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpSalaryDetailArchive" EntityType="Self.EmpSalaryDetailArchive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpSalaryStructure" EntityType="Self.EmpSalaryStructure" Schema="dbo" store:Type="Tables" />
@@ -1129,10 +1199,6 @@
           <AssociationSet Name="FK_City_State" Association="Self.FK_City_State">
             <End Role="State" EntitySet="State" />
             <End Role="City" EntitySet="City" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmpInvestment_Employee" Association="Self.FK_EmpInvestment_Employee">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="EmpInvestment" EntitySet="EmpInvestment" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_Bank" Association="Self.FK_Employee_Bank">
             <End Role="Bank" EntitySet="Bank" />
@@ -1355,9 +1421,9 @@
           <EntitySet Name="Cities" EntityType="VservAccountingDBModel.City" />
           <EntitySet Name="Configs" EntityType="VservAccountingDBModel.Config" />
           <EntitySet Name="Designations" EntityType="VservAccountingDBModel.Designation" />
-          <EntitySet Name="EmpInvestments" EntityType="VservAccountingDBModel.EmpInvestment" />
           <EntitySet Name="Employees" EntityType="VservAccountingDBModel.Employee" />
           <EntitySet Name="EmployeeArchives" EntityType="VservAccountingDBModel.EmployeeArchive" />
+          <EntitySet Name="EmployeePaySlips" EntityType="VservAccountingDBModel.EmployeePaySlip" />
           <EntitySet Name="EmpSalaryDetails" EntityType="VservAccountingDBModel.EmpSalaryDetail" />
           <EntitySet Name="EmpSalaryDetailArchives" EntityType="VservAccountingDBModel.EmpSalaryDetailArchive" />
           <EntitySet Name="EmpSalaryStructures" EntityType="VservAccountingDBModel.EmpSalaryStructure" />
@@ -1405,10 +1471,6 @@
           <AssociationSet Name="FK_EmployeeArchive_Designation" Association="VservAccountingDBModel.FK_EmployeeArchive_Designation">
             <End Role="Designation" EntitySet="Designations" />
             <End Role="EmployeeArchive" EntitySet="EmployeeArchives" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmpInvestment_Employee" Association="VservAccountingDBModel.FK_EmpInvestment_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="EmpInvestment" EntitySet="EmpInvestments" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_Gender" Association="VservAccountingDBModel.FK_Employee_Gender">
             <End Role="Gender" EntitySet="Genders" />
@@ -1514,6 +1576,19 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
+          <FunctionImport Name="EmpSalaryDetailArchiveByUniqueChangeId" ReturnType="Collection(VservAccountingDBModel.EmpSalaryDetailArchiveByUniqueChangeId_Result)">
+            <Parameter Name="UniqueChangeId" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="GenerateEmpPaySlip">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="MonthId" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetEmpSalaryStructureComparisonList" ReturnType="Collection(VservAccountingDBModel.GetEmpSalaryStructureComparisonList_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="UniqueChangeId" Mode="In" Type="Guid" />
+            <Parameter Name="FinancialYearFrom" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="ArchiveEmployee_Result">
           <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
@@ -1668,26 +1743,6 @@
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Designation" ToRole="Employee" />
           <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Designation" FromRole="Designation" ToRole="EmployeeArchive" />
         </EntityType>
-        <EntityType Name="EmpInvestment">
-          <Key>
-            <PropertyRef Name="EmpInvestmentId" />
-          </Key>
-          <Property Name="EmpInvestmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
-          <Property Name="DeclaredAmount" Type="Decimal" Nullable="false" Precision="19" Scale="0" />
-          <Property Name="ApprovedAmount" Type="Decimal" Precision="19" Scale="0" />
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="SubCategoryId" Type="Int32" Nullable="false" />
-          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
-          <Property Name="DocumentId" Type="Int32" />
-          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="VservAccountingDBModel.FK_EmpInvestment_Employee" FromRole="EmpInvestment" ToRole="Employee" />
-        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -1739,7 +1794,6 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Bank" Relationship="VservAccountingDBModel.FK_Employee_Bank" FromRole="Employee" ToRole="Bank" />
           <NavigationProperty Name="Designation" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Employee" ToRole="Designation" />
-          <NavigationProperty Name="EmpInvestments" Relationship="VservAccountingDBModel.FK_EmpInvestment_Employee" FromRole="Employee" ToRole="EmpInvestment" />
           <NavigationProperty Name="Gender" Relationship="VservAccountingDBModel.FK_Employee_Gender" FromRole="Employee" ToRole="Gender" />
           <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_Employee_MailingState" FromRole="Employee" ToRole="State" />
           <NavigationProperty Name="OfficeBranch" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="Employee" ToRole="OfficeBranch" />
@@ -1804,6 +1858,97 @@
           <NavigationProperty Name="OfficeBranch" Relationship="VservAccountingDBModel.FK_EmployeeArchive_OfficeBranch" FromRole="EmployeeArchive" ToRole="OfficeBranch" />
           <NavigationProperty Name="State1" Relationship="VservAccountingDBModel.FK_EmployeeArchive_PermanentState" FromRole="EmployeeArchive" ToRole="State" />
           <NavigationProperty Name="Salutation" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Salutation" FromRole="EmployeeArchive" ToRole="Salutation" />
+        </EntityType>
+        <EntityType Name="EmployeePaySlip">
+          <Key>
+            <PropertyRef Name="EmployeePaySlipId" />
+          </Key>
+          <Property Name="EmployeePaySlipId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="VBS_Id" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="PersonID" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeFullName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PaySlipMonth" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaySlipYear" Type="Int32" Nullable="false" />
+          <Property Name="GeneratedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+          <Property Name="PayPeriod" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Designation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JoiningDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAccountNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UniversalAccountNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EPFNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AADHAARNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ESINumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BankAccountNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Department" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Band" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DaysWorkedInMonth" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LWPCurrentOrPreviousMonth" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SabbaticalLeaveCurrentOrPreviousMon" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StandardBasicSalary" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StandardHRA" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StandardConveyanceAllowance" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StandardCityCompensatoryAllowan" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StandardHolidayAllowance" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StandardMedicalAllowance" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StandardDepAllowOrPerfomInc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EarningsBasicSalary" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EarningsHRA" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EarningsConveyanceAllowance" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EarningsCityCompensatoryAllowan" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EarningsHolidayAllowance" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EarningsMedicalAllowance" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EarningsDepAllowOrPerfomInc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PowerOf1Deduction" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EePFContribution" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProfessionalTax" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IncomeTax" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalStandardSalary" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GrossEarnings" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GrossDeductions" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NetPay" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HRAAnnualExemption" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ConveyanceAnnualExempt" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalExemption" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NMetroHRARcvdOrProj" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NMetroOfBasic" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NMetroRentPaid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LeastOfMetroOrNMetroIsExempt" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MonthsRemainingTillMarch" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TaxableIncometillPrMonth" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentMthTaxableIncome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProjectedStandardSalary" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TaxableAnnPerks" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AnnualMedicalExemption" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GrossSalary" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExemptionUS10" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TaxOnEmployment" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IncomeUnderHeadSalary" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="InterestOnHouseProperty" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GrossTotalIncome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AggOfChapterVI" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalIncome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TaxOnTotalIncome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TaxCredit" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EducationCess" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TaxPayable" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TaxDeductedSofar" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BalanceTax" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProvidentFund" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VoluntaryPF" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentTowardsLifeInsurancePolicy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalContributionUnderChapterVIA" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalMonthlyTaxDeduction" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="EmpSalaryDetail">
           <Key>
@@ -1971,7 +2116,6 @@
           <Property Name="Code" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="MaximumLimit" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DefaultAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Remark" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
@@ -2293,18 +2437,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EmpInvestment_Employee">
-          <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="VservAccountingDBModel.EmpInvestment" Role="EmpInvestment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="EmpInvestment">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Employee_Gender">
           <End Type="VservAccountingDBModel.Gender" Role="Gender" Multiplicity="1" />
           <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
@@ -2609,6 +2741,46 @@
           <End Type="VservAccountingDBModel.Role" Role="Role" Multiplicity="*" />
           <End Type="VservAccountingDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
+        <ComplexType Name="EmpSalaryDetailArchiveByUniqueChangeId_Result">
+          <Property Type="Int32" Name="EmployeeId" Nullable="true" />
+          <Property Type="Int32" Name="EmpSalaryStructureId" Nullable="true" />
+          <Property Type="String" Name="SCName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SCCode" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="SCDescription" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
+          <Property Type="String" Name="April" Nullable="true" />
+          <Property Type="String" Name="May" Nullable="true" />
+          <Property Type="String" Name="June" Nullable="true" />
+          <Property Type="String" Name="July" Nullable="true" />
+          <Property Type="String" Name="August" Nullable="true" />
+          <Property Type="String" Name="September" Nullable="true" />
+          <Property Type="String" Name="October" Nullable="true" />
+          <Property Type="String" Name="November" Nullable="true" />
+          <Property Type="String" Name="December" Nullable="true" />
+          <Property Type="String" Name="January" Nullable="true" />
+          <Property Type="String" Name="February" Nullable="true" />
+          <Property Type="String" Name="March" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetEmpSalaryStructureComparisonList_Result">
+          <Property Type="Int32" Name="EmployeeId" Nullable="true" />
+          <Property Type="Int32" Name="EmpSalaryStructureId" Nullable="true" />
+          <Property Type="String" Name="SCName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SCCode" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SCDescription" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
+          <Property Type="String" Name="April" Nullable="true" />
+          <Property Type="String" Name="May" Nullable="true" />
+          <Property Type="String" Name="June" Nullable="true" />
+          <Property Type="String" Name="July" Nullable="true" />
+          <Property Type="String" Name="August" Nullable="true" />
+          <Property Type="String" Name="September" Nullable="true" />
+          <Property Type="String" Name="October" Nullable="true" />
+          <Property Type="String" Name="November" Nullable="true" />
+          <Property Type="String" Name="December" Nullable="true" />
+          <Property Type="String" Name="January" Nullable="true" />
+          <Property Type="String" Name="February" Nullable="true" />
+          <Property Type="String" Name="March" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2782,26 +2954,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EmpInvestments">
-            <EntityTypeMapping TypeName="VservAccountingDBModel.EmpInvestment">
-              <MappingFragment StoreEntitySet="EmpInvestment">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
-                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
-                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="ApprovedAmount" ColumnName="ApprovedAmount" />
-                <ScalarProperty Name="DeclaredAmount" ColumnName="DeclaredAmount" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="EmpInvestmentId" ColumnName="EmpInvestmentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="VservAccountingDBModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
@@ -2902,6 +3054,98 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="EmployeeArchiveId" ColumnName="EmployeeArchiveId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeePaySlips">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.EmployeePaySlip">
+              <MappingFragment StoreEntitySet="EmployeePaySlip">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="TotalMonthlyTaxDeduction" ColumnName="TotalMonthlyTaxDeduction" />
+                <ScalarProperty Name="TotalContributionUnderChapterVIA" ColumnName="TotalContributionUnderChapterVIA" />
+                <ScalarProperty Name="PaymentTowardsLifeInsurancePolicy" ColumnName="PaymentTowardsLifeInsurancePolicy" />
+                <ScalarProperty Name="VoluntaryPF" ColumnName="VoluntaryPF" />
+                <ScalarProperty Name="ProvidentFund" ColumnName="ProvidentFund" />
+                <ScalarProperty Name="BalanceTax" ColumnName="BalanceTax" />
+                <ScalarProperty Name="TaxDeductedSofar" ColumnName="TaxDeductedSofar" />
+                <ScalarProperty Name="TaxPayable" ColumnName="TaxPayable" />
+                <ScalarProperty Name="EducationCess" ColumnName="EducationCess" />
+                <ScalarProperty Name="TaxCredit" ColumnName="TaxCredit" />
+                <ScalarProperty Name="TaxOnTotalIncome" ColumnName="TaxOnTotalIncome" />
+                <ScalarProperty Name="TotalIncome" ColumnName="TotalIncome" />
+                <ScalarProperty Name="AggOfChapterVI" ColumnName="AggOfChapterVI" />
+                <ScalarProperty Name="GrossTotalIncome" ColumnName="GrossTotalIncome" />
+                <ScalarProperty Name="InterestOnHouseProperty" ColumnName="InterestOnHouseProperty" />
+                <ScalarProperty Name="IncomeUnderHeadSalary" ColumnName="IncomeUnderHeadSalary" />
+                <ScalarProperty Name="TaxOnEmployment" ColumnName="TaxOnEmployment" />
+                <ScalarProperty Name="ExemptionUS10" ColumnName="ExemptionUS10" />
+                <ScalarProperty Name="GrossSalary" ColumnName="GrossSalary" />
+                <ScalarProperty Name="AnnualMedicalExemption" ColumnName="AnnualMedicalExemption" />
+                <ScalarProperty Name="TaxableAnnPerks" ColumnName="TaxableAnnPerks" />
+                <ScalarProperty Name="ProjectedStandardSalary" ColumnName="ProjectedStandardSalary" />
+                <ScalarProperty Name="CurrentMthTaxableIncome" ColumnName="CurrentMthTaxableIncome" />
+                <ScalarProperty Name="TaxableIncometillPrMonth" ColumnName="TaxableIncometillPrMonth" />
+                <ScalarProperty Name="MonthsRemainingTillMarch" ColumnName="MonthsRemainingTillMarch" />
+                <ScalarProperty Name="LeastOfMetroOrNMetroIsExempt" ColumnName="LeastOfMetroOrNMetroIsExempt" />
+                <ScalarProperty Name="NMetroRentPaid" ColumnName="NMetroRentPaid" />
+                <ScalarProperty Name="NMetroOfBasic" ColumnName="NMetroOfBasic" />
+                <ScalarProperty Name="NMetroHRARcvdOrProj" ColumnName="NMetroHRARcvdOrProj" />
+                <ScalarProperty Name="TotalExemption" ColumnName="TotalExemption" />
+                <ScalarProperty Name="ConveyanceAnnualExempt" ColumnName="ConveyanceAnnualExempt" />
+                <ScalarProperty Name="HRAAnnualExemption" ColumnName="HRAAnnualExemption" />
+                <ScalarProperty Name="NetPay" ColumnName="NetPay" />
+                <ScalarProperty Name="GrossDeductions" ColumnName="GrossDeductions" />
+                <ScalarProperty Name="GrossEarnings" ColumnName="GrossEarnings" />
+                <ScalarProperty Name="TotalStandardSalary" ColumnName="TotalStandardSalary" />
+                <ScalarProperty Name="IncomeTax" ColumnName="IncomeTax" />
+                <ScalarProperty Name="ProfessionalTax" ColumnName="ProfessionalTax" />
+                <ScalarProperty Name="EePFContribution" ColumnName="EePFContribution" />
+                <ScalarProperty Name="PowerOf1Deduction" ColumnName="PowerOf1Deduction" />
+                <ScalarProperty Name="EarningsDepAllowOrPerfomInc" ColumnName="EarningsDepAllowOrPerfomInc" />
+                <ScalarProperty Name="EarningsMedicalAllowance" ColumnName="EarningsMedicalAllowance" />
+                <ScalarProperty Name="EarningsHolidayAllowance" ColumnName="EarningsHolidayAllowance" />
+                <ScalarProperty Name="EarningsCityCompensatoryAllowan" ColumnName="EarningsCityCompensatoryAllowan" />
+                <ScalarProperty Name="EarningsConveyanceAllowance" ColumnName="EarningsConveyanceAllowance" />
+                <ScalarProperty Name="EarningsHRA" ColumnName="EarningsHRA" />
+                <ScalarProperty Name="EarningsBasicSalary" ColumnName="EarningsBasicSalary" />
+                <ScalarProperty Name="StandardDepAllowOrPerfomInc" ColumnName="StandardDepAllowOrPerfomInc" />
+                <ScalarProperty Name="StandardMedicalAllowance" ColumnName="StandardMedicalAllowance" />
+                <ScalarProperty Name="StandardHolidayAllowance" ColumnName="StandardHolidayAllowance" />
+                <ScalarProperty Name="StandardCityCompensatoryAllowan" ColumnName="StandardCityCompensatoryAllowan" />
+                <ScalarProperty Name="StandardConveyanceAllowance" ColumnName="StandardConveyanceAllowance" />
+                <ScalarProperty Name="StandardHRA" ColumnName="StandardHRA" />
+                <ScalarProperty Name="StandardBasicSalary" ColumnName="StandardBasicSalary" />
+                <ScalarProperty Name="SabbaticalLeaveCurrentOrPreviousMon" ColumnName="SabbaticalLeaveCurrentOrPreviousMon" />
+                <ScalarProperty Name="LWPCurrentOrPreviousMonth" ColumnName="LWPCurrentOrPreviousMonth" />
+                <ScalarProperty Name="DaysWorkedInMonth" ColumnName="DaysWorkedInMonth" />
+                <ScalarProperty Name="Band" ColumnName="Band" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="BankAccountNumber" ColumnName="BankAccountNumber" />
+                <ScalarProperty Name="ESINumber" ColumnName="ESINumber" />
+                <ScalarProperty Name="AADHAARNumber" ColumnName="AADHAARNumber" />
+                <ScalarProperty Name="EPFNumber" ColumnName="EPFNumber" />
+                <ScalarProperty Name="UniversalAccountNumber" ColumnName="UniversalAccountNumber" />
+                <ScalarProperty Name="PermanentAccountNumber" ColumnName="PermanentAccountNumber" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="PayPeriod" ColumnName="PayPeriod" />
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="GeneratedOn" ColumnName="GeneratedOn" />
+                <ScalarProperty Name="PaySlipYear" ColumnName="PaySlipYear" />
+                <ScalarProperty Name="PaySlipMonth" ColumnName="PaySlipMonth" />
+                <ScalarProperty Name="EmployeeFullName" ColumnName="EmployeeFullName" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="VBS_Id" ColumnName="VBS_Id" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeePaySlipId" ColumnName="EmployeePaySlipId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3060,7 +3304,6 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="DefaultAmount" ColumnName="DefaultAmount" />
                 <ScalarProperty Name="MaximumLimit" ColumnName="MaximumLimit" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
@@ -3309,6 +3552,55 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="EmpSalaryDetailArchiveByUniqueChangeId" FunctionName="VservAccountingDBModel.Store.EmpSalaryDetailArchiveByUniqueChangeId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.EmpSalaryDetailArchiveByUniqueChangeId_Result">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
+                <ScalarProperty Name="SCName" ColumnName="SCName" />
+                <ScalarProperty Name="SCCode" ColumnName="SCCode" />
+                <ScalarProperty Name="SCDescription" ColumnName="SCDescription" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="April" ColumnName="April" />
+                <ScalarProperty Name="May" ColumnName="May" />
+                <ScalarProperty Name="June" ColumnName="June" />
+                <ScalarProperty Name="July" ColumnName="July" />
+                <ScalarProperty Name="August" ColumnName="August" />
+                <ScalarProperty Name="September" ColumnName="September" />
+                <ScalarProperty Name="October" ColumnName="October" />
+                <ScalarProperty Name="November" ColumnName="November" />
+                <ScalarProperty Name="December" ColumnName="December" />
+                <ScalarProperty Name="January" ColumnName="January" />
+                <ScalarProperty Name="February" ColumnName="February" />
+                <ScalarProperty Name="March" ColumnName="March" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GenerateEmpPaySlip" FunctionName="VservAccountingDBModel.Store.GenerateEmpPaySlip" />
+          <FunctionImportMapping FunctionImportName="GetEmpSalaryStructureComparisonList" FunctionName="VservAccountingDBModel.Store.GetEmpSalaryStructureComparisonList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.GetEmpSalaryStructureComparisonList_Result">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmpSalaryStructureId" ColumnName="EmpSalaryStructureId" />
+                <ScalarProperty Name="SCName" ColumnName="SCName" />
+                <ScalarProperty Name="SCCode" ColumnName="SCCode" />
+                <ScalarProperty Name="SCDescription" ColumnName="SCDescription" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="April" ColumnName="April" />
+                <ScalarProperty Name="May" ColumnName="May" />
+                <ScalarProperty Name="June" ColumnName="June" />
+                <ScalarProperty Name="July" ColumnName="July" />
+                <ScalarProperty Name="August" ColumnName="August" />
+                <ScalarProperty Name="September" ColumnName="September" />
+                <ScalarProperty Name="October" ColumnName="October" />
+                <ScalarProperty Name="November" ColumnName="November" />
+                <ScalarProperty Name="December" ColumnName="December" />
+                <ScalarProperty Name="January" ColumnName="January" />
+                <ScalarProperty Name="February" ColumnName="February" />
+                <ScalarProperty Name="March" ColumnName="March" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

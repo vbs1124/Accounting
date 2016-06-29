@@ -7,7 +7,7 @@
         <div class="row" ng-show="vm.empSalaryStructureHistory.length > 0">
             <div class="col-md-12">
                 <div class="dataTable_wrapper">
-                    <table class="table table-bordered table-hover" id="tbl-salary-structure-change-history" style="width:100%">
+                    <table class="table table-striped table-bordered table-hover" id="tbl-salary-structure-change-history" style="width:100%">
                         <thead>
                             <tr>
                                 @*<th>History Id</th>*@
@@ -21,7 +21,7 @@
                                 @*<td>{{item.HistoryId}}</td>*@
                                 <td>{{item.UpdatedBy}}</td>
                                 <td>{{item.UpdatedDate}}</td>
-                                <td><a class="btn btn-link btn-sm" ng-click="openEmpSalaryChangeHistoryModal(item)">Compare with Current</a></td>
+                                <td><a href="" ng-click="openEmpSalaryChangeHistoryModal(item)">Compare with Current</a></td>
                             </tr>
                         </tbody>
                     </table>

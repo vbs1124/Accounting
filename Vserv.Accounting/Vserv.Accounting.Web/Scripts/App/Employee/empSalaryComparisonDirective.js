@@ -5,6 +5,8 @@
         return {
             scope: {
                 empid: "=",
+                updby: "=",
+                updon: "=",
                 fyf: "=",
                 ucid: "="
             },
