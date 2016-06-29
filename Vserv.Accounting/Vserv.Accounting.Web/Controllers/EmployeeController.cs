@@ -140,7 +140,7 @@ namespace Vserv.Accounting.Web.Controllers
             {
                 employeeModel.UpdatedBy = User.Identity.Name;
                 employeeModel.UpdatedDate = DateTime.Now;
-                employeeModel.IsActive = employeeModel.RelievingDate.IsNotNull() ? false : employeeModel.IsActive;
+                employeeModel.IsActive = !employeeModel.RelievingDate.IsNotNull() && employeeModel.IsActive;
 
                 // Perform Save for Employee
                 if (ModelState.IsValid)
