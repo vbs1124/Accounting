@@ -396,11 +396,7 @@ namespace Vserv.Accounting.Web.Controllers
         {
             List<EmpSalaryCompareResult> result = EmployeeManager.GetEmpSalaryStructureComparisonList(salaryComparisonParameter.EmployeeId, salaryComparisonParameter.FinancialYearFrom, salaryComparisonParameter.UniqueChangeId);
 
-            List<EmpSalaryCompareModel> empSalaryCompareModel = new List<EmpSalaryCompareModel>();
-            foreach (EmpSalaryCompareResult item in result)
-            {
-                empSalaryCompareModel.Add(ConvertToEmpSalaryCompareModel(item));
-            }
+            List<EmpSalaryCompareModel> empSalaryCompareModel = result.Select(ConvertToEmpSalaryCompareModel).ToList();
 
             return Json(empSalaryCompareModel, JsonRequestBehavior.AllowGet);
         }
@@ -438,13 +434,15 @@ namespace Vserv.Accounting.Web.Controllers
             return Json(investmentCatogories, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult SaveEmployeeInvestments(int employeeId,List<InvestmentCategoryModel> empInvestmentDeclarationModel)
+        public JsonResult SaveEmployeeInvestments(int employeeId, List<InvestmentCategoryModel> empInvestmentDeclarationModel)
         {
             // Call for Save through Manager.
-            EmpInvestmentDeclarationModel obj = new EmpInvestmentDeclarationModel();
-            obj.EmployeeId = employeeId;
-            obj.InvestmentCategories = empInvestmentDeclarationModel;
-            var result = EmployeeManager.SaveEmployeeInvestments(obj.EmployeeId, obj);
+            EmpInvestmentDeclarationModel obj = new EmpInvestmentDeclarationModel
+            {
+                EmployeeId = employeeId,
+                InvestmentCategories = empInvestmentDeclarationModel
+            };
+            EmployeeManager.SaveEmployeeInvestments(obj.EmployeeId, obj);
             return Json("true", JsonRequestBehavior.AllowGet);
         }
 
@@ -1001,7 +999,8 @@ namespace Vserv.Accounting.Web.Controllers
             //Clears all content output from Buffer Stream
             Response.Clear();
         }
-        private void GenearteSalarySlip(EmployeePaySlip salarySlip)
+
+        public void GenearteSalarySlip(EmployeePaySlip salarySlip)
         {
             Document document = new Document(new Rectangle(841.68f, 599.72f), 20f, 20f, 20f, 20f);
             string path = Server.MapPath("PDFs");
@@ -1034,13 +1033,11 @@ namespace Vserv.Accounting.Web.Controllers
                             BaseFont.EMBEDDED);
                 Font font4 = new Font(baseFont4, 8);
 
-                PdfPTable table = new PdfPTable(11);
-                table.TotalWidth = 800f;
+                PdfPTable table = new PdfPTable(11) {TotalWidth = 800f, LockedWidth = true};
                 //fix the absolute width of the table
-                table.LockedWidth = true;
 
                 //relative col widths in proportions - 1/3 and 2/3
-                float[] widths = new float[] { 4f, 1f, 2f, 2f, 2f, .5f, 2f, 1f, 2f, 1.5f, 2f };
+                float[] widths = { 4f, 1f, 2f, 2f, 2f, .5f, 2f, 1f, 2f, 1.5f, 2f };
                 table.SetWidths(widths);
                 table.HorizontalAlignment = 0;
                 //leave a gap before and after the table
@@ -1048,33 +1045,33 @@ namespace Vserv.Accounting.Web.Controllers
                 table.SpacingAfter = 30f;
                 //PdfPCell cell1 = new PdfPCell();
                 //PdfPTable table2 = new PdfPTable(1);
-                PdfPCell line1a = new PdfPCell(new Phrase(" ", font1));
-                AddtextCell(line1a, 3, 1);
-                line1a.BorderWidthBottom = 0;
-                line1a.BorderWidthRight = 0;
-                table.AddCell(line1a);
-                PdfPCell line1b = new PdfPCell(new Phrase("Salary Payslip for the Month of May-2015", font1));
-                AddtextCell(line1b, 5, 1);
-                line1b.BorderWidthBottom = 0;
-                line1b.BorderWidthLeft = 0;
-                line1b.BorderWidthRight = 0;
-                table.AddCell(line1b);
-                PdfPCell line1c = new PdfPCell(new Phrase(" ", font1));
-                AddtextCell(line1c, 3, 1);
-                line1c.BorderWidthBottom = 0;
-                line1c.BorderWidthLeft = 0;
-                table.AddCell(line1c);
+                PdfPCell line1A = new PdfPCell(new Phrase(" ", font1));
+                AddtextCell(line1A, 3, 1);
+                line1A.BorderWidthBottom = 0;
+                line1A.BorderWidthRight = 0;
+                table.AddCell(line1A);
+                PdfPCell line1B = new PdfPCell(new Phrase("Salary Payslip for the Month of May-2015", font1));
+                AddtextCell(line1B, 5, 1);
+                line1B.BorderWidthBottom = 0;
+                line1B.BorderWidthLeft = 0;
+                line1B.BorderWidthRight = 0;
+                table.AddCell(line1B);
+                PdfPCell line1C = new PdfPCell(new Phrase(" ", font1));
+                AddtextCell(line1C, 3, 1);
+                line1C.BorderWidthBottom = 0;
+                line1C.BorderWidthLeft = 0;
+                table.AddCell(line1C);
 
                 Image image = Image.GetInstance(imagename);
                 image.ScaleToFit(100, 75);
                 image.SetAbsolutePosition(720, 545);
 
-                PdfPCell line2a = new PdfPCell(new Phrase(" ", font1));
-                AddtextCell(line2a, 3, 1);
-                line2a.BorderWidthTop = 0;
-                line2a.BorderWidthBottom = 0;
-                line2a.BorderWidthRight = 0;
-                table.AddCell(line2a);
+                PdfPCell line2A = new PdfPCell(new Phrase(" ", font1));
+                AddtextCell(line2A, 3, 1);
+                line2A.BorderWidthTop = 0;
+                line2A.BorderWidthBottom = 0;
+                line2A.BorderWidthRight = 0;
+                table.AddCell(line2A);
                 PdfPCell line2 = new PdfPCell(new Phrase("Pay Period 01.05.2015 to 31.05.2015", font2));
                 AddtextCell(line2, 5, 1);
                 line2.BorderWidthTop = 0;
@@ -1082,18 +1079,18 @@ namespace Vserv.Accounting.Web.Controllers
                 line2.BorderWidthLeft = 0;
                 line2.BorderWidthRight = 0;
                 table.AddCell(line2);
-                PdfPCell line2c = new PdfPCell(new Phrase(" ", font1));
-                AddtextCell(line2c, 3, 1);
-                line2c.BorderWidthTop = 0;
-                line2c.BorderWidthBottom = 0;
-                line2c.BorderWidthLeft = 0;
-                table.AddCell(line2c);
+                PdfPCell line2C = new PdfPCell(new Phrase(" ", font1));
+                AddtextCell(line2C, 3, 1);
+                line2C.BorderWidthTop = 0;
+                line2C.BorderWidthBottom = 0;
+                line2C.BorderWidthLeft = 0;
+                table.AddCell(line2C);
 
-                PdfPCell line3a = new PdfPCell(new Phrase(" ", font1));
-                AddtextCell(line3a, 3, 1);
-                line3a.BorderWidthTop = 0;
-                line3a.BorderWidthRight = 0;
-                table.AddCell(line3a);
+                PdfPCell line3A = new PdfPCell(new Phrase(" ", font1));
+                AddtextCell(line3A, 3, 1);
+                line3A.BorderWidthTop = 0;
+                line3A.BorderWidthRight = 0;
+                table.AddCell(line3A);
                 PdfPCell line3 = new PdfPCell(new Phrase("Deepak Kumar", font1));
                 AddtextCell(line3, 5, 1);
                 line3.BorderWidthTop = 0;
@@ -1101,11 +1098,11 @@ namespace Vserv.Accounting.Web.Controllers
                 line3.BorderWidthRight = 0;
                 line3.PaddingBottom = 5f;
                 table.AddCell(line3);
-                PdfPCell line3c = new PdfPCell(new Phrase(" ", font1));
-                AddtextCell(line3c, 3, 1);
-                line3c.BorderWidthTop = 0;
-                line3c.BorderWidthLeft = 0;
-                table.AddCell(line3c);
+                PdfPCell line3C = new PdfPCell(new Phrase(" ", font1));
+                AddtextCell(line3C, 3, 1);
+                line3C.BorderWidthTop = 0;
+                line3C.BorderWidthLeft = 0;
+                table.AddCell(line3C);
 
                 PdfPCell line41 = new PdfPCell(new Phrase("Employee ID", font3));
                 AddtextCell(line41, 1, 0);
@@ -1534,8 +1531,7 @@ namespace Vserv.Accounting.Web.Controllers
                 line201.BorderWidthBottom = 0;
                 line201.BorderWidthTop = 0;
                 table.AddCell(line201);
-                PdfPCell line202 = new PdfPCell(new Phrase(" ", font4));
-                line202.BorderWidthTop = 0;
+                PdfPCell line202 = new PdfPCell(new Phrase(" ", font4)) {BorderWidthTop = 0};
                 AddtextCell(line202, 2, 2);
                 line202.BorderWidthBottom = 0;
                 line202.BorderWidthTop = 0;
@@ -2538,9 +2534,6 @@ namespace Vserv.Accounting.Web.Controllers
                 document.Add(image);
 
 
-            }
-            catch (Exception ex)
-            {
             }
             finally
             {
