@@ -76,6 +76,9 @@
     <Compile Include="Designation.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmpInvestment.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Employee.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
@@ -128,9 +131,12 @@
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CompareEmployeeModel.cs" />
+    <Compile Include="Models\EmpInvestmentDeclarationModel.cs" />
     <Compile Include="Models\EmpSalaryCompareResult.cs" />
     <Compile Include="Models\FinancialPeriod.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
+    <Compile Include="Models\InvestmentCategoryModel.cs" />
+    <Compile Include="Models\InvestmentSubCategoryModel.cs" />
     <Compile Include="Models\Membership.cs" />
     <Compile Include="Models\SalaryComponentAmountMapper.cs" />
     <Compile Include="OAuthMembership.cs">

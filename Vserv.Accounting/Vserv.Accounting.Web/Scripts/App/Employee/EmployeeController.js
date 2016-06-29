@@ -7,6 +7,7 @@
         var vm = this;
 
         vm.employeeId = $("#EmployeeId").val();
+       
         vm.addNewSalaryStructure = addNewSalaryStructure;
         vm.employeeChangeHistoryModal = employeeChangeHistoryModal;
         vm.empSalaryStructureChangeHistoryModal = empSalaryStructureChangeHistoryModal;
@@ -30,10 +31,6 @@
         // Investment Declaration.
         vm.loadInvestmentByEmployeeId = employeeService.loadInvestmentByEmployeeId(vm.employeeId);
         vm.investmentDeclarationResult = employeeService.investmentDeclarationResult;
-
-        vm.loadInvestmentCatogories = employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear, vm.employeeId);
-        vm.empInvestmentDeclarationModel = employeeService.empInvestmentDeclarationModel;        
-
         vm.appraisalHistoryGraphOptions = {
             chart: {
                 type: 'discreteBarChart',
@@ -206,8 +203,6 @@
         $scope.vbsParseFloat = function (value) {
             return $.vbsParseFloat(value);
         }
-
-        $scope.addEmployeeInvestments = function () { employeeService.addEmployeeInvestments(vm.employeeId, vm.empInvestmentDeclarationModel); }
         //---------------- Salary Breakup Ends here -----------
     }
 })();
