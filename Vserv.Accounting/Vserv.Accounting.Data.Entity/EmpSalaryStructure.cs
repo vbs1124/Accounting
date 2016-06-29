@@ -16,13 +16,13 @@ namespace Vserv.Accounting.Data.Entity
     {
         public EmpSalaryStructure()
         {
-            this.EmployeeSalaryDetails = new HashSet<EmployeeSalaryDetail>();
             this.EmpSalaryDetails = new HashSet<EmpSalaryDetail>();
             this.EmpSalaryDetailArchives = new HashSet<EmpSalaryDetailArchive>();
             this.EmpSalaryStructure1 = new HashSet<EmpSalaryStructure>();
         }
     
         public int EmpSalaryStructureId { get; set; }
+        public int SalaryStructureTypeId { get; set; }
         public int EmployeeId { get; set; }
         public Nullable<int> ParentId { get; set; }
         public decimal CTC { get; set; }
@@ -39,10 +39,10 @@ namespace Vserv.Accounting.Data.Entity
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
         public virtual Employee Employee { get; set; }
-        public virtual ICollection<EmployeeSalaryDetail> EmployeeSalaryDetails { get; set; }
         public virtual ICollection<EmpSalaryDetail> EmpSalaryDetails { get; set; }
         public virtual ICollection<EmpSalaryDetailArchive> EmpSalaryDetailArchives { get; set; }
         public virtual ICollection<EmpSalaryStructure> EmpSalaryStructure1 { get; set; }
         public virtual EmpSalaryStructure EmpSalaryStructure2 { get; set; }
+        public virtual SalaryStructureType SalaryStructureType { get; set; }
     }
 }

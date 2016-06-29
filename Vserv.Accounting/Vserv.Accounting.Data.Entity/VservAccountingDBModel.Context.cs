@@ -34,6 +34,7 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Config> Configs { get; set; }
         public virtual DbSet<Designation> Designations { get; set; }
+        public virtual DbSet<EmpInvestment> EmpInvestments { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeArchive> EmployeeArchives { get; set; }
         public virtual DbSet<EmpSalaryDetail> EmpSalaryDetails { get; set; }
@@ -43,6 +44,9 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<EPFOffice> EPFOffices { get; set; }
         public virtual DbSet<Feature> Features { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
+        public virtual DbSet<InvestmentCategory> InvestmentCategories { get; set; }
+        public virtual DbSet<InvestmentSubCategory> InvestmentSubCategories { get; set; }
+        public virtual DbSet<InvtDeclarationComponent> InvtDeclarationComponents { get; set; }
         public virtual DbSet<LookupFrequency> LookupFrequencies { get; set; }
         public virtual DbSet<LookupMonth> LookupMonths { get; set; }
         public virtual DbSet<Membership> Memberships { get; set; }
@@ -50,6 +54,7 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<OfficeBranch> OfficeBranches { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SalaryComponent> SalaryComponents { get; set; }
+        public virtual DbSet<SalaryStructureType> SalaryStructureTypes { get; set; }
         public virtual DbSet<Salutation> Salutations { get; set; }
         public virtual DbSet<SecurityQuestion> SecurityQuestions { get; set; }
         public virtual DbSet<State> States { get; set; }

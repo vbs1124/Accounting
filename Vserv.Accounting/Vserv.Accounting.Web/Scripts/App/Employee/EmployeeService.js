@@ -10,7 +10,7 @@
         var empAppraisalGraphValues = [];
         var empSalaryStructureHistory = [];
         var investmentDeclarationResult = {};
-        var investmentCatogories = [];
+        var empInvestmentDeclarationModel = [];
 
         var svc = {
             addEmployeeSalaryDetail: addEmployeeSalaryDetail,
@@ -30,20 +30,25 @@
             employeeChangeHistory: employeeChangeHistory,
 
             loadEmpSalaryStructureHistory: loadEmpSalaryStructureHistory,
-            empSalaryStructureHistory: empSalaryStructureHistory
+            empSalaryStructureHistory: empSalaryStructureHistory,
 
             // Investment Declaration.
             loadInvestmentByEmployeeId: loadInvestmentByEmployeeId,
             investmentDeclarationResult: investmentDeclarationResult,
 
             loadInvestmentCatogories: loadInvestmentCatogories,
-            investmentCatogories: investmentCatogories
+            empInvestmentDeclarationModel: empInvestmentDeclarationModel,
+            addEmployeeInvestments: addEmployeeInvestments
         };
 
         return svc;
 
         function addEmployeeSalaryDetail(empSalaryStructureModel, employeeId) {
             return serviceHandler.executePostService('/Employee/SaveEmployeeSalaryDetail?employeeId=' + employeeId, empSalaryStructureModel);
+        }
+
+        function addEmployeeInvestments(employeeId,empInvestmentDeclarationModel) {
+            return serviceHandler.executePostService('/Employee/SaveEmployeeInvestments?employeeId=' + employeeId, empInvestmentDeclarationModel.InvestmentCategories);
         }
 
         function loadEmployeeAppraisalHistory(employeeId) {
@@ -163,12 +168,12 @@
             });
         }
 
-        function loadInvestmentCatogories(financialYear) {
+        function loadInvestmentCatogories(financialYear, employeeId) {
             if (financialYear) {
-                serviceHandler.executePostService('/Employee/GetInvestmentCatogories?financialYear=' + financialYear).then(function (resp) {
+                serviceHandler.executePostService('/Employee/GetInvestmentCatogories?financialYear=' + financialYear + '&employeeId=' + employeeId).then(function (resp) {
                     if (resp.businessException == null) {
                         if (resp.result) {
-                            angular.extend(investmentCatogories, resp.result);
+                            angular.extend(empInvestmentDeclarationModel, resp.result);
                         }
                     }
                     else {

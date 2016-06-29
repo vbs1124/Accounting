@@ -12,23 +12,23 @@ namespace Vserv.Accounting.Data.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class InvestmentSubCategory
+    public partial class EmpInvestment
     {
-        public int InvestmentSubCategoryId { get; set; }
-        public int InvestmentCategoryId { get; set; }
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string Description { get; set; }
-        public string MaximumLimit { get; set; }
-        public Nullable<decimal> DefaultAmount { get; set; }
-        public string Remark { get; set; }
-        public Nullable<int> DisplayOrder { get; set; }
+        public int EmpInvestmentId { get; set; }
+        public int EmployeeId { get; set; }
+        public decimal DeclaredAmount { get; set; }
+        public Nullable<decimal> ApprovedAmount { get; set; }
+        public int CategoryId { get; set; }
+        public int SubCategoryId { get; set; }
+        public bool IsApproved { get; set; }
+        public Nullable<int> DocumentId { get; set; }
+        public Nullable<System.DateTime> ApprovedDate { get; set; }
         public bool IsActive { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
-        public virtual InvestmentCategory InvestmentCategory { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

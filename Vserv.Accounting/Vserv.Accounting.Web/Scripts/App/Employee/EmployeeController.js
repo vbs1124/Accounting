@@ -32,9 +32,8 @@
         vm.loadInvestmentByEmployeeId = employeeService.loadInvestmentByEmployeeId(vm.employeeId);
         vm.investmentDeclarationResult = employeeService.investmentDeclarationResult;
 
-        vm.loadInvestmentCatogories = employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear);
-        vm.investmentCatogories = employeeService.investmentCatogories;
-
+        vm.loadInvestmentCatogories = employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear, vm.employeeId);
+        vm.empInvestmentDeclarationModel = employeeService.empInvestmentDeclarationModel;        
 
         vm.appraisalHistoryGraphOptions = {
             chart: {
@@ -100,7 +99,7 @@
         }
         $scope.onChangeInvestmentFinancialYear = function () {
             //alert(">>>>");
-            employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear);
+            employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear,vm.employeeId);
         }
 
         //Method Initialize
@@ -200,6 +199,8 @@
         $scope.vbsParseFloat = function (value) {
             return $.vbsParseFloat(value);
         }
+
+        $scope.addEmployeeInvestments = function () { employeeService.addEmployeeInvestments(vm.employeeId, vm.empInvestmentDeclarationModel); }
         //---------------- Salary Breakup Ends here -----------
     }
 })();

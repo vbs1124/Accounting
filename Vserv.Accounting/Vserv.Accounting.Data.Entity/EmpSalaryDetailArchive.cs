@@ -15,6 +15,7 @@ namespace Vserv.Accounting.Data.Entity
     public partial class EmpSalaryDetailArchive
     {
         public int EmpSalaryDetailArchiveId { get; set; }
+        public System.Guid UniqueChangeId { get; set; }
         public Nullable<int> EmpSalaryDetailId { get; set; }
         public int EmployeeId { get; set; }
         public int SalaryComponentId { get; set; }

@@ -1072,16 +1072,140 @@ namespace Vserv.Accounting.Business.Managers
 
         #region  Investments
 
-        public List<InvestmentCategory> GetInvestmentCatogories(int financialYear)
+        public EmpInvestmentDeclarationModel GetInvestmentCatogories(int financialYear, int employeeId)
         {
+            //return ExecuteFaultHandledOperation(() =>
+            //{
+            //    IInvestmentCategoryRepo _repository = DataRepositoryFactory.GetDataRepository<IInvestmentCategoryRepo>();
+            //    return _repository.GetInvestmentCatogories(financialYear);
+            //});
+            List<EmpInvestment> empInvestmentlist = new List<EmpInvestment>();
+            List<InvestmentCategory> categorylist = new List<InvestmentCategory>();
             return ExecuteFaultHandledOperation(() =>
             {
                 IInvestmentCategoryRepo _repository = DataRepositoryFactory.GetDataRepository<IInvestmentCategoryRepo>();
-                return _repository.GetInvestmentCatogories(financialYear);
+                categorylist= _repository.GetInvestmentCatogories(financialYear);
+                empInvestmentlist = _repository.GetEmpInvestmentByEmpId(employeeId);
+                return FillUpEmployeeInvestmentDeclarationDetail(empInvestmentlist, categorylist, employeeId);
+            });
+            
+            
+            //return new List<EmpInvestmentDeclarationModel>();
+        }
+
+        public bool SaveEmployeeInvestments(int employeeId,EmpInvestmentDeclarationModel investmentCatogories)
+        {
+            
+            return ExecuteFaultHandledOperation(() =>
+            {
+                List<EmpInvestment> empInvestmentList = new List<EmpInvestment>();
+                foreach(InvestmentCategoryModel row in investmentCatogories.InvestmentCategories)
+                {                    
+                    foreach(var subcat in row.InvestmentSubCategories)
+                    {
+                        EmpInvestment investment = new EmpInvestment();
+                        investment.EmployeeId = employeeId;
+                        investment.CategoryId = row.InvestmentCategoryId;
+                        investment.IsApproved = false;
+                        investment.IsActive = true;
+                        investment.EmpInvestmentId = subcat.EmpInvestmentId == 0 ? 0 : subcat.EmpInvestmentId;
+                        investment.SubCategoryId = subcat.InvestmentSubCategoryId;
+                        investment.DeclaredAmount =Convert.ToDecimal(subcat.DefaultAmount);
+                        investment.CreatedBy = string.IsNullOrEmpty(row.CreatedBy) ? "vbsadmin" : row.CreatedBy;
+                        investment.CreatedDate = DateTime.Now;
+                        empInvestmentList.Add(investment);
+                    }                   
+                }
+                IInvestmentCategoryRepo _repository = DataRepositoryFactory.GetDataRepository<IInvestmentCategoryRepo>();
+               return _repository.SaveEmployeeInvestments(empInvestmentList);
             });
         }
 
-        #endregion
+
+        private EmpInvestmentDeclarationModel FillUpEmployeeInvestmentDeclarationDetail(List<EmpInvestment> empInvestmentDetail,List<InvestmentCategory> categoryList,int employeeId)
+        {
+            EmpInvestmentDeclarationModel empInvestmentDeclarationModel =new  EmpInvestmentDeclarationModel();
+            empInvestmentDeclarationModel.EmployeeId = employeeId;
+            if(empInvestmentDetail.Count>0)
+            {
+                int j = 0;
+                List<InvestmentCategoryModel> categoryModelList = new List<InvestmentCategoryModel>();
+                for(int i=0;i<categoryList.Count;i++) // iterate the Investment categories
+                {
+                    InvestmentCategoryModel categoryModel = new InvestmentCategoryModel();
+                    
+                    categoryModel.InvestmentCategoryId = categoryList[i].InvestmentCategoryId;
+                    categoryModel.IsActive = categoryList[i].IsActive;
+                    categoryModel.MappingId = categoryList[i].MappingId;
+                    categoryModel.Name = categoryList[i].Name;
+                    categoryModel.Description = categoryList[i].Description;
+                    categoryModel.Code = categoryList[i].Code;
+                    categoryModel.DisplayOrder = categoryList[i].DisplayOrder;
+                    if(categoryList[i].InvestmentCategoryId==empInvestmentDetail[j].CategoryId)
+                    {
+                        List<InvestmentSubCategoryModel> subCategoryList = new List<InvestmentSubCategoryModel>();
+                        foreach(var subcat in categoryList[i].InvestmentSubCategories)  // iterate the sub categories for each category
+                        {
+                            InvestmentSubCategoryModel subcategoryModel = new InvestmentSubCategoryModel();
+                            subcategoryModel.EmpInvestmentId = empInvestmentDetail[j].EmpInvestmentId;
+                            subcategoryModel.InvestmentCategoryId = subcat.InvestmentCategoryId;
+                            subcategoryModel.InvestmentSubCategoryId = subcat.InvestmentSubCategoryId;
+                            subcategoryModel.Name = subcat.Name;
+                            subcategoryModel.DefaultAmount = empInvestmentDetail[j].DeclaredAmount;
+                            subcategoryModel.Description = subcat.Description;
+                            subcategoryModel.Code = subcat.Code;
+                            subcategoryModel.Remark = subcat.Remark;
+                            subcategoryModel.DisplayOrder = subcat.DisplayOrder;
+                            subcategoryModel.IsActive = subcat.IsActive;
+                            subcategoryModel.IsApproved = empInvestmentDetail[j].IsApproved;
+                            subCategoryList.Add(subcategoryModel);
+                            j++;
+                        }
+                        categoryModel.InvestmentSubCategories = subCategoryList;
+                    }
+                    categoryModelList.Add(categoryModel);
+                }
+                empInvestmentDeclarationModel.InvestmentCategories = categoryModelList;
+            }
+            else
+            {
+                List<InvestmentCategoryModel> categoryModelList = new List<InvestmentCategoryModel>();
+                foreach(var row in categoryList)
+                {
+                    InvestmentCategoryModel categoryModel = new InvestmentCategoryModel();
+                    List<InvestmentSubCategoryModel> subCategoryList = new List<InvestmentSubCategoryModel>();
+                    categoryModel.InvestmentCategoryId = row.InvestmentCategoryId;
+                    categoryModel.IsActive = row.IsActive;
+                    categoryModel.MappingId = row.MappingId;
+                    categoryModel.Name = row.Name;
+                    categoryModel.Description = row.Description;
+                    categoryModel.Code = row.Code;
+                    categoryModel.DisplayOrder = row.DisplayOrder;
+                    foreach(var subcat in row.InvestmentSubCategories)
+                    {
+                        InvestmentSubCategoryModel subcategoryModel = new InvestmentSubCategoryModel();
+                        subcategoryModel.InvestmentCategoryId = subcat.InvestmentCategoryId;
+                        subcategoryModel.InvestmentSubCategoryId = subcat.InvestmentSubCategoryId;
+                        subcategoryModel.Name = subcat.Name;
+                        subcategoryModel.DefaultAmount = subcat.DefaultAmount;
+                        subcategoryModel.Description = subcat.Description;
+                        subcategoryModel.Code = subcat.Code;
+                        subcategoryModel.Remark = subcat.Remark;
+                        subcategoryModel.DisplayOrder = subcat.DisplayOrder;
+                        subcategoryModel.IsActive = subcat.IsActive;
+                        subcategoryModel.IsApproved = false;
+                        subCategoryList.Add(subcategoryModel);
+                    }
+                    categoryModel.InvestmentSubCategories = subCategoryList;
+                    categoryModelList.Add(categoryModel);
+                    
+                }
+                empInvestmentDeclarationModel.InvestmentCategories=categoryModelList;
+            }
+
+
+            return empInvestmentDeclarationModel;
+        }
 
         #endregion
     }

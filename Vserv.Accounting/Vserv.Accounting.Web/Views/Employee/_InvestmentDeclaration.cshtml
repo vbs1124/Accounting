@@ -13,7 +13,7 @@
         </div>
     </div>
 </div>
-<div ng-repeat="category in vm.investmentCatogories">
+<div ng-repeat="category in vm.empInvestmentDeclarationModel.InvestmentCategories">
     <div ng-switch="category.Code">
         <div ng-switch-when="ICHOREAL">
             <fieldset id="fieldset-HRA">
@@ -23,12 +23,12 @@
                     Note:- If the Employee is paying the rent below Rs.3000/- per month, he/she need not furnish the Rent Receipts (Circular No:8/2007 Dt: 05.Dec.2007).
                 </div>
                 <div class="row">
-                    <div class="col-lg-3" ng-repeat="subCat in category.InvestmentSubCategories" >
-                        <div class="form-group" >
+                    <div class="col-lg-3" ng-repeat="subCat in category.InvestmentSubCategories">
+                        <div class="form-group">
                             <label class="control-label" for="focusedInput">{{getHRALabel(subCat)}}</label>
-                            <input class="form-control" id="focusedInput" ng-model="vm.investmentDeclarationResult.April" value="" type="text">
+                            <input class="form-control" id="focusedInput" ng-model="subCat.DefaultAmount" value="" type="text">
                         </div>
-                        
+
                     </div>
                 </div>
             </fieldset>
@@ -52,7 +52,7 @@
                                     <tr class="active" ng-repeat="subCat in category.InvestmentSubCategories">
                                         <td>{{subCat.Name}}<br />{{subCat.Description}}</td>
                                         <td>{{subCat.MaximumLimit}}</td>
-                                        <td><input class="form-control input-sm" id="focusedInput" value="" type="text"></td>
+                                        <td><input class="form-control input-sm" id="focusedInput" ng-model="subCat.DefaultAmount" type="text"></td>
                                         <td>{{subCat.Remark}}</td>
                                     </tr>
 
@@ -64,37 +64,26 @@
             </fieldset>
         </div>
     </div>
-
 </div>
-
-<fieldset id="fieldset-permanent-address">
-    <div class="alert alert-dismissible alert-warning">
-        <p><input type="checkbox" ng-model="checked" ng-init="checked=false" />  I here by declare that Information as stated above is true and correct . I also authorize the company to recover tax (TDS) from my salary based on the PROOFS Submitted by me.  I am personally liable to Income Tax proceedings for any misstatements in the declaration or proofs submitted herewith if they are inconsistent with the requirement of Income Tax Act, 1961.</p><br />
-        I undertake to make the investments under various sections of the Income Tax Act not later than 50% on 20-12-2016 and rest on 14-02-2017
-    </div>
-
-</fieldset>
-
-<div ng-switch="checked" class="animate-if">
-    <div class="row" ng-switch-when="false">
-        <div class="col-md-12">
-            <div class="form-group pull-right">
-
-                <button type="reset" class="btn btn-warning" disabled>Reset</button>
-                <button type="submit" class="btn btn-success" disabled>Save</button>
-            </div>
-        </div>
-    </div>
-    <div class="row" ng-switch-default>
-        <div class="col-md-12">
-            <div class="form-group pull-right">
-
-                <button type="reset" class="btn btn-warning">Reset</button>
-                <button type="submit" class="btn btn-success">Save</button>
+<div class="row">
+    <div class="col-md-12">
+        <div class="bs-component">
+            <div class="alert alert-dismissible alert-warning">
+                <p><input type="checkbox" ng-model="isAgreed" />  I here by declare that Information as stated above is true and correct . I also authorize the company to recover tax (TDS) from my salary based on the PROOFS Submitted by me.  I am personally liable to Income Tax proceedings for any misstatements in the declaration or proofs submitted herewith if they are inconsistent with the requirement of Income Tax Act, 1961.</p><br />
+                I undertake to make the investments under various sections of the Income Tax Act not later than 50% on 20-12-2016 and rest on 14-02-2017
             </div>
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group pull-right">
+            <button type="reset" class="btn btn-warning">Reset</button>
+            <button type="submit" ng-click="addEmployeeInvestments()" class="btn btn-success" ng-disabled="!isAgreed">Save</button>
+        </div>
+    </div>
+</div>
+
 
 
 

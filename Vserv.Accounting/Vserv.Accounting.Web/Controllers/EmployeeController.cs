@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Vserv.Accounting.Business.Managers;
 using Vserv.Accounting.Common;
 using Vserv.Accounting.Data.Entity;
+using Vserv.Accounting.Data.Entity.Models;
 using Vserv.Accounting.Web.Models;
 
 #endregion
@@ -395,15 +396,27 @@ namespace Vserv.Accounting.Web.Controllers
             return Json(investmentDeclarationModel, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetInvestmentCatogories(int financialYear)
+        public JsonResult GetInvestmentCatogories(int financialYear, int employeeId)
         {
-            List<InvestmentCategory> investmentCatogories = EmployeeManager.GetInvestmentCatogories(financialYear);// This will have the values frm DB
-            foreach (var item in investmentCatogories)
-            {
-                item.InvestmentSubCategories.ForEach(subCat => subCat.InvestmentCategory = null);
-            }
+
+            EmpInvestmentDeclarationModel investmentCatogories = EmployeeManager.GetInvestmentCatogories(financialYear, employeeId);
+            //List<InvestmentCategory> investmentCatogories = EmployeeManager.GetInvestmentCatogories(financialYear);// This will have the values frm DB
+            //foreach (var item in investmentCatogories)
+            //{
+            //    item.InvestmentSubCategories.ForEach(subCat => subCat.InvestmentCategory = null);
+            //}
 
             return Json(investmentCatogories, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SaveEmployeeInvestments(int employeeId,List<InvestmentCategoryModel> empInvestmentDeclarationModel)
+        {
+            // Call for Save through Manager.
+            EmpInvestmentDeclarationModel obj = new EmpInvestmentDeclarationModel();
+            obj.EmployeeId = employeeId;
+            obj.InvestmentCategories = empInvestmentDeclarationModel;
+            var result = EmployeeManager.SaveEmployeeInvestments(obj.EmployeeId, obj);
+            return Json("true", JsonRequestBehavior.AllowGet);
         }
 
 

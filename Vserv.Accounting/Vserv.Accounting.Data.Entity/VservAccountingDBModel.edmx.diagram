@@ -5,40 +5,46 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d75f662f8dec4d309711b4677fde36aa" Name="Diagram1" ZoomLevel="88">
-        <EntityTypeShape EntityType="VservAccountingDBModel.AddressType" Width="1.5" PointX="10.75" PointY="5.75" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.ApplicationLog" Width="1.5" PointX="12.75" PointY="0.75" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.Bank" Width="1.5" PointX="3.75" PointY="6.25" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.City" Width="1.5" PointX="3" PointY="38.125" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.Config" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.Designation" Width="1.5" PointX="3.75" PointY="31.25" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.Employee" Width="1.5" PointX="6" PointY="10.25" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.EmployeeArchive" Width="1.5" PointX="3" PointY="10.25" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.EmpSalaryDetail" Width="1.5" PointX="10.5" PointY="13.875" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.EmpSalaryDetailArchive" Width="1.5" PointX="12.75" PointY="13.75" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.EmpSalaryStructure" Width="1.5" PointX="8.25" PointY="13.5" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.EPFNumber" Width="1.5" PointX="10.75" PointY="9.75" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.EPFOffice" Width="1.5" PointX="12.75" PointY="7.75" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.Feature" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.Gender" Width="1.5" PointX="3.75" PointY="47.375" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.LookupFrequency" Width="1.5" PointX="14.75" PointY="0.75" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.LookupMonth" Width="1.5" PointX="8.25" PointY="9.25" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.Membership" Width="1.5" PointX="14.75" PointY="4.75" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.OAuthMembership" Width="1.5" PointX="14.75" PointY="10.75" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.OfficeBranch" Width="1.5" PointX="3.75" PointY="42.375" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.Role" Width="1.5" PointX="5.75" PointY="1.5" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.SalaryComponent" Width="1.5" PointX="8.25" PointY="19.125" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.Salutation" Width="1.5" PointX="3.75" PointY="2.125" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.SecurityQuestion" Width="1.5" PointX="8" PointY="5.125" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.State" Width="1.5" PointX="0.75" PointY="13.875" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.UserProfile" Width="1.5" PointX="8" PointY="1.125" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.UserSecurityQuestion" Width="1.5" PointX="10.25" PointY="1" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.ZipCode" Width="1.5" PointX="5.25" PointY="25.875" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.AddressType" Width="1.5" PointX="12.75" PointY="1" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.ApplicationLog" Width="1.5" PointX="14.75" PointY="11" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.Bank" Width="1.5" PointX="3.75" PointY="30.875" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.City" Width="1.5" PointX="3" PointY="38.75" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.Config" Width="1.5" PointX="0.75" PointY="7" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.Designation" Width="1.5" PointX="3.75" PointY="5.625" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.EmpInvestment" Width="1.5" PointX="8.25" PointY="20.375" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.Employee" Width="1.5" PointX="6" PointY="10.625" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.EmployeeArchive" Width="1.5" PointX="3" PointY="10.75" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.EmpSalaryDetail" Width="1.5" PointX="10.5" PointY="14.25" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.EmpSalaryDetailArchive" Width="1.5" PointX="12.75" PointY="14" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.EmpSalaryStructure" Width="1.5" PointX="8.25" PointY="13.625" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.EPFNumber" Width="1.5" PointX="14.75" PointY="1" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.EPFOffice" Width="1.5" PointX="15.75" PointY="5" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.Feature" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.Gender" Width="1.5" PointX="3.75" PointY="34.75" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.InvestmentCategory" Width="1.5" PointX="10.75" PointY="6.625" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.InvestmentSubCategory" Width="1.5" PointX="13" PointY="6.25" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.InvtDeclarationComponent" Width="1.5" PointX="16.75" PointY="1" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.LookupFrequency" Width="1.5" PointX="16.75" PointY="9" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.LookupMonth" Width="1.5" PointX="8.25" PointY="9.625" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.Membership" Width="1.5" PointX="16.75" PointY="13" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.OAuthMembership" Width="1.5" PointX="10.75" PointY="11" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.OfficeBranch" Width="1.5" PointX="3.75" PointY="43.625" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.Role" Width="1.5" PointX="5.75" PointY="1.875" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.SalaryComponent" Width="1.5" PointX="8.25" PointY="25.5" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.SalaryStructureType" Width="1.5" PointX="6" PointY="5.75" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.Salutation" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.SecurityQuestion" Width="1.5" PointX="8" PointY="30.5" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.State" Width="1.5" PointX="0.75" PointY="14.25" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.UserProfile" Width="1.5" PointX="8" PointY="1.5" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.UserSecurityQuestion" Width="1.5" PointX="10.25" PointY="1.25" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.ZipCode" Width="1.5" PointX="5.25" PointY="26.375" />
         <AssociationConnector Association="VservAccountingDBModel.FK_Employee_Bank" />
         <AssociationConnector Association="VservAccountingDBModel.FK_EmployeeArchive_Bank" />
         <AssociationConnector Association="VservAccountingDBModel.FK_City_State" />
         <AssociationConnector Association="VservAccountingDBModel.FK_ZipCode_City" />
         <AssociationConnector Association="VservAccountingDBModel.FK_Employee_Designation" />
         <AssociationConnector Association="VservAccountingDBModel.FK_EmployeeArchive_Designation" />
+        <AssociationConnector Association="VservAccountingDBModel.FK_EmpInvestment_Employee" />
         <AssociationConnector Association="VservAccountingDBModel.FK_Employee_Gender" />
         <AssociationConnector Association="VservAccountingDBModel.FK_Employee_MailingState" />
         <AssociationConnector Association="VservAccountingDBModel.FK_Employee_OfficeBranch" />
@@ -58,7 +64,9 @@
         <AssociationConnector Association="VservAccountingDBModel.FK_EmpSalaryDetailArchive_LookupMonth" />
         <AssociationConnector Association="VservAccountingDBModel.FK_EmpSalaryDetailArchive_SalaryComponent" />
         <AssociationConnector Association="VservAccountingDBModel.FK_EmpSalaryStructure_EmpSalaryStructure" />
+        <AssociationConnector Association="VservAccountingDBModel.FK_EmpSalaryStructure_SalaryStructureType" />
         <AssociationConnector Association="VservAccountingDBModel.FK_Feature_Feature" />
+        <AssociationConnector Association="VservAccountingDBModel.FK_InvestmentSubCategory_InvestmentCategory" />
         <AssociationConnector Association="VservAccountingDBModel.FK_UserSecurityQuestion_SecurityQuestion" />
         <AssociationConnector Association="VservAccountingDBModel.FK_ZipCode_State" />
         <AssociationConnector Association="VservAccountingDBModel.FK_UserSecurityQuestion_UserProfile" />
