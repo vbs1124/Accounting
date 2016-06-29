@@ -1,0 +1,108 @@
+﻿@using Vserv.Accounting.Common
+<div class="modal-header">
+    <h4 class="modal-title">Salary Structure Comparison Result</h4>
+</div>
+<div class="modal-body" ng-init="getEmpSalaryStructureComparisonList()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="success">
+                            <th>&nbsp;</th>
+                            <th>April</th>
+                            <th>May</th>
+                            <th>June</th>
+                            <th>July</th>
+                            <th>August</th>
+                            <th>September</th>
+                            <th>October</th>
+                            <th>November</th>
+                            <th>December</th>
+                            <th>January</th>
+                            <th>February</th>
+                            <th>March</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="item in empSalaryCompareResult">
+                        <tr class="warning" ng-show="item.SCCode=='SCMEDC'">
+                            <td colspan="14">
+                                <strong>Reimbursments:</strong>
+                            </td>
+                        </tr>
+                        <tr class="active" ng-show="item.SCCode=='SCEPFO'">
+                            <td colspan="14">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <!-- Show all fields as no editable-->
+                        <tr>
+                            <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
+                            <td class="text-right" ng-class="{'bg-danger': item.April.IsDirty}" title="{{item.April.CurrentAmount}}">
+                                <span ng-bind="item.April.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.May.IsDirty}" title="{{item.May.CurrentAmount}}">
+                                <span ng-bind="item.May.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.June.IsDirty}" title="{{item.June.CurrentAmount}}">
+                                <span ng-bind="item.June.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.July.IsDirty}" title="{{item.July.CurrentAmount}}">
+                                <span ng-bind="item.July.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.August.IsDirty}" title="{{item.August.CurrentAmount}}">
+                                <span ng-bind="item.August.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.September.IsDirty}" title="{{item.September.CurrentAmount}}">
+                                <span ng-bind="item.September.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.October.IsDirty}" title="{{item.October.CurrentAmount}}">
+                                <span ng-bind="item.October.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.November.IsDirty}" title="{{item.November.CurrentAmount}}">
+                                <span ng-bind="item.November.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.December.IsDirty}" title="{{item.December.CurrentAmount}}">
+                                <span ng-bind="item.December.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.January.IsDirty}" title="{{item.January.CurrentAmount}}">
+                                <span ng-bind="item.January.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.February.IsDirty}" title="{{item.February.CurrentAmount}}">
+                                <span ng-bind="item.February.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.March.IsDirty}" title="{{item.March.CurrentAmount}}">
+                                <span ng-bind="item.March.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-bold text-right"><span ng-bind="getCurrentComponentTotal(item) | currency:'&#8377;':0"></span></td>
+                        </tr>
+                        <!-- /Show all fields as no editable-->
+                    </tbody>
+                    <tfoot>
+                        <tr class="success">
+                            <th class="text-right">Total</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'April' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'May' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'June' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'July' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'August' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'September' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'October' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'November' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'December' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'January' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'February' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'March' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">&nbsp;</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <!-- /.col-md-12 -->
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-warning" ng-click="$parent.$dismiss()">Close</button>
+</div>

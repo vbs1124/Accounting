@@ -282,6 +282,7 @@
     <Compile Include="Models\DesignationModel.cs" />
     <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\EmployeePaySheet.cs" />
+    <Compile Include="Models\EmpSalaryCompareModel.cs" />
     <Compile Include="Models\ForgotPasswordModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvestmentDeclarationModel.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\RoleModel.cs" />
     <Compile Include="Models\EmpSalaryStructureModel.cs" />
+    <Compile Include="Models\SalaryComparisonParameter.cs" />
     <Compile Include="Models\SecurityQuestionModel.cs" />
     <Compile Include="Models\StateModel.cs" />
     <Compile Include="Models\UserProfileModel.cs" />
@@ -466,6 +468,7 @@
     <Content Include="Scripts\App\Designation\designationController.js" />
     <Content Include="Scripts\App\Designation\designationService.js" />
     <Content Include="Scripts\App\Employee\addAppraisalDirective.js" />
+    <Content Include="Scripts\App\Employee\empSalaryComparisonDirective.js" />
     <Content Include="Scripts\App\Employee\empSalaryStructureHistoryDirective.js" />
     <Content Include="Scripts\App\Employee\empHistoryDirective.js" />
     <Content Include="Scripts\App\Employee\employeeController.js" />
@@ -615,6 +618,7 @@
     <Content Include="Scripts\d3\LICENSE" />
     <Content Include="nvd3.license.md" />
     <Content Include="Scripts\App\Employee\templates\empSalaryStructureHistory.tmpl.cshtml" />
+    <Content Include="Scripts\App\Employee\templates\empSalaryComparisonList.tmpl.cshtml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

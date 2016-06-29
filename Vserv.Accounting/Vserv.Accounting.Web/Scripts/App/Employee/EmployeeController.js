@@ -7,7 +7,6 @@
         var vm = this;
 
         vm.employeeId = $("#EmployeeId").val();
-        vm.empSalaryStructureId = 186;
         vm.addNewSalaryStructure = addNewSalaryStructure;
         vm.employeeChangeHistoryModal = employeeChangeHistoryModal;
         vm.empSalaryStructureChangeHistoryModal = empSalaryStructureChangeHistoryModal;
@@ -25,7 +24,7 @@
         vm.empAppraisalGraphValues = employeeService.empAppraisalGraphValues;
         vm.loadEmployeePaySheet = employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(vm.selectedFinancialYear), parseInt(vm.selectedFinancialYear) + 1);
         vm.employeePaySheet = employeeService.employeePaySheet;
-
+        vm.empsalarystructureid = employeeService.empsalarystructureid;
         vm.viewSelectedSalaryBreakup = viewSelectedSalaryBreakup;
 
         // Investment Declaration.
@@ -71,22 +70,26 @@
         vm.isEditableSalaryBreakup = function () {
             return vm.employeePaySheet.length > 0 && $.vbsParseFloat(vm.selectedFinancialYear) >= $.vbsParseFloat(vm.currentYear) && (vm.relievingDate == 'Invalid Date' || vm.relievingDate == null);
         }
+
         function addNewSalaryStructure() {
             $modal.open({
-                template: '<add-appraisal />'
+                template: '<add-appraisal />',
+                animation: true
             });
         }
 
         function employeeChangeHistoryModal() {
             $modal.open({
-                template: '<emp-history />'
+                template: '<emp-history />',
+                animation: true,
             });
         }
 
-        function empSalaryStructureChangeHistoryModal() {
+        function empSalaryStructureChangeHistoryModal(empsalarystructureid) {
             $modal.open({
-                template: '<emp-salary-structure-history empSalaryStructureId="empSalaryStructureId" />',
-                scope: angular.extend($scope.$new(true), { empSalaryStructureId: vm.empSalaryStructureId })
+                template: '<emp-salary-structure-history empsalarystructureid="empsalarystructureid" />',
+                scope: angular.extend($scope.$new(true), { empsalarystructureid: empsalarystructureid }),
+                animation: true
             });
         }
 
@@ -180,6 +183,8 @@
         }
 
         $scope.updateYearlyPaySheet = function () {
+            bootbox.confirm("Are you sure that you want to update existing Salary Structure?", function (result) {
+                if (result) {
             employeeService.updateYearlyPaySheet(vm.employeePaySheet).then(function (resp) {
                 if (resp.businessException == null) {
                     $.showToastrMessage("success", "Salary Breakup for current financial year updated successfully.");
@@ -187,6 +192,8 @@
                 else {
                     $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
                 }
+            });
+        }
             });
         }
 

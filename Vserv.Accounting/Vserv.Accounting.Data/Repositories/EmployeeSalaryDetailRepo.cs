@@ -44,12 +44,11 @@ namespace Vserv.Accounting.Data
             }
         }
 
-        public List<EmpSalaryDetailArchive> GetSalaryStructureChangeHistory(int empSalaryStructureId)
+        public List<SalaryStructureChangeHistory_Result> GetSalaryStructureChangeHistory(int empSalaryStructureId)
         {
             using (VservAccountingDBEntities dbEntities = new VservAccountingDBEntities())
             {
-                List<EmpSalaryDetailArchive> result = dbEntities.EmpSalaryDetailArchives
-                    .Where(condition => condition.EmpSalaryStructureId == empSalaryStructureId).ToList();
+                List<SalaryStructureChangeHistory_Result> result = dbEntities.SalaryStructureChangeHistory(empSalaryStructureId).ToList();
                 return result;
             }
         }

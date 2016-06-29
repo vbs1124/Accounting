@@ -11,6 +11,7 @@
         var empSalaryStructureHistory = [];
         var investmentDeclarationResult = {};
         var empInvestmentDeclarationModel = [];
+        var empsalarystructureid = null;
 
         var svc = {
             addEmployeeSalaryDetail: addEmployeeSalaryDetail,
@@ -24,12 +25,17 @@
 
             loadEmployeePaySheet: loadEmployeePaySheet,
             employeePaySheet: employeePaySheet,
+            empsalarystructureid: empsalarystructureid,
+
             updateYearlyPaySheet: updateYearlyPaySheet,
 
             loadEmployeeChangeHistory: loadEmployeeChangeHistory,
             employeeChangeHistory: employeeChangeHistory,
 
             loadEmpSalaryStructureHistory: loadEmpSalaryStructureHistory,
+            empSalaryStructureHistory: empSalaryStructureHistory,
+
+            getEmpSalaryStructureComparisonList: getEmpSalaryStructureComparisonList,
             empSalaryStructureHistory: empSalaryStructureHistory,
 
             // Investment Declaration.
@@ -92,6 +98,9 @@
                 if (resp.businessException == null) {
                     employeePaySheet.removeAll();// clear all the existing items.
                     employeePaySheet.addRange(resp.result);
+                    if (employeePaySheet.length > 0) {
+                        empsalarystructureid = employeePaySheet[0].EmpSalaryStructureId;
+                }
                 }
                 else {
                     $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
@@ -121,7 +130,7 @@
                     if (resp.result.length > 0) {
                         employeeChangeHistory.removeAll();// clear all the existing items.
                         $.map(resp.result, function (val, i) {
-                            val.UpdatedDate = moment(val.UpdatedDate).format("DD/MM/YYYY");
+                            val.UpdatedDate = moment(val.UpdatedDate).format("DD/MM/YYYY, h:mm:ss A");
                         });
 
                         employeeChangeHistory.addRange(resp.result);
@@ -133,15 +142,14 @@
             });
         }
 
-        function loadEmpSalaryStructureHistory(empSalaryStructureId) {
-            empSalaryStructureId = 186;
-            if (empSalaryStructureId) {
-                serviceHandler.executePostService("/employee/salary/" + empSalaryStructureId + "/changeHistory").then(function (resp) {
+        function loadEmpSalaryStructureHistory() {
+            if (empsalarystructureid) {
+                serviceHandler.executePostService("/employee/salary/" + empsalarystructureid + "/changeHistory").then(function (resp) {
                     if (resp.businessException == null) {
                         if (resp.result.length > 0) {
                             empSalaryStructureHistory.removeAll();// clear all the existing items.
                             $.map(resp.result, function (val, i) {
-                                val.UpdatedDate = moment(val.UpdatedDate).format("DD/MM/YYYY");
+                                val.UpdatedDate = moment(val.UpdatedDate).format("DD/MM/YYYY, h:mm:ss A");
                             });
 
                             empSalaryStructureHistory.addRange(resp.result);
@@ -152,6 +160,10 @@
                     }
                 });
             }
+        }
+
+        function getEmpSalaryStructureComparisonList(salaryComparisonParameter) {
+            return serviceHandler.executePostService('/Employee/GetEmpSalaryStructureComparisonList', salaryComparisonParameter);
         }
 
         // Investment Declaration.

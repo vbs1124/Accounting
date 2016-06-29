@@ -523,6 +523,7 @@ namespace Vserv.Accounting.Business.Managers
                             employeeSalaryDetailRepo.ArchiveEmpSalaryDetail(dbEmpSalaryStructure.EmpSalaryStructureId, userName);
                         }
 
+                        empSalaryStructure.SalaryStructureTypeId = recordsToUpate.IsNotNull() && recordsToUpate.Any() ? Convert.ToInt32(SalaryStructureTypeEnum.Appraisal) : Convert.ToInt32(SalaryStructureTypeEnum.Initial);
                         empSalaryStructure.CreatedDate = DateTime.Now;
                         empSalaryStructure.CreatedBy = userName;
                         empSalaryStructure.IsActive = true;
@@ -530,6 +531,11 @@ namespace Vserv.Accounting.Business.Managers
                         if (dbEmpSalaryStructure.IsNotNull())
                         {
                             empSalaryStructure.ParentId = dbEmpSalaryStructure.EmpSalaryStructureId;
+                            empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Appraisal);
+                        }
+                        else
+                        {
+                            empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Initial);
                         }
 
                         empSalaryStructureRepo.InsertEmpSalaryStructure(empSalaryStructure);
@@ -634,7 +640,7 @@ namespace Vserv.Accounting.Business.Managers
         /// </summary>
         /// <param name="empSalaryStructureId"></param>
         /// <returns></returns>
-        public List<EmpSalaryDetailArchive> GetSalaryStructureChangeHistory(int empSalaryStructureId)
+        public List<SalaryStructureChangeHistory_Result> GetSalaryStructureChangeHistory(int empSalaryStructureId)
         {
             return ExecuteFaultHandledOperation(() =>
             {
@@ -642,6 +648,16 @@ namespace Vserv.Accounting.Business.Managers
                 return employeeSalaryDetailRepo.GetSalaryStructureChangeHistory(empSalaryStructureId);
             });
         }
+
+        public List<EmpSalaryCompareResult> GetEmpSalaryStructureComparisonList(int employeeId, int financialYearFrom, Guid uniqueChangeId)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                IEmpSalaryStructureRepo repository = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
+                return repository.GetEmpSalaryStructureComparisonList(employeeId, financialYearFrom, uniqueChangeId);
+            });
+        }
+
         #endregion
 
         #endregion
