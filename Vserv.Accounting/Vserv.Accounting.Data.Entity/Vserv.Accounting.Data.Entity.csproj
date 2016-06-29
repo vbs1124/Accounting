@@ -82,10 +82,16 @@
     <Compile Include="EmployeeArchive.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmployeePaySlip.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EmpSalaryDetail.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EmpSalaryDetailArchive.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmpSalaryDetailArchiveByUniqueChangeId_Result.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EmpSalaryStructure.cs">
@@ -107,6 +113,9 @@
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GetEmployeeSalaryDetail_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetEmpSalaryStructureComparisonList_Result.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="InvestmentCategory.cs">

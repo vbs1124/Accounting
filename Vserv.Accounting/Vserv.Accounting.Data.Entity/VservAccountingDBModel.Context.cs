@@ -36,6 +36,7 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<Designation> Designations { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeArchive> EmployeeArchives { get; set; }
+        public virtual DbSet<EmployeePaySlip> EmployeePaySlips { get; set; }
         public virtual DbSet<EmpSalaryDetail> EmpSalaryDetails { get; set; }
         public virtual DbSet<EmpSalaryDetailArchive> EmpSalaryDetailArchives { get; set; }
         public virtual DbSet<EmpSalaryStructure> EmpSalaryStructures { get; set; }
@@ -353,6 +354,49 @@ namespace Vserv.Accounting.Data.Entity
                 new ObjectParameter("EmpSalaryStructureId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SalaryStructureChangeHistory_Result>("SalaryStructureChangeHistory", empSalaryStructureIdParameter);
+        }
+    
+        public virtual ObjectResult<EmpSalaryDetailArchiveByUniqueChangeId_Result> EmpSalaryDetailArchiveByUniqueChangeId(Nullable<System.Guid> uniqueChangeId)
+        {
+            var uniqueChangeIdParameter = uniqueChangeId.HasValue ?
+                new ObjectParameter("UniqueChangeId", uniqueChangeId) :
+                new ObjectParameter("UniqueChangeId", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EmpSalaryDetailArchiveByUniqueChangeId_Result>("EmpSalaryDetailArchiveByUniqueChangeId", uniqueChangeIdParameter);
+        }
+    
+        public virtual int GenerateEmpPaySlip(Nullable<int> employeeId, Nullable<int> monthId, Nullable<int> year)
+        {
+            var employeeIdParameter = employeeId.HasValue ?
+                new ObjectParameter("EmployeeId", employeeId) :
+                new ObjectParameter("EmployeeId", typeof(int));
+    
+            var monthIdParameter = monthId.HasValue ?
+                new ObjectParameter("MonthId", monthId) :
+                new ObjectParameter("MonthId", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GenerateEmpPaySlip", employeeIdParameter, monthIdParameter, yearParameter);
+        }
+    
+        public virtual ObjectResult<GetEmpSalaryStructureComparisonList_Result> GetEmpSalaryStructureComparisonList(Nullable<int> employeeId, Nullable<System.Guid> uniqueChangeId, Nullable<int> financialYearFrom)
+        {
+            var employeeIdParameter = employeeId.HasValue ?
+                new ObjectParameter("EmployeeId", employeeId) :
+                new ObjectParameter("EmployeeId", typeof(int));
+    
+            var uniqueChangeIdParameter = uniqueChangeId.HasValue ?
+                new ObjectParameter("UniqueChangeId", uniqueChangeId) :
+                new ObjectParameter("UniqueChangeId", typeof(System.Guid));
+    
+            var financialYearFromParameter = financialYearFrom.HasValue ?
+                new ObjectParameter("FinancialYearFrom", financialYearFrom) :
+                new ObjectParameter("FinancialYearFrom", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmpSalaryStructureComparisonList_Result>("GetEmpSalaryStructureComparisonList", employeeIdParameter, uniqueChangeIdParameter, financialYearFromParameter);
         }
     }
 }

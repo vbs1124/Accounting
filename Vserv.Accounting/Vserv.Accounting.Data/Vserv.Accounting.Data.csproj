@@ -53,6 +53,7 @@
     <Compile Include="Interfaces\IAddressTypeRepository.cs" />
     <Compile Include="Interfaces\IBankRepository.cs" />
     <Compile Include="Interfaces\ICityRepository.cs" />
+    <Compile Include="Interfaces\IEmployeePaySlipRepo.cs" />
     <Compile Include="Interfaces\IEmployeeSalaryDetailRepo.cs" />
     <Compile Include="Interfaces\IEmpSalaryStructureRepo.cs" />
     <Compile Include="Interfaces\ISalaryComponentRepository.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Interfaces\IZipCodeRepository.cs" />
     <Compile Include="Repositories\AddressTypeRepository.cs" />
     <Compile Include="Repositories\BankRepository.cs" />
+    <Compile Include="Repositories\EmployeePaySlipRepo.cs" />
     <Compile Include="Repositories\EmployeeSalaryDetailRepo.cs" />
     <Compile Include="Repositories\EmpSalaryStructureRepo.cs" />
     <Compile Include="Repositories\SalaryComponentRepository.cs" />

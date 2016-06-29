@@ -1,8 +1,20 @@
 ﻿@using Vserv.Accounting.Common
 <div class="modal-header">
-    <h4 class="modal-title">Salary Structure Comparison Result</h4>
+    <h4 class="modal-title">Employee Salary Structure Changes</h4>
 </div>
 <div class="modal-body" ng-init="getEmpSalaryStructureComparisonList()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-dismissible alert-warning" style="vertical-align:central">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <span>
+                    <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+                    Columns with background <span class="bg-danger"><strong> red</strong></span> were updated by <strong> {{updby}}</strong> on <strong>{{updon}}</strong>.
+                    Hover on each field to view it's current value.
+                </span>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
@@ -39,40 +51,40 @@
                         <!-- Show all fields as no editable-->
                         <tr>
                             <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
-                            <td class="text-right" ng-class="{'bg-danger': item.April.IsDirty}" title="{{item.April.CurrentAmount}}">
+                            <td class="text-right" ng-class="{'bg-danger': item.April.IsDirty}" title="{{item.April.CurrentAmount | currency:'&#8377;':0}}">
                                 <span ng-bind="item.April.Amount | currency:'&#8377;':0"></span>
                             </td>
-                            <td class="text-right" ng-class="{'bg-danger': item.May.IsDirty}" title="{{item.May.CurrentAmount}}">
+                            <td class="text-right" ng-class="{'bg-danger': item.May.IsDirty}" title="{{item.May.CurrentAmount | currency:'&#8377;':0}}">
                                 <span ng-bind="item.May.Amount | currency:'&#8377;':0"></span>
                             </td>
-                            <td class="text-right" ng-class="{'bg-danger': item.June.IsDirty}" title="{{item.June.CurrentAmount}}">
+                            <td class="text-right" ng-class="{'bg-danger': item.June.IsDirty}" title="{{item.June.CurrentAmount | currency:'&#8377;':0}}">
                                 <span ng-bind="item.June.Amount | currency:'&#8377;':0"></span>
                             </td>
-                            <td class="text-right" ng-class="{'bg-danger': item.July.IsDirty}" title="{{item.July.CurrentAmount}}">
+                            <td class="text-right" ng-class="{'bg-danger': item.July.IsDirty}" title="{{item.July.CurrentAmount | currency:'&#8377;':0}}">
                                 <span ng-bind="item.July.Amount | currency:'&#8377;':0"></span>
                             </td>
-                            <td class="text-right" ng-class="{'bg-danger': item.August.IsDirty}" title="{{item.August.CurrentAmount}}">
+                            <td class="text-right" ng-class="{'bg-danger': item.August.IsDirty}" title="{{item.August.CurrentAmount | currency:'&#8377;':0}}">
                                 <span ng-bind="item.August.Amount | currency:'&#8377;':0"></span>
                             </td>
-                            <td class="text-right" ng-class="{'bg-danger': item.September.IsDirty}" title="{{item.September.CurrentAmount}}">
+                            <td class="text-right" ng-class="{'bg-danger': item.September.IsDirty}" title="{{item.September.CurrentAmount | currency:'&#8377;':0}}">
                                 <span ng-bind="item.September.Amount | currency:'&#8377;':0"></span>
                             </td>
-                            <td class="text-right" ng-class="{'bg-danger': item.October.IsDirty}" title="{{item.October.CurrentAmount}}">
+                            <td class="text-right" ng-class="{'bg-danger': item.October.IsDirty}" title="{{item.October.CurrentAmount | currency:'&#8377;':0}}">
                                 <span ng-bind="item.October.Amount | currency:'&#8377;':0"></span>
                             </td>
-                            <td class="text-right" ng-class="{'bg-danger': item.November.IsDirty}" title="{{item.November.CurrentAmount}}">
+                            <td class="text-right" ng-class="{'bg-danger': item.November.IsDirty}" title="{{item.November.CurrentAmount | currency:'&#8377;':0}}">
                                 <span ng-bind="item.November.Amount | currency:'&#8377;':0"></span>
                             </td>
-                            <td class="text-right" ng-class="{'bg-danger': item.December.IsDirty}" title="{{item.December.CurrentAmount}}">
+                            <td class="text-right" ng-class="{'bg-danger': item.December.IsDirty}" title="{{item.December.CurrentAmount | currency:'&#8377;':0}}">
                                 <span ng-bind="item.December.Amount | currency:'&#8377;':0"></span>
                             </td>
-                            <td class="text-right" ng-class="{'bg-danger': item.January.IsDirty}" title="{{item.January.CurrentAmount}}">
+                            <td class="text-right" ng-class="{'bg-danger': item.January.IsDirty}" title="{{item.January.CurrentAmount | currency:'&#8377;':0}}">
                                 <span ng-bind="item.January.Amount | currency:'&#8377;':0"></span>
                             </td>
-                            <td class="text-right" ng-class="{'bg-danger': item.February.IsDirty}" title="{{item.February.CurrentAmount}}">
+                            <td class="text-right" ng-class="{'bg-danger': item.February.IsDirty}" title="{{item.February.CurrentAmount | currency:'&#8377;':0}}">
                                 <span ng-bind="item.February.Amount | currency:'&#8377;':0"></span>
                             </td>
-                            <td class="text-right" ng-class="{'bg-danger': item.March.IsDirty}" title="{{item.March.CurrentAmount}}">
+                            <td class="text-right" ng-class="{'bg-danger': item.March.IsDirty}" title="{{item.March.CurrentAmount | currency:'&#8377;':0}}">
                                 <span ng-bind="item.March.Amount | currency:'&#8377;':0"></span>
                             </td>
                             <td class="text-bold text-right"><span ng-bind="getCurrentComponentTotal(item) | currency:'&#8377;':0"></span></td>
