@@ -109,13 +109,7 @@
             return $.vbsParseFloat(value);
         }
 
-        $scope.getHRALabel = function (subCategory) {
-            if (subCategory.Name == 'January' || subCategory.Name == 'February' || subCategory.Name == 'March') {
-                return subCategory.Name + " " + ($.vbsParseFloat(vm.selectedInvestmentFinancialYear) + 1).toString();
-            } else {
-                return subCategory.Name + " " + vm.selectedInvestmentFinancialYear;
-            }
-        }
+        
 
         $scope.getCurrentComponentTotal = function (item) {
 
@@ -203,6 +197,7 @@
         $scope.vbsParseFloat = function (value) {
             return $.vbsParseFloat(value);
         }
+
         //---------------- Salary Breakup Ends here -----------
     }
 })();

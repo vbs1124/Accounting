@@ -16,6 +16,7 @@ namespace Vserv.Accounting.Data.Entity
     {
         public int EmpInvestmentId { get; set; }
         public int EmployeeId { get; set; }
+        public int FinancialYear { get; set; }
         public decimal DeclaredAmount { get; set; }
         public Nullable<decimal> ApprovedAmount { get; set; }
         public int CategoryId { get; set; }

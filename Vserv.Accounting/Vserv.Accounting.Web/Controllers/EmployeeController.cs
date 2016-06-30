@@ -431,13 +431,13 @@ namespace Vserv.Accounting.Web.Controllers
             return Json(investmentCatogories, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult SaveEmployeeInvestments(int employeeId,List<InvestmentCategoryModel> empInvestmentDeclarationModel)
+        public JsonResult SaveEmployeeInvestments(int employeeId, int finYear, List<InvestmentCategoryModel> empInvestmentDeclarationModel)
         {
             // Call for Save through Manager.
             EmpInvestmentDeclarationModel obj = new EmpInvestmentDeclarationModel();
             obj.EmployeeId = employeeId;
             obj.InvestmentCategories = empInvestmentDeclarationModel;
-            var result = EmployeeManager.SaveEmployeeInvestments(obj.EmployeeId, obj);
+            var result = EmployeeManager.SaveEmployeeInvestments(obj.EmployeeId,finYear, obj);
             return Json("true", JsonRequestBehavior.AllowGet);
         }
 

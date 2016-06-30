@@ -53,8 +53,8 @@
             return serviceHandler.executePostService('/Employee/SaveEmployeeSalaryDetail?employeeId=' + employeeId, empSalaryStructureModel);
         }
 
-        function addEmployeeInvestments(employeeId,empInvestmentDeclarationModel) {
-            return serviceHandler.executePostService('/Employee/SaveEmployeeInvestments?employeeId=' + employeeId, empInvestmentDeclarationModel.InvestmentCategories);
+        function addEmployeeInvestments(employeeId,selectedInvestmentFinancialYear,empInvestmentDeclarationModel) {
+            return serviceHandler.executePostService('/Employee/SaveEmployeeInvestments?employeeId=' + employeeId+'&finYear='+selectedInvestmentFinancialYear, empInvestmentDeclarationModel.InvestmentCategories);
         }
 
         function loadEmployeeAppraisalHistory(employeeId) {

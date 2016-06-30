@@ -57,11 +57,11 @@ namespace Vserv.Accounting.Data
 
         }
 
-        public List<EmpInvestment> GetEmpInvestmentByEmpId(int employeeId)
+        public List<EmpInvestment> GetEmpInvestmentByEmpId(int employeeId, int financialYear)
         {
             using (VservAccountingDBEntities context = new VservAccountingDBEntities())
             {
-                return context.EmpInvestments.Where(x => x.EmployeeId == employeeId).ToList();
+                return context.EmpInvestments.Where(x => x.EmployeeId == employeeId && x.FinancialYear==financialYear).ToList();
             }
         }
 

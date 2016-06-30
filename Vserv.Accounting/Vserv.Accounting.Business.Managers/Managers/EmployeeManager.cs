@@ -1109,7 +1109,7 @@ namespace Vserv.Accounting.Business.Managers
             {
                 IInvestmentCategoryRepo _repository = DataRepositoryFactory.GetDataRepository<IInvestmentCategoryRepo>();
                 categorylist= _repository.GetInvestmentCatogories(financialYear);
-                empInvestmentlist = _repository.GetEmpInvestmentByEmpId(employeeId);
+                empInvestmentlist = _repository.GetEmpInvestmentByEmpId(employeeId,financialYear);
                 return FillUpEmployeeInvestmentDeclarationDetail(empInvestmentlist, categorylist, employeeId);
             });
             
@@ -1117,7 +1117,7 @@ namespace Vserv.Accounting.Business.Managers
             //return new List<EmpInvestmentDeclarationModel>();
         }
 
-        public bool SaveEmployeeInvestments(int employeeId,EmpInvestmentDeclarationModel investmentCatogories)
+        public bool SaveEmployeeInvestments(int employeeId,int finYear,EmpInvestmentDeclarationModel investmentCatogories)
         {
             
             return ExecuteFaultHandledOperation(() =>
@@ -1130,6 +1130,7 @@ namespace Vserv.Accounting.Business.Managers
                         EmpInvestment investment = new EmpInvestment();
                         investment.EmployeeId = employeeId;
                         investment.CategoryId = row.InvestmentCategoryId;
+                        investment.FinancialYear = finYear;
                         investment.IsApproved = false;
                         investment.IsActive = true;
                         investment.EmpInvestmentId = subcat.EmpInvestmentId == 0 ? 0 : subcat.EmpInvestmentId;
