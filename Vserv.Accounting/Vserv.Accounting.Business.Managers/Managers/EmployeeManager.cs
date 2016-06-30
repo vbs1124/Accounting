@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using Vserv.Accounting.Common;
 using Vserv.Accounting.Common.Enums;
 using Vserv.Accounting.Data;
@@ -570,6 +571,196 @@ namespace Vserv.Accounting.Business.Managers
 
                 return true;
             });
+        }
+
+        public bool SaveEmployeeAppraisal(EmpSalaryStructure empSalaryStructure, string userName)
+        {
+            using (var transactionScope = new TransactionScope(TransactionScopeOption.RequiresNew))
+            {
+                List<EmpSalaryDetail> empSalaryDetails = new List<EmpSalaryDetail>();
+
+                IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
+                IEmployeeSalaryDetailRepo employeeSalaryDetailRepo = DataRepositoryFactory.GetDataRepository<IEmployeeSalaryDetailRepo>();
+
+                // Get the new month collection based on effective from date.
+                IEnumerable<FinancialPeriod> financialMonthsOnEffectiveFrom = empSalaryStructure.EffectiveFrom.GetFinancialYearMonths().Select(months => new FinancialPeriod { Month = months.Key, Year = months.Value }).ToList();
+
+                // Find if the month exists in the existing Salary Structure.
+                EmpSalaryStructure dbEmpSalaryStructure = empSalaryStructureRepo.GetCurrentEmpSalaryStructure(empSalaryStructure.EmployeeId);
+                IEnumerable<FinancialPeriod> financialMonthsOnExistingEffectiveFrom = dbEmpSalaryStructure.EffectiveFrom.GetFinancialYearMonths().Select(months => new FinancialPeriod { Month = months.Key, Year = months.Value }).ToList();
+
+                IEnumerable<FinancialPeriod> matchingFinancialMonths = financialMonthsOnExistingEffectiveFrom.Intersect(financialMonthsOnEffectiveFrom);
+
+                //if matching month(s) found the the existing records will be updated with the new structure 
+                // and those will be mapped to the new Employee Structure. Need to archive the existing Records too.
+                if (matchingFinancialMonths.Count() > 0)
+                {
+                    // Archive the existing records from EmpSalaryDetail (move to EmpSalaryDetailArchive table.)
+                    // Add a new entry in EmpSalaryStructure table.
+                    // Update amount for all the salary components which are from the matching months.
+                    // Make sure that the existing and updated entries are mapped to the new entry pushed to EmpSalaryStructure table.
+                    // Build the salary structure for the current month based on pro data basis.
+                    // Build Salary Structure for rest of the month.
+
+                    // Update Amount and EmpSalaryStructureId for Matching Records.
+                    // Get all the existing Salary Details Which has to be updated.
+                    // Archive records which are there against existing Structure.
+                    employeeSalaryDetailRepo.ArchiveEmpSalaryDetail(dbEmpSalaryStructure.EmpSalaryStructureId, userName);
+
+                    var empSalaryDetailsToUpdate = (from esd in dbEmpSalaryStructure.EmpSalaryDetails
+                                                    let year = esd.Year
+                                                    where year != null
+                                                    join fp in matchingFinancialMonths on new { Month = esd.MonthId, Year = year.Value } equals new { fp.Month, fp.Year }
+                                                    select esd).ToList();
+
+                    List<EmpSalaryDetail> empSalaryDetailByMonth = GetEmpSalaryDetailsByMonth(empSalaryStructure, matchingFinancialMonths.FirstOrDefault());
+
+                    if (empSalaryDetailByMonth.IsNotNull())
+                    {
+                        foreach (var period in matchingFinancialMonths)
+                        {
+                            foreach (var item in empSalaryDetailByMonth)
+                            {
+                                item.MonthId = period.Month;
+                                item.Year = period.Year;
+                            }
+
+                            empSalaryDetails.AddRange(empSalaryDetailByMonth);
+                        }
+                    }
+
+                    empSalaryStructure.CreatedDate = DateTime.Now;
+                    empSalaryStructure.CreatedBy = userName;
+                    empSalaryStructure.IsActive = true;
+                    empSalaryStructure.ParentId = dbEmpSalaryStructure.EmpSalaryStructureId;
+                    empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Appraisal);
+
+                    if (empSalaryDetailsToUpdate.IsNotNull() && empSalaryDetailsToUpdate.Any())
+                    {
+                        foreach (var item in empSalaryDetailsToUpdate)
+                        {
+                            EmpSalaryDetail toUpdateRecord = empSalaryDetails.FirstOrDefault(condition => condition.EmployeeId == item.EmployeeId && condition.MonthId == item.MonthId && condition.Year == item.Year && condition.SalaryComponentId == item.SalaryComponentId);
+                            if (toUpdateRecord.IsNotNull())
+                            {
+                                item.Amount = toUpdateRecord.Amount;
+                                item.EmpSalaryStructureId = empSalaryStructure.EmpSalaryStructureId;
+                            }
+
+                            empSalaryStructureRepo.Add(empSalaryStructure, userName);
+                        }
+                    }
+
+                    // Update EmpSalaryStructureId for remaining Records.
+                }
+                else
+                {
+                    // Else Insert new records for all the months falling after the effective from Date.
+                    // Insert new record in EmpSalaryStructure table.
+                    // Insert new records in  EmpSalaryDetail table against the newly created EmpSalaryStructure.
+                    if (financialMonthsOnEffectiveFrom.IsNotNull())
+                    {
+                        List<EmpSalaryDetail> empSalaryDetailByMonth = GetEmpSalaryDetailsByMonth(empSalaryStructure, financialMonthsOnEffectiveFrom.FirstOrDefault());
+
+                        if (empSalaryDetailByMonth.IsNotNull())
+                        {
+                            foreach (var period in financialMonthsOnEffectiveFrom)
+                            {
+                                foreach (var item in empSalaryDetailByMonth)
+                                {
+                                    item.MonthId = period.Month;
+                                    item.Year = period.Year;
+                                }
+
+                                empSalaryDetails.AddRange(empSalaryDetailByMonth);
+                            }
+                        }
+
+                        empSalaryStructure.CreatedDate = DateTime.Now;
+                        empSalaryStructure.CreatedBy = userName;
+                        empSalaryStructure.IsActive = true;
+                        empSalaryStructure.EmpSalaryDetails = empSalaryDetails;
+
+                        if (dbEmpSalaryStructure.IsNotNull())
+                        {
+                            empSalaryStructure.ParentId = dbEmpSalaryStructure.EmpSalaryStructureId;
+                            empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Appraisal);
+                        }
+                        else
+                        {
+                            empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Initial);
+                        }
+
+                        empSalaryStructureRepo.Add(empSalaryStructure, userName);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private List<EmpSalaryDetail> GetEmpSalaryDetailsByMonth(EmpSalaryStructure empSalaryStructure, FinancialPeriod financialPeriod)
+        {
+            List<EmpSalaryDetail> employeeSalaryDetails = new List<EmpSalaryDetail>();
+            var salaryComponents = GetSalaryComponents();
+            Decimal? deductedAmountfromCTC = 0;
+
+            // Salary Components that has to be excluded from Monthly CTC to calculate Special Allowance.
+            //{ "Basic", "HRA", "Conveyance", "PerformanceIncentive", "Medical", "FoodCoupons", "ProjectIncentive", "CarLease", "LTC", "PF", "Mediclaim", "Gratuity", "CabDeductions", };
+            String[] deductedComponentFromCTC = { "SCBASC", "SCSHRA", "SCCONV", "SCPERF", "SCMEDC", "SCFCPN", "SCPROJ", "SCCARL", "SCTLTC", "SCEPFO", "SCMEDM", "SCGRAT", "SCCABD" };
+
+            EmpSalaryDetail employeeSalaryDetail;
+
+            foreach (SalaryComponent salaryComponent in salaryComponents)
+            {
+                var salaryComponentEnum = (SalaryComponentEnum)Enum.Parse(typeof(SalaryComponentEnum), salaryComponent.Name);
+
+                if (salaryComponentEnum.Equals(SalaryComponentEnum.SpecialAllowance)) continue;
+
+                var amount = GetAmountBySalaryComponent(empSalaryStructure, salaryComponent.DefaultAmount, salaryComponentEnum, financialPeriod.Month);
+
+                if (amount.IsNotNull() && amount.HasValue)
+                {
+                    amount = Math.Round(amount.Value, 0);
+                }
+
+                employeeSalaryDetail = new EmpSalaryDetail
+                {
+                    EmployeeId = empSalaryStructure.EmployeeId,
+                    SalaryComponentId = salaryComponent.SalaryComponentId,
+                    MonthId = financialPeriod.Month,
+                    Year = financialPeriod.Year,
+                    Amount = amount,
+                    IsActive = true,
+                    CreatedBy = empSalaryStructure.CreatedBy,
+                    CreatedDate = DateTime.Now
+                };
+
+                if (deductedComponentFromCTC.Contains(salaryComponent.Code))
+                {
+                    deductedAmountfromCTC += employeeSalaryDetail.Amount.IsNotNull() && employeeSalaryDetail.Amount.HasValue ? employeeSalaryDetail.Amount : 0;
+                }
+
+                employeeSalaryDetails.Add(employeeSalaryDetail);
+            }
+
+            // Update value for SpecialAllowance based on below rules.
+            // CTC -(Basic + HRA + Conveyance)- Performance Incentive - 
+            // (Medical + Food Coupons + Project Incentive + Car Lease + LTC + PF + Mediclaim + Gratuity) - (Cab Deductions)
+            employeeSalaryDetail = new EmpSalaryDetail
+            {
+                EmployeeId = empSalaryStructure.EmployeeId,
+                SalaryComponentId = Convert.ToInt32(SalaryComponentEnum.SpecialAllowance),
+                MonthId = financialPeriod.Month,
+                Year = financialPeriod.Year,
+                Amount = Math.Round((empSalaryStructure.CTC / 12), 0) - deductedAmountfromCTC,
+                IsActive = true,
+                CreatedBy = empSalaryStructure.CreatedBy,
+                CreatedDate = DateTime.Now
+            };
+
+            employeeSalaryDetails.Add(employeeSalaryDetail);
+
+            return employeeSalaryDetails;
         }
 
         /// <summary>
@@ -1210,15 +1401,15 @@ namespace Vserv.Accounting.Business.Managers
 
                     List<InvestmentSubCategoryModel> subCategoryList = row.InvestmentSubCategories.Select(subcat => new InvestmentSubCategoryModel
                     {
-                        InvestmentCategoryId = subcat.InvestmentCategoryId, 
-                        InvestmentSubCategoryId = subcat.InvestmentSubCategoryId, 
+                        InvestmentCategoryId = subcat.InvestmentCategoryId,
+                        InvestmentSubCategoryId = subcat.InvestmentSubCategoryId,
                         Name = subcat.Name,
-                        DefaultAmount = subcat.DefaultAmount, 
-                        Description = subcat.Description, 
+                        DefaultAmount = subcat.DefaultAmount,
+                        Description = subcat.Description,
                         Code = subcat.Code,
                         Remark = subcat.Remark,
-                        DisplayOrder = subcat.DisplayOrder, 
-                        IsActive = subcat.IsActive, 
+                        DisplayOrder = subcat.DisplayOrder,
+                        IsActive = subcat.IsActive,
                         IsApproved = false
                     }).ToList();
 
