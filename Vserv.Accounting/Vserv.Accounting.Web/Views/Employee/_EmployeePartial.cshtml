@@ -1,5 +1,5 @@
 ﻿@model Vserv.Accounting.Web.Models.EmployeeModel
-<fieldset id="fieldset-permanent-address" @(Model.RelievingDate != null ? "disabled" : "")>
+<fieldset @(Model.RelievingDate != null ? "disabled" : "")>
     <legend>Basic Information</legend>
     <div class="row">
         <div class="col-md-4">
@@ -192,7 +192,7 @@
         </div>
     </div>
 </fieldset>
-<fieldset id="fieldset-permanent-address" @(Model.RelievingDate != null ? "disabled" : "")>
+<fieldset @(Model.RelievingDate != null ? "disabled" : "")>
     <legend>Permanent Address</legend>
     <div class="row">
         <div class="col-md-4">
@@ -228,7 +228,7 @@
         </div>
     </div>
 </fieldset>
-<fieldset id="fieldset-mailing-address" @(Model.RelievingDate != null ? "disabled" : "")>
+<fieldset @(Model.RelievingDate != null ? "disabled" : "")>
     <legend>
         Mailing Address
     </legend>

@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel;
 using System.Transactions;
 using Vserv.Accounting.Common;
 using Vserv.Accounting.Common.Enums;
@@ -124,9 +123,9 @@ namespace Vserv.Accounting.Business.Managers
             });
         }
 
-        private bool PerformEmployeeFNF(Employee employee)
+        private void PerformEmployeeFNF(Employee employee)
         {
-            return ExecuteFaultHandledOperation(() =>
+            ExecuteFaultHandledOperation(() =>
             {
                 IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
                 IEmployeeSalaryDetailRepo employeeSalaryDetailRepo = DataRepositoryFactory.GetDataRepository<IEmployeeSalaryDetailRepo>();
@@ -151,9 +150,8 @@ namespace Vserv.Accounting.Business.Managers
                 }
 
                 if (employee.RelievingDate != null)
-                dbEmpSalaryStructure.EffectiveTo = employee.RelievingDate.Value; //Update the EffectiveTo to the RelievingDate of the employee
+                    dbEmpSalaryStructure.EffectiveTo = employee.RelievingDate.Value; //Update the EffectiveTo to the RelievingDate of the employee
                 empSalaryStructureRepo.Update(dbEmpSalaryStructure, employee.UpdatedBy);
-                return true;
             });
         }
 
@@ -508,7 +506,7 @@ namespace Vserv.Accounting.Business.Managers
                 {
                     var options = new TransactionOptions
                     {
-                        IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted,
+                        IsolationLevel = IsolationLevel.ReadCommitted,
                         Timeout = TransactionManager.DefaultTimeout,
                     };
 
@@ -521,7 +519,7 @@ namespace Vserv.Accounting.Business.Managers
 
                         // Get the new month collection based on effective from date.
                         IEnumerable<FinancialPeriod> financialMonthsOnEffectiveFrom = empSalaryStructure.EffectiveFrom.GetFinancialYearMonths().Select(months => new FinancialPeriod { Month = months.Key, Year = months.Value }).ToList();
-                        IEnumerable<FinancialPeriod> matchingFinancialMonths = null;
+                        List<FinancialPeriod> matchingFinancialMonths = null;
 
                         // Set Values for EmpSalaryStructure entity.
                         var periods = financialMonthsOnEffectiveFrom.OrderByDescending(order => order.Year).ThenByDescending(then => then.Month).FirstOrDefault();
@@ -542,13 +540,13 @@ namespace Vserv.Accounting.Business.Managers
                         {
                             IEnumerable<FinancialPeriod> financialMonthsOnExistingEffectiveFrom = dbEmpSalaryStructure.EffectiveFrom.GetFinancialYearMonths().Select(months => new FinancialPeriod { Month = months.Key, Year = months.Value }).ToList();
 
-                            matchingFinancialMonths = financialMonthsOnExistingEffectiveFrom.Intersect(financialMonthsOnEffectiveFrom);
+                            matchingFinancialMonths = financialMonthsOnExistingEffectiveFrom.Intersect(financialMonthsOnEffectiveFrom).ToList();
                         }
 
 
                         //if matching month(s) found the the existing records will be updated with the new structure 
                         // and those will be mapped to the new Employee Structure. Need to archive the existing Records too.
-                        if (matchingFinancialMonths.IsNotNull() && matchingFinancialMonths.Count() > 0)
+                        if (matchingFinancialMonths.IsNotNull() && matchingFinancialMonths.Any())
                         {
                             empSalaryStructure.ParentId = dbEmpSalaryStructure.EmpSalaryStructureId;
                             empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Appraisal);
@@ -581,14 +579,14 @@ namespace Vserv.Accounting.Business.Managers
                                     if (period.Month.Equals(empSalaryStructure.EffectiveFrom.Month) && period.Year.Equals(empSalaryStructure.EffectiveFrom.Year))
                                     {
                                         empSalaryDetails.AddRange(CalculateSalaryComponentForAppraisalMonth(empSalaryStructure));
-                        }
-                        else
-                        {
+                                    }
+                                    else
+                                    {
                                         foreach (var item in empSalaryDetailByMonth)
                                         {
                                             item.MonthId = period.Month;
                                             item.Year = period.Year;
-                        }
+                                        }
 
                                         empSalaryDetails.AddRange(empSalaryDetailByMonth.Clone());
                                     }
@@ -642,17 +640,17 @@ namespace Vserv.Accounting.Business.Managers
                                             empSalaryDetails.AddRange(CalculateSalaryComponentForAppraisalMonth(empSalaryStructure));
                                         }
                                         else
-                        {
+                                        {
                                             foreach (var item in empSalaryDetailByMonth)
-                            {
+                                            {
                                                 item.MonthId = period.Month;
                                                 item.Year = period.Year;
                                             }
 
                                             empSalaryDetails.AddRange(empSalaryDetailByMonth.Clone());
                                         }
-                            }
-                        }
+                                    }
+                                }
 
                                 if (dbEmpSalaryStructure.IsNotNull())
                                 {
@@ -660,13 +658,13 @@ namespace Vserv.Accounting.Business.Managers
                                     empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Appraisal);
                                 }
                                 else
-                        {
+                                {
                                     empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Initial);
                                 }
 
                                 var withNegativeSpeicalAllowance = empSalaryDetails.FirstOrDefault(condition => condition.SalaryComponentId == Convert.ToInt32(SalaryComponentEnum.SpecialAllowance) && condition.Amount < 0);
                                 if (withNegativeSpeicalAllowance.IsNotNull())
-                            {
+                                {
                                     return new MessageResult { IsErrorOccurred = true, Message = CommonConstants.INVALID_SPECIAL_ALLOWANCE };
                                 }
 
@@ -849,6 +847,7 @@ namespace Vserv.Accounting.Business.Managers
 
         #region Private Methods
 
+        /*
         /// <summary>
         /// Calculates the salary components.
         /// </summary>
@@ -934,77 +933,80 @@ namespace Vserv.Accounting.Business.Managers
 
             return finalCollection;
         }
+*/
 
-        /// <summary>
-        /// Calculates the salary component.
-        /// </summary>
-        /// <param name="empSalaryStructure">The emp salary structure.</param>
-        /// <param name="monthId">The month identifier.</param>
-        /// <param name="year">The year.</param>
-        /// <returns></returns>
-        private List<EmpSalaryDetail> CalculateSalaryComponent(EmpSalaryStructure empSalaryStructure, int monthId, int year)
-        {
-            List<EmpSalaryDetail> employeeSalaryDetails = new List<EmpSalaryDetail>();
-            var salaryComponents = GetSalaryComponents();
-            Decimal? deductedAmountfromCTC = 0;
-
-            // Salary Components that has to be excluded from Monthly CTC to calculate Special Allowance.
-            //"Basic", "HRA", "Conveyance", "PerformanceIncentive", "Medical", "FoodCoupons", "ProjectIncentive", "CarLease", "LTC", "PF", "Mediclaim", "Gratuity", "CabDeductions"
-            String[] deductedComponentFromCTC = { "SCBASC", "SCSHRA", "SCCONV", "SCPERF", "SCMEDC", "SCFCPN", "SCPROJ", "SCCARL", "SCTLTC", "SCEPFO", "SCMEDM", "SCGRAT", "SCCABD" };
-
-            EmpSalaryDetail employeeSalaryDetail;
-
-            foreach (SalaryComponent salaryComponent in salaryComponents)
-            {
-                var salaryComponentEnum = (SalaryComponentEnum)Enum.Parse(typeof(SalaryComponentEnum), salaryComponent.Name);
-
-                if (salaryComponentEnum.Equals(SalaryComponentEnum.SpecialAllowance)) continue;
-
-                var amount = GetAmountBySalaryComponent(empSalaryStructure, salaryComponent.DefaultAmount, salaryComponentEnum, monthId);
-
-                if (amount.IsNotNull() && amount.HasValue)
+        /*
+                /// <summary>
+                /// Calculates the salary component.
+                /// </summary>
+                /// <param name="empSalaryStructure">The emp salary structure.</param>
+                /// <param name="monthId">The month identifier.</param>
+                /// <param name="year">The year.</param>
+                /// <returns></returns>
+                private List<EmpSalaryDetail> CalculateSalaryComponent(EmpSalaryStructure empSalaryStructure, int monthId, int year)
                 {
-                    amount = Math.Round(amount.Value, 0);
+                    List<EmpSalaryDetail> employeeSalaryDetails = new List<EmpSalaryDetail>();
+                    var salaryComponents = GetSalaryComponents();
+                    Decimal? deductedAmountfromCTC = 0;
+
+                    // Salary Components that has to be excluded from Monthly CTC to calculate Special Allowance.
+                    //"Basic", "HRA", "Conveyance", "PerformanceIncentive", "Medical", "FoodCoupons", "ProjectIncentive", "CarLease", "LTC", "PF", "Mediclaim", "Gratuity", "CabDeductions"
+                    String[] deductedComponentFromCTC = { "SCBASC", "SCSHRA", "SCCONV", "SCPERF", "SCMEDC", "SCFCPN", "SCPROJ", "SCCARL", "SCTLTC", "SCEPFO", "SCMEDM", "SCGRAT", "SCCABD" };
+
+                    EmpSalaryDetail employeeSalaryDetail;
+
+                    foreach (SalaryComponent salaryComponent in salaryComponents)
+                    {
+                        var salaryComponentEnum = (SalaryComponentEnum)Enum.Parse(typeof(SalaryComponentEnum), salaryComponent.Name);
+
+                        if (salaryComponentEnum.Equals(SalaryComponentEnum.SpecialAllowance)) continue;
+
+                        var amount = GetAmountBySalaryComponent(empSalaryStructure, salaryComponent.DefaultAmount, salaryComponentEnum, monthId);
+
+                        if (amount.IsNotNull() && amount.HasValue)
+                        {
+                            amount = Math.Round(amount.Value, 0);
+                        }
+
+                        employeeSalaryDetail = new EmpSalaryDetail
+                        {
+                            EmployeeId = empSalaryStructure.EmployeeId,
+                            SalaryComponentId = salaryComponent.SalaryComponentId,
+                            MonthId = monthId,
+                            Year = year,
+                            Amount = amount,
+                            IsActive = true,
+                            CreatedBy = empSalaryStructure.CreatedBy,
+                            CreatedDate = DateTime.Now
+                        };
+
+                        if (deductedComponentFromCTC.Contains(salaryComponent.Code))
+                        {
+                            deductedAmountfromCTC += employeeSalaryDetail.Amount.IsNotNull() && employeeSalaryDetail.Amount.HasValue ? employeeSalaryDetail.Amount : 0;
+                        }
+
+                        employeeSalaryDetails.Add(employeeSalaryDetail);
+                    }
+
+                    // Update value for SpecialAllowance based on below rules.
+                    // CTC -(Basic + HRA + Conveyance)- Performance Incentive - 
+                    // (Medical + Food Coupons + Project Incentive + Car Lease + LTC + PF + Mediclaim + Gratuity) - (Cab Deductions)
+                    employeeSalaryDetail = new EmpSalaryDetail
+                    {
+                        EmployeeId = empSalaryStructure.EmployeeId,
+                        SalaryComponentId = Convert.ToInt32(SalaryComponentEnum.SpecialAllowance),
+                        MonthId = monthId,
+                        Year = year,
+                        Amount = Math.Round((empSalaryStructure.CTC / 12), 0) - deductedAmountfromCTC,
+                        IsActive = true,
+                        CreatedBy = empSalaryStructure.CreatedBy,
+                        CreatedDate = DateTime.Now
+                    };
+                    employeeSalaryDetails.Add(employeeSalaryDetail);
+
+                    return employeeSalaryDetails.OrderBy(order => order.MonthId).ThenBy(then => then.SalaryComponentId).ToList();
                 }
-
-                employeeSalaryDetail = new EmpSalaryDetail
-                {
-                    EmployeeId = empSalaryStructure.EmployeeId,
-                    SalaryComponentId = salaryComponent.SalaryComponentId,
-                    MonthId = monthId,
-                    Year = year,
-                    Amount = amount,
-                    IsActive = true,
-                    CreatedBy = empSalaryStructure.CreatedBy,
-                    CreatedDate = DateTime.Now
-                };
-
-                if (deductedComponentFromCTC.Contains(salaryComponent.Code))
-                {
-                    deductedAmountfromCTC += employeeSalaryDetail.Amount.IsNotNull() && employeeSalaryDetail.Amount.HasValue ? employeeSalaryDetail.Amount : 0;
-                }
-
-                employeeSalaryDetails.Add(employeeSalaryDetail);
-            }
-
-            // Update value for SpecialAllowance based on below rules.
-            // CTC -(Basic + HRA + Conveyance)- Performance Incentive - 
-            // (Medical + Food Coupons + Project Incentive + Car Lease + LTC + PF + Mediclaim + Gratuity) - (Cab Deductions)
-            employeeSalaryDetail = new EmpSalaryDetail
-            {
-                EmployeeId = empSalaryStructure.EmployeeId,
-                SalaryComponentId = Convert.ToInt32(SalaryComponentEnum.SpecialAllowance),
-                MonthId = monthId,
-                Year = year,
-                Amount = Math.Round((empSalaryStructure.CTC / 12), 0) - deductedAmountfromCTC,
-                IsActive = true,
-                CreatedBy = empSalaryStructure.CreatedBy,
-                CreatedDate = DateTime.Now
-            };
-            employeeSalaryDetails.Add(employeeSalaryDetail);
-
-            return employeeSalaryDetails.OrderBy(order => order.MonthId).ThenBy(then => then.SalaryComponentId).ToList();
-        }
+        */
 
         /// <summary>
         /// Calculates the salary component for appraisal month.
@@ -1288,32 +1290,32 @@ namespace Vserv.Accounting.Business.Managers
                 var empInvestmentlist = repository.GetEmpInvestmentByEmpId(employeeId, financialYear);
                 return FillUpEmployeeInvestmentDeclarationDetail(empInvestmentlist, categorylist, employeeId);
             });
-            
-            
+
+
             //return new List<EmpInvestmentDeclarationModel>();
         }
 
         public bool SaveEmployeeInvestments(int employeeId, int finYear, EmpInvestmentDeclarationModel investmentCatogories)
         {
-            
+
             return ExecuteFaultHandledOperation(() =>
             {
                 List<EmpInvestment> empInvestmentList = (from row in investmentCatogories.InvestmentCategories
                                                          from subcat in row.InvestmentSubCategories
                                                          select new EmpInvestment
-                {                    
-                                                             EmployeeId = employeeId,
-                                                             CategoryId = row.InvestmentCategoryId,
+                {
+                    EmployeeId = employeeId,
+                    CategoryId = row.InvestmentCategoryId,
                     IsApproved = Convert.ToBoolean(subcat.IsApproved),
-                                                             IsActive = true,
+                    IsActive = true,
                     FinancialYear = finYear,
-                                                             EmpInvestmentId = subcat.EmpInvestmentId == 0 ? 0 : subcat.EmpInvestmentId,
-                                                             SubCategoryId = subcat.InvestmentSubCategoryId,
-                                                             DeclaredAmount = Convert.ToDecimal(subcat.DefaultAmount),
-                    ApprovedAmount =Convert.ToDecimal(subcat.ApprovedAmount) == 0 ? Convert.ToDecimal(subcat.DefaultAmount) : Convert.ToDecimal(subcat.ApprovedAmount),
-                                                             CreatedBy = string.IsNullOrEmpty(row.CreatedBy) ? "vbsadmin" : row.CreatedBy,
-                                                             CreatedDate = DateTime.Now
-                                                         }).ToList();
+                    EmpInvestmentId = subcat.EmpInvestmentId == 0 ? 0 : subcat.EmpInvestmentId,
+                    SubCategoryId = subcat.InvestmentSubCategoryId,
+                    DeclaredAmount = Convert.ToDecimal(subcat.DefaultAmount),
+                    ApprovedAmount = Convert.ToDecimal(subcat.ApprovedAmount) == 0 ? Convert.ToDecimal(subcat.DefaultAmount) : Convert.ToDecimal(subcat.ApprovedAmount),
+                    CreatedBy = string.IsNullOrEmpty(row.CreatedBy) ? "vbsadmin" : row.CreatedBy,
+                    CreatedDate = DateTime.Now
+                }).ToList();
                 IInvestmentCategoryRepo repository = DataRepositoryFactory.GetDataRepository<IInvestmentCategoryRepo>();
                 return repository.SaveEmployeeInvestments(empInvestmentList);
             });
@@ -1342,7 +1344,7 @@ namespace Vserv.Accounting.Business.Managers
                         Code = investmentCategory.Code,
                         DisplayOrder = investmentCategory.DisplayOrder
                     };
-                    
+
                     if (investmentCategory.InvestmentCategoryId == empInvestmentDetail[j].CategoryId)
                     {
                         List<InvestmentSubCategoryModel> subCategoryList = new List<InvestmentSubCategoryModel>();
@@ -1350,20 +1352,20 @@ namespace Vserv.Accounting.Business.Managers
                         {
                             InvestmentSubCategoryModel subcategoryModel = new InvestmentSubCategoryModel
                         {
-                                EmpInvestmentId = empInvestmentDetail[j].EmpInvestmentId,
-                                InvestmentCategoryId = subcat.InvestmentCategoryId,
-                                InvestmentSubCategoryId = subcat.InvestmentSubCategoryId,
-                                Name = subcat.Name,
-                                MaximumLimit=subcat.MaximumLimit,
-                                DefaultAmount = empInvestmentDetail[j].DeclaredAmount,
-                                ApprovedAmount=empInvestmentDetail[j].ApprovedAmount,
-                                Description = subcat.Description,
-                                Code = subcat.Code,
-                                Remark = subcat.Remark,
-                                DisplayOrder = subcat.DisplayOrder,
-                                IsActive = subcat.IsActive,
-                                IsApproved = empInvestmentDetail[j].IsApproved
-                            };
+                            EmpInvestmentId = empInvestmentDetail[j].EmpInvestmentId,
+                            InvestmentCategoryId = subcat.InvestmentCategoryId,
+                            InvestmentSubCategoryId = subcat.InvestmentSubCategoryId,
+                            Name = subcat.Name,
+                            MaximumLimit = subcat.MaximumLimit,
+                            DefaultAmount = empInvestmentDetail[j].DeclaredAmount,
+                            ApprovedAmount = empInvestmentDetail[j].ApprovedAmount,
+                            Description = subcat.Description,
+                            Code = subcat.Code,
+                            Remark = subcat.Remark,
+                            DisplayOrder = subcat.DisplayOrder,
+                            IsActive = subcat.IsActive,
+                            IsApproved = empInvestmentDetail[j].IsApproved
+                        };
                             subCategoryList.Add(subcategoryModel);
                             j++;
                         }
@@ -1380,33 +1382,33 @@ namespace Vserv.Accounting.Business.Managers
                 {
                     InvestmentCategoryModel categoryModel = new InvestmentCategoryModel
                 {
-                        InvestmentCategoryId = row.InvestmentCategoryId,
-                        IsActive = row.IsActive,
-                        MappingId = row.MappingId,
-                        Name = row.Name,
-                        Description = row.Description,
-                        Code = row.Code,
-                        DisplayOrder = row.DisplayOrder
-                    };
+                    InvestmentCategoryId = row.InvestmentCategoryId,
+                    IsActive = row.IsActive,
+                    MappingId = row.MappingId,
+                    Name = row.Name,
+                    Description = row.Description,
+                    Code = row.Code,
+                    DisplayOrder = row.DisplayOrder
+                };
 
                     List<InvestmentSubCategoryModel> subCategoryList = row.InvestmentSubCategories.Select(subcat => new InvestmentSubCategoryModel
                     {
-                        InvestmentCategoryId = subcat.InvestmentCategoryId, 
-                        InvestmentSubCategoryId = subcat.InvestmentSubCategoryId, 
+                        InvestmentCategoryId = subcat.InvestmentCategoryId,
+                        InvestmentSubCategoryId = subcat.InvestmentSubCategoryId,
                         Name = subcat.Name,
-                        MaximumLimit=subcat.MaximumLimit,
-                        DefaultAmount = subcat.DefaultAmount, 
-                        Description = subcat.Description, 
+                        MaximumLimit = subcat.MaximumLimit,
+                        DefaultAmount = subcat.DefaultAmount,
+                        Description = subcat.Description,
                         Code = subcat.Code,
                         Remark = subcat.Remark,
-                        DisplayOrder = subcat.DisplayOrder, 
-                        IsActive = subcat.IsActive, 
+                        DisplayOrder = subcat.DisplayOrder,
+                        IsActive = subcat.IsActive,
                         IsApproved = false
                     }).ToList();
 
                     categoryModel.InvestmentSubCategories = subCategoryList;
                     categoryModelList.Add(categoryModel);
-                    
+
                 }
                 empInvestmentDeclarationModel.InvestmentCategories = categoryModelList;
             }
