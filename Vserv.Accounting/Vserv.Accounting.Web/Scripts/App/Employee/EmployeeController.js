@@ -7,10 +7,10 @@
         var vm = this;
 
         vm.employeeId = $("#EmployeeId").val();
-       
-        vm.addNewSalaryStructure = addNewSalaryStructure;
-        vm.employeeChangeHistoryModal = employeeChangeHistoryModal;
-        vm.empSalaryStructureChangeHistoryModal = empSalaryStructureChangeHistoryModal;
+
+        vm.loadEmployee = employeeService.loadEmployee(vm.employeeId);
+        vm.employee = employeeService.employee;
+
         vm.empSalaryStructureModel = employeeService.empSalaryStructureModel;
         vm.relievingDate = new Date($("#RelievingDate").val());
         vm.joiningDate = new Date($("#JoiningDate").val());
@@ -21,16 +21,18 @@
 
         vm.loadEmployeeAppraisalHistory = employeeService.loadEmployeeAppraisalHistory(vm.employeeId);
         vm.employeeAppraisalHistory = employeeService.employeeAppraisalHistory;
-
         vm.empAppraisalGraphValues = employeeService.empAppraisalGraphValues;
+
         vm.loadEmployeePaySheet = employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(vm.selectedFinancialYear), parseInt(vm.selectedFinancialYear) + 1);
         vm.employeePaySheet = employeeService.employeePaySheet;
         vm.empsalarystructureid = employeeService.empsalarystructureid;
+
         vm.viewSelectedSalaryBreakup = viewSelectedSalaryBreakup;
 
         // Investment Declaration.
         vm.loadInvestmentByEmployeeId = employeeService.loadInvestmentByEmployeeId(vm.employeeId);
         vm.investmentDeclarationResult = employeeService.investmentDeclarationResult;
+
         vm.appraisalHistoryGraphOptions = {
             chart: {
                 type: 'discreteBarChart',
@@ -68,21 +70,21 @@
             return vm.employeePaySheet.length > 0 && $.vbsParseFloat(vm.selectedFinancialYear) >= $.vbsParseFloat(vm.currentYear) && (vm.relievingDate == 'Invalid Date' || vm.relievingDate == null);
         }
 
-        function addNewSalaryStructure() {
+        $scope.addNewSalaryStructure = function () {
             $modal.open({
                 template: '<add-appraisal />',
                 animation: true
             });
         }
 
-        function employeeChangeHistoryModal() {
+        $scope.employeeChangeHistoryModal = function () {
             $modal.open({
                 template: '<emp-history />',
                 animation: true,
             });
         }
 
-        function empSalaryStructureChangeHistoryModal(empsalarystructureid) {
+        $scope.empSalaryStructureChangeHistoryModal = function (empsalarystructureid) {
             $modal.open({
                 template: '<emp-salary-structure-history empsalarystructureid="empsalarystructureid" />',
                 scope: angular.extend($scope.$new(true), { empsalarystructureid: empsalarystructureid }),
@@ -99,7 +101,7 @@
         }
         $scope.onChangeInvestmentFinancialYear = function () {
             //alert(">>>>");
-            employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear,vm.employeeId);
+            employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear, vm.employeeId);
         }
 
         //Method Initialize
@@ -176,15 +178,15 @@
         $scope.updateYearlyPaySheet = function () {
             bootbox.confirm("Are you sure that you want to update existing Salary Structure?", function (result) {
                 if (result) {
-            employeeService.updateYearlyPaySheet(vm.employeePaySheet).then(function (resp) {
-                if (resp.businessException == null) {
-                    $.showToastrMessage("success", "Salary Breakup for current financial year updated successfully.");
+                    employeeService.updateYearlyPaySheet(vm.employeePaySheet).then(function (resp) {
+                        if (resp.businessException == null) {
+                            $.showToastrMessage("success", "Salary Breakup for current financial year updated successfully.");
+                        }
+                        else {
+                            $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                        }
+                    });
                 }
-                else {
-                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
-                }
-            });
-        }
             });
         }
 
