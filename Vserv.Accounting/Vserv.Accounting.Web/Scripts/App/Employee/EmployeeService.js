@@ -56,8 +56,8 @@
             return serviceHandler.executePostService('/Employee/SaveEmployeeSalaryDetail?employeeId=' + employeeId, empSalaryStructureModel);
         }
 
-        function addEmployeeInvestments(employeeId, empInvestmentDeclarationModel) {
-            return serviceHandler.executePostService('/Employee/SaveEmployeeInvestments?employeeId=' + employeeId, empInvestmentDeclarationModel.InvestmentCategories);
+        function addEmployeeInvestments(employeeId,selectedInvestmentFinancialYear,empInvestmentDeclarationModel) {
+            return serviceHandler.executePostService('/Employee/SaveEmployeeInvestments?employeeId=' + employeeId+'&finYear='+selectedInvestmentFinancialYear, empInvestmentDeclarationModel.InvestmentCategories);
         }
 
         function loadEmployeeAppraisalHistory(employeeId) {
@@ -86,7 +86,7 @@
         }
 
         function getEmployee(employeeId) {
-            return serviceHandler.executePostService('/Employee/GetEmployee?employeeId=' + employeeId);
+            return serviceHandler.executePostService('/Employee/GetEmployeeDetail?employeeId=' + employeeId);
         }
 
         function loadEmployeePaySheet(employeeId, financialYearFrom, financialYearTo) {
@@ -103,7 +103,7 @@
                     employeePaySheet.addRange(resp.result);
                     if (employeePaySheet.length > 0) {
                         empsalarystructureid = employeePaySheet[0].EmpSalaryStructureId;
-                    }
+                }
                 }
                 else {
                     $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");

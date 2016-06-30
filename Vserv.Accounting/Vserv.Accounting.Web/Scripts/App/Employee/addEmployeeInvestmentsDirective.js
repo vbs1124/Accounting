@@ -4,7 +4,7 @@
     function addEmployeeInvestments() {
         return {
             scope: {
-                vmodel: "="
+                vmodel: "=",                
             },
             templateUrl: '/employee/template/addEmployeeInvestments.tmpl.cshtml',
             controller: addEmployeeInvestmentsController,
@@ -25,7 +25,7 @@
         vm.addEmployeeInvestments = addEmployeeInvestments;
         function addEmployeeInvestments() {
             vm.saving = true;
-            employeeService.addEmployeeInvestments(vm.employeeId, vm.empInvestmentDeclarationModel).then(function (resp) {
+            employeeService.addEmployeeInvestments(vm.employeeId,vm.selectedInvestmentFinancialYear, vm.empInvestmentDeclarationModel).then(function (resp) {
                 if (resp.businessException == null) {
                     $.showToastrMessage("success", "Investment Declaration saved successfully.");
                 }
@@ -34,6 +34,17 @@
                 }
                 vm.saving = false;
             });
+        }
+
+        $scope.getHRALabel = function (subCategory) {
+            if (subCategory.Name == 'January' || subCategory.Name == 'February' || subCategory.Name == 'March') {
+                return subCategory.Name + " " + ($.vbsParseFloat(vm.selectedInvestmentFinancialYear) + 1).toString();
+            } else {
+                return subCategory.Name + " " + vm.selectedInvestmentFinancialYear;
+            }
+        }
+        $scope.vbsParseFloat = function (value) {
+            return $.vbsParseFloat(value);
         }
     }
 })();

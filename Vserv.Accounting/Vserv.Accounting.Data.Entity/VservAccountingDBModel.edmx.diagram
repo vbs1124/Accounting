@@ -11,7 +11,6 @@
         <EntityTypeShape EntityType="VservAccountingDBModel.City" Width="1.5" PointX="3" PointY="38.5" />
         <EntityTypeShape EntityType="VservAccountingDBModel.Config" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="VservAccountingDBModel.Designation" Width="1.5" PointX="3.75" PointY="43.375" />
-        <EntityTypeShape EntityType="VservAccountingDBModel.EmpInvestment" Width="1.5" PointX="8.25" PointY="20.125" />
         <EntityTypeShape EntityType="VservAccountingDBModel.Employee" Width="1.5" PointX="6" PointY="10.375" />
         <EntityTypeShape EntityType="VservAccountingDBModel.EmployeeArchive" Width="1.5" PointX="3" PointY="10.375" />
         <EntityTypeShape EntityType="VservAccountingDBModel.EmployeePaySlip" Width="1.5" PointX="16.75" PointY="0.75" />
@@ -45,7 +44,6 @@
         <AssociationConnector Association="VservAccountingDBModel.FK_ZipCode_City" />
         <AssociationConnector Association="VservAccountingDBModel.FK_Employee_Designation" />
         <AssociationConnector Association="VservAccountingDBModel.FK_EmployeeArchive_Designation" />
-        <AssociationConnector Association="VservAccountingDBModel.FK_EmpInvestment_Employee" />
         <AssociationConnector Association="VservAccountingDBModel.FK_Employee_Gender" />
         <AssociationConnector Association="VservAccountingDBModel.FK_Employee_MailingState" />
         <AssociationConnector Association="VservAccountingDBModel.FK_Employee_OfficeBranch" />
@@ -72,6 +70,8 @@
         <AssociationConnector Association="VservAccountingDBModel.FK_ZipCode_State" />
         <AssociationConnector Association="VservAccountingDBModel.FK_UserSecurityQuestion_UserProfile" />
         <AssociationConnector Association="VservAccountingDBModel.UsersInRoles" />
+        <EntityTypeShape EntityType="VservAccountingDBModel.EmpInvestment" Width="1.5" PointX="8.25" PointY="20" />
+        <AssociationConnector Association="VservAccountingDBModel.FK_EmpInvestment_Employee" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

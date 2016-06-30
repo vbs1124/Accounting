@@ -8,7 +8,7 @@
 
         vm.employeeId = $("#EmployeeId").val();
 
-        vm.loadEmployee = employeeService.loadEmployee(vm.employeeId);
+        vm.loadEmployee = employeeService.getEmployee(vm.employeeId);
         vm.employee = employeeService.employee;
 
         vm.empSalaryStructureModel = employeeService.empSalaryStructureModel;
@@ -111,13 +111,7 @@
             return $.vbsParseFloat(value);
         }
 
-        $scope.getHRALabel = function (subCategory) {
-            if (subCategory.Name == 'January' || subCategory.Name == 'February' || subCategory.Name == 'March') {
-                return subCategory.Name + " " + ($.vbsParseFloat(vm.selectedInvestmentFinancialYear) + 1).toString();
-            } else {
-                return subCategory.Name + " " + vm.selectedInvestmentFinancialYear;
-            }
-        }
+        
 
         $scope.getCurrentComponentTotal = function (item) {
 
@@ -205,6 +199,7 @@
         $scope.vbsParseFloat = function (value) {
             return $.vbsParseFloat(value);
         }
+
         //---------------- Salary Breakup Ends here -----------
     }
 })();

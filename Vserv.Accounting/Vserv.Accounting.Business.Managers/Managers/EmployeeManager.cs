@@ -150,7 +150,7 @@ namespace Vserv.Accounting.Business.Managers
                 }
 
                 if (employee.RelievingDate != null)
-                    dbEmpSalaryStructure.EffectiveTo = employee.RelievingDate.Value; //Update the EffectiveTo to the RelievingDate of the employee
+                dbEmpSalaryStructure.EffectiveTo = employee.RelievingDate.Value; //Update the EffectiveTo to the RelievingDate of the employee
                 empSalaryStructureRepo.Update(dbEmpSalaryStructure, employee.UpdatedBy);
                 return true;
             });
@@ -1299,27 +1299,28 @@ namespace Vserv.Accounting.Business.Managers
             {
                 IInvestmentCategoryRepo repository = DataRepositoryFactory.GetDataRepository<IInvestmentCategoryRepo>();
                 var categorylist = repository.GetInvestmentCatogories(financialYear);
-                var empInvestmentlist = repository.GetEmpInvestmentByEmpId(employeeId);
+                var empInvestmentlist = repository.GetEmpInvestmentByEmpId(employeeId, financialYear);
                 return FillUpEmployeeInvestmentDeclarationDetail(empInvestmentlist, categorylist, employeeId);
             });
-
-
+            
+            
             //return new List<EmpInvestmentDeclarationModel>();
         }
 
-        public bool SaveEmployeeInvestments(int employeeId, EmpInvestmentDeclarationModel investmentCatogories)
+        public bool SaveEmployeeInvestments(int employeeId,int finYear,EmpInvestmentDeclarationModel investmentCatogories)
         {
-
+            
             return ExecuteFaultHandledOperation(() =>
             {
                 List<EmpInvestment> empInvestmentList = (from row in investmentCatogories.InvestmentCategories
                                                          from subcat in row.InvestmentSubCategories
                                                          select new EmpInvestment
-                                                         {
+                {                    
                                                              EmployeeId = employeeId,
                                                              CategoryId = row.InvestmentCategoryId,
                                                              IsApproved = false,
                                                              IsActive = true,
+                                                             FinancialYear=finYear,
                                                              EmpInvestmentId = subcat.EmpInvestmentId == 0 ? 0 : subcat.EmpInvestmentId,
                                                              SubCategoryId = subcat.InvestmentSubCategoryId,
                                                              DeclaredAmount = Convert.ToDecimal(subcat.DefaultAmount),
@@ -1354,14 +1355,14 @@ namespace Vserv.Accounting.Business.Managers
                         Code = investmentCategory.Code,
                         DisplayOrder = investmentCategory.DisplayOrder
                     };
-
+                    
                     if (investmentCategory.InvestmentCategoryId == empInvestmentDetail[j].CategoryId)
                     {
                         List<InvestmentSubCategoryModel> subCategoryList = new List<InvestmentSubCategoryModel>();
                         foreach (var subcat in investmentCategory.InvestmentSubCategories)  // iterate the sub categories for each category
                         {
                             InvestmentSubCategoryModel subcategoryModel = new InvestmentSubCategoryModel
-                            {
+                        {
                                 EmpInvestmentId = empInvestmentDetail[j].EmpInvestmentId,
                                 InvestmentCategoryId = subcat.InvestmentCategoryId,
                                 InvestmentSubCategoryId = subcat.InvestmentSubCategoryId,
@@ -1389,7 +1390,7 @@ namespace Vserv.Accounting.Business.Managers
                 foreach (var row in categoryList)
                 {
                     InvestmentCategoryModel categoryModel = new InvestmentCategoryModel
-                    {
+                {
                         InvestmentCategoryId = row.InvestmentCategoryId,
                         IsActive = row.IsActive,
                         MappingId = row.MappingId,
@@ -1415,7 +1416,7 @@ namespace Vserv.Accounting.Business.Managers
 
                     categoryModel.InvestmentSubCategories = subCategoryList;
                     categoryModelList.Add(categoryModel);
-
+                    
                 }
                 empInvestmentDeclarationModel.InvestmentCategories = categoryModelList;
             }

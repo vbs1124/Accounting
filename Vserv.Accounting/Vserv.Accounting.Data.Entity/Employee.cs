@@ -16,8 +16,8 @@ namespace Vserv.Accounting.Data.Entity
     {
         public Employee()
         {
-            this.EmpInvestments = new HashSet<EmpInvestment>();
             this.EmpSalaryStructures = new HashSet<EmpSalaryStructure>();
+            this.EmpInvestments = new HashSet<EmpInvestment>();
         }
     
         public int EmployeeId { get; set; }
@@ -68,12 +68,12 @@ namespace Vserv.Accounting.Data.Entity
     
         public virtual Bank Bank { get; set; }
         public virtual Designation Designation { get; set; }
-        public virtual ICollection<EmpInvestment> EmpInvestments { get; set; }
         public virtual Gender Gender { get; set; }
         public virtual State State { get; set; }
         public virtual OfficeBranch OfficeBranch { get; set; }
         public virtual State State1 { get; set; }
         public virtual Salutation Salutation { get; set; }
         public virtual ICollection<EmpSalaryStructure> EmpSalaryStructures { get; set; }
+        public virtual ICollection<EmpInvestment> EmpInvestments { get; set; }
     }
 }

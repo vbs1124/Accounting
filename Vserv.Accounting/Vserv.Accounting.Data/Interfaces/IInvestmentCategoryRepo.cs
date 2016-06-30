@@ -13,6 +13,6 @@ namespace Vserv.Accounting.Data
         List<InvestmentCategory> GetInvestmentCatogories(int financialYear);
         bool SaveEmployeeInvestments(List<EmpInvestment> investmentCatogories);
         List<InvestmentCategory> GetInvestmentCategories(int financialYear, int EmployeeId);
-        List<EmpInvestment> GetEmpInvestmentByEmpId(int employeeId);
+        List<EmpInvestment> GetEmpInvestmentByEmpId(int employeeId, int financialYear);
     }
 }

@@ -120,7 +120,7 @@ namespace Vserv.Accounting.Web.Controllers
             return View(employeeModel);
         }
 
-        public JsonResult GetEmployee(string id)
+        public JsonResult GetEmployeeDetail(string id)
         {
             var employee = EmployeeManager.GetEmployee(id.ToDecryptedInt());
             EmployeeModel employeeModel = ConvertTo(employee);
@@ -434,7 +434,7 @@ namespace Vserv.Accounting.Web.Controllers
             return Json(investmentCatogories, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult SaveEmployeeInvestments(int employeeId, List<InvestmentCategoryModel> empInvestmentDeclarationModel)
+        public JsonResult SaveEmployeeInvestments(int employeeId, int finYear, List<InvestmentCategoryModel> empInvestmentDeclarationModel)
         {
             // Call for Save through Manager.
             EmpInvestmentDeclarationModel obj = new EmpInvestmentDeclarationModel
@@ -442,7 +442,7 @@ namespace Vserv.Accounting.Web.Controllers
                 EmployeeId = employeeId,
                 InvestmentCategories = empInvestmentDeclarationModel
             };
-            EmployeeManager.SaveEmployeeInvestments(obj.EmployeeId, obj);
+            EmployeeManager.SaveEmployeeInvestments(obj.EmployeeId, finYear, obj);
             return Json("true", JsonRequestBehavior.AllowGet);
         }
 
