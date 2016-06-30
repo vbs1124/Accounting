@@ -99,10 +99,7 @@
         $scope.onChangeFinancialYear = function () {
             employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(vm.selectedFinancialYear), parseInt(vm.selectedFinancialYear) + 1);
         }
-        $scope.onChangeInvestmentFinancialYear = function () {
-            //alert(">>>>");
-            employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear, vm.employeeId);
-        }
+        
 
         //Method Initialize
         $scope.initialize = function (employeeId) {

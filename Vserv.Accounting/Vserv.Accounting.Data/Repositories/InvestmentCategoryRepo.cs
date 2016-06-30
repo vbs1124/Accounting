@@ -46,6 +46,12 @@ namespace Vserv.Accounting.Data
                     {
                         EmpInvestment investmentDetail = context.EmpInvestments.Where(x => x.EmpInvestmentId == row.EmpInvestmentId).FirstOrDefault();
                         investmentDetail.DeclaredAmount = row.DeclaredAmount;
+                        investmentDetail.ApprovedAmount = row.ApprovedAmount;
+                        investmentDetail.IsApproved = row.IsApproved;
+                        if (row.IsApproved)
+                        {
+                            investmentDetail.ApprovedDate = System.DateTime.Now;
+                        }
                         investmentDetail.UpdatedBy = row.UpdatedBy;
                         investmentDetail.UpdatedDate = System.DateTime.Now;
                     }

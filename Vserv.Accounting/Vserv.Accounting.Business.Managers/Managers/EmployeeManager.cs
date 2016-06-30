@@ -151,7 +151,7 @@ namespace Vserv.Accounting.Business.Managers
                 }
 
                 if (employee.RelievingDate != null)
-                    dbEmpSalaryStructure.EffectiveTo = employee.RelievingDate.Value; //Update the EffectiveTo to the RelievingDate of the employee
+                dbEmpSalaryStructure.EffectiveTo = employee.RelievingDate.Value; //Update the EffectiveTo to the RelievingDate of the employee
                 empSalaryStructureRepo.Update(dbEmpSalaryStructure, employee.UpdatedBy);
                 return true;
             });
@@ -581,14 +581,14 @@ namespace Vserv.Accounting.Business.Managers
                                     if (period.Month.Equals(empSalaryStructure.EffectiveFrom.Month) && period.Year.Equals(empSalaryStructure.EffectiveFrom.Year))
                                     {
                                         empSalaryDetails.AddRange(CalculateSalaryComponentForAppraisalMonth(empSalaryStructure));
-                                    }
-                                    else
-                                    {
+                        }
+                        else
+                        {
                                         foreach (var item in empSalaryDetailByMonth)
                                         {
                                             item.MonthId = period.Month;
                                             item.Year = period.Year;
-                                        }
+                        }
 
                                         empSalaryDetails.AddRange(empSalaryDetailByMonth.Clone());
                                     }
@@ -642,17 +642,17 @@ namespace Vserv.Accounting.Business.Managers
                                             empSalaryDetails.AddRange(CalculateSalaryComponentForAppraisalMonth(empSalaryStructure));
                                         }
                                         else
-                                        {
+                        {
                                             foreach (var item in empSalaryDetailByMonth)
-                                            {
+                            {
                                                 item.MonthId = period.Month;
                                                 item.Year = period.Year;
                                             }
 
                                             empSalaryDetails.AddRange(empSalaryDetailByMonth.Clone());
                                         }
-                                    }
-                                }
+                            }
+                        }
 
                                 if (dbEmpSalaryStructure.IsNotNull())
                                 {
@@ -660,13 +660,13 @@ namespace Vserv.Accounting.Business.Managers
                                     empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Appraisal);
                                 }
                                 else
-                                {
+                        {
                                     empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Initial);
                                 }
 
                                 var withNegativeSpeicalAllowance = empSalaryDetails.FirstOrDefault(condition => condition.SalaryComponentId == Convert.ToInt32(SalaryComponentEnum.SpecialAllowance) && condition.Amount < 0);
                                 if (withNegativeSpeicalAllowance.IsNotNull())
-                                {
+                            {
                                     return new MessageResult { IsErrorOccurred = true, Message = CommonConstants.INVALID_SPECIAL_ALLOWANCE };
                                 }
 
@@ -1288,31 +1288,32 @@ namespace Vserv.Accounting.Business.Managers
                 var empInvestmentlist = repository.GetEmpInvestmentByEmpId(employeeId, financialYear);
                 return FillUpEmployeeInvestmentDeclarationDetail(empInvestmentlist, categorylist, employeeId);
             });
-
-
+            
+            
             //return new List<EmpInvestmentDeclarationModel>();
         }
 
         public bool SaveEmployeeInvestments(int employeeId, int finYear, EmpInvestmentDeclarationModel investmentCatogories)
         {
-
+            
             return ExecuteFaultHandledOperation(() =>
             {
                 List<EmpInvestment> empInvestmentList = (from row in investmentCatogories.InvestmentCategories
                                                          from subcat in row.InvestmentSubCategories
                                                          select new EmpInvestment
-                {
-                    EmployeeId = employeeId,
-                    CategoryId = row.InvestmentCategoryId,
-                    IsApproved = false,
-                    IsActive = true,
+                {                    
+                                                             EmployeeId = employeeId,
+                                                             CategoryId = row.InvestmentCategoryId,
+                    IsApproved = Convert.ToBoolean(subcat.IsApproved),
+                                                             IsActive = true,
                     FinancialYear = finYear,
-                    EmpInvestmentId = subcat.EmpInvestmentId == 0 ? 0 : subcat.EmpInvestmentId,
-                    SubCategoryId = subcat.InvestmentSubCategoryId,
-                    DeclaredAmount = Convert.ToDecimal(subcat.DefaultAmount),
-                    CreatedBy = string.IsNullOrEmpty(row.CreatedBy) ? "vbsadmin" : row.CreatedBy,
-                    CreatedDate = DateTime.Now
-                }).ToList();
+                                                             EmpInvestmentId = subcat.EmpInvestmentId == 0 ? 0 : subcat.EmpInvestmentId,
+                                                             SubCategoryId = subcat.InvestmentSubCategoryId,
+                                                             DeclaredAmount = Convert.ToDecimal(subcat.DefaultAmount),
+                    ApprovedAmount =Convert.ToDecimal(subcat.ApprovedAmount) == 0 ? Convert.ToDecimal(subcat.DefaultAmount) : Convert.ToDecimal(subcat.ApprovedAmount),
+                                                             CreatedBy = string.IsNullOrEmpty(row.CreatedBy) ? "vbsadmin" : row.CreatedBy,
+                                                             CreatedDate = DateTime.Now
+                                                         }).ToList();
                 IInvestmentCategoryRepo repository = DataRepositoryFactory.GetDataRepository<IInvestmentCategoryRepo>();
                 return repository.SaveEmployeeInvestments(empInvestmentList);
             });
@@ -1341,7 +1342,7 @@ namespace Vserv.Accounting.Business.Managers
                         Code = investmentCategory.Code,
                         DisplayOrder = investmentCategory.DisplayOrder
                     };
-
+                    
                     if (investmentCategory.InvestmentCategoryId == empInvestmentDetail[j].CategoryId)
                     {
                         List<InvestmentSubCategoryModel> subCategoryList = new List<InvestmentSubCategoryModel>();
@@ -1349,18 +1350,20 @@ namespace Vserv.Accounting.Business.Managers
                         {
                             InvestmentSubCategoryModel subcategoryModel = new InvestmentSubCategoryModel
                         {
-                            EmpInvestmentId = empInvestmentDetail[j].EmpInvestmentId,
-                            InvestmentCategoryId = subcat.InvestmentCategoryId,
-                            InvestmentSubCategoryId = subcat.InvestmentSubCategoryId,
-                            Name = subcat.Name,
-                            DefaultAmount = empInvestmentDetail[j].DeclaredAmount,
-                            Description = subcat.Description,
-                            Code = subcat.Code,
-                            Remark = subcat.Remark,
-                            DisplayOrder = subcat.DisplayOrder,
-                            IsActive = subcat.IsActive,
-                            IsApproved = empInvestmentDetail[j].IsApproved
-                        };
+                                EmpInvestmentId = empInvestmentDetail[j].EmpInvestmentId,
+                                InvestmentCategoryId = subcat.InvestmentCategoryId,
+                                InvestmentSubCategoryId = subcat.InvestmentSubCategoryId,
+                                Name = subcat.Name,
+                                MaximumLimit=subcat.MaximumLimit,
+                                DefaultAmount = empInvestmentDetail[j].DeclaredAmount,
+                                ApprovedAmount=empInvestmentDetail[j].ApprovedAmount,
+                                Description = subcat.Description,
+                                Code = subcat.Code,
+                                Remark = subcat.Remark,
+                                DisplayOrder = subcat.DisplayOrder,
+                                IsActive = subcat.IsActive,
+                                IsApproved = empInvestmentDetail[j].IsApproved
+                            };
                             subCategoryList.Add(subcategoryModel);
                             j++;
                         }
@@ -1377,32 +1380,33 @@ namespace Vserv.Accounting.Business.Managers
                 {
                     InvestmentCategoryModel categoryModel = new InvestmentCategoryModel
                 {
-                    InvestmentCategoryId = row.InvestmentCategoryId,
-                    IsActive = row.IsActive,
-                    MappingId = row.MappingId,
-                    Name = row.Name,
-                    Description = row.Description,
-                    Code = row.Code,
-                    DisplayOrder = row.DisplayOrder
-                };
+                        InvestmentCategoryId = row.InvestmentCategoryId,
+                        IsActive = row.IsActive,
+                        MappingId = row.MappingId,
+                        Name = row.Name,
+                        Description = row.Description,
+                        Code = row.Code,
+                        DisplayOrder = row.DisplayOrder
+                    };
 
                     List<InvestmentSubCategoryModel> subCategoryList = row.InvestmentSubCategories.Select(subcat => new InvestmentSubCategoryModel
                     {
-                        InvestmentCategoryId = subcat.InvestmentCategoryId,
-                        InvestmentSubCategoryId = subcat.InvestmentSubCategoryId,
+                        InvestmentCategoryId = subcat.InvestmentCategoryId, 
+                        InvestmentSubCategoryId = subcat.InvestmentSubCategoryId, 
                         Name = subcat.Name,
-                        DefaultAmount = subcat.DefaultAmount,
-                        Description = subcat.Description,
+                        MaximumLimit=subcat.MaximumLimit,
+                        DefaultAmount = subcat.DefaultAmount, 
+                        Description = subcat.Description, 
                         Code = subcat.Code,
                         Remark = subcat.Remark,
-                        DisplayOrder = subcat.DisplayOrder,
-                        IsActive = subcat.IsActive,
+                        DisplayOrder = subcat.DisplayOrder, 
+                        IsActive = subcat.IsActive, 
                         IsApproved = false
                     }).ToList();
 
                     categoryModel.InvestmentSubCategories = subCategoryList;
                     categoryModelList.Add(categoryModel);
-
+                    
                 }
                 empInvestmentDeclarationModel.InvestmentCategories = categoryModelList;
             }
