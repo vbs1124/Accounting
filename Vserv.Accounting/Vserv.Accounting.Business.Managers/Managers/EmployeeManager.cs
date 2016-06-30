@@ -1124,18 +1124,19 @@ namespace Vserv.Accounting.Business.Managers
                 List<EmpInvestment> empInvestmentList = (from row in investmentCatogories.InvestmentCategories
                                                          from subcat in row.InvestmentSubCategories
                                                          select new EmpInvestment
-                {                    
-                                                             EmployeeId = employeeId,
-                                                             CategoryId = row.InvestmentCategoryId,
-                                                             IsApproved = false,
-                                                             IsActive = true,
-                                                             FinancialYear=finYear,
-                                                             EmpInvestmentId = subcat.EmpInvestmentId == 0 ? 0 : subcat.EmpInvestmentId,
-                                                             SubCategoryId = subcat.InvestmentSubCategoryId,
-                                                             DeclaredAmount = Convert.ToDecimal(subcat.DefaultAmount),
-                                                             CreatedBy = string.IsNullOrEmpty(row.CreatedBy) ? "vbsadmin" : row.CreatedBy,
-                                                             CreatedDate = DateTime.Now
-                                                         }).ToList();
+                {
+                    EmployeeId = employeeId,
+                    CategoryId = row.InvestmentCategoryId,
+                    IsApproved = Convert.ToBoolean(subcat.IsApproved),
+                    IsActive = true,
+                    FinancialYear = finYear,
+                    EmpInvestmentId = subcat.EmpInvestmentId == 0 ? 0 : subcat.EmpInvestmentId,
+                    SubCategoryId = subcat.InvestmentSubCategoryId,
+                    DeclaredAmount = Convert.ToDecimal(subcat.DefaultAmount),
+                    ApprovedAmount =Convert.ToDecimal(subcat.ApprovedAmount) == 0 ? Convert.ToDecimal(subcat.DefaultAmount) : Convert.ToDecimal(subcat.ApprovedAmount),
+                    CreatedBy = string.IsNullOrEmpty(row.CreatedBy) ? "vbsadmin" : row.CreatedBy,
+                    CreatedDate = DateTime.Now
+                }).ToList();
                 IInvestmentCategoryRepo repository = DataRepositoryFactory.GetDataRepository<IInvestmentCategoryRepo>();
                 return repository.SaveEmployeeInvestments(empInvestmentList);
             });
@@ -1157,7 +1158,7 @@ namespace Vserv.Accounting.Business.Managers
                     InvestmentCategoryModel categoryModel = new InvestmentCategoryModel
                     {
                         InvestmentCategoryId = investmentCategory.InvestmentCategoryId,
-                        IsActive = investmentCategory.IsActive,
+                        IsActive = investmentCategory.IsActive,                        
                         MappingId = investmentCategory.MappingId,
                         Name = investmentCategory.Name,
                         Description = investmentCategory.Description,
@@ -1176,7 +1177,9 @@ namespace Vserv.Accounting.Business.Managers
                                 InvestmentCategoryId = subcat.InvestmentCategoryId,
                                 InvestmentSubCategoryId = subcat.InvestmentSubCategoryId,
                                 Name = subcat.Name,
+                                MaximumLimit=subcat.MaximumLimit,
                                 DefaultAmount = empInvestmentDetail[j].DeclaredAmount,
+                                ApprovedAmount=empInvestmentDetail[j].ApprovedAmount,
                                 Description = subcat.Description,
                                 Code = subcat.Code,
                                 Remark = subcat.Remark,
@@ -1214,6 +1217,7 @@ namespace Vserv.Accounting.Business.Managers
                         InvestmentCategoryId = subcat.InvestmentCategoryId, 
                         InvestmentSubCategoryId = subcat.InvestmentSubCategoryId, 
                         Name = subcat.Name,
+                        MaximumLimit=subcat.MaximumLimit,
                         DefaultAmount = subcat.DefaultAmount, 
                         Description = subcat.Description, 
                         Code = subcat.Code,

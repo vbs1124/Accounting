@@ -47,7 +47,7 @@
                                             <td>{{getHRALabel(subCat)}}</td>
                                             @*<td><img src="/Images/help.png" width="15px" title="{{subCat.Remark}}" /></td>*@
                                             <td><a href=""><i class="fa fa-question-circle fa-2x" aria-hidden="true" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{subCat.Remark}}"></i></a></td>
-                                            <td><input class="form-control InputFieldWidth" type="text" title="Popover title" ng-model="subCat.DefaultAmount" /></td>
+                                            <td><input class="form-control InputFieldWidth" type="text"  ng-model="subCat.DefaultAmount" /></td>
                                             <td><input class="form-control InputFieldWidth" type="text" ng-model="subCat.ApprovedAmount" /></td>
                                             <td><input type="checkbox" ng-model="subCat.IsApproved" /></td>
                                         </tr>
@@ -77,6 +77,7 @@
                                         <tr class="success">
                                             <th>Particulars</th>
                                             <th>Help</th>
+                                            <th>Maximum Limit</th>
                                             <th>Declared Amount</th>
                                             <th>Approved Amount</th>
                                             <th>Verified</th>
@@ -86,6 +87,7 @@
                                         <tr ng-repeat="subCat in category.InvestmentSubCategories" vbs-popover>
                                             <td>{{subCat.Name}}</td>
                                             <td><a href=""><i class="fa fa-question-circle fa-2x" vbs="popover" aria-hidden="true" data-toggle="popover" data-placement="top" data-content="{{subCat.Remark}}"></i></a></td>
+                                            <td>{{subCat.MaximumLimit}}</td>
                                             <td><input class="form-control InputFieldWidth" type="text" ng-model="subCat.DefaultAmount" /></td>
                                             <td><input class="form-control InputFieldWidth" type="text" ng-model="subCat.ApprovedAmount" /></td>
                                             <td><input type="checkbox" ng-model="subCat.IsApproved" /></td>
