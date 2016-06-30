@@ -142,11 +142,14 @@
     <Compile Include="Models\CompareEmployeeModel.cs" />
     <Compile Include="Models\EmpInvestmentDeclarationModel.cs" />
     <Compile Include="Models\EmpSalaryCompareResult.cs" />
+    <Compile Include="Models\EmpSalaryDetail.cs" />
+    <Compile Include="Models\EmpSalaryStructure.cs" />
     <Compile Include="Models\FinancialPeriod.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\InvestmentCategoryModel.cs" />
     <Compile Include="Models\InvestmentSubCategoryModel.cs" />
     <Compile Include="Models\Membership.cs" />
+    <Compile Include="Models\MessageResult.cs" />
     <Compile Include="Models\SalaryComponentAmountMapper.cs" />
     <Compile Include="OAuthMembership.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>

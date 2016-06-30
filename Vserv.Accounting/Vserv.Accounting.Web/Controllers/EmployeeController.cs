@@ -345,8 +345,7 @@ namespace Vserv.Accounting.Web.Controllers
                 CreatedBy = User.Identity.Name,
             };
 
-            manager.SaveEmployeeSalaryDetail(empSalaryStructure, User.Identity.Name);
-            return Json("Success", JsonRequestBehavior.AllowGet);
+            return Json(manager.SaveEmployeeSalaryDetail(empSalaryStructure, User.Identity.Name), JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -1033,7 +1032,7 @@ namespace Vserv.Accounting.Web.Controllers
                             BaseFont.EMBEDDED);
                 Font font4 = new Font(baseFont4, 8);
 
-                PdfPTable table = new PdfPTable(11) {TotalWidth = 800f, LockedWidth = true};
+                PdfPTable table = new PdfPTable(11) { TotalWidth = 800f, LockedWidth = true };
                 //fix the absolute width of the table
 
                 //relative col widths in proportions - 1/3 and 2/3
@@ -1531,7 +1530,7 @@ namespace Vserv.Accounting.Web.Controllers
                 line201.BorderWidthBottom = 0;
                 line201.BorderWidthTop = 0;
                 table.AddCell(line201);
-                PdfPCell line202 = new PdfPCell(new Phrase(" ", font4)) {BorderWidthTop = 0};
+                PdfPCell line202 = new PdfPCell(new Phrase(" ", font4)) { BorderWidthTop = 0 };
                 AddtextCell(line202, 2, 2);
                 line202.BorderWidthBottom = 0;
                 line202.BorderWidthTop = 0;

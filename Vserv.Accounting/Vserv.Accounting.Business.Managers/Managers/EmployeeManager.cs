@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Transactions;
 using Vserv.Accounting.Common;
 using Vserv.Accounting.Common.Enums;
@@ -150,7 +151,7 @@ namespace Vserv.Accounting.Business.Managers
                 }
 
                 if (employee.RelievingDate != null)
-                dbEmpSalaryStructure.EffectiveTo = employee.RelievingDate.Value; //Update the EffectiveTo to the RelievingDate of the employee
+                    dbEmpSalaryStructure.EffectiveTo = employee.RelievingDate.Value; //Update the EffectiveTo to the RelievingDate of the employee
                 empSalaryStructureRepo.Update(dbEmpSalaryStructure, employee.UpdatedBy);
                 return true;
             });
@@ -499,203 +500,187 @@ namespace Vserv.Accounting.Business.Managers
         /// <param name="empSalaryStructure">The emp salary structure.</param>
         /// <param name="userName">Name of the user.</param>
         /// <returns></returns>
-        public bool SaveEmployeeSalaryDetail(EmpSalaryStructure empSalaryStructure, string userName)
+        public MessageResult SaveEmployeeSalaryDetail(EmpSalaryStructure empSalaryStructure, string userName)
         {
             return ExecuteFaultHandledOperation(() =>
             {
                 if (empSalaryStructure.CTC.IsNotNull())
                 {
-                    IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
-                    List<EmpSalaryDetail> employeeSalaryDetails = CalculateSalaryComponents(empSalaryStructure);
-
-                    if (employeeSalaryDetails.IsNotNull() && employeeSalaryDetails.Any())
+                    var options = new TransactionOptions
                     {
-                        // Archive Existing EmpSalaryStructure.
+                        IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted,
+                        Timeout = TransactionManager.DefaultTimeout,
+                    };
+
+                    using (var transactionScope = new TransactionScope(TransactionScopeOption.RequiresNew, options))
+                    {
+                        List<EmpSalaryDetail> empSalaryDetails = new List<EmpSalaryDetail>();
+
+                        IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
                         IEmployeeSalaryDetailRepo employeeSalaryDetailRepo = DataRepositoryFactory.GetDataRepository<IEmployeeSalaryDetailRepo>();
 
-                        List<EmpSalaryDetail> recordsToInsert = employeeSalaryDetails.Where(condition => condition.EmpSalaryDetailId <= 0).ToList();
-                        List<EmpSalaryDetail> recordsToUpate = employeeSalaryDetails.Except(recordsToInsert).ToList();
+                        // Get the new month collection based on effective from date.
+                        IEnumerable<FinancialPeriod> financialMonthsOnEffectiveFrom = empSalaryStructure.EffectiveFrom.GetFinancialYearMonths().Select(months => new FinancialPeriod { Month = months.Key, Year = months.Value }).ToList();
+                        IEnumerable<FinancialPeriod> matchingFinancialMonths = null;
 
-                        // Insert EmpSalaryStructure
+                        // Set Values for EmpSalaryStructure entity.
+                        var periods = financialMonthsOnEffectiveFrom.OrderByDescending(order => order.Year).ThenByDescending(then => then.Month).FirstOrDefault();
+
+                        if (periods.IsNotNull())
+                        {
+                            empSalaryStructure.EffectiveTo = new DateTime(periods.Year, periods.Month, empSalaryStructure.EffectiveFrom.Day);
+                        }
+                        empSalaryStructure.CreatedDate = DateTime.Now;
+                        empSalaryStructure.CreatedBy = userName;
+                        empSalaryStructure.IsActive = true;
+                        // End
+
+                        // Find if the month exists in the existing Salary Structure.
                         EmpSalaryStructure dbEmpSalaryStructure = empSalaryStructureRepo.GetCurrentEmpSalaryStructure(empSalaryStructure.EmployeeId);
 
-                        // Archive records which are there against existing Structure.
                         if (dbEmpSalaryStructure.IsNotNull())
                         {
-                            employeeSalaryDetailRepo.ArchiveEmpSalaryDetail(dbEmpSalaryStructure.EmpSalaryStructureId, userName);
+                            IEnumerable<FinancialPeriod> financialMonthsOnExistingEffectiveFrom = dbEmpSalaryStructure.EffectiveFrom.GetFinancialYearMonths().Select(months => new FinancialPeriod { Month = months.Key, Year = months.Value }).ToList();
+
+                            matchingFinancialMonths = financialMonthsOnExistingEffectiveFrom.Intersect(financialMonthsOnEffectiveFrom);
                         }
 
-                        empSalaryStructure.SalaryStructureTypeId = recordsToUpate.IsNotNull() && recordsToUpate.Any() ? Convert.ToInt32(SalaryStructureTypeEnum.Appraisal) : Convert.ToInt32(SalaryStructureTypeEnum.Initial);
-                        empSalaryStructure.CreatedDate = DateTime.Now;
-                        empSalaryStructure.CreatedBy = userName;
-                        empSalaryStructure.IsActive = true;
 
-                        if (dbEmpSalaryStructure.IsNotNull())
+                        //if matching month(s) found the the existing records will be updated with the new structure 
+                        // and those will be mapped to the new Employee Structure. Need to archive the existing Records too.
+                        if (matchingFinancialMonths.IsNotNull() && matchingFinancialMonths.Count() > 0)
                         {
                             empSalaryStructure.ParentId = dbEmpSalaryStructure.EmpSalaryStructureId;
                             empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Appraisal);
+
+                            // Archive the existing records from EmpSalaryDetail (move to EmpSalaryDetailArchive table.)
+                            // Add a new entry in EmpSalaryStructure table.
+                            // Update amount for all the salary components which are from the matching months.
+                            // Make sure that the existing and updated entries are mapped to the new entry pushed to EmpSalaryStructure table.
+                            // Build the salary structure for the current month based on pro data basis.
+                            // Build Salary Structure for rest of the month.
+
+                            // Update Amount and EmpSalaryStructureId for Matching Records.
+                            // Get all the existing Salary Details Which has to be updated.
+                            // Archive records which are there against existing Structure.
+                            employeeSalaryDetailRepo.ArchiveEmpSalaryDetail(dbEmpSalaryStructure.EmpSalaryStructureId, userName);
+
+                            List<EmpSalaryDetail> empSalaryDetailsToUpdate = (from esd in dbEmpSalaryStructure.EmpSalaryDetails
+                                                                              let year = esd.Year
+                                                                              where year != null
+                                                                              join fp in matchingFinancialMonths on new { Month = esd.MonthId, Year = year.Value } equals new { fp.Month, fp.Year }
+                                                                              select esd).ToList();
+
+                            List<EmpSalaryDetail> empSalaryDetailByMonth = GetEmpSalaryDetailsByMonth(empSalaryStructure, matchingFinancialMonths.FirstOrDefault());
+
+                            if (empSalaryDetailByMonth.IsNotNull())
+                            {
+                                foreach (var period in matchingFinancialMonths)
+                                {
+                                    // Appraisal Month: Build Salary Component's information on Pro data basis.
+                                    if (period.Month.Equals(empSalaryStructure.EffectiveFrom.Month) && period.Year.Equals(empSalaryStructure.EffectiveFrom.Year))
+                                    {
+                                        empSalaryDetails.AddRange(CalculateSalaryComponentForAppraisalMonth(empSalaryStructure));
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in empSalaryDetailByMonth)
+                                        {
+                                            item.MonthId = period.Month;
+                                            item.Year = period.Year;
+                                        }
+
+                                        empSalaryDetails.AddRange(empSalaryDetailByMonth.Clone());
+                                    }
+                                }
+                            }
+
+                            foreach (var empSalaryDetail in empSalaryDetailsToUpdate)
+                            {
+                                EmpSalaryDetail updatedAmountRecord = empSalaryDetails.FirstOrDefault(condition => condition.EmployeeId == empSalaryDetail.EmployeeId && condition.MonthId == empSalaryDetail.MonthId && condition.Year == empSalaryDetail.Year && condition.SalaryComponentId == empSalaryDetail.SalaryComponentId);
+
+                                if (updatedAmountRecord.IsNotNull())
+                                {
+                                    empSalaryDetail.Amount = updatedAmountRecord.Amount;
+                                }
+                            }
+
+                            List<EmpSalaryDetail> calculatedEmpSalaryDetails = new List<EmpSalaryDetail>();
+                            calculatedEmpSalaryDetails.AddRange(empSalaryDetailsToUpdate);
+                            calculatedEmpSalaryDetails.AddRange(dbEmpSalaryStructure.EmpSalaryDetails.Except(empSalaryDetailsToUpdate));
+
+                            var withNegativeSpeicalAllowance = empSalaryDetailsToUpdate.FirstOrDefault(condition => condition.SalaryComponentId == Convert.ToInt32(SalaryComponentEnum.SpecialAllowance) && condition.Amount < 0);
+                            if (withNegativeSpeicalAllowance.IsNotNull())
+                            {
+                                return new MessageResult { IsErrorOccurred = true, Message = CommonConstants.INVALID_SPECIAL_ALLOWANCE };
+                            }
+
+                            empSalaryStructure = empSalaryStructureRepo.Add(empSalaryStructure, userName);
+
+                            foreach (var item in calculatedEmpSalaryDetails)
+                            {
+                                item.EmpSalaryStructureId = empSalaryStructure.EmpSalaryStructureId;
+                                employeeSalaryDetailRepo.AddOrUpdate(item, userName);
+                            }
                         }
                         else
                         {
-                            empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Initial);
-                        }
-
-                        empSalaryStructureRepo.InsertEmpSalaryStructure(empSalaryStructure);
-                        dbEmpSalaryStructure = empSalaryStructureRepo.GetCurrentEmpSalaryStructure(empSalaryStructure.EmployeeId);
-
-                        // Update the existing Record
-                        if (recordsToUpate.IsNotNull() && recordsToUpate.Any())
-                        {
-                            foreach (var item in recordsToUpate)
+                            // Else Insert new records for all the months falling after the effective from Date.
+                            // Insert new record in EmpSalaryStructure table.
+                            // Insert new records in  EmpSalaryDetail table against the newly created EmpSalaryStructure.
+                            if (financialMonthsOnEffectiveFrom.IsNotNull())
                             {
-                                item.UpdatedBy = userName;
-                                item.UpdatedDate = DateTime.Now;
-                                employeeSalaryDetailRepo.Update(item, userName);
-                            }
-                        }
+                                List<EmpSalaryDetail> empSalaryDetailByMonth = GetEmpSalaryDetailsByMonth(empSalaryStructure, financialMonthsOnEffectiveFrom.FirstOrDefault());
 
-                        // Insert new records against the currently generated EmpSalaryStructure.
-                        if (recordsToInsert.IsNotNull() && recordsToInsert.Any())
-                        {
-                            foreach (var item in recordsToInsert)
-                            {
-                                item.EmpSalaryStructureId = dbEmpSalaryStructure.EmpSalaryStructureId;
-                                employeeSalaryDetailRepo.Add(item, userName);
-                            }
-                        }
-
-                        // Update EmpSalaryStructureId of those breakups which were updated.
-                        employeeSalaryDetailRepo.ResetEmpSalaryStructureId(dbEmpSalaryStructure.EmpSalaryStructureId);
-                    }
-                }
-
-                return true;
-            });
-        }
-
-        public bool SaveEmployeeAppraisal(EmpSalaryStructure empSalaryStructure, string userName)
-        {
-            using (var transactionScope = new TransactionScope(TransactionScopeOption.RequiresNew))
-            {
-                List<EmpSalaryDetail> empSalaryDetails = new List<EmpSalaryDetail>();
-
-                IEmpSalaryStructureRepo empSalaryStructureRepo = DataRepositoryFactory.GetDataRepository<IEmpSalaryStructureRepo>();
-                IEmployeeSalaryDetailRepo employeeSalaryDetailRepo = DataRepositoryFactory.GetDataRepository<IEmployeeSalaryDetailRepo>();
-
-                // Get the new month collection based on effective from date.
-                IEnumerable<FinancialPeriod> financialMonthsOnEffectiveFrom = empSalaryStructure.EffectiveFrom.GetFinancialYearMonths().Select(months => new FinancialPeriod { Month = months.Key, Year = months.Value }).ToList();
-
-                // Find if the month exists in the existing Salary Structure.
-                EmpSalaryStructure dbEmpSalaryStructure = empSalaryStructureRepo.GetCurrentEmpSalaryStructure(empSalaryStructure.EmployeeId);
-                IEnumerable<FinancialPeriod> financialMonthsOnExistingEffectiveFrom = dbEmpSalaryStructure.EffectiveFrom.GetFinancialYearMonths().Select(months => new FinancialPeriod { Month = months.Key, Year = months.Value }).ToList();
-
-                IEnumerable<FinancialPeriod> matchingFinancialMonths = financialMonthsOnExistingEffectiveFrom.Intersect(financialMonthsOnEffectiveFrom);
-
-                //if matching month(s) found the the existing records will be updated with the new structure 
-                // and those will be mapped to the new Employee Structure. Need to archive the existing Records too.
-                if (matchingFinancialMonths.Count() > 0)
-                {
-                    // Archive the existing records from EmpSalaryDetail (move to EmpSalaryDetailArchive table.)
-                    // Add a new entry in EmpSalaryStructure table.
-                    // Update amount for all the salary components which are from the matching months.
-                    // Make sure that the existing and updated entries are mapped to the new entry pushed to EmpSalaryStructure table.
-                    // Build the salary structure for the current month based on pro data basis.
-                    // Build Salary Structure for rest of the month.
-
-                    // Update Amount and EmpSalaryStructureId for Matching Records.
-                    // Get all the existing Salary Details Which has to be updated.
-                    // Archive records which are there against existing Structure.
-                    employeeSalaryDetailRepo.ArchiveEmpSalaryDetail(dbEmpSalaryStructure.EmpSalaryStructureId, userName);
-
-                    var empSalaryDetailsToUpdate = (from esd in dbEmpSalaryStructure.EmpSalaryDetails
-                                                    let year = esd.Year
-                                                    where year != null
-                                                    join fp in matchingFinancialMonths on new { Month = esd.MonthId, Year = year.Value } equals new { fp.Month, fp.Year }
-                                                    select esd).ToList();
-
-                    List<EmpSalaryDetail> empSalaryDetailByMonth = GetEmpSalaryDetailsByMonth(empSalaryStructure, matchingFinancialMonths.FirstOrDefault());
-
-                    if (empSalaryDetailByMonth.IsNotNull())
-                    {
-                        foreach (var period in matchingFinancialMonths)
-                        {
-                            foreach (var item in empSalaryDetailByMonth)
-                            {
-                                item.MonthId = period.Month;
-                                item.Year = period.Year;
-                            }
-
-                            empSalaryDetails.AddRange(empSalaryDetailByMonth);
-                        }
-                    }
-
-                    empSalaryStructure.CreatedDate = DateTime.Now;
-                    empSalaryStructure.CreatedBy = userName;
-                    empSalaryStructure.IsActive = true;
-                    empSalaryStructure.ParentId = dbEmpSalaryStructure.EmpSalaryStructureId;
-                    empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Appraisal);
-
-                    if (empSalaryDetailsToUpdate.IsNotNull() && empSalaryDetailsToUpdate.Any())
-                    {
-                        foreach (var item in empSalaryDetailsToUpdate)
-                        {
-                            EmpSalaryDetail toUpdateRecord = empSalaryDetails.FirstOrDefault(condition => condition.EmployeeId == item.EmployeeId && condition.MonthId == item.MonthId && condition.Year == item.Year && condition.SalaryComponentId == item.SalaryComponentId);
-                            if (toUpdateRecord.IsNotNull())
-                            {
-                                item.Amount = toUpdateRecord.Amount;
-                                item.EmpSalaryStructureId = empSalaryStructure.EmpSalaryStructureId;
-                            }
-
-                            empSalaryStructureRepo.Add(empSalaryStructure, userName);
-                        }
-                    }
-
-                    // Update EmpSalaryStructureId for remaining Records.
-                }
-                else
-                {
-                    // Else Insert new records for all the months falling after the effective from Date.
-                    // Insert new record in EmpSalaryStructure table.
-                    // Insert new records in  EmpSalaryDetail table against the newly created EmpSalaryStructure.
-                    if (financialMonthsOnEffectiveFrom.IsNotNull())
-                    {
-                        List<EmpSalaryDetail> empSalaryDetailByMonth = GetEmpSalaryDetailsByMonth(empSalaryStructure, financialMonthsOnEffectiveFrom.FirstOrDefault());
-
-                        if (empSalaryDetailByMonth.IsNotNull())
-                        {
-                            foreach (var period in financialMonthsOnEffectiveFrom)
-                            {
-                                foreach (var item in empSalaryDetailByMonth)
+                                if (empSalaryDetailByMonth.IsNotNull())
                                 {
-                                    item.MonthId = period.Month;
-                                    item.Year = period.Year;
+                                    foreach (var period in financialMonthsOnEffectiveFrom)
+                                    {
+                                        // Appraisal Month: Build Salary Component's information on Pro data basis.
+                                        if (period.Month.Equals(empSalaryStructure.EffectiveFrom.Month) && period.Year.Equals(empSalaryStructure.EffectiveFrom.Year))
+                                        {
+                                            empSalaryDetails.AddRange(CalculateSalaryComponentForAppraisalMonth(empSalaryStructure));
+                                        }
+                                        else
+                                        {
+                                            foreach (var item in empSalaryDetailByMonth)
+                                            {
+                                                item.MonthId = period.Month;
+                                                item.Year = period.Year;
+                                            }
+
+                                            empSalaryDetails.AddRange(empSalaryDetailByMonth.Clone());
+                                        }
+                                    }
                                 }
 
-                                empSalaryDetails.AddRange(empSalaryDetailByMonth);
+                                if (dbEmpSalaryStructure.IsNotNull())
+                                {
+                                    empSalaryStructure.ParentId = dbEmpSalaryStructure.EmpSalaryStructureId;
+                                    empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Appraisal);
+                                }
+                                else
+                                {
+                                    empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Initial);
+                                }
+
+                                var withNegativeSpeicalAllowance = empSalaryDetails.FirstOrDefault(condition => condition.SalaryComponentId == Convert.ToInt32(SalaryComponentEnum.SpecialAllowance) && condition.Amount < 0);
+                                if (withNegativeSpeicalAllowance.IsNotNull())
+                                {
+                                    return new MessageResult { IsErrorOccurred = true, Message = CommonConstants.INVALID_SPECIAL_ALLOWANCE };
+                                }
+
+                                empSalaryStructure.EmpSalaryDetails = empSalaryDetails;
+                                empSalaryStructureRepo.Add(empSalaryStructure, userName);
                             }
                         }
 
-                        empSalaryStructure.CreatedDate = DateTime.Now;
-                        empSalaryStructure.CreatedBy = userName;
-                        empSalaryStructure.IsActive = true;
-                        empSalaryStructure.EmpSalaryDetails = empSalaryDetails;
-
-                        if (dbEmpSalaryStructure.IsNotNull())
-                        {
-                            empSalaryStructure.ParentId = dbEmpSalaryStructure.EmpSalaryStructureId;
-                            empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Appraisal);
-                        }
-                        else
-                        {
-                            empSalaryStructure.SalaryStructureTypeId = Convert.ToInt32(SalaryStructureTypeEnum.Initial);
-                        }
-
-                        empSalaryStructureRepo.Add(empSalaryStructure, userName);
+                        transactionScope.Complete();
                     }
                 }
-            }
 
-            return true;
+                return new MessageResult { IsErrorOccurred = false, Message = CommonConstants.SALARY_BREAKUP_SUCCESS_MESSAGE };
+            });
         }
 
         private List<EmpSalaryDetail> GetEmpSalaryDetailsByMonth(EmpSalaryStructure empSalaryStructure, FinancialPeriod financialPeriod)
@@ -757,7 +742,6 @@ namespace Vserv.Accounting.Business.Managers
                 CreatedBy = empSalaryStructure.CreatedBy,
                 CreatedDate = DateTime.Now
             };
-
             employeeSalaryDetails.Add(employeeSalaryDetail);
 
             return employeeSalaryDetails;
@@ -858,6 +842,7 @@ namespace Vserv.Accounting.Business.Managers
                 return repo.GetEmployeePaySlip(employeeId, monthId, year);
             });
         }
+
         #endregion
 
         #endregion
@@ -963,8 +948,9 @@ namespace Vserv.Accounting.Business.Managers
             var salaryComponents = GetSalaryComponents();
             Decimal? deductedAmountfromCTC = 0;
 
-            // Salary Components that has to be excluded from Monthly CTC to calculate Special Alloance.
-            String[] deductedComponentFromCTC = { "Basic", "HRA", "Conveyance", "PerformanceIncentive", "Medical", "FoodCoupons", "ProjectIncentive", "CarLease", "LTC", "PF", "Mediclaim", "Gratuity", "CabDeductions", };
+            // Salary Components that has to be excluded from Monthly CTC to calculate Special Allowance.
+            //"Basic", "HRA", "Conveyance", "PerformanceIncentive", "Medical", "FoodCoupons", "ProjectIncentive", "CarLease", "LTC", "PF", "Mediclaim", "Gratuity", "CabDeductions"
+            String[] deductedComponentFromCTC = { "SCBASC", "SCSHRA", "SCCONV", "SCPERF", "SCMEDC", "SCFCPN", "SCPROJ", "SCCARL", "SCTLTC", "SCEPFO", "SCMEDM", "SCGRAT", "SCCABD" };
 
             EmpSalaryDetail employeeSalaryDetail;
 
@@ -993,7 +979,7 @@ namespace Vserv.Accounting.Business.Managers
                     CreatedDate = DateTime.Now
                 };
 
-                if (deductedComponentFromCTC.Contains(salaryComponentEnum.ToStringValue()))
+                if (deductedComponentFromCTC.Contains(salaryComponent.Code))
                 {
                     deductedAmountfromCTC += employeeSalaryDetail.Amount.IsNotNull() && employeeSalaryDetail.Amount.HasValue ? employeeSalaryDetail.Amount : 0;
                 }
@@ -1302,31 +1288,31 @@ namespace Vserv.Accounting.Business.Managers
                 var empInvestmentlist = repository.GetEmpInvestmentByEmpId(employeeId, financialYear);
                 return FillUpEmployeeInvestmentDeclarationDetail(empInvestmentlist, categorylist, employeeId);
             });
-            
-            
+
+
             //return new List<EmpInvestmentDeclarationModel>();
         }
 
-        public bool SaveEmployeeInvestments(int employeeId,int finYear,EmpInvestmentDeclarationModel investmentCatogories)
+        public bool SaveEmployeeInvestments(int employeeId, int finYear, EmpInvestmentDeclarationModel investmentCatogories)
         {
-            
+
             return ExecuteFaultHandledOperation(() =>
             {
                 List<EmpInvestment> empInvestmentList = (from row in investmentCatogories.InvestmentCategories
                                                          from subcat in row.InvestmentSubCategories
                                                          select new EmpInvestment
-                {                    
-                                                             EmployeeId = employeeId,
-                                                             CategoryId = row.InvestmentCategoryId,
-                                                             IsApproved = false,
-                                                             IsActive = true,
-                                                             FinancialYear=finYear,
-                                                             EmpInvestmentId = subcat.EmpInvestmentId == 0 ? 0 : subcat.EmpInvestmentId,
-                                                             SubCategoryId = subcat.InvestmentSubCategoryId,
-                                                             DeclaredAmount = Convert.ToDecimal(subcat.DefaultAmount),
-                                                             CreatedBy = string.IsNullOrEmpty(row.CreatedBy) ? "vbsadmin" : row.CreatedBy,
-                                                             CreatedDate = DateTime.Now
-                                                         }).ToList();
+                {
+                    EmployeeId = employeeId,
+                    CategoryId = row.InvestmentCategoryId,
+                    IsApproved = false,
+                    IsActive = true,
+                    FinancialYear = finYear,
+                    EmpInvestmentId = subcat.EmpInvestmentId == 0 ? 0 : subcat.EmpInvestmentId,
+                    SubCategoryId = subcat.InvestmentSubCategoryId,
+                    DeclaredAmount = Convert.ToDecimal(subcat.DefaultAmount),
+                    CreatedBy = string.IsNullOrEmpty(row.CreatedBy) ? "vbsadmin" : row.CreatedBy,
+                    CreatedDate = DateTime.Now
+                }).ToList();
                 IInvestmentCategoryRepo repository = DataRepositoryFactory.GetDataRepository<IInvestmentCategoryRepo>();
                 return repository.SaveEmployeeInvestments(empInvestmentList);
             });
@@ -1355,7 +1341,7 @@ namespace Vserv.Accounting.Business.Managers
                         Code = investmentCategory.Code,
                         DisplayOrder = investmentCategory.DisplayOrder
                     };
-                    
+
                     if (investmentCategory.InvestmentCategoryId == empInvestmentDetail[j].CategoryId)
                     {
                         List<InvestmentSubCategoryModel> subCategoryList = new List<InvestmentSubCategoryModel>();
@@ -1363,18 +1349,18 @@ namespace Vserv.Accounting.Business.Managers
                         {
                             InvestmentSubCategoryModel subcategoryModel = new InvestmentSubCategoryModel
                         {
-                                EmpInvestmentId = empInvestmentDetail[j].EmpInvestmentId,
-                                InvestmentCategoryId = subcat.InvestmentCategoryId,
-                                InvestmentSubCategoryId = subcat.InvestmentSubCategoryId,
-                                Name = subcat.Name,
-                                DefaultAmount = empInvestmentDetail[j].DeclaredAmount,
-                                Description = subcat.Description,
-                                Code = subcat.Code,
-                                Remark = subcat.Remark,
-                                DisplayOrder = subcat.DisplayOrder,
-                                IsActive = subcat.IsActive,
-                                IsApproved = empInvestmentDetail[j].IsApproved
-                            };
+                            EmpInvestmentId = empInvestmentDetail[j].EmpInvestmentId,
+                            InvestmentCategoryId = subcat.InvestmentCategoryId,
+                            InvestmentSubCategoryId = subcat.InvestmentSubCategoryId,
+                            Name = subcat.Name,
+                            DefaultAmount = empInvestmentDetail[j].DeclaredAmount,
+                            Description = subcat.Description,
+                            Code = subcat.Code,
+                            Remark = subcat.Remark,
+                            DisplayOrder = subcat.DisplayOrder,
+                            IsActive = subcat.IsActive,
+                            IsApproved = empInvestmentDetail[j].IsApproved
+                        };
                             subCategoryList.Add(subcategoryModel);
                             j++;
                         }
@@ -1391,14 +1377,14 @@ namespace Vserv.Accounting.Business.Managers
                 {
                     InvestmentCategoryModel categoryModel = new InvestmentCategoryModel
                 {
-                        InvestmentCategoryId = row.InvestmentCategoryId,
-                        IsActive = row.IsActive,
-                        MappingId = row.MappingId,
-                        Name = row.Name,
-                        Description = row.Description,
-                        Code = row.Code,
-                        DisplayOrder = row.DisplayOrder
-                    };
+                    InvestmentCategoryId = row.InvestmentCategoryId,
+                    IsActive = row.IsActive,
+                    MappingId = row.MappingId,
+                    Name = row.Name,
+                    Description = row.Description,
+                    Code = row.Code,
+                    DisplayOrder = row.DisplayOrder
+                };
 
                     List<InvestmentSubCategoryModel> subCategoryList = row.InvestmentSubCategories.Select(subcat => new InvestmentSubCategoryModel
                     {
@@ -1416,7 +1402,7 @@ namespace Vserv.Accounting.Business.Managers
 
                     categoryModel.InvestmentSubCategories = subCategoryList;
                     categoryModelList.Add(categoryModel);
-                    
+
                 }
                 empInvestmentDeclarationModel.InvestmentCategories = categoryModelList;
             }
