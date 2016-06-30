@@ -1,8 +1,112 @@
-﻿<form novalidate
+﻿<div class="row form-horizontal">
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="col-md-8">
+                &nbsp;
+            </div>
+            <label for="" class="col-md-2 control-label">Financial Year</label>
+            <div class="col-md-2">
+                <select class="form-control" ng-model="vm.selectedInvestmentFinancialYear" ng-change="onChangeInvestmentFinancialYear()">
+                    <option ng-repeat="x in vm.financialYears" value="{{x.currentYear}}">{{x.financialYear}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form novalidate
       name="vm.form"
       ng-submit="vm.form.$valid && vm.addEmployeeInvestments()">
-    <fieldset ng-disabled="vm.saving">
-        <div ng-repeat="category in vm.empInvestmentDeclarationModel.InvestmentCategories">
+    <fieldset ng-disabled="vm.saving" class="clsEmpInvestment">
+
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default" ng-repeat="category in vm.empInvestmentDeclarationModel.InvestmentCategories">
+                <div ng-switch="category.Code">
+                    <div ng-switch-when="ICHOREAL">
+                        <div class="panel-heading">
+                            <div>
+                                <span class="panel-title">
+                                    <strong><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{category.InvestmentCategoryId}}">{{category.Name}}</a></strong>
+                                </span>
+                            </div>
+                        </div>
+                        <div id="collapse{{category.InvestmentCategoryId}}" class="panel-collapse collapse">
+                            <div class="panel-body">                                
+                                <table class="table table-bordered table-hover ">
+                                    <thead>
+                                        <tr class="success">
+                                            <th>Month</th>
+                                            <th>Help</th>
+                                            <th>Rent Paid</th>
+                                            <th>Approved Rent</th>
+                                            <th>Verified</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="subCat in category.InvestmentSubCategories" vbs-popover>
+                                            <td>{{getHRALabel(subCat)}}</td>
+                                            @*<td><img src="/Images/help.png" width="15px" title="{{subCat.Remark}}" /></td>*@
+                                            <td><a href=""><i class="fa fa-question-circle fa-2x" aria-hidden="true" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{subCat.Remark}}"></i></a></td>
+                                            <td><input class="form-control InputFieldWidth" type="text" title="Popover title" ng-model="subCat.DefaultAmount" /></td>
+                                            <td><input class="form-control InputFieldWidth" type="text" ng-model="subCat.ApprovedAmount" /></td>
+                                            <td><input type="checkbox" ng-model="subCat.IsApproved" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-switch-default>
+                        <div class="panel-heading">
+                            <div>
+                                <span class="panel-title">
+                                    <strong><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{category.InvestmentCategoryId}}">{{category.Name}}</a></strong>
+                                </span>
+                            </div>
+                        </div>
+                        <div id="collapse{{category.InvestmentCategoryId}}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                @*<ul>
+                                    <li ng-repeat="item in category.InvestmentSubCategories">{{item.Name}}</li>
+                                </ul>*@
+
+                                <table class="table table-bordered table-hover ">
+                                    <thead>
+                                        <tr class="success">
+                                            <th>Particulars</th>
+                                            <th>Help</th>
+                                            <th>Declared Amount</th>
+                                            <th>Approved Amount</th>
+                                            <th>Verified</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="subCat in category.InvestmentSubCategories" vbs-popover>
+                                            <td>{{subCat.Name}}</td>
+                                            <td><a href=""><i class="fa fa-question-circle fa-2x" vbs="popover" aria-hidden="true" data-toggle="popover" data-placement="top" data-content="{{subCat.Remark}}"></i></a></td>
+                                            <td><input class="form-control InputFieldWidth" type="text" ng-model="subCat.DefaultAmount" /></td>
+                                            <td><input class="form-control InputFieldWidth" type="text" ng-model="subCat.ApprovedAmount" /></td>
+                                            <td><input type="checkbox" ng-model="subCat.IsApproved" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        @*<div ng-repeat="category in vm.empInvestmentDeclarationModel.InvestmentCategories">
             <div ng-switch="category.Code">
                 <div ng-switch-when="ICHOREAL">
                     <fieldset id="fieldset-HRA">
@@ -53,7 +157,7 @@
                     </fieldset>
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="row">
             <div class="col-md-12">
                 <div class="bs-component">

@@ -19,6 +19,9 @@
         vm.employeeId = $scope.vmodel.employeeId;
         vm.selectedInvestmentFinancialYear = $scope.vmodel.selectedInvestmentFinancialYear;
         vm.form = 'frm-add-emp-investments',
+        vm.joiningDate = $scope.vmodel.joiningDate,
+        vm.relievingDate = $scope.vmodel.relievingDate,
+        vm.financialYears = employeeService.getEmpFinancialYears(vm.joiningDate, vm.relievingDate);
         vm.loadInvestmentCatogories = employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear, vm.employeeId);
         vm.empInvestmentDeclarationModel = employeeService.empInvestmentDeclarationModel;
         vm.saving = false;
@@ -45,6 +48,11 @@
         }
         $scope.vbsParseFloat = function (value) {
             return $.vbsParseFloat(value);
+        }
+
+        $scope.onChangeInvestmentFinancialYear = function () {
+            //alert(">>>>");
+            employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear, vm.employeeId);
         }
     }
 })();

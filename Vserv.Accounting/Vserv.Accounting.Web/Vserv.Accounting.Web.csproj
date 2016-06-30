@@ -447,6 +447,7 @@
     <Content Include="font-awesome\css\font-awesome.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\help.png" />
     <Content Include="Images\logoVserv.gif" />
     <Content Include="Images\vserv-logo.gif" />
     <Content Include="Scripts\angular-animate.js" />
@@ -471,6 +472,7 @@
     <Content Include="Scripts\App\Designation\designationController.js" />
     <Content Include="Scripts\App\Designation\designationService.js" />
     <Content Include="Scripts\App\Employee\addAppraisalDirective.js" />
+    <Content Include="Scripts\App\Utility\vbsPopoverDirective.js" />
     <Content Include="Scripts\App\Employee\empSalaryComparisonDirective.js" />
     <Content Include="Scripts\App\Employee\addEmployeeInvestmentsDirective.js" />
     <Content Include="Scripts\App\Employee\empSalaryStructureHistoryDirective.js" />
