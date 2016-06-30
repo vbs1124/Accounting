@@ -120,7 +120,7 @@ namespace Vserv.Accounting.Web.Controllers
             return View(employeeModel);
         }
 
-        public JsonResult GetEmployee(string id)
+        public JsonResult GetEmployeeDetail(string id)
         {
             var employee = EmployeeManager.GetEmployee(id.ToDecryptedInt());
             EmployeeModel employeeModel = ConvertTo(employee);

@@ -1129,6 +1129,7 @@ namespace Vserv.Accounting.Business.Managers
                                                              CategoryId = row.InvestmentCategoryId,
                                                              IsApproved = false,
                                                              IsActive = true,
+                                                             FinancialYear=finYear,
                                                              EmpInvestmentId = subcat.EmpInvestmentId == 0 ? 0 : subcat.EmpInvestmentId,
                                                              SubCategoryId = subcat.InvestmentSubCategoryId,
                                                              DeclaredAmount = Convert.ToDecimal(subcat.DefaultAmount),

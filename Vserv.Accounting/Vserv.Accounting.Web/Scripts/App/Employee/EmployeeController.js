@@ -8,7 +8,7 @@
 
         vm.employeeId = $("#EmployeeId").val();
 
-        vm.loadEmployee = employeeService.loadEmployee(vm.employeeId);
+        vm.loadEmployee = employeeService.getEmployee(vm.employeeId);
         vm.employee = employeeService.employee;
 
         vm.empSalaryStructureModel = employeeService.empSalaryStructureModel;

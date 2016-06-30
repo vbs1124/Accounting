@@ -86,7 +86,7 @@
         }
 
         function getEmployee(employeeId) {
-            return serviceHandler.executePostService('/Employee/GetEmployee?employeeId=' + employeeId);
+            return serviceHandler.executePostService('/Employee/GetEmployeeDetail?employeeId=' + employeeId);
         }
 
         function loadEmployeePaySheet(employeeId, financialYearFrom, financialYearTo) {
