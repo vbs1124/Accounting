@@ -34,6 +34,7 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Config> Configs { get; set; }
         public virtual DbSet<Designation> Designations { get; set; }
+        public virtual DbSet<EmpInvestment> EmpInvestments { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeArchive> EmployeeArchives { get; set; }
         public virtual DbSet<EmployeePaySlip> EmployeePaySlips { get; set; }
@@ -61,7 +62,6 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<UserSecurityQuestion> UserSecurityQuestions { get; set; }
         public virtual DbSet<ZipCode> ZipCodes { get; set; }
-        public virtual DbSet<EmpInvestment> EmpInvestments { get; set; }
     
         public virtual int InsertErrorLog(string appdomain, string exception, string identity, string level, Nullable<int> line, string logger, string message, string method, string ndc, string property, string stacktrace, string stacktracedetail, Nullable<long> timestamp, string thread, string type, string username)
         {
@@ -398,6 +398,31 @@ namespace Vserv.Accounting.Data.Entity
                 new ObjectParameter("FinancialYearFrom", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmpSalaryStructureComparisonList_Result>("GetEmpSalaryStructureComparisonList", employeeIdParameter, uniqueChangeIdParameter, financialYearFromParameter);
+        }
+    
+        public virtual int UpdateMediclaimAmount(Nullable<decimal> zeroToFive, Nullable<decimal> fiveToTen, Nullable<decimal> tenPlus, Nullable<System.DateTime> effectiveFrom, Nullable<System.DateTime> effectiveTo)
+        {
+            var zeroToFiveParameter = zeroToFive.HasValue ?
+                new ObjectParameter("ZeroToFive", zeroToFive) :
+                new ObjectParameter("ZeroToFive", typeof(decimal));
+    
+            var fiveToTenParameter = fiveToTen.HasValue ?
+                new ObjectParameter("FiveToTen", fiveToTen) :
+                new ObjectParameter("FiveToTen", typeof(decimal));
+    
+            var tenPlusParameter = tenPlus.HasValue ?
+                new ObjectParameter("TenPlus", tenPlus) :
+                new ObjectParameter("TenPlus", typeof(decimal));
+    
+            var effectiveFromParameter = effectiveFrom.HasValue ?
+                new ObjectParameter("EffectiveFrom", effectiveFrom) :
+                new ObjectParameter("EffectiveFrom", typeof(System.DateTime));
+    
+            var effectiveToParameter = effectiveTo.HasValue ?
+                new ObjectParameter("EffectiveTo", effectiveTo) :
+                new ObjectParameter("EffectiveTo", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateMediclaimAmount", zeroToFiveParameter, fiveToTenParameter, tenPlusParameter, effectiveFromParameter, effectiveToParameter);
         }
     }
 }

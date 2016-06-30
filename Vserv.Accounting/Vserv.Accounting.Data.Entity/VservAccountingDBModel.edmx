@@ -360,6 +360,7 @@
           <Property Name="MonthlyProjectIncentive" Type="numeric" Precision="19" Scale="0" />
           <Property Name="MonthlyCarLease" Type="numeric" Precision="19" Scale="0" />
           <Property Name="MonthlyFoodCoupons" Type="numeric" Precision="19" Scale="0" />
+          <Property Name="PerformanceIncentivePayable" Type="int" />
           <Property Name="EffectiveFrom" Type="datetime" Nullable="false" />
           <Property Name="EffectiveTo" Type="datetime" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -1187,6 +1188,13 @@
         <Function Name="SalaryStructureChangeHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpSalaryStructureId" Type="int" Mode="In" />
         </Function>
+        <Function Name="UpdateMediclaimAmount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ZeroToFive" Type="numeric" Mode="In" />
+          <Parameter Name="FiveToTen" Type="numeric" Mode="In" />
+          <Parameter Name="TenPlus" Type="numeric" Mode="In" />
+          <Parameter Name="EffectiveFrom" Type="datetime" Mode="In" />
+          <Parameter Name="EffectiveTo" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="ValidateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="SecurityQuestionId" Type="int" Mode="In" />
@@ -1472,6 +1480,7 @@
           <EntitySet Name="Cities" EntityType="VservAccountingDBModel.City" />
           <EntitySet Name="Configs" EntityType="VservAccountingDBModel.Config" />
           <EntitySet Name="Designations" EntityType="VservAccountingDBModel.Designation" />
+          <EntitySet Name="EmpInvestments" EntityType="VservAccountingDBModel.EmpInvestment" />
           <EntitySet Name="Employees" EntityType="VservAccountingDBModel.Employee" />
           <EntitySet Name="EmployeeArchives" EntityType="VservAccountingDBModel.EmployeeArchive" />
           <EntitySet Name="EmployeePaySlips" EntityType="VservAccountingDBModel.EmployeePaySlip" />
@@ -1522,6 +1531,10 @@
           <AssociationSet Name="FK_EmployeeArchive_Designation" Association="VservAccountingDBModel.FK_EmployeeArchive_Designation">
             <End Role="Designation" EntitySet="Designations" />
             <End Role="EmployeeArchive" EntitySet="EmployeeArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpInvestment_Employee" Association="VservAccountingDBModel.FK_EmpInvestment_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmpInvestment" EntitySet="EmpInvestments" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_Gender" Association="VservAccountingDBModel.FK_Employee_Gender">
             <End Role="Gender" EntitySet="Genders" />
@@ -1627,11 +1640,13 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
-          <EntitySet Name="EmpInvestments" EntityType="VservAccountingDBModel.EmpInvestment" />
-          <AssociationSet Name="FK_EmpInvestment_Employee" Association="VservAccountingDBModel.FK_EmpInvestment_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="EmpInvestment" EntitySet="EmpInvestments" />
-          </AssociationSet>
+          <FunctionImport Name="UpdateMediclaimAmount">
+            <Parameter Name="ZeroToFive" Mode="In" Type="Decimal" />
+            <Parameter Name="FiveToTen" Mode="In" Type="Decimal" />
+            <Parameter Name="TenPlus" Mode="In" Type="Decimal" />
+            <Parameter Name="EffectiveFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="EffectiveTo" Mode="In" Type="DateTime" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="ArchiveEmployee_Result">
           <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
@@ -1826,6 +1841,27 @@
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Designation" ToRole="Employee" />
           <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Designation" FromRole="Designation" ToRole="EmployeeArchive" />
         </EntityType>
+        <EntityType Name="EmpInvestment">
+          <Key>
+            <PropertyRef Name="EmpInvestmentId" />
+          </Key>
+          <Property Name="EmpInvestmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="FinancialYear" Type="Int32" Nullable="false" />
+          <Property Name="DeclaredAmount" Type="Decimal" Nullable="false" Precision="19" Scale="0" />
+          <Property Name="ApprovedAmount" Type="Decimal" Precision="19" Scale="0" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <Property Name="DocumentId" Type="Int32" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="VservAccountingDBModel.FK_EmpInvestment_Employee" FromRole="EmpInvestment" ToRole="Employee" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -1877,13 +1913,13 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Bank" Relationship="VservAccountingDBModel.FK_Employee_Bank" FromRole="Employee" ToRole="Bank" />
           <NavigationProperty Name="Designation" Relationship="VservAccountingDBModel.FK_Employee_Designation" FromRole="Employee" ToRole="Designation" />
+          <NavigationProperty Name="EmpInvestments" Relationship="VservAccountingDBModel.FK_EmpInvestment_Employee" FromRole="Employee" ToRole="EmpInvestment" />
           <NavigationProperty Name="Gender" Relationship="VservAccountingDBModel.FK_Employee_Gender" FromRole="Employee" ToRole="Gender" />
           <NavigationProperty Name="State" Relationship="VservAccountingDBModel.FK_Employee_MailingState" FromRole="Employee" ToRole="State" />
           <NavigationProperty Name="OfficeBranch" Relationship="VservAccountingDBModel.FK_Employee_OfficeBranch" FromRole="Employee" ToRole="OfficeBranch" />
           <NavigationProperty Name="State1" Relationship="VservAccountingDBModel.FK_Employee_PermanentState" FromRole="Employee" ToRole="State" />
           <NavigationProperty Name="Salutation" Relationship="VservAccountingDBModel.FK_Employee_Salutation" FromRole="Employee" ToRole="Salutation" />
           <NavigationProperty Name="EmpSalaryStructures" Relationship="VservAccountingDBModel.FK_EmpSalaryStructure_Employee" FromRole="Employee" ToRole="EmpSalaryStructure" />
-          <NavigationProperty Name="EmpInvestments" Relationship="VservAccountingDBModel.FK_EmpInvestment_Employee" FromRole="Employee" ToRole="EmpInvestment" />
         </EntityType>
         <EntityType Name="EmployeeArchive">
           <Key>
@@ -2091,6 +2127,7 @@
           <Property Name="MonthlyProjectIncentive" Type="Decimal" Precision="19" Scale="0" />
           <Property Name="MonthlyCarLease" Type="Decimal" Precision="19" Scale="0" />
           <Property Name="MonthlyFoodCoupons" Type="Decimal" Precision="19" Scale="0" />
+          <Property Name="PerformanceIncentivePayable" Type="Int32" />
           <Property Name="EffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EffectiveTo" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
@@ -2522,6 +2559,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmpInvestment_Employee">
+          <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="VservAccountingDBModel.EmpInvestment" Role="EmpInvestment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmpInvestment">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_Gender">
           <End Type="VservAccountingDBModel.Gender" Role="Gender" Multiplicity="1" />
           <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="*" />
@@ -2826,39 +2875,6 @@
           <End Type="VservAccountingDBModel.Role" Role="Role" Multiplicity="*" />
           <End Type="VservAccountingDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
-        <EntityType Name="EmpInvestment">
-          <Key>
-            <PropertyRef Name="EmpInvestmentId" />
-          </Key>
-          <Property Name="EmpInvestmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
-          <Property Name="FinancialYear" Type="Int32" Nullable="false" />
-          <Property Name="DeclaredAmount" Type="Decimal" Nullable="false" Precision="19" Scale="0" />
-          <Property Name="ApprovedAmount" Type="Decimal" Precision="19" Scale="0" />
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="SubCategoryId" Type="Int32" Nullable="false" />
-          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
-          <Property Name="DocumentId" Type="Int32" />
-          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="VservAccountingDBModel.FK_EmpInvestment_Employee" FromRole="EmpInvestment" ToRole="Employee" />
-        </EntityType>
-        <Association Name="FK_EmpInvestment_Employee">
-          <End Type="VservAccountingDBModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="VservAccountingDBModel.EmpInvestment" Role="EmpInvestment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="EmpInvestment">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3078,6 +3094,27 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpInvestments">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.EmpInvestment">
+              <MappingFragment StoreEntitySet="EmpInvestment">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ApprovedAmount" ColumnName="ApprovedAmount" />
+                <ScalarProperty Name="DeclaredAmount" ColumnName="DeclaredAmount" />
+                <ScalarProperty Name="FinancialYear" ColumnName="FinancialYear" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmpInvestmentId" ColumnName="EmpInvestmentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3324,6 +3361,7 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="EffectiveTo" ColumnName="EffectiveTo" />
                 <ScalarProperty Name="EffectiveFrom" ColumnName="EffectiveFrom" />
+                <ScalarProperty Name="PerformanceIncentivePayable" ColumnName="PerformanceIncentivePayable" />
                 <ScalarProperty Name="MonthlyFoodCoupons" ColumnName="MonthlyFoodCoupons" />
                 <ScalarProperty Name="MonthlyCarLease" ColumnName="MonthlyCarLease" />
                 <ScalarProperty Name="MonthlyProjectIncentive" ColumnName="MonthlyProjectIncentive" />
@@ -3680,27 +3718,7 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="EmpInvestments">
-            <EntityTypeMapping TypeName="VservAccountingDBModel.EmpInvestment">
-              <MappingFragment StoreEntitySet="EmpInvestment">
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
-                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
-                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="ApprovedAmount" ColumnName="ApprovedAmount" />
-                <ScalarProperty Name="DeclaredAmount" ColumnName="DeclaredAmount" />
-                <ScalarProperty Name="FinancialYear" ColumnName="FinancialYear" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="EmpInvestmentId" ColumnName="EmpInvestmentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UpdateMediclaimAmount" FunctionName="VservAccountingDBModel.Store.UpdateMediclaimAmount" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

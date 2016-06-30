@@ -116,18 +116,18 @@
                         <!-- Special Allowance fields-->
                         <tr ng-switch-when="SCSPCL">
                             <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
-                            <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'April' | currency:'&#8377;':0}}</td>
-                            <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'May' | currency:'&#8377;':0}}</td>
-                            <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'June' | currency:'&#8377;':0}}</td>
-                            <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'July' | currency:'&#8377;':0}}</td>
-                            <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'August' | currency:'&#8377;':0}}</td>
-                            <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'September' | currency:'&#8377;':0}}</td>
-                            <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'October' | currency:'&#8377;':0}}</td>
-                            <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'November' | currency:'&#8377;':0}}</td>
-                            <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'December' | currency:'&#8377;':0}}</td>
-                            <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'January' | currency:'&#8377;':0}}</td>
-                            <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'February' | currency:'&#8377;':0}}</td>
-                            <td class="text-right">{{vm.employeePaySheet|specialAllowanceByMonth:'March' | currency:'&#8377;':0}}</td>
+                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'April') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'April' | currency:'&#8377;':0}}</td>
+                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'May') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'May' | currency:'&#8377;':0}}</td>
+                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'June') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'June' | currency:'&#8377;':0}}</td>
+                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'July') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'July' | currency:'&#8377;':0}}</td>
+                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'August') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'August' | currency:'&#8377;':0}}</td>
+                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'September') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'September' | currency:'&#8377;':0}}</td>
+                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'October') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'October' | currency:'&#8377;':0}}</td>
+                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'November') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'November' | currency:'&#8377;':0}}</td>
+                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'December') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'December' | currency:'&#8377;':0}}</td>
+                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'January') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'January' | currency:'&#8377;':0}}</td>
+                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'February') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'February' | currency:'&#8377;':0}}</td>
+                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'March') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'March' | currency:'&#8377;':0}}</td>
                             <td class="text-bold text-right">{{getCurrentComponentTotal(item) | currency:'&#8377;':0}}</td>
                         </tr>
                         <!-- /Special Allowance fields-->
