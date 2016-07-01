@@ -21,7 +21,8 @@
         vm.isEditableEffectiveFrom = true;
         vm.empSalaryStructureModel = {
             effectiveFrom: setEffectiveFrom(),
-            foodCoupons: 0
+            foodCoupons: 0,
+            performanceIncentivePayable: 1
         };
         vm.paySheetParameter = {
             EmployeeId: $("#EmployeeId").val(),
@@ -116,7 +117,7 @@
         };
 
         $scope.foodCoupons = [{ value: 0, text: '0' }, { value: 1100, text: '1100' }, { value: 2200, text: '2200' }];
-        $scope.foodCoupons = [{ value: 0, text: '0' }, { value: 1100, text: '1100' }, { value: 2200, text: '2200' }];
+        $scope.performanceIncentives = [{ value: 1, text: '5 % of CTC paid Annually' }, { value: 2, text: '25% of increment in June and 25% in December' }];
         //---------------------------
     }
 
