@@ -7,7 +7,6 @@
         var vm = this;
 
         vm.employeeId = $("#EmployeeId").val();
-
         vm.loadEmployee = employeeService.getEmployee(vm.employeeId);
         vm.employee = employeeService.employee;
 

@@ -20,7 +20,8 @@
         vm.errorMessage = null;
         vm.isEditableEffectiveFrom = true;
         vm.empSalaryStructureModel = {
-            effectiveFrom: setEffectiveFrom()
+            effectiveFrom: setEffectiveFrom(),
+            foodCoupons: 0
         };
         vm.paySheetParameter = {
             EmployeeId: $("#EmployeeId").val(),
@@ -114,6 +115,8 @@
             opened: false
         };
 
+        $scope.foodCoupons = [{ value: 0, text: '0' }, { value: 1100, text: '1100' }, { value: 2200, text: '2200' }];
+        $scope.foodCoupons = [{ value: 0, text: '0' }, { value: 1100, text: '1100' }, { value: 2200, text: '2200' }];
         //---------------------------
     }
 
