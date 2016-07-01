@@ -473,6 +473,7 @@
     <Content Include="Scripts\App\Designation\designationService.js" />
     <Content Include="Scripts\App\Employee\addAppraisalDirective.js" />
     <Content Include="Scripts\App\Employee\empChangeComparisonDirective.js" />
+    <Content Include="Scripts\App\Utility\vbsTooltipDirective.js" />
     <Content Include="Scripts\App\Utility\vbsPopoverDirective.js" />
     <Content Include="Scripts\App\Employee\empSalaryComparisonDirective.js" />
     <Content Include="Scripts\App\Employee\addEmployeeInvestmentsDirective.js" />
