@@ -935,7 +935,6 @@
     <Content Include="Views\Employee\_SalarySummary.cshtml" />
     <Content Include="Views\Employee\_EmpAppraisalHistory.cshtml" />
     <Content Include="Views\Employee\_EmpAppraisalGraph.cshtml" />
-    <Content Include="Views\Employee\_InvestmentDeclaration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
