@@ -47,7 +47,8 @@
             addEmployeeInvestments: addEmployeeInvestments,
 
             loadEmployee: loadEmployee,
-            employee: employee
+            employee: employee,
+            loadEmpChangeComparisonResult: loadEmpChangeComparisonResult
         };
 
         return svc;
@@ -167,6 +168,10 @@
 
         function getEmpSalaryStructureComparisonList(salaryComparisonParameter) {
             return serviceHandler.executePostService('/Employee/GetEmpSalaryStructureComparisonList', salaryComparisonParameter);
+        }
+
+        function loadEmpChangeComparisonResult(employeeArchiveId) {
+            return serviceHandler.executePostService('/Employee/LoadEmpChangeComparisonResult', employeeArchiveId);
         }
 
         // Investment Declaration.

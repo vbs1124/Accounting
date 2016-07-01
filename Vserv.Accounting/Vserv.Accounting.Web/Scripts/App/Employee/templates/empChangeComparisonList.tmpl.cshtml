@@ -1,0 +1,237 @@
+﻿@using Vserv.Accounting.Common
+<div class="modal-header">
+    <h4 class="modal-title">Compare Employee Detail</h4>
+</div>
+<div class="modal-body" ng-init="getEmpChangeHistoryResult()" vbs-popover>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i> Columns highlighted in<span class="text-danger"><strong> red</strong></span> were updated by <strong> {{updby}}</strong> on <strong>{{updon}}</strong>.
+                Click on each field to view it's current value.
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.VBS_Id != empChangeComparisonResult.PreviousEmployeeInfo.VBS_Id}">
+                        <label class="control-label">Employee Id</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.VBS_Id}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.VBS_Id">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.SalutationName != empChangeComparisonResult.PreviousEmployeeInfo.SalutationName}">
+                        <label class="control-label">Salutation</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.SalutationName}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.SalutationName">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.FirstName != empChangeComparisonResult.PreviousEmployeeInfo.FirstName}">
+                        <label class="control-label">First Name</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.FirstName}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.FirstName">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.MiddleName != empChangeComparisonResult.PreviousEmployeeInfo.MiddleName}">
+                        <label class="control-label">Middle Name</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.MiddleName}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.MiddleName">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.LastName != empChangeComparisonResult.PreviousEmployeeInfo.LastName}">
+                        <label class="control-label">Last Name</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.LastName}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.LastName">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.FatherName != empChangeComparisonResult.PreviousEmployeeInfo.FatherName}">
+                        <label class="control-label">Father's Name</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.FatherName}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.FatherName">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.MotherName != empChangeComparisonResult.PreviousEmployeeInfo.MotherName}">
+                        <label class="control-label">Mother's Name</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.MotherName}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.MotherName">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.GenderName != empChangeComparisonResult.PreviousEmployeeInfo.GenderName}">
+                        <label class="control-label">Gender</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.GenderName}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.GenderName">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.MobileNumber != empChangeComparisonResult.PreviousEmployeeInfo.MobileNumber}">
+                        <label class="control-label">Mobile Number</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.MobileNumber}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.MobileNumber">
+                    </div>
+
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.PermanentAccountNumber != empChangeComparisonResult.PreviousEmployeeInfo.PermanentAccountNumber}">
+                        <label class="control-label">PAN Number</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.PermanentAccountNumber}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.PermanentAccountNumber">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.UniversalAccountNumber != empChangeComparisonResult.PreviousEmployeeInfo.UniversalAccountNumber}">
+                        <label class="control-label">UAN Number</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.UniversalAccountNumber}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.UniversalAccountNumber">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.EPFNumber != empChangeComparisonResult.PreviousEmployeeInfo.EPFNumber}">
+                        <label class="control-label">EPF Number</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.EPFNumber}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.EPFNumber">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.AADHAARNumber != empChangeComparisonResult.PreviousEmployeeInfo.AADHAARNumber}">
+                        <label class="control-label">AADHAAR Number</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.AADHAARNumber}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.AADHAARNumber">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.ESINumber != empChangeComparisonResult.PreviousEmployeeInfo.ESINumber}">
+                        <label class="control-label">ESI Number</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.ESINumber}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.ESINumber">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.BankAccountNumber != empChangeComparisonResult.PreviousEmployeeInfo.BankAccountNumber}">
+                        <label class="control-label">Bank Account Number</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.BankAccountNumber}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.BankAccountNumber">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.BankName != empChangeComparisonResult.PreviousEmployeeInfo.BankName}">
+                        <label class="control-label">Bank</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.BankName}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.BankName">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.BankIFSCCode != empChangeComparisonResult.PreviousEmployeeInfo.BankIFSCCode}">
+                        <label class="control-label">IFSC Code</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.BankIFSCCode}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.BankIFSCCode">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.BankMICRCode != empChangeComparisonResult.PreviousEmployeeInfo.BankMICRCode}">
+                        <label class="control-label">MICR Code</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.BankMICRCode}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.BankMICRCode">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.OfficialEmailAddress != empChangeComparisonResult.PreviousEmployeeInfo.OfficialEmailAddress}">
+                        <label class="control-label">Official Email address</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.OfficialEmailAddress}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.OfficialEmailAddress">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.PersonalEmailAddress != empChangeComparisonResult.PreviousEmployeeInfo.PersonalEmailAddress}">
+                        <label class="control-label">Personal Email address</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.PersonalEmailAddress}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.PersonalEmailAddress">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.OfficeBranchName != empChangeComparisonResult.PreviousEmployeeInfo.OfficeBranchName}">
+                        <label class="control-label">Office Branch</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.OfficeBranchName}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.OfficeBranchName">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.DesignationName != empChangeComparisonResult.PreviousEmployeeInfo.DesignationName}">
+                        <label class="control-label">Designation</label>
+                        <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.DesignationName}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.DesignationName">
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.BirthDay != empChangeComparisonResult.PreviousEmployeeInfo.BirthDay}">
+                        <label class="control-label">BirthDay</label>
+                        <div class='input-group date' id="dp-birth-date">
+                            <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.BirthDay}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.BirthDay">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.JoiningDate != empChangeComparisonResult.PreviousEmployeeInfo.JoiningDate}">
+                        <label class="control-label">Joining Date</label>
+                        <div class='input-group date' id="dp-joining-date">
+                            <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.JoiningDate}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.JoiningDate">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.ResignationDate != empChangeComparisonResult.PreviousEmployeeInfo.ResignationDate}">
+                        <label class="control-label">Resignation Date</label>
+                        <div class='input-group date' id="dp-resignation-date">
+                            <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.ResignationDate}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.ResignationDate">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.RelievingDate != empChangeComparisonResult.PreviousEmployeeInfo.RelievingDate}">
+                        <label class="control-label">Relieving Date</label>
+                        <div class='input-group date' id="dp-relieving-date">
+                            <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.RelievingDate}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.RelievingDate">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.IsActive != empChangeComparisonResult.PreviousEmployeeInfo.IsActive}">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.IsActive}}" disabled ng-model="empChangeComparisonResult.PreviousEmployeeInfo.IsActive"> Active Employee
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <fieldset id="fieldset-permanent-address">
+                <legend>Permanent Address</legend>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.PermanentAddress1 != empChangeComparisonResult.PreviousEmployeeInfo.PermanentAddress1}">
+                            <label class="control-label">Address 1</label>
+                            <textarea class="form-control" rows="4" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.PermanentAddress1}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.PermanentAddress1"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.PermanentAddress2 != empChangeComparisonResult.PreviousEmployeeInfo.PermanentAddress2}">
+                            <label class="control-label">Address 2</label>
+                            <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.PermanentAddress2}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.PermanentAddress2">
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.PermanentZipCode != empChangeComparisonResult.PreviousEmployeeInfo.PermanentZipCode}">
+                            <label class="control-label">Pin Code</label>
+                            <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.PermanentZipCode}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.PermanentZipCode">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.PermanentCity != empChangeComparisonResult.PreviousEmployeeInfo.PermanentCity}">
+                            <label class="control-label">City</label>
+                            <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.PermanentCity}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.PermanentCity">
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.PermanentStateName != empChangeComparisonResult.PreviousEmployeeInfo.PermanentStateName}">
+                            <label class="control-label">State</label>
+                            <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.PermanentStateName}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.PermanentStateName">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset id="fieldset-mailing-address">
+                <legend>
+                    Mailing Address
+                </legend>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.MailingAddress1 != empChangeComparisonResult.PreviousEmployeeInfo.MailingAddress1}">
+                            <label class="control-label">Address 1</label>
+                            <textarea class="form-control" rows="3" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.MailingAddress1}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.MailingAddress1"></textarea>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.IsMetro != empChangeComparisonResult.PreviousEmployeeInfo.IsMetro}">
+                            <div class="radio">
+                                <label class="radio-inline">
+                                    <input type="radio" readonly="readonly" value="True" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.IsMetro"> Metro
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" readonly="readonly" value="false" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.IsMetro"> Non Metro
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.MailingAddress2 != empChangeComparisonResult.PreviousEmployeeInfo.MailingAddress2}">
+                            <label class="control-label">Address 2</label>
+                            <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.MailingAddress2}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.MailingAddress2">
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.MailingZipCode != empChangeComparisonResult.PreviousEmployeeInfo.MailingZipCode}">
+                            <label class="control-label">Pin Code</label>
+                            <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.MailingZipCode}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.MailingZipCode">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.MailingCity != empChangeComparisonResult.PreviousEmployeeInfo.MailingCity}">
+                            <label class="control-label">City</label>
+                            <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.MailingCity}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.MailingCity">
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': empChangeComparisonResult.CurrentEmployeeInfo.MailingStateName != empChangeComparisonResult.PreviousEmployeeInfo.MailingStateName}">
+                            <label class="control-label">State</label>
+                            <input type="text" class="form-control" readonly="readonly" vbs="popover" data-toggle="popover" data-placement="top" data-content="{{empChangeComparisonResult.CurrentEmployeeInfo.MailingStateName}}" ng-model="empChangeComparisonResult.PreviousEmployeeInfo.MailingStateName">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-warning" ng-click="$parent.$dismiss()">Close</button>
+</div>

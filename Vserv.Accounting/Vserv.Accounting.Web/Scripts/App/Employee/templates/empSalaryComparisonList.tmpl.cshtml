@@ -2,7 +2,7 @@
 <div class="modal-header">
     <h4 class="modal-title">Employee Salary Structure Changes</h4>
 </div>
-<div class="modal-body" ng-init="getEmpSalaryStructureComparisonList()">
+<div class="modal-body" ng-init="getEmpSalaryStructureComparisonList()" vbs-popover>
     <div class="row">
         <div class="col-md-12">
             <div class="alert alert-dismissible alert-warning" style="vertical-align:central">
@@ -52,19 +52,19 @@
                         <tr>
                             <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
                             <td class="text-right" ng-class="{'bg-danger': item.April.IsDirty}" title="{{item.April.CurrentAmount | currency:'&#8377;':0}}">
-                                <span ng-bind="item.April.Amount | currency:'&#8377;':0"></span>
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="{{item.April.CurrentAmount | currency:'&#8377;':0}}" ng-bind="item.April.Amount | currency:'&#8377;':0"></span>
                             </td>
                             <td class="text-right" ng-class="{'bg-danger': item.May.IsDirty}" title="{{item.May.CurrentAmount | currency:'&#8377;':0}}">
-                                <span ng-bind="item.May.Amount | currency:'&#8377;':0"></span>
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="XXXXXXXXXXXXXXXXXXXXXXXXXXXXX" ng-bind="item.May.Amount | currency:'&#8377;':0"></span>
                             </td>
                             <td class="text-right" ng-class="{'bg-danger': item.June.IsDirty}" title="{{item.June.CurrentAmount | currency:'&#8377;':0}}">
-                                <span ng-bind="item.June.Amount | currency:'&#8377;':0"></span>
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="XXXXXXXXXXXXXXXXXXXXXXXXXXXXX" ng-bind="item.June.Amount | currency:'&#8377;':0"></span>
                             </td>
                             <td class="text-right" ng-class="{'bg-danger': item.July.IsDirty}" title="{{item.July.CurrentAmount | currency:'&#8377;':0}}">
-                                <span ng-bind="item.July.Amount | currency:'&#8377;':0"></span>
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="XXXXXXXXXXXXXXXXXXXXXXXXXXXXX" ng-bind="item.July.Amount | currency:'&#8377;':0"></span>
                             </td>
                             <td class="text-right" ng-class="{'bg-danger': item.August.IsDirty}" title="{{item.August.CurrentAmount | currency:'&#8377;':0}}">
-                                <span ng-bind="item.August.Amount | currency:'&#8377;':0"></span>
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="XXXXXXXXXXXXXXXXXXXXXXXXXXXXX" ng-bind="item.August.Amount | currency:'&#8377;':0"></span>
                             </td>
                             <td class="text-right" ng-class="{'bg-danger': item.September.IsDirty}" title="{{item.September.CurrentAmount | currency:'&#8377;':0}}">
                                 <span ng-bind="item.September.Amount | currency:'&#8377;':0"></span>

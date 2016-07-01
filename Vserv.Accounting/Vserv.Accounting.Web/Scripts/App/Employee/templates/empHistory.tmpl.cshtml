@@ -21,7 +21,8 @@
                                 <td>{{item.EmployeeArchiveId}}</td>
                                 <td>{{item.UpdatedBy}}</td>
                                 <td>{{item.UpdatedDate}}</td>
-                                <td><a ng-href="/employee/{{item.EmployeeArchiveId}}/compare" target="_blank">Compare with Current</a></td>
+                                @*<td><a ng-href="/employee/{{item.EmployeeArchiveId}}/compare" target="_blank">Compare with Current</a></td>*@
+                                <td><a href="" ng-click="openEmpChangeHistoryModal(item.EmployeeArchiveId, item.UpdatedBy, item.UpdatedDate)">Compare with Current</a></td>
                             </tr>
                         </tbody>
                     </table>
