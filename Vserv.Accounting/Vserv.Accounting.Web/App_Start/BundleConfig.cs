@@ -48,6 +48,7 @@ namespace Vserv.Accounting.Web
 
             bundles.Add(new ScriptBundle("~/scripts/app/angular")
                 .Include("~/Scripts/angular.js")
+                .Include("~/Scripts/ng-ost-0.1.1.js")
                 .Include("~/Scripts/loading-bar.js")
                 .Include("~/Scripts/angular-touch.js")
                 .Include("~/Scripts/angular-animate.js")
