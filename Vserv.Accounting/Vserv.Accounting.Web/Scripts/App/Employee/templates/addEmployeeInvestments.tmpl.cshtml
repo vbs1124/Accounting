@@ -105,11 +105,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" ng-hide="isapprovermode">
                     <div class="col-md-12">
                         <div class="bs-component">
                             <div class="alert alert-dismissible alert-warning">
-                                <p><input type="checkbox" ng-model="isAgreed" />  I here by declare that Information as stated above is true and correct . I also authorize the company to recover tax (TDS) from my salary based on the PROOFS Submitted by me.  I am personally liable to Income Tax proceedings for any misstatements in the declaration or proofs submitted herewith if they are inconsistent with the requirement of Income Tax Act, 1961.</p><br />
+                                <p><input type="checkbox" checked="checked" ng-model="isAgreed" />  I here by declare that Information as stated above is true and correct . I also authorize the company to recover tax (TDS) from my salary based on the PROOFS Submitted by me.  I am personally liable to Income Tax proceedings for any misstatements in the declaration or proofs submitted herewith if they are inconsistent with the requirement of Income Tax Act, 1961.</p><br />
                                 I undertake to make the investments under various sections of the Income Tax Act not later than 50% on 20-12-2016 and rest on 14-02-2017
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                         <div class="form-group pull-right">
                             @*<button type="button" class="btn btn-info">View Change History</button>*@
                             <div class="btn-group">
-                                <button class="btn btn-success" ng-disabled="!isAgreed">Save</button>
+                                <button class="btn btn-success" ng-disabled="!isAgreed && !isapprovermode">Save</button>
                                 <button type="reset" class="btn btn-default">Reset</button>
                             </div>
                         </div>
@@ -129,4 +129,9 @@
             </fieldset>
         </form>
     </div>
+</div>
+
+
+<div class="alert alert-dismissible alert-danger" ng-show="vm.empInvestmentDeclarationModel.InvestmentCategories.length <= 0">
+    No Salary structure defined yet for the selected Financial Year.
 </div>

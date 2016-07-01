@@ -869,6 +869,7 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\ng-ost-0.1.1.js" />
     <Content Include="Scripts\nv.d3.js" />
     <Content Include="Scripts\nv.d3.min.js" />
     <Content Include="Scripts\respond.js" />
