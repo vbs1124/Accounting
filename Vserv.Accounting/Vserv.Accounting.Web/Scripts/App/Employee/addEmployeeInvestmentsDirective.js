@@ -4,7 +4,8 @@
     function addEmployeeInvestments() {
         return {
             scope: {
-                vmodel: "=",                
+                vmodel: "=",
+                isapprovermode: "="
             },
             templateUrl: '/employee/template/addEmployeeInvestments.tmpl.cshtml',
             controller: addEmployeeInvestmentsController,
@@ -26,16 +27,23 @@
         vm.empInvestmentDeclarationModel = employeeService.empInvestmentDeclarationModel;
         vm.saving = false;
         vm.addEmployeeInvestments = addEmployeeInvestments;
+        
         function addEmployeeInvestments() {
-            vm.saving = true;
-            employeeService.addEmployeeInvestments(vm.employeeId,vm.selectedInvestmentFinancialYear, vm.empInvestmentDeclarationModel).then(function (resp) {
-                if (resp.businessException == null) {
-                    $.showToastrMessage("success", "Investment Declaration saved successfully.");
+            bootbox.confirm("Are you sure that you want to save Investment Declaration?", function (result) {
+                if (result) {
+                    vm.saving = true;
+                    employeeService.addEmployeeInvestments(vm.employeeId, vm.selectedInvestmentFinancialYear, vm.empInvestmentDeclarationModel).then(function (resp) {
+                        if (resp.businessException == null) {
+                            $.showToastrMessage("success", "Investment Declaration saved successfully.");
+                        }
+                        else {
+                            $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                        }
+                        vm.saving = false;
+                    });
+                } else {
+                    vm.saving = false;
                 }
-                else {
-                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
-                }
-                vm.saving = false;
             });
         }
 
