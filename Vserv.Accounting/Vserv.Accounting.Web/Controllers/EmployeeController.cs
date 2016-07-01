@@ -173,7 +173,7 @@ namespace Vserv.Accounting.Web.Controllers
         }
 
         /// <summary>
-        /// Bankings this instance.
+        /// Banking this instance.
         /// </summary>
         /// <returns></returns>
         public ActionResult Banking()
@@ -221,6 +221,13 @@ namespace Vserv.Accounting.Web.Controllers
             SetDropdownValues();
             CompareEmployeeModel compareEmployeeModel = EmployeeManager.GetMatchingEmployeeInformation(employeeArchiveId);
             return View("_employeecompare", compareEmployeeModel);
+        }
+
+        public ActionResult LoadEmpChangeComparisonResult(int employeeArchiveId)
+        {
+            CompareEmployeeModel compareEmployeeModel = EmployeeManager.GetMatchingEmployeeInformation(employeeArchiveId);
+            
+            return Json(compareEmployeeModel, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

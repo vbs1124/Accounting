@@ -210,7 +210,7 @@ namespace Vserv.Accounting.Data
             CompareEmployeeModel compareEmployeeModel = new CompareEmployeeModel();
             using (var context = new VservAccountingDBEntities())
             {
-                compareEmployeeModel.PreviousEmployeeInfo = context.EmployeeArchives.AsNoTracking()
+                var employeeArchive = context.EmployeeArchives.AsNoTracking()
                     .Include("Bank")
                     .Include("Designation")
                     .Include("Gender")
@@ -220,9 +220,56 @@ namespace Vserv.Accounting.Data
                     .Include("Salutation")
                     .FirstOrDefault(emp => emp.EmployeeArchiveId == employeeArchiveId);
 
+                compareEmployeeModel.PreviousEmployeeInfo = new EmployeeMapper
+                {
+                    EmployeeId = employeeArchive.EmployeeId,
+                    FirstName = employeeArchive.FirstName ?? String.Empty,
+                    MiddleName = employeeArchive.MiddleName ?? String.Empty,
+                    LastName = employeeArchive.LastName ?? String.Empty,
+                    FatherName = employeeArchive.FatherName ?? String.Empty,
+                    MotherName = employeeArchive.MotherName ?? String.Empty,
+                    PermanentAccountNumber = employeeArchive.PermanentAccountNumber ?? String.Empty,
+                    UniversalAccountNumber = employeeArchive.UniversalAccountNumber ?? String.Empty,
+                    EPFNumber = employeeArchive.EPFNumber ?? String.Empty,
+                    AADHAARNumber = employeeArchive.AADHAARNumber ?? String.Empty,
+                    ESINumber = employeeArchive.ESINumber ?? String.Empty,
+                    MobileNumber = employeeArchive.MobileNumber ?? String.Empty,
+                    OfficialEmailAddress = employeeArchive.OfficialEmailAddress,
+                    PersonalEmailAddress = employeeArchive.PersonalEmailAddress,
+                    BirthDay = employeeArchive.BirthDay,
+                    JoiningDate = employeeArchive.JoiningDate,
+                    RelievingDate = employeeArchive.RelievingDate,
+                    ResignationDate = employeeArchive.ResignationDate,
+                    VBS_Id = employeeArchive.VBS_Id,
+                    DesignationName = employeeArchive.Designation.Name,
+                    SalutationName = employeeArchive.Salutation.Name,
+                    GenderName = employeeArchive.Gender.Name,
+                    OfficeBranchName = employeeArchive.OfficeBranch.Name,
+                    PermanentAddress1 = employeeArchive.PermanentAddress1,
+                    PermanentAddress2 = employeeArchive.PermanentAddress2,
+                    PermanentCity = employeeArchive.PermanentCity,
+                    PermanentZipCode = employeeArchive.PermanentZipCode,
+                    PermanentStateName = employeeArchive.State1.Name,
+                    MailingAddress1 = employeeArchive.MailingAddress1,
+                    MailingAddress2 = employeeArchive.MailingAddress2,
+                    MailingCity = employeeArchive.MailingCity,
+                    MailingZipCode = employeeArchive.MailingZipCode,
+                    MailingStateName = employeeArchive.State.Name,
+                    IsMetro = employeeArchive.IsMetro,
+                    BankAccountNumber = employeeArchive.BankAccountNumber,
+                    BankName = employeeArchive.Bank.Name,
+                    BankIFSCCode = employeeArchive.BankIFSCCode,
+                    BankMICRCode = employeeArchive.BankMICRCode,
+                    IsActive = employeeArchive.IsActive,
+                    CreatedBy = employeeArchive.CreatedBy,
+                    UpdatedBy = employeeArchive.UpdatedBy,
+                    CreatedDate = employeeArchive.CreatedDate,
+                    UpdatedDate = employeeArchive.UpdatedDate
+                };
+
                 if (compareEmployeeModel.PreviousEmployeeInfo.IsNotNull())
                 {
-                    compareEmployeeModel.CurrentEmployeeInfo = context.Employees.AsNoTracking()
+                    var employee = context.Employees.AsNoTracking()
                         .Include("Bank")
                         .Include("Designation")
                         .Include("Gender")
@@ -231,9 +278,55 @@ namespace Vserv.Accounting.Data
                         .Include("State1")
                         .Include("Salutation")
                         .FirstOrDefault(emp => emp.EmployeeId == compareEmployeeModel.PreviousEmployeeInfo.EmployeeId);
+
+                    compareEmployeeModel.CurrentEmployeeInfo = new EmployeeMapper
+                    {
+                        EmployeeId = employee.EmployeeId,
+                        FirstName = employee.FirstName,
+                        MiddleName = employee.MiddleName,
+                        LastName = employee.LastName,
+                        FatherName = employee.FatherName,
+                        MotherName = employee.MotherName,
+                        PermanentAccountNumber = employee.PermanentAccountNumber,
+                        UniversalAccountNumber = employee.UniversalAccountNumber,
+                        EPFNumber = employee.EPFNumber,
+                        AADHAARNumber = employee.AADHAARNumber,
+                        ESINumber = employee.ESINumber,
+                        MobileNumber = employee.MobileNumber,
+                        OfficialEmailAddress = employee.OfficialEmailAddress,
+                        PersonalEmailAddress = employee.PersonalEmailAddress,
+                        BirthDay = employee.BirthDay,
+                        JoiningDate = employee.JoiningDate,
+                        RelievingDate = employee.RelievingDate,
+                        ResignationDate = employee.ResignationDate,
+                        VBS_Id = employee.VBS_Id,
+                        DesignationName = employee.Designation.Name,
+                        SalutationName = employee.Salutation.Name,
+                        GenderName = employee.Gender.Name,
+                        OfficeBranchName = employee.OfficeBranch.Name,
+                        PermanentAddress1 = employee.PermanentAddress1,
+                        PermanentAddress2 = employee.PermanentAddress2,
+                        PermanentCity = employee.PermanentCity,
+                        PermanentZipCode = employee.PermanentZipCode,
+                        PermanentStateName = employee.State1.Name,
+                        MailingAddress1 = employee.MailingAddress1,
+                        MailingAddress2 = employee.MailingAddress2,
+                        MailingCity = employee.MailingCity,
+                        MailingZipCode = employee.MailingZipCode,
+                        MailingStateName = employee.State.Name,
+                        IsMetro = employee.IsMetro,
+                        BankAccountNumber = employee.BankAccountNumber,
+                        BankName = employee.Bank.Name,
+                        BankIFSCCode = employee.BankIFSCCode,
+                        BankMICRCode = employee.BankMICRCode,
+                        IsActive = employee.IsActive,
+                        CreatedBy = employee.CreatedBy,
+                        UpdatedBy = employee.UpdatedBy,
+                        CreatedDate = employee.CreatedDate,
+                        UpdatedDate = employee.UpdatedDate
+                    };
                 }
             }
-
             //SetModifiedColumnCount(compareEmployeeModel);
             return compareEmployeeModel;
         }
