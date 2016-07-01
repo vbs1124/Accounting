@@ -341,6 +341,7 @@ namespace Vserv.Accounting.Web.Controllers
                 MonthlyCarLease = String.IsNullOrWhiteSpace(empSalaryStructureModel.CarLease) ? 0 : Convert.ToDecimal(empSalaryStructureModel.CarLease),
                 MonthlyFoodCoupons = String.IsNullOrWhiteSpace(empSalaryStructureModel.FoodCoupons) ? 0 : Convert.ToDecimal(empSalaryStructureModel.FoodCoupons),
                 EffectiveFrom = String.IsNullOrWhiteSpace(empSalaryStructureModel.EffectiveFrom) ? DateTime.Now : Convert.ToDateTime(empSalaryStructureModel.EffectiveFrom),
+                PerformanceIncentivePayable = String.IsNullOrWhiteSpace(empSalaryStructureModel.PerformanceIncentivePayable) ? 1 : Convert.ToInt32(empSalaryStructureModel.PerformanceIncentivePayable),
                 EmployeeId = employeeId,
                 CreatedBy = User.Identity.Name,
             };
