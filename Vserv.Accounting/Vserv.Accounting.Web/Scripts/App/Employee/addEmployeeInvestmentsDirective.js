@@ -48,10 +48,10 @@
         }
 
         $scope.getHRALabel = function (subCategory) {
-            if (subCategory.Name == 'January' || subCategory.Name == 'February' || subCategory.Name == 'March') {
-                return subCategory.Name + " " + ($.vbsParseFloat(vm.selectedInvestmentFinancialYear) + 1).toString();
+            if (subCategory.name === 'January' || subCategory.name === 'February' || subCategory.name === 'March') {
+                return subCategory.name + " " + ($.vbsParseFloat(vm.selectedInvestmentFinancialYear) + 1).toString();
             } else {
-                return subCategory.Name + " " + vm.selectedInvestmentFinancialYear;
+                return subCategory.name + " " + vm.selectedInvestmentFinancialYear;
             }
         }
         $scope.vbsParseFloat = function (value) {

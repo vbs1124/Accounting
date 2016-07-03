@@ -58,7 +58,7 @@
         }
 
         function addEmployeeInvestments(employeeId,selectedInvestmentFinancialYear,empInvestmentDeclarationModel) {
-            return serviceHandler.executePostService('/Employee/SaveEmployeeInvestments?employeeId=' + employeeId+'&finYear='+selectedInvestmentFinancialYear, empInvestmentDeclarationModel.InvestmentCategories);
+            return serviceHandler.executePostService('/Employee/SaveEmployeeInvestments?employeeId=' + employeeId+'&finYear='+selectedInvestmentFinancialYear, empInvestmentDeclarationModel.investmentCategories);
         }
 
         function loadEmployeeAppraisalHistory(employeeId) {

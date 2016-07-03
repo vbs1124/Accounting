@@ -226,7 +226,7 @@ namespace Vserv.Accounting.Web.Controllers
         public ActionResult LoadEmpChangeComparisonResult(int employeeArchiveId)
         {
             CompareEmployeeModel compareEmployeeModel = EmployeeManager.GetMatchingEmployeeInformation(employeeArchiveId);
-            
+
             return Json(compareEmployeeModel, JsonRequestBehavior.AllowGet);
         }
 
@@ -438,7 +438,7 @@ namespace Vserv.Accounting.Web.Controllers
             //    item.InvestmentSubCategories.ForEach(subCat => subCat.InvestmentCategory = null);
             //}
 
-            return Json(investmentCatogories, JsonRequestBehavior.AllowGet);
+            return CustomJson(investmentCatogories);
         }
 
         public JsonResult SaveEmployeeInvestments(int employeeId, int finYear, List<InvestmentCategoryModel> empInvestmentDeclarationModel)
