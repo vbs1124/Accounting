@@ -147,7 +147,7 @@
                                 <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.June.Amount | currency:'&#8377;':0"></span>
                             </td>
                             <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.July.Amount">{{ item.July.Amount | currency:'&#8377;':0}}</a>
+                                <a href="#" buttons="no" blur="submit" e-min="0" e-maxlength="18" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.July.Amount">{{ item.July.Amount | currency:'&#8377;':0}}</a>
                                 <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.July.Amount | currency:'&#8377;':0"></span>
                             </td>
                             <td class="text-right">

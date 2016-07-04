@@ -45,11 +45,13 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<EPFOffice> EPFOffices { get; set; }
         public virtual DbSet<Feature> Features { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
+        public virtual DbSet<IncomeTaxRate> IncomeTaxRates { get; set; }
         public virtual DbSet<InvestmentCategory> InvestmentCategories { get; set; }
         public virtual DbSet<InvestmentSubCategory> InvestmentSubCategories { get; set; }
         public virtual DbSet<InvtDeclarationComponent> InvtDeclarationComponents { get; set; }
         public virtual DbSet<LookupFrequency> LookupFrequencies { get; set; }
         public virtual DbSet<LookupMonth> LookupMonths { get; set; }
+        public virtual DbSet<MedicalInsuranceRate> MedicalInsuranceRates { get; set; }
         public virtual DbSet<Membership> Memberships { get; set; }
         public virtual DbSet<OAuthMembership> OAuthMemberships { get; set; }
         public virtual DbSet<OfficeBranch> OfficeBranches { get; set; }

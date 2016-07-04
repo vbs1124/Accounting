@@ -34,6 +34,7 @@
                     vm.saving = true;
                     employeeService.addEmployeeInvestments(vm.employeeId, vm.selectedInvestmentFinancialYear, vm.empInvestmentDeclarationModel).then(function (resp) {
                         if (resp.businessException == null) {
+                            employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear, vm.employeeId);
                             $.showToastrMessage("success", "Investment Declaration saved successfully.");
                         }
                         else {

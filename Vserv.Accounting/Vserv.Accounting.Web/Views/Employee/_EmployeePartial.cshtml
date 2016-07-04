@@ -198,7 +198,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.PermanentAddress1, new { @class = "control-label required-field" })
-                @Html.TextBoxFor(m => m.PermanentAddress1, new { @class = "form-control permanent-geo-field", data_geo = "address_components", placeholder = "", @rows = 4, @maxlength = "200" })
+                @Html.TextAreaFor(m => m.PermanentAddress1, new { @class = "form-control permanent-geo-field", data_geo = "address_components", placeholder = "", @rows = 4, @maxlength = "200" })
                 @Html.ValidationMessageFor(m => m.PermanentAddress1)
             </div>
         </div>
@@ -243,7 +243,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.MailingAddress1, new { @class = "control-label required-field" })
-                @Html.TextBoxFor(m => m.MailingAddress1, new { @class = "form-control mailing-geo-field", data_geo = "address_components", placeholder = "", @resize = "none", @rows = 3, @maxlength = "200" })
+                @Html.TextAreaFor(m => m.MailingAddress1, new { @class = "form-control mailing-geo-field", data_geo = "address_components", placeholder = "", @resize = "none", @rows = 3, @maxlength = "200" })
                 @Html.ValidationMessageFor(m => m.MailingAddress1)
             </div>
             <div class="form-group">

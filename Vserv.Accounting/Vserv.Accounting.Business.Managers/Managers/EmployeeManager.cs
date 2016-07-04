@@ -699,7 +699,8 @@ namespace Vserv.Accounting.Business.Managers
 
                 if (salaryComponentEnum.Equals(SalaryComponentEnum.SpecialAllowance)) continue;
 
-                var amount = GetAmountBySalaryComponent(empSalaryStructure, salaryComponent.DefaultAmount, salaryComponentEnum, financialPeriod.Month);
+                Decimal? amount = salaryComponentEnum.Equals(SalaryComponentEnum.Mediclaim) ? GetCalculatedMediclaimByMonth(empSalaryStructure) :
+                    GetAmountBySalaryComponent(empSalaryStructure, salaryComponent.DefaultAmount, salaryComponentEnum, financialPeriod.Month);
 
                 if (amount.IsNotNull() && amount.HasValue)
                 {
@@ -1130,7 +1131,7 @@ namespace Vserv.Accounting.Business.Managers
                 case SalaryComponentEnum.PF:
                     return 12 * basic / 100;
                 case SalaryComponentEnum.Mediclaim:
-                    return GetCalculatedMediclaimByMonth(ctcMonthly, monthId);
+                    return GetCalculatedMediclaimByMonth(empSalaryStructure);
                 case SalaryComponentEnum.Gratuity:
                     return (((basic * 15) / 26) / 12);
                 default:
@@ -1216,7 +1217,7 @@ namespace Vserv.Accounting.Business.Managers
                 case SalaryComponentEnum.PF:
                     return GetSalaryComponentAmountByDays(12 * basic / 100, numberOfDays); // TBD on the rules.
                 case SalaryComponentEnum.Mediclaim:
-                    return GetSalaryComponentAmountByDays(GetCalculatedMediclaimByMonth(ctcMonthly, empSalaryStructure.EffectiveFrom.Month), numberOfDays); // TBD on the rules.
+                    return GetSalaryComponentAmountByDays(GetCalculatedMediclaimByMonth(empSalaryStructure), numberOfDays); // TBD on the rules.
                 case SalaryComponentEnum.Gratuity:
                     return GetSalaryComponentAmountByDays((((basic * 15) / 26) / 12), numberOfDays);
                 default:
@@ -1252,24 +1253,10 @@ namespace Vserv.Accounting.Business.Managers
         /// <param name="monthlyCTC">The monthly CTC.</param>
         /// <param name="monthId">The month identifier.</param>
         /// <returns></returns>
-        private decimal? GetCalculatedMediclaimByMonth(decimal? monthlyCTC, int monthId)
+        private decimal? GetCalculatedMediclaimByMonth(EmpSalaryStructure empSalaryStructure)
         {
-            //=IF(H21<41667, 484, IF(AND(H21>41668, H21<83334), 969,1453))
-            //    =IF(L21<41667, 476, IF(AND(L21>41668, L21<83334), 952,1428))
-            //if (month.Equals(MonthEnum.April)
-            //    || month.Equals(MonthEnum.May) || month.Equals(MonthEnum.June)
-            //    || month.Equals(MonthEnum.February) || month.Equals(MonthEnum.March))
-            if (monthId >= 2 && monthId <= 6)
-            {
-                //if(CTC < 41667){484}
-                //else if (CTC > 41668 AND CTC< 83334){969}
-                //else{1453}
-                return monthlyCTC < 41667 ? 484 : monthlyCTC > 41668 && monthlyCTC < 83334 ? 969 : 1453;
-            }
-            //if(CTC < 41667){476}
-            //else if (CTC > 41668 AND CTC< 83334){952}
-            //else{1428}
-            return monthlyCTC < 41667 ? 476 : monthlyCTC > 41668 && monthlyCTC < 83334 ? 952 : 1428;
+            IMedicalInsuranceRateRepo repo = DataRepositoryFactory.GetDataRepository<IMedicalInsuranceRateRepo>();
+            return repo.GetCalculatedMediclaimByMonth(empSalaryStructure);
         }
 
         #endregion
@@ -1364,7 +1351,8 @@ namespace Vserv.Accounting.Business.Managers
                             Remark = subcat.Remark,
                             DisplayOrder = subcat.DisplayOrder,
                             IsActive = subcat.IsActive,
-                            IsApproved = empInvestmentDetail[j].IsApproved
+                            IsApproved = empInvestmentDetail[j].IsApproved,
+                            ApprovedDate = empInvestmentDetail[j].ApprovedDate
                         };
                             subCategoryList.Add(subcategoryModel);
                             j++;

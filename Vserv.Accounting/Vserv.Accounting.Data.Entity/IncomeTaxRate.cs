@@ -12,24 +12,23 @@ namespace Vserv.Accounting.Data.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class EmpInvestment
+    public partial class IncomeTaxRate
     {
-        public int EmpInvestmentId { get; set; }
-        public int EmployeeId { get; set; }
-        public int FinancialYear { get; set; }
-        public Nullable<decimal> DeclaredAmount { get; set; }
-        public Nullable<decimal> ApprovedAmount { get; set; }
-        public int CategoryId { get; set; }
-        public int SubCategoryId { get; set; }
-        public bool IsApproved { get; set; }
-        public Nullable<int> DocumentId { get; set; }
-        public Nullable<System.DateTime> ApprovedDate { get; set; }
+        public int IncomeTaxRateId { get; set; }
+        public System.Guid BatchId { get; set; }
+        public string IncomeSlab { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
+        public Nullable<decimal> MinNetTaxableIncome { get; set; }
+        public Nullable<decimal> MaxNetTaxableIncome { get; set; }
+        public Nullable<int> TaxPercentageRate { get; set; }
+        public int DisplayOrder { get; set; }
+        public System.DateTime EffectiveFrom { get; set; }
+        public System.DateTime EffectiveTo { get; set; }
         public bool IsActive { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-    
-        public virtual Employee Employee { get; set; }
     }
 }

@@ -25,5 +25,6 @@ namespace Vserv.Accounting.Data.Entity.Models
         public Nullable<bool> IsApproved { get; set; }
         public int EmpInvestmentId { get; set; }
         public Nullable<decimal> ApprovedAmount { get; set; }
+        public DateTime? ApprovedDate { get; set; }
     }
 }

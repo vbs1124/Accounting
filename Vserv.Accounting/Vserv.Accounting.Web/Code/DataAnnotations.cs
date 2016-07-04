@@ -88,7 +88,7 @@ namespace Vserv.Accounting.Web.Code
             string emailAddress = value.ToString();
             EmployeeManager employeeManager = new EmployeeManager();
 
-            if (emailAddress.Contains("@intsof.com"))
+            if (!emailAddress.Contains("@intsof.com"))
             {
                 return new ValidationResult("Invalid Official Email address.");
             }

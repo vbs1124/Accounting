@@ -57,8 +57,8 @@
             return serviceHandler.executePostService('/Employee/SaveEmployeeSalaryDetail?employeeId=' + employeeId, empSalaryStructureModel);
         }
 
-        function addEmployeeInvestments(employeeId,selectedInvestmentFinancialYear,empInvestmentDeclarationModel) {
-            return serviceHandler.executePostService('/Employee/SaveEmployeeInvestments?employeeId=' + employeeId+'&finYear='+selectedInvestmentFinancialYear, empInvestmentDeclarationModel.investmentCategories);
+        function addEmployeeInvestments(employeeId, selectedInvestmentFinancialYear, empInvestmentDeclarationModel) {
+            return serviceHandler.executePostService('/Employee/SaveEmployeeInvestments?employeeId=' + employeeId + '&finYear=' + selectedInvestmentFinancialYear, empInvestmentDeclarationModel.investmentCategories);
         }
 
         function loadEmployeeAppraisalHistory(employeeId) {
@@ -104,7 +104,7 @@
                     employeePaySheet.addRange(resp.result);
                     if (employeePaySheet.length > 0) {
                         empsalarystructureid = employeePaySheet[0].EmpSalaryStructureId;
-                }
+                    }
                 }
                 else {
                     $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
@@ -193,7 +193,9 @@
                 serviceHandler.executePostService('/Employee/GetInvestmentCatogories?financialYear=' + financialYear + '&employeeId=' + employeeId).then(function (resp) {
                     if (resp.businessException == null) {
                         if (resp.result) {
+                            empInvestmentDeclarationModel.removeAll();// clear all the existing items.
                             angular.extend(empInvestmentDeclarationModel, resp.result);
+                            //empInvestmentDeclarationModel.addRange(resp.result);
                         }
                     }
                     else {

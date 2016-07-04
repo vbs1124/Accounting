@@ -106,8 +106,8 @@
           <Property Name="EmpInvestmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="FinancialYear" Type="int" Nullable="false" />
-          <Property Name="DeclaredAmount" Type="numeric" Precision="19" Scale="0" Nullable="false" />
-          <Property Name="ApprovedAmount" Type="numeric" Precision="19" Scale="0" />
+          <Property Name="DeclaredAmount" Type="numeric" Precision="19" Scale="2" />
+          <Property Name="ApprovedAmount" Type="numeric" Precision="19" Scale="2" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="SubCategoryId" Type="int" Nullable="false" />
           <Property Name="IsApproved" Type="bit" Nullable="false" />
@@ -321,7 +321,7 @@
           <Property Name="EmpSalaryStructureId" Type="int" Nullable="false" />
           <Property Name="MonthId" Type="int" Nullable="false" />
           <Property Name="Year" Type="int" />
-          <Property Name="Amount" Type="numeric" Precision="19" Scale="0" />
+          <Property Name="Amount" Type="numeric" Precision="19" Scale="2" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -340,7 +340,7 @@
           <Property Name="EmpSalaryStructureId" Type="int" Nullable="false" />
           <Property Name="MonthId" Type="int" Nullable="false" />
           <Property Name="Year" Type="int" />
-          <Property Name="Amount" Type="numeric" Precision="19" Scale="0" />
+          <Property Name="Amount" Type="numeric" Precision="19" Scale="2" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -355,11 +355,11 @@
           <Property Name="SalaryStructureTypeId" Type="int" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="ParentId" Type="int" />
-          <Property Name="CTC" Type="numeric" Precision="19" Scale="0" Nullable="false" />
-          <Property Name="MonthlyCabDeductions" Type="numeric" Precision="19" Scale="0" />
-          <Property Name="MonthlyProjectIncentive" Type="numeric" Precision="19" Scale="0" />
-          <Property Name="MonthlyCarLease" Type="numeric" Precision="19" Scale="0" />
-          <Property Name="MonthlyFoodCoupons" Type="numeric" Precision="19" Scale="0" />
+          <Property Name="CTC" Type="numeric" Precision="19" Scale="2" Nullable="false" />
+          <Property Name="MonthlyCabDeductions" Type="numeric" Precision="19" Scale="2" />
+          <Property Name="MonthlyProjectIncentive" Type="numeric" Precision="19" Scale="2" />
+          <Property Name="MonthlyCarLease" Type="numeric" Precision="19" Scale="2" />
+          <Property Name="MonthlyFoodCoupons" Type="numeric" Precision="19" Scale="2" />
           <Property Name="PerformanceIncentivePayable" Type="int" />
           <Property Name="EffectiveFrom" Type="datetime" Nullable="false" />
           <Property Name="EffectiveTo" Type="datetime" Nullable="false" />
@@ -433,6 +433,27 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="IncomeTaxRate">
+          <Key>
+            <PropertyRef Name="IncomeTaxRateId" />
+          </Key>
+          <Property Name="IncomeTaxRateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BatchId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IncomeSlab" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="MinNetTaxableIncome" Type="numeric" Precision="19" Scale="2" />
+          <Property Name="MaxNetTaxableIncome" Type="numeric" Precision="19" Scale="2" />
+          <Property Name="TaxPercentageRate" Type="int" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="EffectiveFrom" Type="datetime" Nullable="false" />
+          <Property Name="EffectiveTo" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="InvestmentCategory">
           <Key>
             <PropertyRef Name="InvestmentCategoryId" />
@@ -459,7 +480,7 @@
           <Property Name="Code" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="MaximumLimit" Type="varchar(max)" />
-          <Property Name="DefaultAmount" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="DefaultAmount" Type="numeric" Precision="19" Scale="2" />
           <Property Name="Remark" Type="varchar(max)" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -503,6 +524,28 @@
           <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MedicalInsuranceRate">
+          <Key>
+            <PropertyRef Name="MedicalInsuranceRateId" />
+          </Key>
+          <Property Name="MedicalInsuranceRateId" Type="int" Nullable="false" />
+          <Property Name="BatchId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="MinCTCAmount" Type="numeric" Precision="19" Scale="2" />
+          <Property Name="MaxCTCAmount" Type="numeric" Precision="19" Scale="2" />
+          <Property Name="MediclaimAmount" Type="numeric" Precision="19" Scale="2" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="EffectiveFrom" Type="datetime" Nullable="false" />
+          <Property Name="EffectiveTo" Type="datetime" Nullable="false" />
+          <Property Name="DocumentId" Type="int" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -577,7 +620,7 @@
           <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Code" Type="varchar" MaxLength="6" />
           <Property Name="Description" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="DefaultAmount" Type="numeric" Precision="19" Scale="0" />
+          <Property Name="DefaultAmount" Type="numeric" Precision="19" Scale="2" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
@@ -1220,11 +1263,13 @@
           <EntitySet Name="EPFOffice" EntityType="Self.EPFOffice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feature" EntityType="Self.Feature" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IncomeTaxRate" EntityType="Self.IncomeTaxRate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvestmentCategory" EntityType="Self.InvestmentCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvestmentSubCategory" EntityType="Self.InvestmentSubCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvtDeclarationComponent" EntityType="Self.InvtDeclarationComponent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LookupFrequency" EntityType="Self.LookupFrequency" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LookupMonth" EntityType="Self.LookupMonth" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicalInsuranceRate" EntityType="Self.MedicalInsuranceRate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Membership" EntityType="Self.Membership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OAuthMembership" EntityType="Self.OAuthMembership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfficeBranch" EntityType="Self.OfficeBranch" Schema="dbo" store:Type="Tables" />
@@ -1474,6 +1519,13 @@
             <Parameter Name="UniqueChangeId" Mode="In" Type="Guid" />
             <Parameter Name="FinancialYearFrom" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="UpdateMediclaimAmount">
+            <Parameter Name="ZeroToFive" Mode="In" Type="Decimal" />
+            <Parameter Name="FiveToTen" Mode="In" Type="Decimal" />
+            <Parameter Name="TenPlus" Mode="In" Type="Decimal" />
+            <Parameter Name="EffectiveFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="EffectiveTo" Mode="In" Type="DateTime" />
+          </FunctionImport>
           <EntitySet Name="AddressTypes" EntityType="VservAccountingDBModel.AddressType" />
           <EntitySet Name="ApplicationLogs" EntityType="VservAccountingDBModel.ApplicationLog" />
           <EntitySet Name="Banks" EntityType="VservAccountingDBModel.Bank" />
@@ -1491,11 +1543,13 @@
           <EntitySet Name="EPFOffices" EntityType="VservAccountingDBModel.EPFOffice" />
           <EntitySet Name="Features" EntityType="VservAccountingDBModel.Feature" />
           <EntitySet Name="Genders" EntityType="VservAccountingDBModel.Gender" />
+          <EntitySet Name="IncomeTaxRates" EntityType="VservAccountingDBModel.IncomeTaxRate" />
           <EntitySet Name="InvestmentCategories" EntityType="VservAccountingDBModel.InvestmentCategory" />
           <EntitySet Name="InvestmentSubCategories" EntityType="VservAccountingDBModel.InvestmentSubCategory" />
           <EntitySet Name="InvtDeclarationComponents" EntityType="VservAccountingDBModel.InvtDeclarationComponent" />
           <EntitySet Name="LookupFrequencies" EntityType="VservAccountingDBModel.LookupFrequency" />
           <EntitySet Name="LookupMonths" EntityType="VservAccountingDBModel.LookupMonth" />
+          <EntitySet Name="MedicalInsuranceRates" EntityType="VservAccountingDBModel.MedicalInsuranceRate" />
           <EntitySet Name="Memberships" EntityType="VservAccountingDBModel.Membership" />
           <EntitySet Name="OAuthMemberships" EntityType="VservAccountingDBModel.OAuthMembership" />
           <EntitySet Name="OfficeBranches" EntityType="VservAccountingDBModel.OfficeBranch" />
@@ -1640,13 +1694,6 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
-          <FunctionImport Name="UpdateMediclaimAmount">
-            <Parameter Name="ZeroToFive" Mode="In" Type="Decimal" />
-            <Parameter Name="FiveToTen" Mode="In" Type="Decimal" />
-            <Parameter Name="TenPlus" Mode="In" Type="Decimal" />
-            <Parameter Name="EffectiveFrom" Mode="In" Type="DateTime" />
-            <Parameter Name="EffectiveTo" Mode="In" Type="DateTime" />
-          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="ArchiveEmployee_Result">
           <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
@@ -1848,8 +1895,8 @@
           <Property Name="EmpInvestmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="FinancialYear" Type="Int32" Nullable="false" />
-          <Property Name="DeclaredAmount" Type="Decimal" Nullable="false" Precision="19" Scale="0" />
-          <Property Name="ApprovedAmount" Type="Decimal" Precision="19" Scale="0" />
+          <Property Name="DeclaredAmount" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="ApprovedAmount" Type="Decimal" Precision="19" Scale="2" />
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
           <Property Name="SubCategoryId" Type="Int32" Nullable="false" />
           <Property Name="IsApproved" Type="Boolean" Nullable="false" />
@@ -2080,7 +2127,7 @@
           <Property Name="EmpSalaryStructureId" Type="Int32" Nullable="false" />
           <Property Name="MonthId" Type="Int32" Nullable="false" />
           <Property Name="Year" Type="Int32" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="0" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="2" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -2103,7 +2150,7 @@
           <Property Name="EmpSalaryStructureId" Type="Int32" Nullable="false" />
           <Property Name="MonthId" Type="Int32" Nullable="false" />
           <Property Name="Year" Type="Int32" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="0" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="2" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -2122,11 +2169,11 @@
           <Property Name="SalaryStructureTypeId" Type="Int32" Nullable="false" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="ParentId" Type="Int32" />
-          <Property Name="CTC" Type="Decimal" Nullable="false" Precision="19" Scale="0" />
-          <Property Name="MonthlyCabDeductions" Type="Decimal" Precision="19" Scale="0" />
-          <Property Name="MonthlyProjectIncentive" Type="Decimal" Precision="19" Scale="0" />
-          <Property Name="MonthlyCarLease" Type="Decimal" Precision="19" Scale="0" />
-          <Property Name="MonthlyFoodCoupons" Type="Decimal" Precision="19" Scale="0" />
+          <Property Name="CTC" Type="Decimal" Nullable="false" Precision="19" Scale="2" />
+          <Property Name="MonthlyCabDeductions" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="MonthlyProjectIncentive" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="MonthlyCarLease" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="MonthlyFoodCoupons" Type="Decimal" Precision="19" Scale="2" />
           <Property Name="PerformanceIncentivePayable" Type="Int32" />
           <Property Name="EffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EffectiveTo" Type="DateTime" Nullable="false" Precision="3" />
@@ -2210,6 +2257,27 @@
           <NavigationProperty Name="Employees" Relationship="VservAccountingDBModel.FK_Employee_Gender" FromRole="Gender" ToRole="Employee" />
           <NavigationProperty Name="EmployeeArchives" Relationship="VservAccountingDBModel.FK_EmployeeArchive_Gender" FromRole="Gender" ToRole="EmployeeArchive" />
         </EntityType>
+        <EntityType Name="IncomeTaxRate">
+          <Key>
+            <PropertyRef Name="IncomeTaxRateId" />
+          </Key>
+          <Property Name="IncomeTaxRateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BatchId" Type="Guid" Nullable="false" />
+          <Property Name="IncomeSlab" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MinNetTaxableIncome" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="MaxNetTaxableIncome" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="TaxPercentageRate" Type="Int32" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="EffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EffectiveTo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="InvestmentCategory">
           <Key>
             <PropertyRef Name="InvestmentCategoryId" />
@@ -2237,7 +2305,7 @@
           <Property Name="Code" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="MaximumLimit" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DefaultAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DefaultAmount" Type="Decimal" Precision="19" Scale="2" />
           <Property Name="Remark" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DisplayOrder" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
@@ -2289,6 +2357,28 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="EmpSalaryDetails" Relationship="VservAccountingDBModel.FK_EmpSalaryDetail_LookupMonth" FromRole="LookupMonth" ToRole="EmpSalaryDetail" />
           <NavigationProperty Name="EmpSalaryDetailArchives" Relationship="VservAccountingDBModel.FK_EmpSalaryDetailArchive_LookupMonth" FromRole="LookupMonth" ToRole="EmpSalaryDetailArchive" />
+        </EntityType>
+        <EntityType Name="MedicalInsuranceRate">
+          <Key>
+            <PropertyRef Name="MedicalInsuranceRateId" />
+          </Key>
+          <Property Name="MedicalInsuranceRateId" Type="Int32" Nullable="false" />
+          <Property Name="BatchId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="MinCTCAmount" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="MaxCTCAmount" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="MediclaimAmount" Type="Decimal" Nullable="false" Precision="19" Scale="2" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <Property Name="EffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EffectiveTo" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DocumentId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Membership">
           <Key>
@@ -2361,7 +2451,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Code" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="DefaultAmount" Type="Decimal" Precision="19" Scale="0" />
+          <Property Name="DefaultAmount" Type="Decimal" Precision="19" Scale="2" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -2997,6 +3087,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateMediclaimAmount" FunctionName="VservAccountingDBModel.Store.UpdateMediclaimAmount" />
           <EntitySetMapping Name="AddressTypes">
             <EntityTypeMapping TypeName="VservAccountingDBModel.AddressType">
               <MappingFragment StoreEntitySet="AddressType">
@@ -3442,6 +3533,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="IncomeTaxRates">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.IncomeTaxRate">
+              <MappingFragment StoreEntitySet="IncomeTaxRate">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="EffectiveTo" ColumnName="EffectiveTo" />
+                <ScalarProperty Name="EffectiveFrom" ColumnName="EffectiveFrom" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="TaxPercentageRate" ColumnName="TaxPercentageRate" />
+                <ScalarProperty Name="MaxNetTaxableIncome" ColumnName="MaxNetTaxableIncome" />
+                <ScalarProperty Name="MinNetTaxableIncome" ColumnName="MinNetTaxableIncome" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="IncomeSlab" ColumnName="IncomeSlab" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="IncomeTaxRateId" ColumnName="IncomeTaxRateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="InvestmentCategories">
             <EntityTypeMapping TypeName="VservAccountingDBModel.InvestmentCategory">
               <MappingFragment StoreEntitySet="InvestmentCategory">
@@ -3520,6 +3633,29 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="MonthId" ColumnName="MonthId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedicalInsuranceRates">
+            <EntityTypeMapping TypeName="VservAccountingDBModel.MedicalInsuranceRate">
+              <MappingFragment StoreEntitySet="MedicalInsuranceRate">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
+                <ScalarProperty Name="EffectiveTo" ColumnName="EffectiveTo" />
+                <ScalarProperty Name="EffectiveFrom" ColumnName="EffectiveFrom" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="MediclaimAmount" ColumnName="MediclaimAmount" />
+                <ScalarProperty Name="MaxCTCAmount" ColumnName="MaxCTCAmount" />
+                <ScalarProperty Name="MinCTCAmount" ColumnName="MinCTCAmount" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="MedicalInsuranceRateId" ColumnName="MedicalInsuranceRateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3718,7 +3854,6 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="UpdateMediclaimAmount" FunctionName="VservAccountingDBModel.Store.UpdateMediclaimAmount" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
