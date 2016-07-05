@@ -19,6 +19,7 @@
         vm.saving = false;
         vm.errorMessage = null;
         vm.isEditableEffectiveFrom = true;
+        vm.init = init;
         vm.empSalaryStructureModel = {
             effectiveFrom: setEffectiveFrom(),
             foodCoupons: 0,
@@ -38,7 +39,7 @@
                 return new Date($("#JoiningDate").val()) // Set the default "Effective From" to joining date of the employee.
             }
         }
-
+       
         function addEmployeeSalaryDetail() {
             var monthlyCTC = vm.empSalaryStructureModel.ctc / 12;
 
@@ -92,7 +93,7 @@
                         vm.saving = false;
                     });
                 }
-                vm.saving = true;
+                vm.saving = false;
             });
         }
 
@@ -117,7 +118,17 @@
         };
 
         $scope.foodCoupons = [{ value: 0, text: '0' }, { value: 1100, text: '1100' }, { value: 2200, text: '2200' }];
-        $scope.performanceIncentives = [{ value: 1, text: '5 % of CTC paid Annually' }, { value: 2, text: '25% of increment in June and 25% in December' }];
+        
+
+        function init() {
+            if (vm.isEditableEffectiveFrom) {
+                $scope.performanceIncentives = [{ value: 1, text: '5 % of CTC paid Annually' }, { value: 2, text: '25% of increment paid half yearly' }];
+            } else {
+                $scope.performanceIncentives = [{ value: 1, text: '5 % of CTC paid Annually' }];
+            }
+        }
+
+        vm.init();
         //---------------------------
     }
 
