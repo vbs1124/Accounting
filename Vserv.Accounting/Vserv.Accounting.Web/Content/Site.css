@@ -539,6 +539,17 @@ textarea {
         color: black;
     }
 
+ #loading-bar .bar {
+  background: #8b0000;
+}
+
+
+#loading-bar .peg {
+  -moz-box-shadow: #8b0000 1px 0 6px 1px;
+  -ms-box-shadow: #8b0000 1px 0 6px 1px;
+  -webkit-box-shadow: #8b0000 1px 0 6px 1px;
+  box-shadow: #8b0000 1px 0 6px 1px;
+}
 /*.clsEmpInvestment #accordion .popover-content
 {
     font-size:11px;
