@@ -19,15 +19,15 @@
         var vm = this;
         vm.employeeId = $scope.vmodel.employeeId;
         vm.selectedInvestmentFinancialYear = $scope.vmodel.selectedInvestmentFinancialYear;
-        vm.form = 'frm-add-emp-investments',
-        vm.joiningDate = $scope.vmodel.joiningDate,
-        vm.relievingDate = $scope.vmodel.relievingDate,
+        vm.form = 'frm-add-emp-investments';
+        vm.joiningDate = $scope.vmodel.joiningDate;
+        vm.relievingDate = $scope.vmodel.relievingDate;
         vm.financialYears = employeeService.getEmpFinancialYears(vm.joiningDate, vm.relievingDate);
         vm.loadInvestmentCatogories = employeeService.loadInvestmentCatogories(vm.selectedInvestmentFinancialYear, vm.employeeId);
         vm.empInvestmentDeclarationModel = employeeService.empInvestmentDeclarationModel;
         vm.saving = false;
         vm.addEmployeeInvestments = addEmployeeInvestments;
-        
+
         function addEmployeeInvestments() {
             bootbox.confirm("Are you sure that you want to save Investment Declaration?", function (result) {
                 if (result) {

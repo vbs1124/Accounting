@@ -7,9 +7,10 @@
         <ul class="nav nav-tabs" id="tabs-manage-employee">
             <li class="active"><a href="#edit-employee" data-toggle="tab">Employee Profile</a></li>
             <li class=""><a href="#emp-salary-summary" data-toggle="tab" aria-expanded="false">Salary Summary</a></li>
-            <li class=""><a href="#emp-salary-breakup" data-toggle="tab" aria-expanded="false">Salary Breakup</a></li>
+            <li class=""><a href="#emp-salary-breakup" data-toggle="tab" aria-expanded="false">Salary Structure</a></li>
             <li class=""><a href="#emp-investment-declaration" data-toggle="tab" aria-expanded="false">Investment Declaration</a></li>
             <li class=""><a href="#emp-investment-verification" data-toggle="tab" aria-expanded="false">Investment Verification</a></li>
+            <li class=""><a href="#emp-taxation" data-toggle="tab" aria-expanded="false">Taxation</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade active in padding-top10" id="edit-employee">
@@ -30,6 +31,9 @@
             </div>
             <div class="tab-pane fade padding-top10" id="emp-investment-verification">
                 <add-employee-investments vmodel="vm" isapprovermode="true"></add-employee-investments>
+            </div>
+            <div class="tab-pane fade padding-top10" id="emp-taxation">
+                <emp-taxation vmodel="vm"></emp-taxation>
             </div>
         </div>
     </div>

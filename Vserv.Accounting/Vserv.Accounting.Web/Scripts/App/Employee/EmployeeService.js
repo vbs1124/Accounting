@@ -48,7 +48,9 @@
 
             loadEmployee: loadEmployee,
             employee: employee,
-            loadEmpChangeComparisonResult: loadEmpChangeComparisonResult
+            loadEmpChangeComparisonResult: loadEmpChangeComparisonResult,
+
+            loadEmployeeTaxation: loadEmployeeTaxation
         };
 
         return svc;
@@ -67,7 +69,7 @@
                 if (resp.businessException == null) {
 
                     $.map(resp.result, function (val, i) {
-                        val.CurrentEffectiveFrom = moment(val.CurrentEffectiveFrom).format("DD/MM/YYYY");
+                      //  val.CurrentEffectiveFrom = moment(val.CurrentEffectiveFrom).format("DD/MM/YYYY");
                         graphValues.push({ label: val.CurrentEffectiveFrom, value: val.CurrentCTC });
                     });
 
@@ -216,6 +218,10 @@
                     $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
                 }
             });
+        }
+
+        function loadEmployeeTaxation(employeeId, joiningDate) {
+            return null; //TODO: need to be implemented.
         }
     }
 })();
