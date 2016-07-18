@@ -3,9 +3,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data.SqlClient;
 using System.Linq;
 using Vserv.Accounting.Common;
 using Vserv.Accounting.Data.Entity;
+using Vserv.Accounting.Data.Entity.Models;
+
 
 #endregion
 
@@ -210,7 +213,7 @@ namespace Vserv.Accounting.Data
             CompareEmployeeModel compareEmployeeModel = new CompareEmployeeModel();
             using (var context = new VservAccountingDBEntities())
             {
-                compareEmployeeModel.PreviousEmployeeInfo = context.EmployeeArchives.AsNoTracking()
+                var employeeArchive = context.EmployeeArchives.AsNoTracking()
                     .Include("Bank")
                     .Include("Designation")
                     .Include("Gender")
@@ -220,9 +223,56 @@ namespace Vserv.Accounting.Data
                     .Include("Salutation")
                     .FirstOrDefault(emp => emp.EmployeeArchiveId == employeeArchiveId);
 
+                compareEmployeeModel.PreviousEmployeeInfo = new EmployeeMapper
+                {
+                    EmployeeId = employeeArchive.EmployeeId,
+                    FirstName = employeeArchive.FirstName ?? String.Empty,
+                    MiddleName = employeeArchive.MiddleName ?? String.Empty,
+                    LastName = employeeArchive.LastName ?? String.Empty,
+                    FatherName = employeeArchive.FatherName ?? String.Empty,
+                    MotherName = employeeArchive.MotherName ?? String.Empty,
+                    PermanentAccountNumber = employeeArchive.PermanentAccountNumber ?? String.Empty,
+                    UniversalAccountNumber = employeeArchive.UniversalAccountNumber ?? String.Empty,
+                    EPFNumber = employeeArchive.EPFNumber ?? String.Empty,
+                    AADHAARNumber = employeeArchive.AADHAARNumber ?? String.Empty,
+                    ESINumber = employeeArchive.ESINumber ?? String.Empty,
+                    MobileNumber = employeeArchive.MobileNumber ?? String.Empty,
+                    OfficialEmailAddress = employeeArchive.OfficialEmailAddress ?? String.Empty,
+                    PersonalEmailAddress = employeeArchive.PersonalEmailAddress ?? String.Empty,
+                    BirthDay = employeeArchive.BirthDay,
+                    JoiningDate = employeeArchive.JoiningDate,
+                    RelievingDate = employeeArchive.RelievingDate,
+                    ResignationDate = employeeArchive.ResignationDate,
+                    VBS_Id = employeeArchive.VBS_Id ?? String.Empty,
+                    DesignationName = employeeArchive.Designation.Name ?? String.Empty,
+                    SalutationName = employeeArchive.Salutation.Name ?? String.Empty,
+                    GenderName = employeeArchive.Gender.Name ?? String.Empty,
+                    OfficeBranchName = employeeArchive.OfficeBranch.Name ?? String.Empty,
+                    PermanentAddress1 = employeeArchive.PermanentAddress1 ?? String.Empty,
+                    PermanentAddress2 = employeeArchive.PermanentAddress2 ?? String.Empty,
+                    PermanentCity = employeeArchive.PermanentCity ?? String.Empty,
+                    PermanentZipCode = employeeArchive.PermanentZipCode ?? String.Empty,
+                    PermanentStateName = employeeArchive.State1.Name ?? String.Empty,
+                    MailingAddress1 = employeeArchive.MailingAddress1 ?? String.Empty,
+                    MailingAddress2 = employeeArchive.MailingAddress2 ?? String.Empty,
+                    MailingCity = employeeArchive.MailingCity ?? String.Empty,
+                    MailingZipCode = employeeArchive.MailingZipCode ?? String.Empty,
+                    MailingStateName = employeeArchive.State.Name ?? String.Empty,
+                    IsMetro = employeeArchive.IsMetro,
+                    BankAccountNumber = employeeArchive.BankAccountNumber ?? String.Empty,
+                    BankName = employeeArchive.Bank.Name ?? String.Empty,
+                    BankIFSCCode = employeeArchive.BankIFSCCode ?? String.Empty,
+                    BankMICRCode = employeeArchive.BankMICRCode ?? String.Empty,
+                    IsActive = employeeArchive.IsActive,
+                    CreatedBy = employeeArchive.CreatedBy ?? String.Empty,
+                    UpdatedBy = employeeArchive.UpdatedBy ?? String.Empty,
+                    CreatedDate = employeeArchive.CreatedDate,
+                    UpdatedDate = employeeArchive.UpdatedDate
+                };
+
                 if (compareEmployeeModel.PreviousEmployeeInfo.IsNotNull())
                 {
-                    compareEmployeeModel.CurrentEmployeeInfo = context.Employees.AsNoTracking()
+                    var employee = context.Employees.AsNoTracking()
                         .Include("Bank")
                         .Include("Designation")
                         .Include("Gender")
@@ -231,9 +281,55 @@ namespace Vserv.Accounting.Data
                         .Include("State1")
                         .Include("Salutation")
                         .FirstOrDefault(emp => emp.EmployeeId == compareEmployeeModel.PreviousEmployeeInfo.EmployeeId);
+
+                    compareEmployeeModel.CurrentEmployeeInfo = new EmployeeMapper
+                    {
+                        EmployeeId = employee.EmployeeId,
+                        FirstName = employee.FirstName ?? String.Empty,
+                        MiddleName = employee.MiddleName ?? String.Empty,
+                        LastName = employee.LastName ?? String.Empty,
+                        FatherName = employee.FatherName ?? String.Empty,
+                        MotherName = employee.MotherName ?? String.Empty,
+                        PermanentAccountNumber = employee.PermanentAccountNumber ?? String.Empty,
+                        UniversalAccountNumber = employee.UniversalAccountNumber ?? String.Empty,
+                        EPFNumber = employee.EPFNumber ?? String.Empty,
+                        AADHAARNumber = employee.AADHAARNumber ?? String.Empty,
+                        ESINumber = employee.ESINumber ?? String.Empty,
+                        MobileNumber = employee.MobileNumber ?? String.Empty,
+                        OfficialEmailAddress = employee.OfficialEmailAddress ?? String.Empty,
+                        PersonalEmailAddress = employee.PersonalEmailAddress ?? String.Empty,
+                        BirthDay = employee.BirthDay,
+                        JoiningDate = employee.JoiningDate,
+                        RelievingDate = employee.RelievingDate,
+                        ResignationDate = employee.ResignationDate,
+                        VBS_Id = employee.VBS_Id ?? String.Empty,
+                        DesignationName = employee.Designation.Name ?? String.Empty,
+                        SalutationName = employee.Salutation.Name ?? String.Empty,
+                        GenderName = employee.Gender.Name ?? String.Empty,
+                        OfficeBranchName = employee.OfficeBranch.Name ?? String.Empty,
+                        PermanentAddress1 = employee.PermanentAddress1 ?? String.Empty,
+                        PermanentAddress2 = employee.PermanentAddress2 ?? String.Empty,
+                        PermanentCity = employee.PermanentCity ?? String.Empty,
+                        PermanentZipCode = employee.PermanentZipCode ?? String.Empty,
+                        PermanentStateName = employee.State1.Name ?? String.Empty,
+                        MailingAddress1 = employee.MailingAddress1 ?? String.Empty,
+                        MailingAddress2 = employee.MailingAddress2 ?? String.Empty,
+                        MailingCity = employee.MailingCity ?? String.Empty,
+                        MailingZipCode = employee.MailingZipCode ?? String.Empty,
+                        MailingStateName = employee.State.Name ?? String.Empty,
+                        IsMetro = employee.IsMetro,
+                        BankAccountNumber = employee.BankAccountNumber ?? String.Empty,
+                        BankName = employee.Bank.Name ?? String.Empty,
+                        BankIFSCCode = employee.BankIFSCCode ?? String.Empty,
+                        BankMICRCode = employee.BankMICRCode ?? String.Empty,
+                        IsActive = employee.IsActive,
+                        CreatedBy = employee.CreatedBy ?? String.Empty,
+                        UpdatedBy = employee.UpdatedBy ?? String.Empty,
+                        CreatedDate = employee.CreatedDate,
+                        UpdatedDate = employee.UpdatedDate
+                    };
                 }
             }
-
             //SetModifiedColumnCount(compareEmployeeModel);
             return compareEmployeeModel;
         }
@@ -245,6 +341,32 @@ namespace Vserv.Accounting.Data
                 return context.GetEmployeeSalaryDetail(employeeId, financialYearFrom, financialYearTo).ToList();
             }
         }
+
+        #region Income Tax Computation
+
+        public EmployeeTaxation GetEmployeeIncomeTaxComputation(int employeeId, int financialYear)
+        {
+            EmployeeTaxation employeeTaxation = new EmployeeTaxation();
+
+            using (VservAccountingDBEntities dbEntities = new VservAccountingDBEntities())
+            {
+                //var sqlQueryGetEmployeeMonthlyTaxDeductions = @"EXECUTE [dbo].[GetEmployeeMonthlyTaxDeductions] @EmployeeId, @FinancialYear";
+                //employeeTaxation.MonthlyTaxDeductions = dbEntities.Database.SqlQuery<EmployeeMonthlyTaxDeduction>(sqlQueryGetEmployeeMonthlyTaxDeductions, new SqlParameter("EmployeeId", employeeId), new SqlParameter("FinancialYear", financialYear)).ToList();
+
+
+                employeeTaxation.MonthlyTaxDeductions = dbEntities.GetMonthlyTaxDeduction(employeeId, financialYear).ToList();
+
+                var sqlQueryGetEmployeeYearlyTaxExemptions = @"EXECUTE [dbo].[GetEmployeeYearlyTaxExemptions] @EmployeeId, @FinancialYear";
+                employeeTaxation.YearlyTaxExemptions = dbEntities.Database.SqlQuery<TaxComputationComponent>(sqlQueryGetEmployeeYearlyTaxExemptions, new SqlParameter("EmployeeId", employeeId), new SqlParameter("FinancialYear", financialYear)).ToList();
+
+                var sqlQueryGetEmpAnnualContributionUnderChapterVIA = @"EXECUTE [dbo].[GetEmpAnnualContributionUnderChapterVIA] @EmployeeId, @FinancialYear";
+                employeeTaxation.YearlyContributionUnderChapterVIA = dbEntities.Database.SqlQuery<TaxComputationComponent>(sqlQueryGetEmpAnnualContributionUnderChapterVIA, new SqlParameter("EmployeeId", employeeId), new SqlParameter("FinancialYear", financialYear)).ToList();
+            }
+
+            return employeeTaxation;
+        }
+
+        #endregion
 
         #endregion Public Methods
 

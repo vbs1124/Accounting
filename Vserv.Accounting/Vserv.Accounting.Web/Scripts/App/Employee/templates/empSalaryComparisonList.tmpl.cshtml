@@ -1,0 +1,121 @@
+﻿@using Vserv.Accounting.Common
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$parent.$dismiss()">×</button>
+    <h4 class="modal-title">Employee Salary Structure Changes</h4>
+</div>
+<div class="modal-body" ng-init="getEmpSalaryStructureComparisonList()" >
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-dismissible alert-warning" style="vertical-align:central">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <span>
+                    <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+                    Columns with background <span class="bg-danger"><strong> red</strong></span> were updated by <strong> {{updby}}</strong> on <strong>{{updon}}</strong>.
+                    Hover on each field to view it's current value.
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="success">
+                            <th>&nbsp;</th>
+                            <th>April</th>
+                            <th>May</th>
+                            <th>June</th>
+                            <th>July</th>
+                            <th>August</th>
+                            <th>September</th>
+                            <th>October</th>
+                            <th>November</th>
+                            <th>December</th>
+                            <th>January</th>
+                            <th>February</th>
+                            <th>March</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="item in empSalaryCompareResult" vbs-popover>
+                        <tr class="warning" ng-show="item.SCCode=='SCMEDC'">
+                            <td colspan="14">
+                                <strong>Reimbursments:</strong>
+                            </td>
+                        </tr>
+                        <tr class="active" ng-show="item.SCCode=='SCEPFO'">
+                            <td colspan="14">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <!-- Show all fields as no editable-->
+                        <tr>
+                            <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
+                            <td class="text-right" ng-class="{'bg-danger': item.April.IsDirty}">
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="{{item.April.CurrentAmount | currency:'&#8377;':0}}" ng-bind="item.April.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.May.IsDirty}" >
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="{{item.May.CurrentAmount | currency:'&#8377;':0}}" ng-bind="item.May.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.June.IsDirty}">
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="{{item.June.CurrentAmount | currency:'&#8377;':0}}" ng-bind="item.June.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.July.IsDirty}">
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="{{item.July.CurrentAmount | currency:'&#8377;':0}}" ng-bind="item.July.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.August.IsDirty}">
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="{{item.August.CurrentAmount | currency:'&#8377;':0}}" ng-bind="item.August.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.September.IsDirty}">
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="{{item.September.CurrentAmount | currency:'&#8377;':0}}" ng-bind="item.September.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.October.IsDirty}">
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="{{item.October.CurrentAmount | currency:'&#8377;':0}}" ng-bind="item.October.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.November.IsDirty}">
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="{{item.November.CurrentAmount | currency:'&#8377;':0}}" ng-bind="item.November.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.December.IsDirty}">
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="{{item.December.CurrentAmount | currency:'&#8377;':0}}" ng-bind="item.December.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.January.IsDirty}">
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="{{item.January.CurrentAmount | currency:'&#8377;':0}}" ng-bind="item.January.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.February.IsDirty}">
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="{{item.February.CurrentAmount | currency:'&#8377;':0}}" ng-bind="item.February.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-right" ng-class="{'bg-danger': item.March.IsDirty}">
+                                <span vbs="popover" data-toggle="popover" data-placement="top" data-content="{{item.March.CurrentAmount | currency:'&#8377;':0}}" ng-bind="item.March.Amount | currency:'&#8377;':0"></span>
+                            </td>
+                            <td class="text-bold text-right"><span ng-bind="getCurrentComponentTotal(item) | currency:'&#8377;':0"></span></td>
+                        </tr>
+                        <!-- /Show all fields as no editable-->
+                    </tbody>
+                    <tfoot>
+                        <tr class="success">
+                            <th class="text-right">Total</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'April' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'May' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'June' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'July' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'August' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'September' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'October' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'November' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'December' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'January' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'February' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">{{empSalaryCompareResult|sumByMonth:'March' | currency:'&#8377;':0}}</th>
+                            <th class="text-right">&nbsp;</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <!-- /.col-md-12 -->
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-warning" ng-click="$parent.$dismiss()">Close</button>
+</div>

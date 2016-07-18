@@ -9,7 +9,12 @@
         var employeeChangeHistory = [];
         var empAppraisalGraphValues = [];
         var empSalaryStructureHistory = [];
+        var investmentDeclarationResult = {};
+        var empInvestmentDeclarationModel = [];
         var empsalarystructureid = null;
+        var employee = {};
+        var employeeTaxation = {};
+
         var svc = {
             addEmployeeSalaryDetail: addEmployeeSalaryDetail,
             getEmpFinancialYears: getEmpFinancialYears,
@@ -30,13 +35,34 @@
             employeeChangeHistory: employeeChangeHistory,
 
             loadEmpSalaryStructureHistory: loadEmpSalaryStructureHistory,
-            empSalaryStructureHistory: empSalaryStructureHistory
+            empSalaryStructureHistory: empSalaryStructureHistory,
+
+            getEmpSalaryStructureComparisonList: getEmpSalaryStructureComparisonList,
+
+            // Investment Declaration.
+            loadInvestmentByEmployeeId: loadInvestmentByEmployeeId,
+            investmentDeclarationResult: investmentDeclarationResult,
+
+            loadInvestmentCatogories: loadInvestmentCatogories,
+            empInvestmentDeclarationModel: empInvestmentDeclarationModel,
+            addEmployeeInvestments: addEmployeeInvestments,
+
+            loadEmployee: loadEmployee,
+            employee: employee,
+            loadEmpChangeComparisonResult: loadEmpChangeComparisonResult,
+
+            loadEmployeeTaxation: loadEmployeeTaxation,
+            employeeTaxation: employeeTaxation
         };
 
         return svc;
 
         function addEmployeeSalaryDetail(empSalaryStructureModel, employeeId) {
             return serviceHandler.executePostService('/Employee/SaveEmployeeSalaryDetail?employeeId=' + employeeId, empSalaryStructureModel);
+        }
+
+        function addEmployeeInvestments(employeeId, selectedInvestmentFinancialYear, empInvestmentDeclarationModel) {
+            return serviceHandler.executePostService('/Employee/SaveEmployeeInvestments?employeeId=' + employeeId + '&finYear=' + selectedInvestmentFinancialYear, empInvestmentDeclarationModel.investmentCategories);
         }
 
         function loadEmployeeAppraisalHistory(employeeId) {
@@ -65,7 +91,7 @@
         }
 
         function getEmployee(employeeId) {
-            return serviceHandler.executePostService('/Employee/GetEmployee?employeeId=' + employeeId);
+            return serviceHandler.executePostService('/Employee/GetEmployeeDetail?employeeId=' + employeeId);
         }
 
         function loadEmployeePaySheet(employeeId, financialYearFrom, financialYearTo) {
@@ -142,6 +168,71 @@
                     }
                 });
             }
+        }
+
+        function getEmpSalaryStructureComparisonList(salaryComparisonParameter) {
+            return serviceHandler.executePostService('/Employee/GetEmpSalaryStructureComparisonList', salaryComparisonParameter);
+        }
+
+        function loadEmpChangeComparisonResult(employeeArchiveId) {
+            return serviceHandler.executePostService('/Employee/LoadEmpChangeComparisonResult', employeeArchiveId);
+        }
+
+        // Investment Declaration.
+        function loadInvestmentByEmployeeId(employeeId) {
+            serviceHandler.executePostService('/Employee/GetInvestmentByEmployeeId?employeeId=' + employeeId).then(function (resp) {
+                if (resp.businessException == null) {
+                    if (resp.result) {
+                        angular.extend(investmentDeclarationResult, resp.result);
+                    }
+                }
+                else {
+                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                }
+            });
+        }
+
+        function loadInvestmentCatogories(financialYear, employeeId) {
+            if (financialYear) {
+                serviceHandler.executePostService('/Employee/GetInvestmentCatogories?financialYear=' + financialYear + '&employeeId=' + employeeId).then(function (resp) {
+                    if (resp.businessException == null) {
+                        if (resp.result) {
+                            empInvestmentDeclarationModel.removeAll();// clear all the existing items.
+                            angular.extend(empInvestmentDeclarationModel, resp.result);
+                            //empInvestmentDeclarationModel.addRange(resp.result);
+                        }
+                    }
+                    else {
+                        $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                    }
+                });
+            }
+        }
+
+        function loadEmployee(employeeId) {
+            serviceHandler.executePostService('/Employee/GetEmployee', employeeId).then(function (resp) {
+                if (resp.businessException == null) {
+                    if (resp.result) {
+                        angular.extend(employee, resp.result);
+                    }
+                }
+                else {
+                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                }
+            });
+        }
+
+        function loadEmployeeTaxation(employeeId, financialYear) {
+            serviceHandler.executePostService('/Employee/GetEmployeeIncomeTaxComputation', { employeeId: employeeId, financialYear: financialYear }).then(function (resp) {
+                if (resp.businessException == null) {
+                    if (resp.result) {
+                        angular.extend(employeeTaxation, resp.result);
+                    }
+                }
+                else {
+                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                }
+            });
         }
     }
 })();

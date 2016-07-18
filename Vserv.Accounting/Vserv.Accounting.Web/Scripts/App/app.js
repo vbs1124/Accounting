@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    window.app = angular.module('VservAccountingApp', ['angular-loading-bar', 'ngAnimate', 'ui.bootstrap', 'ui.grid', 'xeditable', 'nvd3', 'data-table'])
+    window.app = angular.module('VservAccountingApp', ['angular-loading-bar', 'ngAnimate', 'ui.bootstrap', 'ui.grid', 'xeditable', 'nvd3', 'ngOst'])
                         .config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) { cfpLoadingBarProvider.includeSpinner = false; }])
                         //.config(['$locationProvider', function ($locationProvider) { $locationProvider.html5Mode(true); }])
                         .run(function (editableOptions, editableThemes) {

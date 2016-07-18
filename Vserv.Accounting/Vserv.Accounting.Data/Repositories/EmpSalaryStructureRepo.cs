@@ -6,6 +6,9 @@ using Vserv.Accounting.Data.Entity;
 using System.Linq;
 using Vserv.Accounting.Common;
 using System;
+using Vserv.Accounting.Data.Entity.Models;
+using System.Data.Entity;
+using System.Data.SqlClient;
 #endregion
 
 namespace Vserv.Accounting.Data.Repositories
@@ -54,6 +57,23 @@ namespace Vserv.Accounting.Data.Repositories
                 context.EmpSalaryStructures.Add(empSalaryStructure);
                 return context.SaveChanges() > 0;
             }
+        }
+
+        public List<EmpSalaryCompareResult> GetEmpSalaryStructureComparisonList(int employeeId, int financialYearFrom, Guid uniqueChangeId)
+        {
+            List<EmpSalaryCompareResult> empSalaryCompareResult = new List<EmpSalaryCompareResult>();
+
+            using (var context = new VservAccountingDBEntities())
+            {
+                empSalaryCompareResult = context.Database.SqlQuery<EmpSalaryCompareResult>(
+                         "[dbo].[GetEmpSalaryStructureComparisonList] @EmployeeId, @UniqueChangeId, @FinancialYearFrom",
+                         new SqlParameter("@EmployeeId", employeeId),
+                         new SqlParameter("@UniqueChangeId", uniqueChangeId),
+                         new SqlParameter("@FinancialYearFrom", financialYearFrom)
+                         ).ToList<EmpSalaryCompareResult>();
+            }
+
+            return empSalaryCompareResult;
         }
     }
 }

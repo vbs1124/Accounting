@@ -73,6 +73,9 @@
       <HintPath>..\packages\Humanizer.Core.2.0.1\lib\portable-win+net45+wp8+wpa81\Humanizer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\iTextSharp.5.5.9\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -282,14 +285,17 @@
     <Compile Include="Models\DesignationModel.cs" />
     <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\EmployeePaySheet.cs" />
+    <Compile Include="Models\EmpSalaryCompareModel.cs" />
     <Compile Include="Models\ForgotPasswordModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InvestmentDeclarationModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MonthlySalaryBreakupModel.cs" />
     <Compile Include="Models\PaySheetParameter.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\RoleModel.cs" />
     <Compile Include="Models\EmpSalaryStructureModel.cs" />
+    <Compile Include="Models\SalaryComparisonParameter.cs" />
     <Compile Include="Models\SecurityQuestionModel.cs" />
     <Compile Include="Models\StateModel.cs" />
     <Compile Include="Models\UserProfileModel.cs" />
@@ -441,6 +447,7 @@
     <Content Include="font-awesome\css\font-awesome.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\help.png" />
     <Content Include="Images\logoVserv.gif" />
     <Content Include="Images\vserv-logo.gif" />
     <Content Include="Scripts\angular-animate.js" />
@@ -465,6 +472,12 @@
     <Content Include="Scripts\App\Designation\designationController.js" />
     <Content Include="Scripts\App\Designation\designationService.js" />
     <Content Include="Scripts\App\Employee\addAppraisalDirective.js" />
+    <Content Include="Scripts\App\Employee\empChangeComparisonDirective.js" />
+    <Content Include="Scripts\App\Employee\empTaxationDirective.js" />
+    <Content Include="Scripts\App\Utility\vbsTooltipDirective.js" />
+    <Content Include="Scripts\App\Utility\vbsPopoverDirective.js" />
+    <Content Include="Scripts\App\Employee\empSalaryComparisonDirective.js" />
+    <Content Include="Scripts\App\Employee\addEmployeeInvestmentsDirective.js" />
     <Content Include="Scripts\App\Employee\empSalaryStructureHistoryDirective.js" />
     <Content Include="Scripts\App\Employee\empHistoryDirective.js" />
     <Content Include="Scripts\App\Employee\employeeController.js" />
@@ -600,6 +613,35 @@
     <Content Include="Content\bootstrap-datepicker.standalone.css.map" />
     <Content Include="Content\bootstrap-datepicker.min.css.map" />
     <Content Include="Content\bootstrap-datepicker.css.map" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="font-awesome\less\animated.less" />
+    <Content Include="font-awesome\less\bordered-pulled.less" />
+    <Content Include="font-awesome\less\core.less" />
+    <Content Include="font-awesome\less\fixed-width.less" />
+    <Content Include="font-awesome\less\font-awesome.less" />
+    <Content Include="font-awesome\less\icons.less" />
+    <Content Include="font-awesome\less\larger.less" />
+    <Content Include="font-awesome\less\list.less" />
+    <Content Include="font-awesome\less\mixins.less" />
+    <Content Include="font-awesome\less\path.less" />
+    <Content Include="font-awesome\less\rotated-flipped.less" />
+    <Content Include="font-awesome\less\screen-reader.less" />
+    <Content Include="font-awesome\less\stacked.less" />
+    <Content Include="font-awesome\less\variables.less" />
+    <Content Include="font-awesome\scss\font-awesome.scss" />
+    <Content Include="font-awesome\scss\_animated.scss" />
+    <Content Include="font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="font-awesome\scss\_core.scss" />
+    <Content Include="font-awesome\scss\_fixed-width.scss" />
+    <Content Include="font-awesome\scss\_icons.scss" />
+    <Content Include="font-awesome\scss\_larger.scss" />
+    <Content Include="font-awesome\scss\_list.scss" />
+    <Content Include="font-awesome\scss\_mixins.scss" />
+    <Content Include="font-awesome\scss\_path.scss" />
+    <Content Include="font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="font-awesome\scss\_screen-reader.scss" />
+    <Content Include="font-awesome\scss\_stacked.scss" />
+    <Content Include="font-awesome\scss\_variables.scss" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -614,6 +656,10 @@
     <Content Include="Scripts\d3\LICENSE" />
     <Content Include="nvd3.license.md" />
     <Content Include="Scripts\App\Employee\templates\empSalaryStructureHistory.tmpl.cshtml" />
+    <Content Include="Scripts\App\Employee\templates\empSalaryComparisonList.tmpl.cshtml" />
+    <Content Include="Scripts\App\Employee\templates\addEmployeeInvestments.tmpl.cshtml" />
+    <Content Include="Scripts\App\Employee\templates\empChangeComparisonList.tmpl.cshtml" />
+    <Content Include="Scripts\App\Employee\templates\empTaxation.tmpl.cshtml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -825,6 +871,7 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\ng-ost-0.1.1.js" />
     <Content Include="Scripts\nv.d3.js" />
     <Content Include="Scripts\nv.d3.min.js" />
     <Content Include="Scripts\respond.js" />

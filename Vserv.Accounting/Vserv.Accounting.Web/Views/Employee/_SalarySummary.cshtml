@@ -1,15 +1,19 @@
-﻿<div class="row" ng-if="@(Model.RelievingDate != null)">
-    <div class="col-md-12">
-        <div class="form-group pull-right">
-            <button type="submit" class="btn btn-success" ng-click="vm.addNewSalaryStructure()">Appraisal Form</button>
+﻿<fieldset>
+    <legend>Salary Summary</legend>
+    <div class="row" ng-if="@(Model.RelievingDate != null)">
+        <div class="col-md-12">
+            <div class="form-group pull-right">
+                <button type="submit" class="btn btn-success" ng-click="addNewSalaryStructure()" autofocus>Appraisal Form</button>
+            </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-5">
-        @Html.Partial("_EmpAppraisalHistory")
+    <div class="row">
+        <div class="col-md-5">
+            @Html.Partial("_EmpAppraisalHistory")
+        </div>
+        <div class="col-md-7">
+            @Html.Partial("_EmpAppraisalGraph")
+        </div>
     </div>
-    <div class="col-md-7">
-        @Html.Partial("_EmpAppraisalGraph")
-    </div>
-</div>
+</fieldset>
+

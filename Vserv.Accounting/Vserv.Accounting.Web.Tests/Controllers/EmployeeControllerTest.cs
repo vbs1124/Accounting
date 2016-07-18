@@ -55,8 +55,8 @@ namespace Vserv.Accounting.Web.Tests.Controllers
             int employeeId = A.Dummy<int>();
 
             // Act
-            ViewResult result = controller.Edit(employeeId) as ViewResult;
-
+            //ViewResult result = controller.Edit(employeeId) as ViewResult;
+            ViewResult result = controller.Edit(""+employeeId) as ViewResult;
             // Assert
             Assert.IsNotNull(result);
         }

@@ -18,6 +18,8 @@ namespace Vserv.Accounting.Web.Code
         /// The email address
         /// </summary>
         public static string EmailAddress = @"^[a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$";
+
+        public static string PermanentAccountNumber = @"^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$";
     }
 
     /// <summary>
@@ -27,9 +29,17 @@ namespace Vserv.Accounting.Web.Code
     public class ValidEmailAddressAttribute : RegularExpressionAttribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValidEmailAddressAttribute"/> class.
+        /// Initializes a new instance of the <see cref="ValidEmailAddressAttribute" /> class.
         /// </summary>
         public ValidEmailAddressAttribute() : base(RegularExpressions.EmailAddress) { }
+    }
+
+    public class ValidPermanentAccountNumberAttribute : RegularExpressionAttribute
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValidEmailAddressAttribute" /> class.
+        /// </summary>
+        public ValidPermanentAccountNumberAttribute() : base(RegularExpressions.PermanentAccountNumber) { }
     }
 
     /// <summary>
@@ -48,17 +58,12 @@ namespace Vserv.Accounting.Web.Code
         /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value != null)
-            {
-                string VBS_Id = value.ToString().ToLower();
-                EmployeeManager employeeManager = new EmployeeManager();
-                Boolean isExists = employeeManager.IsEmployeeIdAlreadyRegistered(VBS_Id, ((EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
-                return isExists ? new ValidationResult("Employee Id already registered.") : ValidationResult.Success;
-            }
-            else
-            {
+            if (value == null)
                 return new ValidationResult(String.Format("{0} is required.", validationContext.DisplayName));
-            }
+            string VBS_Id = value.ToString().ToLower();
+            EmployeeManager employeeManager = new EmployeeManager();
+            Boolean isExists = employeeManager.IsEmployeeIdAlreadyRegistered(VBS_Id, ((EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
+            return isExists ? new ValidationResult("Employee Id already registered.") : ValidationResult.Success;
         }
     }
 
@@ -78,19 +83,18 @@ namespace Vserv.Accounting.Web.Code
         /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value != null)
-            {
-                string emailAddress = value.ToString();
-                EmployeeManager employeeManager = new EmployeeManager();
-                Boolean isexists = employeeManager.IsEmailAlreadyRegistered(emailAddress, ((EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
+            if (value == null) return ValidationResult.Success;
 
-                if (isexists)
-                {
-                    return new ValidationResult("Official Email address already registered.");
-                }
+            string emailAddress = value.ToString();
+            EmployeeManager employeeManager = new EmployeeManager();
+
+            if (!emailAddress.Contains("@intsof.com"))
+            {
+                return new ValidationResult("Invalid Official Email address.");
             }
 
-            return ValidationResult.Success;
+            Boolean isexists = employeeManager.IsEmailAlreadyRegistered(emailAddress, ((EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
+            return isexists ? new ValidationResult("Official Email address already registered.") : ValidationResult.Success;
         }
     }
 
@@ -110,19 +114,12 @@ namespace Vserv.Accounting.Web.Code
         /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value != null)
-            {
-                string mobileNumber = value.ToString();
-                EmployeeManager employeeManager = new EmployeeManager();
-                Boolean isexists = employeeManager.IsMobileNumberAlreadyRegistered(mobileNumber, ((EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
+            if (value == null) return ValidationResult.Success;
+            string mobileNumber = value.ToString();
+            EmployeeManager employeeManager = new EmployeeManager();
+            Boolean isexists = employeeManager.IsMobileNumberAlreadyRegistered(mobileNumber, ((EmployeeModel)(validationContext.ObjectInstance)).EmployeeId);
 
-                if (isexists)
-                {
-                    return new ValidationResult("Mobile Number already registered.");
-                }
-            }
-
-            return ValidationResult.Success;
+            return isexists ? new ValidationResult("Mobile Number already registered.") : ValidationResult.Success;
         }
     }
 
@@ -142,19 +139,12 @@ namespace Vserv.Accounting.Web.Code
         /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value != null)
-            {
-                string designationName = value.ToString();
-                EmployeeManager employeeManager = new EmployeeManager();
-                Boolean isexists = employeeManager.IsDesignationExists(designationName, ((DesignationModel)(validationContext.ObjectInstance)).DesignationId);
+            if (value == null) return ValidationResult.Success;
+            string designationName = value.ToString();
+            EmployeeManager employeeManager = new EmployeeManager();
+            Boolean isexists = employeeManager.IsDesignationExists(designationName, ((DesignationModel)(validationContext.ObjectInstance)).DesignationId);
 
-                if (isexists)
-                {
-                    return new ValidationResult("Designation already exists.");
-                }
-            }
-
-            return ValidationResult.Success;
+            return isexists ? new ValidationResult("Designation already exists.") : ValidationResult.Success;
         }
     }
 
@@ -174,31 +164,25 @@ namespace Vserv.Accounting.Web.Code
         /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value != null)
+            if (value == null) return ValidationResult.Success;
+            HashSet<char> specialCharacters = new HashSet<char>() { '@', '%', '$', '#' };
+            HashSet<char> excludedCharacters = new HashSet<char>() { '(', ')', '[', ']', '.', ';', ':', '\\' };
+            string password = value.ToString();
+            RegisterModel registerModel = (RegisterModel)(validationContext.ObjectInstance);
+
+            if (password.Length > 8 && !password.Any(char.IsWhiteSpace) && !password.Any(excludedCharacters.Contains) && !password.Contains(registerModel.UserName) && password.Any(char.IsLower) && password.Any(char.IsUpper) && password.Any(char.IsDigit) && password.Any(specialCharacters.Contains))
             {
-                HashSet<char> specialCharacters = new HashSet<char>() { '@', '%', '$', '#' };
-                HashSet<char> excludedCharacters = new HashSet<char>() { '(', ')', '[', ']', '.', ';', ':', '\\' };
-                string password = value.ToString();
-                RegisterModel registerModel = (RegisterModel)(validationContext.ObjectInstance);
-
-                if (password.Length > 8 && !password.Any(char.IsWhiteSpace) && !password.Any(excludedCharacters.Contains) && !password.Contains(registerModel.UserName) && password.Any(char.IsLower) && password.Any(char.IsUpper) && password.Any(char.IsDigit) && password.Any(specialCharacters.Contains))
-                {
-                    return ValidationResult.Success;
-                }
-                else
-                {
-                    StringBuilder errorMessage = new StringBuilder();
-                    errorMessage.Append("Use at least 8 characters.");
-                    errorMessage.Append("Don't put a password similar to your User name.");
-                    errorMessage.Append("It should mandatorily contain digits, special characters(@, #, $ or %) and letters(lower and caps both).");
-                    errorMessage.Append("No spaces in-between password.");
-                    errorMessage.Append(@"The password cannot contain following characters ( ) [ ] . ; : \ ");
-                    errorMessage.Append("");
-                    return new ValidationResult(errorMessage.ToString());
-                }
+                return ValidationResult.Success;
             }
-
-            return ValidationResult.Success;
+                
+            StringBuilder errorMessage = new StringBuilder();
+            errorMessage.Append("Use at least 8 characters.");
+            errorMessage.Append("Don't put a password similar to your User name.");
+            errorMessage.Append("It should mandatorily contain digits, special characters(@, #, $ or %) and letters(lower and caps both).");
+            errorMessage.Append("No spaces in-between password.");
+            errorMessage.Append(@"The password cannot contain following characters ( ) [ ] . ; : \ ");
+            errorMessage.Append("");
+            return new ValidationResult(errorMessage.ToString());
         }
     }
 
@@ -218,31 +202,26 @@ namespace Vserv.Accounting.Web.Code
         /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value != null)
-            {
-                HashSet<char> specialCharacters = new HashSet<char>() { '@', '%', '$', '#' };
-                HashSet<char> excludedCharacters = new HashSet<char>() { '(', ')', '[', ']', '.', ';', ':', '\\' };
-                string password = value.ToString();
-                UserProfileModel registerModel = (UserProfileModel)(validationContext.ObjectInstance);
-                registerModel.UserName = String.IsNullOrWhiteSpace(registerModel.UserName) ? " " : registerModel.UserName;
-                if (password.Length > 8 && !password.Any(char.IsWhiteSpace) && !password.Any(excludedCharacters.Contains) && !password.Contains(Convert.ToString(registerModel.UserName)) && password.Any(char.IsLower) && password.Any(char.IsUpper) && password.Any(char.IsDigit) && password.Any(specialCharacters.Contains))
-                {
-                    return ValidationResult.Success;
-                }
-                else
-                {
-                    StringBuilder errorMessage = new StringBuilder();
-                    errorMessage.Append("Use at least 8 characters.");
-                    errorMessage.Append("Don't put a password similar to your User name.");
-                    errorMessage.Append("It should mandatorily contain digits, special characters(@, #, $ or %) and letters(lower and caps both).");
-                    errorMessage.Append("No spaces in-between password.");
-                    errorMessage.Append(@"The password cannot contain following characters ( ) [ ] . ; : \ ");
-                    errorMessage.Append("");
-                    return new ValidationResult(errorMessage.ToString());
-                }
-            }
+            if (value == null) return ValidationResult.Success;
 
-            return ValidationResult.Success;
+            HashSet<char> specialCharacters = new HashSet<char>() { '@', '%', '$', '#' };
+            HashSet<char> excludedCharacters = new HashSet<char>() { '(', ')', '[', ']', '.', ';', ':', '\\' };
+            string password = value.ToString();
+            UserProfileModel registerModel = (UserProfileModel)(validationContext.ObjectInstance);
+            registerModel.UserName = String.IsNullOrWhiteSpace(registerModel.UserName) ? " " : registerModel.UserName;
+
+            if (password.Length > 8 && !password.Any(char.IsWhiteSpace) && !password.Any(excludedCharacters.Contains) && !password.Contains(Convert.ToString(registerModel.UserName)) && password.Any(char.IsLower) && password.Any(char.IsUpper) && password.Any(char.IsDigit) && password.Any(specialCharacters.Contains))
+            {
+                return ValidationResult.Success;
+            }
+            var errorMessage = new StringBuilder();
+            errorMessage.Append("Use at least 8 characters.");
+            errorMessage.Append("Don't put a password similar to your User name.");
+            errorMessage.Append("It should mandatorily contain digits, special characters(@, #, $ or %) and letters(lower and caps both).");
+            errorMessage.Append("No spaces in-between password.");
+            errorMessage.Append(@"The password cannot contain following characters ( ) [ ] . ; : \ ");
+            errorMessage.Append("");
+            return new ValidationResult(errorMessage.ToString());
         }
     }
 
@@ -262,19 +241,11 @@ namespace Vserv.Accounting.Web.Code
             {
                 return new ValidationResult("User Name is Required.");
             }
-            else
-            {
-                string userName = value.ToString();
-                AccountManager _manager = new AccountManager();
-                UserProfile userProfile = _manager.GetUserProfile(userName);
-
-                if (userProfile == null)
-                {
-                    return new ValidationResult("No account found with that User Name.");
-                }
-            }
-
-            return ValidationResult.Success;
+            
+            string userName = value.ToString();
+            AccountManager manager = new AccountManager();
+            UserProfile userProfile = manager.GetUserProfile(userName);
+            return userProfile == null ? new ValidationResult("No account found with that User Name.") : ValidationResult.Success;
         }
     }
 }

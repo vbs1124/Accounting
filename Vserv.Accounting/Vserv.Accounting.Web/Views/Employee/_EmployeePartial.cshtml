@@ -1,5 +1,5 @@
 ﻿@model Vserv.Accounting.Web.Models.EmployeeModel
-<fieldset id="fieldset-permanent-address" @(Model.RelievingDate != null ? "disabled" : "")>
+<fieldset @(Model.RelievingDate != null ? "disabled" : "")>
     <legend>Basic Information</legend>
     <div class="row">
         <div class="col-md-4">
@@ -192,13 +192,13 @@
         </div>
     </div>
 </fieldset>
-<fieldset id="fieldset-permanent-address" @(Model.RelievingDate != null ? "disabled" : "")>
+<fieldset @(Model.RelievingDate != null ? "disabled" : "")>
     <legend>Permanent Address</legend>
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.PermanentAddress1, new { @class = "control-label required-field" })
-                @Html.TextBoxFor(m => m.PermanentAddress1, new { @class = "form-control permanent-geo-field", data_geo = "address_components", placeholder = "", @rows = 4, @maxlength = "200" })
+                @Html.TextAreaFor(m => m.PermanentAddress1, new { @class = "form-control permanent-geo-field", data_geo = "address_components", placeholder = "", @rows = 4, @maxlength = "200" })
                 @Html.ValidationMessageFor(m => m.PermanentAddress1)
             </div>
         </div>
@@ -228,7 +228,7 @@
         </div>
     </div>
 </fieldset>
-<fieldset id="fieldset-mailing-address" @(Model.RelievingDate != null ? "disabled" : "")>
+<fieldset @(Model.RelievingDate != null ? "disabled" : "")>
     <legend>
         Mailing Address
     </legend>
@@ -243,7 +243,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 @Html.LabelFor(m => m.MailingAddress1, new { @class = "control-label required-field" })
-                @Html.TextBoxFor(m => m.MailingAddress1, new { @class = "form-control mailing-geo-field", data_geo = "address_components", placeholder = "", @resize = "none", @rows = 3, @maxlength = "200" })
+                @Html.TextAreaFor(m => m.MailingAddress1, new { @class = "form-control mailing-geo-field", data_geo = "address_components", placeholder = "", @resize = "none", @rows = 3, @maxlength = "200" })
                 @Html.ValidationMessageFor(m => m.MailingAddress1)
             </div>
             <div class="form-group">
@@ -288,7 +288,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="form-group pull-right">
-            <button type="button" class="btn btn-info" ng-show="vm.employeeId > 0" ng-click="vm.employeeChangeHistoryModal()">View Change History</button>
+            <button type="button" class="btn btn-info" ng-show="vm.employeeId > 0" ng-click="employeeChangeHistoryModal()">View Change History</button>
             <div class="btn-group">
                 <button type="submit" class="btn btn-success" ng-if="@(Model.RelievingDate != null)">Save</button>
                 <button type="reset" class="btn btn-default" ng-if="@(Model.RelievingDate != null)">Reset</button>

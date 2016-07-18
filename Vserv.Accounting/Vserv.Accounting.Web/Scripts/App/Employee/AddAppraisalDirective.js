@@ -19,8 +19,11 @@
         vm.saving = false;
         vm.errorMessage = null;
         vm.isEditableEffectiveFrom = true;
+        vm.init = init;
         vm.empSalaryStructureModel = {
-            effectiveFrom: setEffectiveFrom()
+            effectiveFrom: setEffectiveFrom(),
+            foodCoupons: 0,
+            performanceIncentivePayable: 1
         };
         vm.paySheetParameter = {
             EmployeeId: $("#EmployeeId").val(),
@@ -36,7 +39,7 @@
                 return new Date($("#JoiningDate").val()) // Set the default "Effective From" to joining date of the employee.
             }
         }
-
+       
         function addEmployeeSalaryDetail() {
             var monthlyCTC = vm.empSalaryStructureModel.ctc / 12;
 
@@ -60,27 +63,38 @@
                 return false;
             }
 
-            vm.saving = true;
-            employeeService.addEmployeeSalaryDetail(vm.empSalaryStructureModel, vm.employeeId).then(function (resp) {
-                if (resp.businessException == null) {
-                    $.showToastrMessage("success", 'Salary breakup generated successfully.', "Success!");
-                    employeeService.loadEmployeeAppraisalHistory(vm.employeeId);
+            bootbox.confirm("Are you sure that you want to add a new Appraisal?", function (result) {
+                if (result) {
+                    vm.saving = true;
+                    employeeService.addEmployeeSalaryDetail(vm.empSalaryStructureModel, vm.employeeId).then(function (resp) {
+                        if (resp.businessException == null) {
 
-                    // Activate "Salary Breakup" tab.
-                    if (moment(vm.empSalaryStructureModel.effectiveFrom).year() == moment().year()) {
-                        employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(moment().year()), parseInt(moment().year()) + 1);
-                        activateTab("tabs-manage-employee", "emp-salary-breakup");
-                    }
+                            if (resp.result.IsErrorOccurred) {
+                                $.showToastrMessage("error", resp.result.Message, "Error!");
+                                vm.saving = false;
+                            }
+                            else {
+                                $.showToastrMessage("success", resp.result.Message, "Success!");
+                                employeeService.loadEmployeeAppraisalHistory(vm.employeeId);
 
-                    //Close the modal
-                    $scope.$close();
-                }
-                else {
-                    vm.errorMessage = 'There was a problem adding the appraisal: ' + data;
+                                // Activate "Salary Breakup" tab.
+                                if (moment(vm.empSalaryStructureModel.effectiveFrom).year() == moment().year()) {
+                                    employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(moment().year()), parseInt(moment().year()) + 1);
+                                    activateTab("tabs-manage-employee", "emp-salary-breakup");
+                                }
+
+                                //Close the modal
+                                $scope.$close();
+                            }
+                        }
+                        else {
+                            vm.errorMessage = 'There was a problem adding the appraisal: ' + data;
+                        }
+                        vm.saving = false;
+                    });
                 }
                 vm.saving = false;
             });
-            return false;
         }
 
         //-------------------------
@@ -103,6 +117,18 @@
             opened: false
         };
 
+        $scope.foodCoupons = [{ value: 0, text: '0' }, { value: 1100, text: '1100' }, { value: 2200, text: '2200' }];
+        
+
+        function init() {
+            if (vm.isEditableEffectiveFrom) {
+                $scope.performanceIncentives = [{ value: 1, text: '5 % of CTC paid Annually' }, { value: 2, text: '25% of increment paid half yearly' }];
+            } else {
+                $scope.performanceIncentives = [{ value: 1, text: '5 % of CTC paid Annually' }];
+            }
+        }
+
+        vm.init();
         //---------------------------
     }
 

@@ -1,6 +1,6 @@
 ﻿body {
     background-color: #F2F2F2;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 #wrapper {
@@ -527,3 +527,38 @@ textarea {
     /* margin: 20px 0; */
     border-radius: 4px;
 }
+
+/* Styles Employee Investment Directive Template */
+
+.clsEmpInvestment #accordion a {
+        text-decoration: none;
+        font-size: 12px;
+        color: black;
+    }
+.clsEmpInvestment #accordion a:hover {        
+        color: black;
+    }
+
+ #loading-bar .bar {
+  background: #8b0000;
+}
+
+
+#loading-bar .peg {
+  -moz-box-shadow: #8b0000 1px 0 6px 1px;
+  -ms-box-shadow: #8b0000 1px 0 6px 1px;
+  -webkit-box-shadow: #8b0000 1px 0 6px 1px;
+  box-shadow: #8b0000 1px 0 6px 1px;
+}
+
+.table {
+     margin-bottom: 0px; 
+}
+
+/*.clsEmpInvestment #accordion .popover-content
+{
+    font-size:11px;
+    color:grey;
+}*/   
+
+/* Styles End Here */

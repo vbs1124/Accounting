@@ -34,4 +34,23 @@
             return sum == 0 ? null : sum;
         };
     }
+
+    window.app.filter("sumByColumn", sumByColumn);
+    function sumByColumn() {
+        return function (data, column) {
+            if (typeof (data) === "undefined" || typeof (column) === "undefined") {
+                return 0;
+            }
+
+            var sum = 0;
+
+            for (var i = data.length - 1; i >= 0; i--) {
+                if (data[i][column] != null) {
+                    sum += $.vbsParseFloat(data[i][column]);
+                }
+            }
+
+            return sum == 0 ? 0 : sum;
+        };
+    }
 })();

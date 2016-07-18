@@ -1,0 +1,166 @@
+﻿@using Vserv.Accounting.Web.Helpers
+<div class="row form-horizontal">
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="col-md-8">
+                &nbsp;
+            </div>
+            <label for="" class="col-md-2 control-label">Financial Year</label>
+            <div class="col-md-2">
+                <select class="form-control" ng-model="vm.selectedInvestmentFinancialYear" ng-change="onChangeInvestmentFinancialYear()">
+                    <option ng-repeat="x in vm.financialYears" value="{{x.currentYear}}">{{x.financialYear}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<fieldset>
+    <legend>Income Tax Computation</legend>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Salary Components
+                    </div>
+                    <div id="collapse-salary-components" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr class="active">
+                                            <th>Component</th>
+                                            <th class="text-right">Yearly</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="active">
+                                            <th>Gross Salary Income:</th>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel-group">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Exemption U/S 10
+                    </div>
+                    <div id="collapse-emp-exemption" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr class="active">
+                                            <th>Component</th>
+                                            <th class="text-right">Yearly</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="yte in vm.employeeTaxation.yearlyTaxExemptions">
+                                            <td>{{yte.description}}</td>
+                                            <td class="text-right">{{yte.amount | currency:'&#8377;':0}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="active">
+                                            <th>Total:</th>
+                                            <th class="text-right">{{vm.employeeTaxation.yearlyTaxExemptions | sumByColumn:'amount' | currency:'&#8377;':0}}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Contribution under Chapter VI A
+                    </div>
+                    <div id="collapse-emp-deduction" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr class="active">
+                                            <th>Component</th>
+                                            <th class="text-right">Yearly</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="yc in vm.employeeTaxation.yearlyContributionUnderChapterVIA">
+                                            <td>{{yc.description}}</td>
+                                            <td class="text-right">{{yc.amount | currency:'&#8377;':0}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="active">
+                                            <th>Total:</th>
+                                            <th class="text-right">{{vm.employeeTaxation.yearlyContributionUnderChapterVIA | sumByColumn:'amount' | currency:'&#8377;':0}}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel-group">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        Monthly Tax Deduction
+                    </div>
+                    <div id="collapse-monthly-tax-payable" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr class="active">
+                                            <th>Month</th>
+                                            <th class="text-right">Tax</th>
+                                            <th class="text-right">SC</th>
+                                            <th class="text-right">EC</th>
+                                            <th class="text-right">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="mtd in vm.employeeTaxation.monthlyTaxDeductions">
+                                            <td>{{mtd.monthName}}</td>
+                                            <td class="text-right">{{mtd.tax | currency:'&#8377;':0}}</td>
+                                            <td class="text-right">{{mtd.surcharge | currency:'&#8377;':0}}</td>
+                                            <td class="text-right">{{mtd.eduacationCess | currency:'&#8377;':0}}</td>
+                                            <td class="text-right">{{mtd.taxDeducted | currency:'&#8377;':0}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="active">
+                                            <th>Total:</th>
+                                            <th class="text-right">{{vm.employeeTaxation.monthlyTaxDeductions | sumByColumn:'tax' | currency:'&#8377;':0}}</th>
+                                            <th class="text-right">{{vm.employeeTaxation.monthlyTaxDeductions | sumByColumn:'surcharge' | currency:'&#8377;':0}}</th>
+                                            <th class="text-right">{{vm.employeeTaxation.monthlyTaxDeductions | sumByColumn:'eduacationCess' | currency:'&#8377;':0}}</th>
+                                            <th class="text-right">{{vm.employeeTaxation.monthlyTaxDeductions | sumByColumn:'taxDeducted' | currency:'&#8377;':0}}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>

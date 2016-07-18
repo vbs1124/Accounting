@@ -30,6 +30,7 @@ namespace Vserv.Accounting.Data.Entity
         public Nullable<decimal> MonthlyProjectIncentive { get; set; }
         public Nullable<decimal> MonthlyCarLease { get; set; }
         public Nullable<decimal> MonthlyFoodCoupons { get; set; }
+        public Nullable<int> PerformanceIncentivePayable { get; set; }
         public System.DateTime EffectiveFrom { get; set; }
         public System.DateTime EffectiveTo { get; set; }
         public bool IsActive { get; set; }

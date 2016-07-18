@@ -42,6 +42,7 @@
             if (isNaN(specialAlloance) || specialAlloance == 0) {
                 return null;
             }
+
             return specialAlloance.toFixed(0);
         };
     }

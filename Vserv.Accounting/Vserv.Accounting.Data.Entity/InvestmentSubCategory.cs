@@ -20,6 +20,7 @@ namespace Vserv.Accounting.Data.Entity
         public string Code { get; set; }
         public string Description { get; set; }
         public string MaximumLimit { get; set; }
+        public Nullable<decimal> DefaultAmount { get; set; }
         public string Remark { get; set; }
         public Nullable<int> DisplayOrder { get; set; }
         public bool IsActive { get; set; }

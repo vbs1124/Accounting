@@ -127,9 +127,17 @@ namespace Vserv.Accounting.Web.Helpers
             {
                 input = GetDateTimeHtmlTag(expression, name, metadata);
             }
-            else if (metadata.DataTypeName == "Currency")
+            else if (metadata.DataTypeName == "Currency" && metadata.DisplayName != "Food Coupons (Monthly)" && metadata.DisplayName!="Performance Incentive Payable")
             {
                 input = GetCurrencyHtmlTag(expression, name, metadata);
+            }
+            else if (metadata.DisplayName == "Performance Incentive Payable")
+            {
+                input = GetPerformanceIncentiveDropdownHtmlTag(expression, name, metadata);
+            }
+            else if (metadata.DisplayName == "Food Coupons (Monthly)")
+            {
+                input = GetFoodCouponDropdownHtmlTag(expression, name, metadata);
             }
             else
             {
@@ -201,6 +209,39 @@ namespace Vserv.Accounting.Web.Helpers
 
             span.Append(iconTag);
             inputGroup.Append(span).Append(inputControl);
+            return inputGroup;
+        }
+
+        private HtmlTag GetFoodCouponDropdownHtmlTag(string expression, string name, ModelMetadata metadata)
+        {
+            var inputGroup = new HtmlTag("div").AddClass("input-group");
+
+            var span = new HtmlTag("span").AddClass("input-group-addon");
+            var iconTag = new HtmlTag("i").AddClasses("fa", "fa-shopping-bag");
+
+            var inputControl = new HtmlTag("select")            
+            .Attr("ng-model", expression)
+            .Attr("ng-options", "s.value as s.text for s in foodCoupons")
+            .Attr("name", name)
+            .Attr("id", name)            
+            .AddClass("form-control");            
+            //ApplyValidationToInput(inputControl, metadata);
+            span.Append(iconTag);
+            inputGroup.Append(span).Append(inputControl);
+            return inputGroup;
+        }
+
+        private HtmlTag GetPerformanceIncentiveDropdownHtmlTag(string expression, string name, ModelMetadata metadata)
+        {
+            var inputGroup = new HtmlTag("div").AddClass("form-group");
+            var inputControl = new HtmlTag("select")
+            .Attr("ng-model", expression)
+            .Attr("ng-options", "s.value as s.text for s in performanceIncentives")
+            .Attr("name", name)
+            .Attr("id", name)
+            .AddClass("form-control");            
+            ApplyValidationToInput(inputControl, metadata);
+            inputGroup.Append(inputControl);
             return inputGroup;
         }
 

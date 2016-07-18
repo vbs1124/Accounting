@@ -34,8 +34,10 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Config> Configs { get; set; }
         public virtual DbSet<Designation> Designations { get; set; }
+        public virtual DbSet<EmpInvestment> EmpInvestments { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeArchive> EmployeeArchives { get; set; }
+        public virtual DbSet<EmployeePaySlip> EmployeePaySlips { get; set; }
         public virtual DbSet<EmpSalaryDetail> EmpSalaryDetails { get; set; }
         public virtual DbSet<EmpSalaryDetailArchive> EmpSalaryDetailArchives { get; set; }
         public virtual DbSet<EmpSalaryStructure> EmpSalaryStructures { get; set; }
@@ -43,11 +45,13 @@ namespace Vserv.Accounting.Data.Entity
         public virtual DbSet<EPFOffice> EPFOffices { get; set; }
         public virtual DbSet<Feature> Features { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
+        public virtual DbSet<IncomeTaxRate> IncomeTaxRates { get; set; }
         public virtual DbSet<InvestmentCategory> InvestmentCategories { get; set; }
         public virtual DbSet<InvestmentSubCategory> InvestmentSubCategories { get; set; }
         public virtual DbSet<InvtDeclarationComponent> InvtDeclarationComponents { get; set; }
         public virtual DbSet<LookupFrequency> LookupFrequencies { get; set; }
         public virtual DbSet<LookupMonth> LookupMonths { get; set; }
+        public virtual DbSet<MedicalInsuranceRate> MedicalInsuranceRates { get; set; }
         public virtual DbSet<Membership> Memberships { get; set; }
         public virtual DbSet<OAuthMembership> OAuthMemberships { get; set; }
         public virtual DbSet<OfficeBranch> OfficeBranches { get; set; }
@@ -353,6 +357,126 @@ namespace Vserv.Accounting.Data.Entity
                 new ObjectParameter("EmpSalaryStructureId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SalaryStructureChangeHistory_Result>("SalaryStructureChangeHistory", empSalaryStructureIdParameter);
+        }
+    
+        public virtual ObjectResult<EmpSalaryDetailArchiveByUniqueChangeId_Result> EmpSalaryDetailArchiveByUniqueChangeId(Nullable<System.Guid> uniqueChangeId)
+        {
+            var uniqueChangeIdParameter = uniqueChangeId.HasValue ?
+                new ObjectParameter("UniqueChangeId", uniqueChangeId) :
+                new ObjectParameter("UniqueChangeId", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EmpSalaryDetailArchiveByUniqueChangeId_Result>("EmpSalaryDetailArchiveByUniqueChangeId", uniqueChangeIdParameter);
+        }
+    
+        public virtual int GenerateEmpPaySlip(Nullable<int> employeeId, Nullable<int> monthId, Nullable<int> year)
+        {
+            var employeeIdParameter = employeeId.HasValue ?
+                new ObjectParameter("EmployeeId", employeeId) :
+                new ObjectParameter("EmployeeId", typeof(int));
+    
+            var monthIdParameter = monthId.HasValue ?
+                new ObjectParameter("MonthId", monthId) :
+                new ObjectParameter("MonthId", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GenerateEmpPaySlip", employeeIdParameter, monthIdParameter, yearParameter);
+        }
+    
+        public virtual ObjectResult<GetEmpSalaryStructureComparisonList_Result> GetEmpSalaryStructureComparisonList(Nullable<int> employeeId, Nullable<System.Guid> uniqueChangeId, Nullable<int> financialYearFrom)
+        {
+            var employeeIdParameter = employeeId.HasValue ?
+                new ObjectParameter("EmployeeId", employeeId) :
+                new ObjectParameter("EmployeeId", typeof(int));
+    
+            var uniqueChangeIdParameter = uniqueChangeId.HasValue ?
+                new ObjectParameter("UniqueChangeId", uniqueChangeId) :
+                new ObjectParameter("UniqueChangeId", typeof(System.Guid));
+    
+            var financialYearFromParameter = financialYearFrom.HasValue ?
+                new ObjectParameter("FinancialYearFrom", financialYearFrom) :
+                new ObjectParameter("FinancialYearFrom", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmpSalaryStructureComparisonList_Result>("GetEmpSalaryStructureComparisonList", employeeIdParameter, uniqueChangeIdParameter, financialYearFromParameter);
+        }
+    
+        public virtual int UpdateMediclaimAmount(Nullable<decimal> zeroToFive, Nullable<decimal> fiveToTen, Nullable<decimal> tenPlus, Nullable<System.DateTime> effectiveFrom, Nullable<System.DateTime> effectiveTo)
+        {
+            var zeroToFiveParameter = zeroToFive.HasValue ?
+                new ObjectParameter("ZeroToFive", zeroToFive) :
+                new ObjectParameter("ZeroToFive", typeof(decimal));
+    
+            var fiveToTenParameter = fiveToTen.HasValue ?
+                new ObjectParameter("FiveToTen", fiveToTen) :
+                new ObjectParameter("FiveToTen", typeof(decimal));
+    
+            var tenPlusParameter = tenPlus.HasValue ?
+                new ObjectParameter("TenPlus", tenPlus) :
+                new ObjectParameter("TenPlus", typeof(decimal));
+    
+            var effectiveFromParameter = effectiveFrom.HasValue ?
+                new ObjectParameter("EffectiveFrom", effectiveFrom) :
+                new ObjectParameter("EffectiveFrom", typeof(System.DateTime));
+    
+            var effectiveToParameter = effectiveTo.HasValue ?
+                new ObjectParameter("EffectiveTo", effectiveTo) :
+                new ObjectParameter("EffectiveTo", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateMediclaimAmount", zeroToFiveParameter, fiveToTenParameter, tenPlusParameter, effectiveFromParameter, effectiveToParameter);
+        }
+    
+        public virtual ObjectResult<GetEmpAnnualContributionUnderChapterVIA_Result> GetEmpAnnualContributionUnderChapterVIA(Nullable<int> employeeId, Nullable<int> financialYear)
+        {
+            var employeeIdParameter = employeeId.HasValue ?
+                new ObjectParameter("EmployeeId", employeeId) :
+                new ObjectParameter("EmployeeId", typeof(int));
+    
+            var financialYearParameter = financialYear.HasValue ?
+                new ObjectParameter("FinancialYear", financialYear) :
+                new ObjectParameter("FinancialYear", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmpAnnualContributionUnderChapterVIA_Result>("GetEmpAnnualContributionUnderChapterVIA", employeeIdParameter, financialYearParameter);
+        }
+    
+        public virtual ObjectResult<GetEmployeeMonthlyTaxDeductions_Result> GetEmployeeMonthlyTaxDeductions(Nullable<int> employeeId, Nullable<int> financialYear)
+        {
+            var employeeIdParameter = employeeId.HasValue ?
+                new ObjectParameter("EmployeeId", employeeId) :
+                new ObjectParameter("EmployeeId", typeof(int));
+    
+            var financialYearParameter = financialYear.HasValue ?
+                new ObjectParameter("FinancialYear", financialYear) :
+                new ObjectParameter("FinancialYear", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmployeeMonthlyTaxDeductions_Result>("GetEmployeeMonthlyTaxDeductions", employeeIdParameter, financialYearParameter);
+        }
+    
+        public virtual ObjectResult<GetEmployeeYearlyTaxExemptions_Result> GetEmployeeYearlyTaxExemptions(Nullable<int> employeeId, Nullable<int> financialYear)
+        {
+            var employeeIdParameter = employeeId.HasValue ?
+                new ObjectParameter("EmployeeId", employeeId) :
+                new ObjectParameter("EmployeeId", typeof(int));
+    
+            var financialYearParameter = financialYear.HasValue ?
+                new ObjectParameter("FinancialYear", financialYear) :
+                new ObjectParameter("FinancialYear", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmployeeYearlyTaxExemptions_Result>("GetEmployeeYearlyTaxExemptions", employeeIdParameter, financialYearParameter);
+        }
+    
+        public virtual ObjectResult<GetMonthlyTaxDeduction_Result> GetMonthlyTaxDeduction(Nullable<int> employeeId, Nullable<int> financialYear)
+        {
+            var employeeIdParameter = employeeId.HasValue ?
+                new ObjectParameter("EmployeeId", employeeId) :
+                new ObjectParameter("EmployeeId", typeof(int));
+    
+            var financialYearParameter = financialYear.HasValue ?
+                new ObjectParameter("FinancialYear", financialYear) :
+                new ObjectParameter("FinancialYear", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMonthlyTaxDeduction_Result>("GetMonthlyTaxDeduction", employeeIdParameter, financialYearParameter);
         }
     }
 }

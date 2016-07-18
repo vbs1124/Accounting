@@ -43,6 +43,12 @@ namespace Vserv.Accounting.Common
         public const string MESSAGE = "MESSAGE";
         #endregion
 
-       
+        #region Messages
+
+        public const string INVALID_SPECIAL_ALLOWANCE = "Calculated Special Allowance is coming negative, so please very the field values.";
+
+        public const string SALARY_BREAKUP_SUCCESS_MESSAGE = "Salary breakup generated successfully.";
+
+        #endregion
     }
 }

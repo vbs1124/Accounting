@@ -6,6 +6,7 @@
       ng-submit="vm.form.$valid && vm.addEmployeeSalaryDetail()">
     <fieldset ng-disabled="vm.saving">
         <div class="modal-header">
+            <button type="button" class="close" ng-click="$dismiss()">×</button>
             <h4 class="modal-title">Add New Appraisal</h4>
         </div>
         <div class="modal-body">
@@ -20,7 +21,7 @@
         </div>
         <div class="modal-footer">
             <div class="btn-group pull-right">
-                <button class="btn btn-success">Save</button>
+                <button class="btn btn-success" autofocus>Save</button>
                 <button type="button" class="btn btn-default" ng-click="$dismiss()">Cancel</button>
             </div>
         </div>

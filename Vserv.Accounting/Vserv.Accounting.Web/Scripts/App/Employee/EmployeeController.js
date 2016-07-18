@@ -7,23 +7,30 @@
         var vm = this;
 
         vm.employeeId = $("#EmployeeId").val();
-        vm.addNewSalaryStructure = addNewSalaryStructure;
-        vm.employeeChangeHistoryModal = employeeChangeHistoryModal;
-        vm.empSalaryStructureChangeHistoryModal = empSalaryStructureChangeHistoryModal;
+        vm.loadEmployee = employeeService.getEmployee(vm.employeeId);
+        vm.employee = employeeService.employee;
+
         vm.empSalaryStructureModel = employeeService.empSalaryStructureModel;
         vm.relievingDate = new Date($("#RelievingDate").val());
         vm.joiningDate = new Date($("#JoiningDate").val());
         vm.financialYears = employeeService.getEmpFinancialYears(vm.joiningDate, vm.relievingDate);
         vm.selectedFinancialYear = vm.relievingDate == null || vm.relievingDate == 'Invalid Date' ? moment().year().toString() : moment(vm.relievingDate).year().toString();
+        vm.selectedInvestmentFinancialYear = vm.relievingDate == null || vm.relievingDate == 'Invalid Date' ? moment().year().toString() : moment(vm.relievingDate).year().toString();
         vm.currentYear = moment().year().toString();
 
         vm.loadEmployeeAppraisalHistory = employeeService.loadEmployeeAppraisalHistory(vm.employeeId);
         vm.employeeAppraisalHistory = employeeService.employeeAppraisalHistory;
         vm.empAppraisalGraphValues = employeeService.empAppraisalGraphValues;
+
         vm.loadEmployeePaySheet = employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(vm.selectedFinancialYear), parseInt(vm.selectedFinancialYear) + 1);
         vm.employeePaySheet = employeeService.employeePaySheet;
         vm.empsalarystructureid = employeeService.empsalarystructureid;
+
         vm.viewSelectedSalaryBreakup = viewSelectedSalaryBreakup;
+
+        // Investment Declaration.
+        vm.loadInvestmentByEmployeeId = employeeService.loadInvestmentByEmployeeId(vm.employeeId);
+        vm.investmentDeclarationResult = employeeService.investmentDeclarationResult;
 
         vm.appraisalHistoryGraphOptions = {
             chart: {
@@ -62,22 +69,25 @@
             return vm.employeePaySheet.length > 0 && $.vbsParseFloat(vm.selectedFinancialYear) >= $.vbsParseFloat(vm.currentYear) && (vm.relievingDate == 'Invalid Date' || vm.relievingDate == null);
         }
 
-        function addNewSalaryStructure() {
+        $scope.addNewSalaryStructure = function () {
             $modal.open({
-                template: '<add-appraisal />'
+                template: '<add-appraisal />',
+                animation: true
             });
         }
 
-        function employeeChangeHistoryModal() {
+        $scope.employeeChangeHistoryModal = function () {
             $modal.open({
-                template: '<emp-history />'
+                template: '<emp-history />',
+                animation: true,
             });
         }
 
-        function empSalaryStructureChangeHistoryModal(empsalarystructureid) {
+        $scope.empSalaryStructureChangeHistoryModal = function (empsalarystructureid) {
             $modal.open({
                 template: '<emp-salary-structure-history empsalarystructureid="empsalarystructureid" />',
-                scope: angular.extend($scope.$new(true), { empsalarystructureid: empsalarystructureid })
+                scope: angular.extend($scope.$new(true), { empsalarystructureid: empsalarystructureid }),
+                animation: true
             });
         }
 
@@ -88,10 +98,16 @@
         $scope.onChangeFinancialYear = function () {
             employeeService.loadEmployeePaySheet(vm.employeeId, parseInt(vm.selectedFinancialYear), parseInt(vm.selectedFinancialYear) + 1);
         }
+        
 
         //Method Initialize
         $scope.initialize = function (employeeId) {
         };
+        $scope.vbsParseFloat = function (value) {
+            return $.vbsParseFloat(value);
+        }
+
+        
 
         $scope.getCurrentComponentTotal = function (item) {
 
@@ -147,7 +163,7 @@
             "SCSPCL",
             "SCPERF",
             "SCMEDC",
-            "SCEPFO",
+            //"SCEPFO",
             "SCMEDM",
             "SCGRAT"];
 
@@ -160,6 +176,7 @@
                 if (result) {
                     employeeService.updateYearlyPaySheet(vm.employeePaySheet).then(function (resp) {
                         if (resp.businessException == null) {
+                            employeeService.loadEmployeeTaxation(vm.employeeId, vm.selectedFinancialYear);
                             $.showToastrMessage("success", "Salary Breakup for current financial year updated successfully.");
                         }
                         else {
@@ -179,6 +196,7 @@
         $scope.vbsParseFloat = function (value) {
             return $.vbsParseFloat(value);
         }
+
         //---------------- Salary Breakup Ends here -----------
     }
 })();

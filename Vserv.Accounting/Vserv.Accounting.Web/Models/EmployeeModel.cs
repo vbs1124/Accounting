@@ -26,9 +26,9 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The first name.
         /// </value>
-        [Required(ErrorMessage = "First Name is required.")]
-        [Display(Name = "First Name")]
-        [StringLength(250, MinimumLength = 3, ErrorMessage = "First Name is too short.")]
+        [Required(ErrorMessage = @"First Name is required.")]
+        [Display(Name = @"First Name")]
+        [StringLength(250, MinimumLength = 3, ErrorMessage = @"First Name is too short.")]
         public string FirstName { get; set; }
 
         /// <summary>
@@ -37,8 +37,8 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The name of the middle.
         /// </value>
-        [Display(Name = "Middle Name")]
-        [MaxLength(250, ErrorMessage = "Middle Name is too short.")]
+        [Display(Name = @"Middle Name")]
+        [MaxLength(250, ErrorMessage = @"Middle Name is too short.")]
         public string MiddleName { get; set; }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The last name.
         /// </value>
-        [Display(Name = "Last Name")]
-        [StringLength(250, ErrorMessage = "Last Name is too short.")]
+        [Display(Name = @"Last Name")]
+        [StringLength(250, ErrorMessage = @"Last Name is too short.")]
         public string LastName { get; set; }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The name of the father.
         /// </value>
-        [Required(ErrorMessage = "Father's Name is required.")]
-        [Display(Name = "Father's Name")]
-        [StringLength(250, MinimumLength = 3, ErrorMessage = "Father's Name is too short.")]
+        [Required(ErrorMessage = @"Father's Name is required.")]
+        [Display(Name = @"Father's Name")]
+        [StringLength(250, MinimumLength = 3, ErrorMessage = @"Father's Name is too short.")]
         public string FatherName { get; set; }
 
         /// <summary>
@@ -68,7 +68,8 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The name of the mother.
         /// </value>
-        [Display(Name = "Mother's Name")]
+        [Display(Name = @"Mother's Name")]
+        [StringLength(250, MinimumLength = 3, ErrorMessage = @"Mother's Name is too short.")]
         public string MotherName { get; set; }
 
         /// <summary>
@@ -77,9 +78,9 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The universal account number.
         /// </value>
-        [Required(ErrorMessage = "UAN Number is required.")]
-        [Display(Name = "UAN Number")]
-        [StringLength(12, MinimumLength = 12, ErrorMessage = "UAN Number should Be 12 digits.")]
+        [Required(ErrorMessage = @"UAN Number is required.")]
+        [Display(Name = @"UAN Number")]
+        [StringLength(12, MinimumLength = 12, ErrorMessage = @"UAN Number should be 12 digits.")]
         public string UniversalAccountNumber { get; set; }
 
         /// <summary>
@@ -88,8 +89,10 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The permanent account number.
         /// </value>
-        [Required(ErrorMessage = "PAN Number is required.")]
-        [Display(Name = "PAN Number")]
+        [Required(ErrorMessage = @"PAN Number is required.")]
+        [Display(Name = @"PAN Number")]
+        [ValidPermanentAccountNumber(ErrorMessage = @"Invalid PAN Number.")]
+        [StringLength(10, MinimumLength = 10, ErrorMessage = @"PAN Number should be 10 characters.")]
         public string PermanentAccountNumber { get; set; }
 
         /// <summary>
@@ -98,7 +101,8 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The aadhaar number.
         /// </value>
-        [Display(Name = "AADHAAR Number")]
+        [Display(Name = @"AADHAAR Number")]
+        [StringLength(12, MinimumLength = 12, ErrorMessage = @"AADHAAR Number should be 12 digits.")]
         public string AADHAARNumber { get; set; }
 
         /// <summary>
@@ -107,11 +111,11 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The mobile number.
         /// </value>
-        [Required(ErrorMessage = "Mobile Number is required.")]
-        [Display(Name = "Mobile Number")]
+        [Required(ErrorMessage = @"Mobile Number is required.")]
+        [Display(Name = @"Mobile Number")]
         [MobileNumberExists]
-        [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid phone number.")]
-        [StringLength(10, MinimumLength = 10, ErrorMessage = "Mobile Number should be 10 digits.")]
+        [DataType(DataType.PhoneNumber, ErrorMessage = @"Invalid phone number.")]
+        [StringLength(10, MinimumLength = 10, ErrorMessage = @"Mobile Number should be 10 digits.")]
         public string MobileNumber { get; set; }
 
         /// <summary>
@@ -120,8 +124,8 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The birth day.
         /// </value>
-        [Required(ErrorMessage = "Date of Birth is required.")]
-        [Display(Name = "Date of Birth")]
+        [Required(ErrorMessage = @"Date of Birth is required.")]
+        [Display(Name = @"Date of Birth")]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? BirthDay { get; set; }
 
@@ -131,8 +135,8 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The joining date.
         /// </value>
-        [Display(Name = "Joining Date")]
-        [Required(ErrorMessage = "Joining Date is required.")]
+        [Display(Name = @"Joining Date")]
+        [Required(ErrorMessage = @"Joining Date is required.")]
         [DataType(DataType.DateTime)]
         public DateTime? JoiningDate { get; set; }
 
@@ -142,7 +146,7 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The relieving date.
         /// </value>
-        [Display(Name = "Relieving Date")]
+        [Display(Name = @"Relieving Date")]
         public DateTime? RelievingDate { get; set; }
 
         /// <summary>
@@ -174,8 +178,8 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The salutation identifier.
         /// </value>
-        [Required(ErrorMessage = "Salutation is required.")]
-        [Display(Name = "Salutation")]
+        [Required(ErrorMessage = @"Salutation is required.")]
+        [Display(Name = @"Salutation")]
         public int? SalutationId { get; set; }
 
         /// <summary>
@@ -184,8 +188,8 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The gender identifier.
         /// </value>
-        [Required(ErrorMessage = "Gender is required.")]
-        [Display(Name = "Gender")]
+        [Required(ErrorMessage = @"Gender is required.")]
+        [Display(Name = @"Gender")]
         public int? GenderId { get; set; }
 
         /// <summary>
@@ -194,8 +198,8 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The office branch identifier.
         /// </value>
-        [Required(ErrorMessage = "Office Branch is required.")]
-        [Display(Name = "Office Location")]
+        [Required(ErrorMessage = @"Office Branch is required.")]
+        [Display(Name = @"Office Location")]
         public int? OfficeBranchId { get; set; }
 
         /// <summary>
@@ -204,7 +208,7 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The department identifier.
         /// </value>
-        [Display(Name = "Department")]
+        [Display(Name = @"Department")]
         public int DepartmentId { get; set; }
 
         /// <summary>
@@ -213,7 +217,7 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         ///   <c>true</c> if this instance is active; otherwise, <c>false</c>.
         /// </value>
-        [Display(Name = "Active Employee?")]
+        [Display(Name = @"Active Employee?")]
         public bool IsActive { get; set; }
 
         /// <summary>
@@ -222,7 +226,7 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The created by.
         /// </value>
-        [Display(Name = "CreatedBy")]
+        [Display(Name = @"CreatedBy")]
         public string CreatedBy { get; set; }
 
         /// <summary>
@@ -231,7 +235,7 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The updated by.
         /// </value>
-        [Display(Name = "UpdatedBy")]
+        [Display(Name = @"UpdatedBy")]
         public string UpdatedBy { get; set; }
 
         /// <summary>
@@ -240,7 +244,7 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The created date.
         /// </value>
-        [Display(Name = "Created Date")]
+        [Display(Name = @"Created Date")]
         public DateTime? CreatedDate { get; set; }
 
         /// <summary>
@@ -249,15 +253,33 @@ namespace Vserv.Accounting.Web.Models
         /// <value>
         /// The updated date.
         /// </value>
-        [Display(Name = "Updated Date")]
+        [Display(Name = @"Updated Date")]
         public DateTime? UpdatedDate { get; set; }
 
-        [Display(Name = "EPF Number")]
+        /// <summary>
+        /// Gets or sets the epf number.
+        /// </summary>
+        /// <value>
+        /// The epf number.
+        /// </value>
+        [Display(Name = @"EPF Number")]
         public string EPFNumber { get; set; }
 
-        [Display(Name = "ESI Number")]
+        /// <summary>
+        /// Gets or sets the esi number.
+        /// </summary>
+        /// <value>
+        /// The esi number.
+        /// </value>
+        [Display(Name = @"ESI Number")]
         public string ESINumber { get; set; }
 
+        /// <summary>
+        /// Gets or sets the official email address.
+        /// </summary>
+        /// <value>
+        /// The official email address.
+        /// </value>
         [Required(ErrorMessage = @"Official Email address is required.")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = @"Official Email address")]
@@ -265,92 +287,230 @@ namespace Vserv.Accounting.Web.Models
         [EmailAddressExists]
         public string OfficialEmailAddress { get; set; }
 
+        /// <summary>
+        /// Gets or sets the personal email address.
+        /// </summary>
+        /// <value>
+        /// The personal email address.
+        /// </value>
         [Required(ErrorMessage = @"Personal Email address is required.")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = @"Personal Email address")]
         [ValidEmailAddress(ErrorMessage = @"Invalid Personal Email address.")]
         public string PersonalEmailAddress { get; set; }
 
+        /// <summary>
+        /// Gets or sets the resignation date.
+        /// </summary>
+        /// <value>
+        /// The resignation date.
+        /// </value>
         [Display(Name = @"Resignation Date")]
         public DateTime? ResignationDate { get; set; }
 
+        /// <summary>
+        /// Gets or sets the permanent address1.
+        /// </summary>
+        /// <value>
+        /// The permanent address1.
+        /// </value>
         [Required(ErrorMessage = @"Address 1 is required.")]
         [StringLength(250, MinimumLength = 3, ErrorMessage = @"Address 1 is too short.")]
         [Display(Name = @"Address 1")]
         public string PermanentAddress1 { get; set; }
 
-        [Display(Name = "Address 2")]
+        /// <summary>
+        /// Gets or sets the permanent address2.
+        /// </summary>
+        /// <value>
+        /// The permanent address2.
+        /// </value>
+        [Display(Name = @"Address 2")]
         public string PermanentAddress2 { get; set; }
 
-        [Required(ErrorMessage = "City is required.")]
-        [MaxLength(250, ErrorMessage = "City is too long.")]
-        [Display(Name = "City")]
+        /// <summary>
+        /// Gets or sets the permanent city.
+        /// </summary>
+        /// <value>
+        /// The permanent city.
+        /// </value>
+        [Required(ErrorMessage = @"City is required.")]
+        [MaxLength(250, ErrorMessage = @"City is too long.")]
+        [Display(Name = @"City")]
         public string PermanentCity { get; set; }
 
-        [Required(ErrorMessage = "Pin Code is required.")]
-        [RegularExpression("^[1-9][0-9]{5}$", ErrorMessage = "Invalid Pin Code.")]
-        [StringLength(6, MinimumLength = 6, ErrorMessage = "Pin Code should be 6 digits.")]
-        [Display(Name = "Pin Code")]
+        /// <summary>
+        /// Gets or sets the permanent zip code.
+        /// </summary>
+        /// <value>
+        /// The permanent zip code.
+        /// </value>
+        [Required(ErrorMessage = @"Pin Code is required.")]
+        [RegularExpression("^[1-9][0-9]{5}$", ErrorMessage = @"Invalid Pin Code.")]
+        [StringLength(6, MinimumLength = 6, ErrorMessage = @"Pin Code should be 6 digits.")]
+        [Display(Name = @"Pin Code")]
         public string PermanentZipCode { get; set; }
 
-        [Required(ErrorMessage = "State is required.")]
-        [Display(Name = "State")]
+        /// <summary>
+        /// Gets or sets the permanent state identifier.
+        /// </summary>
+        /// <value>
+        /// The permanent state identifier.
+        /// </value>
+        [Required(ErrorMessage = @"State is required.")]
+        [Display(Name = @"State")]
         public int? PermanentStateId { get; set; }
 
-        [Display(Name = "Country")]
+        /// <summary>
+        /// Gets or sets the permanent country identifier.
+        /// </summary>
+        /// <value>
+        /// The permanent country identifier.
+        /// </value>
+        [Display(Name = @"Country")]
         public int? PermanentCountryId { get; set; }
 
-        [Required(ErrorMessage = "Address 1 is required.")]
-        [StringLength(250, MinimumLength = 3, ErrorMessage = "Address 1 is too short.")]
-        [Display(Name = "Address 1")]
+        /// <summary>
+        /// Gets or sets the mailing address1.
+        /// </summary>
+        /// <value>
+        /// The mailing address1.
+        /// </value>
+        [Required(ErrorMessage = @"Address 1 is required.")]
+        [StringLength(250, MinimumLength = 3, ErrorMessage = @"Address 1 is too short.")]
+        [Display(Name = @"Address 1")]
         public string MailingAddress1 { get; set; }
 
-        [Display(Name = "Address 2")]
+        /// <summary>
+        /// Gets or sets the mailing address2.
+        /// </summary>
+        /// <value>
+        /// The mailing address2.
+        /// </value>
+        [Display(Name = @"Address 2")]
         public string MailingAddress2 { get; set; }
 
-        [Required(ErrorMessage = "City is required.")]
-        [MaxLength(250, ErrorMessage = "City is too long.")]
-        [Display(Name = "City")]
+        /// <summary>
+        /// Gets or sets the mailing city.
+        /// </summary>
+        /// <value>
+        /// The mailing city.
+        /// </value>
+        [Required(ErrorMessage = @"City is required.")]
+        [MaxLength(250, ErrorMessage = @"City is too long.")]
+        [Display(Name = @"City")]
         public string MailingCity { get; set; }
 
-        [Required(ErrorMessage = "Pin Code is required.")]
-        [RegularExpression("^[1-9][0-9]{5}$", ErrorMessage = "Invalid Pin Code.")]
-        [StringLength(6, MinimumLength = 6, ErrorMessage = "Pin Code should be 6 digits.")]
-        [Display(Name = "Pin Code")]
+        /// <summary>
+        /// Gets or sets the mailing zip code.
+        /// </summary>
+        /// <value>
+        /// The mailing zip code.
+        /// </value>
+        [Required(ErrorMessage = @"Pin Code is required.")]
+        [RegularExpression("^[1-9][0-9]{5}$", ErrorMessage = @"Invalid Pin Code.")]
+        [StringLength(6, MinimumLength = 6, ErrorMessage = @"Pin Code should be 6 digits.")]
+        [Display(Name = @"Pin Code")]
         public string MailingZipCode { get; set; }
 
-        [Required(ErrorMessage = "State is required.")]
-        [Display(Name = "State")]
+        /// <summary>
+        /// Gets or sets the mailing state identifier.
+        /// </summary>
+        /// <value>
+        /// The mailing state identifier.
+        /// </value>
+        [Required(ErrorMessage = @"State is required.")]
+        [Display(Name = @"State")]
         public int? MailingStateId { get; set; }
 
-        [Display(Name = "Country")]
+        /// <summary>
+        /// Gets or sets the mailing country identifier.
+        /// </summary>
+        /// <value>
+        /// The mailing country identifier.
+        /// </value>
+        [Display(Name = @"Country")]
         public int? MailingCountryId { get; set; }
 
-        [Display(Name = "Metro/Non Metro")]
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is metro.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is metro; otherwise, <c>false</c>.
+        /// </value>
+        [Display(Name = @"Metro/Non Metro")]
         public bool IsMetro { get; set; }
 
-        [Display(Name = "Bank Account Number")]
+        /// <summary>
+        /// Gets or sets the bank account number.
+        /// </summary>
+        /// <value>
+        /// The bank account number.
+        /// </value>
+        [Display(Name = @"Bank Account Number")]
         public string BankAccountNumber { get; set; }
 
-        [Display(Name = "Bank Name")]
+        /// <summary>
+        /// Gets or sets the bank identifier.
+        /// </summary>
+        /// <value>
+        /// The bank identifier.
+        /// </value>
+        [Display(Name = @"Bank Name")]
         public int? BankId { get; set; }
 
-        [Display(Name = "IFSC Code")]
+        /// <summary>
+        /// Gets or sets the bank ifsc code.
+        /// </summary>
+        /// <value>
+        /// The bank ifsc code.
+        /// </value>
+        [Display(Name = @"IFSC Code")]
         public string BankIFSCCode { get; set; }
 
-        [Display(Name = "MICR Code")]
+        /// <summary>
+        /// Gets or sets the bank micr code.
+        /// </summary>
+        /// <value>
+        /// The bank micr code.
+        /// </value>
+        [Display(Name = @"MICR Code")]
         public string BankMICRCode { get; set; }
 
-        [Display(Name = "Bank")]
+        /// <summary>
+        /// Gets or sets the bank.
+        /// </summary>
+        /// <value>
+        /// The bank.
+        /// </value>
+        [Display(Name = @"Bank")]
         public virtual BankModel Bank { get; set; }
 
-        [Display(Name = "Designation")]
+        /// <summary>
+        /// Gets or sets the designation.
+        /// </summary>
+        /// <value>
+        /// The designation.
+        /// </value>
+        [Display(Name = @"Designation")]
         public virtual DesignationModel Designation { get; set; }
 
-        [Display(Name = "OfficeBranch")]
+        /// <summary>
+        /// Gets or sets the office branch.
+        /// </summary>
+        /// <value>
+        /// The office branch.
+        /// </value>
+        [Display(Name = @"OfficeBranch")]
         public virtual OfficeBranchModel OfficeBranch { get; set; }
 
-        [Display(Name = "Salutation")]
+        /// <summary>
+        /// Gets or sets the salutation.
+        /// </summary>
+        /// <value>
+        /// The salutation.
+        /// </value>
+        [Display(Name = @"Salutation")]
         public virtual SalutationModel Salutation { get; set; }
     }
 

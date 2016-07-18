@@ -12,7 +12,12 @@ namespace Vserv.Accounting.Web.Models
         [DataType(DataType.Currency)]
         public string CTC { get; set; }
 
-        [Display(Name = "Cab Deductions (Mmonthly)")]
+        [Display(Name = "Performance Incentive Payable")]
+        [MaxLength(20)]
+        [Required(ErrorMessage = "Performance Incentive Payable is required.")]
+        public string PerformanceIncentivePayable { get; set; }
+
+        [Display(Name = "Cab Deductions (Monthly)")]
         [MaxLength(20)]
         [DataType(DataType.Currency)]
         public string CabDeductions { get; set; }

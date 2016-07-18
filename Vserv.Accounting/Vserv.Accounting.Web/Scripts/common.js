@@ -2,6 +2,14 @@
 $(function () {
     $('#side-menu').metisMenu();
     $("[data-toggle=popover]").popover();
+    $("[data-toggle=tooltip]").tooltip();
+    //$("[data-toggle=tooltip]").hover(function () {
+    //    // on mouseenter
+    //    $(this).tooltip('show');
+    //}, function () {
+    //    // on mouseleave
+    //    $(this).tooltip('hide');
+    //});
 
     (function (vbs) {
         var viewModelHelper = function () {

@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
@@ -1085,6 +1087,88 @@ namespace Vserv.Accounting.Common
         public static Boolean IsNullOrWhiteSpace(this String stringObject)
         {
             return String.IsNullOrWhiteSpace(stringObject);
+        }
+
+
+        /// <summary>
+        /// Clones a List collection of ICloneable objects
+        /// </summary>
+        /// <typeparam name="T">The type.</typeparam>
+        /// <param name="listToClone">The List collection to clone</param>
+        /// <returns>A List&lt;T&gt;</returns>
+        /// <remarks></remarks>
+        [DebuggerStepThrough]
+        public static List<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
+        {
+            return listToClone.IsNull() ? null : listToClone.Select(item => (T)((ICloneable)item).Clone()).ToList();
+        }
+
+        /// <summary>
+        /// Clones the specified dictionary.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <typeparam name="TValue">The type of the value.</typeparam>
+        /// <param name="dictionary">The dictionary.</param>
+        /// <returns>A Dictionary&lt;TKey,TValue&gt;</returns>
+        /// <remarks></remarks>
+        [DebuggerStepThrough]
+        public static IDictionary<TKey, TValue> Clone<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
+        {
+            if (dictionary.IsNullOrEmpty())
+            {
+                return new Dictionary<TKey, TValue>();
+            }
+
+            var clone = new Dictionary<TKey, TValue>();
+
+            Boolean keyIsCloneable = default(TKey) is ICloneable;
+
+            Boolean valueIsCloneable = default(TValue) is ICloneable;
+
+            foreach (KeyValuePair<TKey, TValue> keyValuePair in dictionary)
+            {
+                TKey key = keyIsCloneable ? (TKey)((ICloneable)keyValuePair.Key).Clone() : keyValuePair.Key;
+                TValue value = valueIsCloneable ? (TValue)((ICloneable)keyValuePair.Value).Clone() : keyValuePair.Value;
+
+                clone.Add(key, value);
+            }
+
+            return clone;
+        }
+
+        /// <summary>
+        /// Deep Clones an Object
+        /// </summary>
+        /// <typeparam name="T">Type of Object</typeparam>
+        /// <param name="obj">Actual Object</param>
+        /// <returns>Cloned Object</returns>
+        public static T DeepClone<T>(this T obj)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+
+                return (T)formatter.Deserialize(ms);
+            }
+        }
+
+        /// <summary>
+        /// Clone.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static T Clone<T>(this T source)
+        {
+            var dcs = new DataContractSerializer(typeof(T));
+            using (var ms = new MemoryStream())
+            {
+                dcs.WriteObject(ms, source);
+                ms.Seek(0, SeekOrigin.Begin);
+                return (T)dcs.ReadObject(ms);
+            }
         }
 
         #endregion

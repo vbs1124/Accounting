@@ -76,16 +76,25 @@
     <Compile Include="Designation.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmpInvestment.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Employee.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EmployeeArchive.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmployeePaySlip.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EmpSalaryDetail.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EmpSalaryDetailArchive.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmpSalaryDetailArchiveByUniqueChangeId_Result.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EmpSalaryStructure.cs">
@@ -103,10 +112,28 @@
     <Compile Include="Gender.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetEmpAnnualContributionUnderChapterVIA_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetEmpAppraisalHistory_Result.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetEmployeeMonthlyTaxDeductions_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetEmployeeSalaryDetail_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetEmployeeYearlyTaxExemptions_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetEmpSalaryStructureComparisonList_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetMonthlyTaxDeduction_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IncomeTaxRate.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="InvestmentCategory.cs">
@@ -124,14 +151,27 @@
     <Compile Include="LookupMonth.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MedicalInsuranceRate.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Membership.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CompareEmployeeModel.cs" />
+    <Compile Include="Models\EmpInvestmentDeclarationModel.cs" />
+    <Compile Include="Models\EmployeeMonthlyTaxDeduction.cs" />
+    <Compile Include="Models\EmployeeTaxation.cs" />
+    <Compile Include="Models\EmpSalaryCompareResult.cs" />
+    <Compile Include="Models\EmpSalaryDetail.cs" />
+    <Compile Include="Models\EmpSalaryStructure.cs" />
     <Compile Include="Models\FinancialPeriod.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
+    <Compile Include="Models\InvestmentCategoryModel.cs" />
+    <Compile Include="Models\InvestmentSubCategoryModel.cs" />
     <Compile Include="Models\Membership.cs" />
+    <Compile Include="Models\MessageResult.cs" />
     <Compile Include="Models\SalaryComponentAmountMapper.cs" />
+    <Compile Include="Models\TaxComputationComponent.cs" />
     <Compile Include="OAuthMembership.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
