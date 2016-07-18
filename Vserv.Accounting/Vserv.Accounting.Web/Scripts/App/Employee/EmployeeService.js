@@ -13,6 +13,7 @@
         var empInvestmentDeclarationModel = [];
         var empsalarystructureid = null;
         var employee = {};
+        var employeeTaxation = {};
 
         var svc = {
             addEmployeeSalaryDetail: addEmployeeSalaryDetail,
@@ -50,7 +51,8 @@
             employee: employee,
             loadEmpChangeComparisonResult: loadEmpChangeComparisonResult,
 
-            loadEmployeeTaxation: loadEmployeeTaxation
+            loadEmployeeTaxation: loadEmployeeTaxation,
+            employeeTaxation: employeeTaxation
         };
 
         return svc;
@@ -69,7 +71,7 @@
                 if (resp.businessException == null) {
 
                     $.map(resp.result, function (val, i) {
-                      //  val.CurrentEffectiveFrom = moment(val.CurrentEffectiveFrom).format("DD/MM/YYYY");
+                        val.CurrentEffectiveFrom = moment(val.CurrentEffectiveFrom).format("DD/MM/YYYY");
                         graphValues.push({ label: val.CurrentEffectiveFrom, value: val.CurrentCTC });
                     });
 
@@ -220,8 +222,17 @@
             });
         }
 
-        function loadEmployeeTaxation(employeeId, joiningDate) {
-            return null; //TODO: need to be implemented.
+        function loadEmployeeTaxation(employeeId, financialYear) {
+            serviceHandler.executePostService('/Employee/GetEmployeeIncomeTaxComputation', { employeeId: employeeId, financialYear: financialYear }).then(function (resp) {
+                if (resp.businessException == null) {
+                    if (resp.result) {
+                        angular.extend(employeeTaxation, resp.result);
+                    }
+                }
+                else {
+                    $.showToastrMessage("error", resp.businessException.ExceptionMessage, "Error!");
+                }
+            });
         }
     }
 })();

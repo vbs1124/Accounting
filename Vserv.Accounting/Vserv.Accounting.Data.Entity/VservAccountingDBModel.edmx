@@ -1160,18 +1160,34 @@
           <Parameter Name="MonthId" Type="int" Mode="In" />
           <Parameter Name="Year" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetEmpAnnualContributionUnderChapterVIA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeId" Type="int" Mode="In" />
+          <Parameter Name="FinancialYear" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetEmpAppraisalHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmployeeId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetEmployeeMonthlyTaxDeductions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeId" Type="int" Mode="In" />
+          <Parameter Name="FinancialYear" Type="int" Mode="In" />
         </Function>
         <Function Name="GetEmployeeSalaryDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmployeeId" Type="int" Mode="In" />
           <Parameter Name="FinancialYearFrom" Type="int" Mode="In" />
           <Parameter Name="FinancialYearTo" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetEmployeeYearlyTaxExemptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeId" Type="int" Mode="In" />
+          <Parameter Name="FinancialYear" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetEmpSalaryStructureComparisonList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmployeeId" Type="int" Mode="In" />
           <Parameter Name="UniqueChangeId" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="FinancialYearFrom" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetMonthlyTaxDeduction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeId" Type="int" Mode="In" />
+          <Parameter Name="FinancialYear" Type="int" Mode="In" />
         </Function>
         <Function Name="InsertErrorLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="appdomain" Type="varchar" Mode="In" />
@@ -1230,6 +1246,18 @@
         </Function>
         <Function Name="SalaryStructureChangeHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpSalaryStructureId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="svf_getEmpAnnualContributionUnderChapterVIA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="numeric">
+          <Parameter Name="EmployeeId" Type="int" Mode="In" />
+          <Parameter Name="FinancialYear" Type="int" Mode="In" />
+        </Function>
+        <Function Name="svf_getEmpAnnualTaxPayable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="numeric">
+          <Parameter Name="EmployeeId" Type="int" Mode="In" />
+          <Parameter Name="FinancialYear" Type="int" Mode="In" />
+        </Function>
+        <Function Name="svf_getEmpHRAAnnualExemption" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="numeric">
+          <Parameter Name="EmployeeId" Type="int" Mode="In" />
+          <Parameter Name="FinancialYear" Type="int" Mode="In" />
         </Function>
         <Function Name="UpdateMediclaimAmount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ZeroToFive" Type="numeric" Mode="In" />
@@ -1694,6 +1722,22 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
+          <FunctionImport Name="GetEmpAnnualContributionUnderChapterVIA" ReturnType="Collection(VservAccountingDBModel.GetEmpAnnualContributionUnderChapterVIA_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="FinancialYear" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetEmployeeMonthlyTaxDeductions" ReturnType="Collection(VservAccountingDBModel.GetEmployeeMonthlyTaxDeductions_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="FinancialYear" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetEmployeeYearlyTaxExemptions" ReturnType="Collection(VservAccountingDBModel.GetEmployeeYearlyTaxExemptions_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="FinancialYear" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetMonthlyTaxDeduction" ReturnType="Collection(VservAccountingDBModel.GetMonthlyTaxDeduction_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="FinancialYear" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="ArchiveEmployee_Result">
           <Property Type="Int32" Name="ErrorNumber" Nullable="true" />
@@ -2965,6 +3009,36 @@
           <End Type="VservAccountingDBModel.Role" Role="Role" Multiplicity="*" />
           <End Type="VservAccountingDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
+        <ComplexType Name="GetEmpAnnualContributionUnderChapterVIA_Result">
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="14" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="GetEmployeeMonthlyTaxDeductions_Result">
+          <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
+          <Property Type="Int32" Name="MonthId" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="Tax" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Surcharge" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="EduacationCess" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Total" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="GetEmployeeYearlyTaxExemptions_Result">
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="25" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="GetMonthlyTaxDeduction_Result">
+          <Property Type="Int32" Name="MonthId" Nullable="true" />
+          <Property Type="String" Name="MonthName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="true" />
+          <Property Type="Decimal" Name="TaxDeducted" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Tax" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Surcharge" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="EduacationCess" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3854,6 +3928,52 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="GetEmpAnnualContributionUnderChapterVIA" FunctionName="VservAccountingDBModel.Store.GetEmpAnnualContributionUnderChapterVIA">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.GetEmpAnnualContributionUnderChapterVIA_Result">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetEmployeeMonthlyTaxDeductions" FunctionName="VservAccountingDBModel.Store.GetEmployeeMonthlyTaxDeductions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.GetEmployeeMonthlyTaxDeductions_Result">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="MonthId" ColumnName="MonthId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="Surcharge" ColumnName="Surcharge" />
+                <ScalarProperty Name="EduacationCess" ColumnName="EduacationCess" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetEmployeeYearlyTaxExemptions" FunctionName="VservAccountingDBModel.Store.GetEmployeeYearlyTaxExemptions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.GetEmployeeYearlyTaxExemptions_Result">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetMonthlyTaxDeduction" FunctionName="VservAccountingDBModel.Store.GetMonthlyTaxDeduction">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VservAccountingDBModel.GetMonthlyTaxDeduction_Result">
+                <ScalarProperty Name="MonthId" ColumnName="MonthId" />
+                <ScalarProperty Name="MonthName" ColumnName="MonthName" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="TaxDeducted" ColumnName="TaxDeducted" />
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="Surcharge" ColumnName="Surcharge" />
+                <ScalarProperty Name="EduacationCess" ColumnName="EduacationCess" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

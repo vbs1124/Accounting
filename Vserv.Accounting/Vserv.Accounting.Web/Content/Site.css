@@ -550,6 +550,11 @@ textarea {
   -webkit-box-shadow: #8b0000 1px 0 6px 1px;
   box-shadow: #8b0000 1px 0 6px 1px;
 }
+
+.table {
+     margin-bottom: 0px; 
+}
+
 /*.clsEmpInvestment #accordion .popover-content
 {
     font-size:11px;

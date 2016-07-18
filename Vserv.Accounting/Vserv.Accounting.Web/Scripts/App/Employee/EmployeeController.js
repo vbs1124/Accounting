@@ -176,6 +176,7 @@
                 if (result) {
                     employeeService.updateYearlyPaySheet(vm.employeePaySheet).then(function (resp) {
                         if (resp.businessException == null) {
+                            employeeService.loadEmployeeTaxation(vm.employeeId, vm.selectedFinancialYear);
                             $.showToastrMessage("success", "Salary Breakup for current financial year updated successfully.");
                         }
                         else {

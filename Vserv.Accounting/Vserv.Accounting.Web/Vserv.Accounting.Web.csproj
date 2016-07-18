@@ -473,6 +473,7 @@
     <Content Include="Scripts\App\Designation\designationService.js" />
     <Content Include="Scripts\App\Employee\addAppraisalDirective.js" />
     <Content Include="Scripts\App\Employee\empChangeComparisonDirective.js" />
+    <Content Include="Scripts\App\Employee\empTaxationDirective.js" />
     <Content Include="Scripts\App\Utility\vbsTooltipDirective.js" />
     <Content Include="Scripts\App\Utility\vbsPopoverDirective.js" />
     <Content Include="Scripts\App\Employee\empSalaryComparisonDirective.js" />
@@ -658,6 +659,7 @@
     <Content Include="Scripts\App\Employee\templates\empSalaryComparisonList.tmpl.cshtml" />
     <Content Include="Scripts\App\Employee\templates\addEmployeeInvestments.tmpl.cshtml" />
     <Content Include="Scripts\App\Employee\templates\empChangeComparisonList.tmpl.cshtml" />
+    <Content Include="Scripts\App\Employee\templates\empTaxation.tmpl.cshtml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

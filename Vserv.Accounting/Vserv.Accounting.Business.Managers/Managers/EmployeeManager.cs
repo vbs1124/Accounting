@@ -821,6 +821,25 @@ namespace Vserv.Accounting.Business.Managers
 
         #endregion
 
+        #region Income Tax Computation
+
+        /// <summary>
+        /// Get all the information related to Employee's Income Tax Computation.
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <param name="financialYear"></param>
+        /// <returns></returns>
+        public EmployeeTaxation GetEmployeeIncomeTaxComputation(int employeeId, int financialYear)
+        {
+            return ExecuteFaultHandledOperation(() =>
+            {
+                IEmployeeRepository repo = DataRepositoryFactory.GetDataRepository<IEmployeeRepository>();
+                return repo.GetEmployeeIncomeTaxComputation(employeeId, financialYear);
+            });
+        }
+
+        #endregion
+
         #endregion
 
         #region Private Methods

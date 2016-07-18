@@ -3,9 +3,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data.SqlClient;
 using System.Linq;
 using Vserv.Accounting.Common;
 using Vserv.Accounting.Data.Entity;
+using Vserv.Accounting.Data.Entity.Models;
+
 
 #endregion
 
@@ -338,6 +341,32 @@ namespace Vserv.Accounting.Data
                 return context.GetEmployeeSalaryDetail(employeeId, financialYearFrom, financialYearTo).ToList();
             }
         }
+
+        #region Income Tax Computation
+
+        public EmployeeTaxation GetEmployeeIncomeTaxComputation(int employeeId, int financialYear)
+        {
+            EmployeeTaxation employeeTaxation = new EmployeeTaxation();
+
+            using (VservAccountingDBEntities dbEntities = new VservAccountingDBEntities())
+            {
+                //var sqlQueryGetEmployeeMonthlyTaxDeductions = @"EXECUTE [dbo].[GetEmployeeMonthlyTaxDeductions] @EmployeeId, @FinancialYear";
+                //employeeTaxation.MonthlyTaxDeductions = dbEntities.Database.SqlQuery<EmployeeMonthlyTaxDeduction>(sqlQueryGetEmployeeMonthlyTaxDeductions, new SqlParameter("EmployeeId", employeeId), new SqlParameter("FinancialYear", financialYear)).ToList();
+
+
+                employeeTaxation.MonthlyTaxDeductions = dbEntities.GetMonthlyTaxDeduction(employeeId, financialYear).ToList();
+
+                var sqlQueryGetEmployeeYearlyTaxExemptions = @"EXECUTE [dbo].[GetEmployeeYearlyTaxExemptions] @EmployeeId, @FinancialYear";
+                employeeTaxation.YearlyTaxExemptions = dbEntities.Database.SqlQuery<TaxComputationComponent>(sqlQueryGetEmployeeYearlyTaxExemptions, new SqlParameter("EmployeeId", employeeId), new SqlParameter("FinancialYear", financialYear)).ToList();
+
+                var sqlQueryGetEmpAnnualContributionUnderChapterVIA = @"EXECUTE [dbo].[GetEmpAnnualContributionUnderChapterVIA] @EmployeeId, @FinancialYear";
+                employeeTaxation.YearlyContributionUnderChapterVIA = dbEntities.Database.SqlQuery<TaxComputationComponent>(sqlQueryGetEmpAnnualContributionUnderChapterVIA, new SqlParameter("EmployeeId", employeeId), new SqlParameter("FinancialYear", financialYear)).ToList();
+            }
+
+            return employeeTaxation;
+        }
+
+        #endregion
 
         #endregion Public Methods
 

@@ -7,6 +7,7 @@ using Vserv.Accounting.Common;
 using Vserv.Accounting.Data.Entity;
 using System.Linq;
 using Vserv.Accounting.Data.Entity.Models;
+using System.Data.SqlClient;
 #endregion
 
 namespace Vserv.Accounting.Data
@@ -34,15 +35,15 @@ namespace Vserv.Accounting.Data
         {
             List<EmpInvestment> UpdaterecordList = investmentCatogories.Where(x => x.EmpInvestmentId > 0).ToList();
             List<EmpInvestment> NewlyrecordList = investmentCatogories.Where(x => x.EmpInvestmentId == 0).ToList();
-            using (VservAccountingDBEntities context=new VservAccountingDBEntities())
+            using (VservAccountingDBEntities context = new VservAccountingDBEntities())
             {
-                if(NewlyrecordList.Count>0)
+                if (NewlyrecordList.Count > 0)
                 {
                     context.EmpInvestments.AddRange(NewlyrecordList);
                 }
-                if(UpdaterecordList.Count>0)
+                if (UpdaterecordList.Count > 0)
                 {
-                    foreach(var row in UpdaterecordList)
+                    foreach (var row in UpdaterecordList)
                     {
                         EmpInvestment investmentDetail = context.EmpInvestments.Where(x => x.EmpInvestmentId == row.EmpInvestmentId).FirstOrDefault();
                         investmentDetail.DeclaredAmount = row.DeclaredAmount;
@@ -56,7 +57,7 @@ namespace Vserv.Accounting.Data
                         investmentDetail.UpdatedDate = System.DateTime.Now;
                     }
                 }
-                
+
                 context.SaveChanges();
                 return true;
             }
@@ -67,13 +68,13 @@ namespace Vserv.Accounting.Data
         {
             using (VservAccountingDBEntities context = new VservAccountingDBEntities())
             {
-                return context.EmpInvestments.Where(x => x.EmployeeId == employeeId && x.FinancialYear==financialYear).ToList();
+                return context.EmpInvestments.Where(x => x.EmployeeId == employeeId && x.FinancialYear == financialYear).ToList();
             }
         }
 
-        public List<InvestmentCategory> GetInvestmentCategories(int financialYear,int employeeId)
+        public List<InvestmentCategory> GetInvestmentCategories(int financialYear, int employeeId)
         {
-            List<InvestmentCategory> investmentCategoryList = new List<InvestmentCategory>();           
+            List<InvestmentCategory> investmentCategoryList = new List<InvestmentCategory>();
             List<EmpInvestment> empInvestmentList = new List<EmpInvestment>();
             EmpInvestmentDeclarationModel investmentDeclaration = new EmpInvestmentDeclarationModel();
             using (VservAccountingDBEntities context = new VservAccountingDBEntities())
@@ -82,16 +83,16 @@ namespace Vserv.Accounting.Data
 
                 if (invtDeclarationComponent.IsNotNull())
                 {
-                    investmentCategoryList= context.InvestmentCategories.Include("InvestmentSubCategories").Where(condition => condition.MappingId == invtDeclarationComponent.MappingId).ToList();
+                    investmentCategoryList = context.InvestmentCategories.Include("InvestmentSubCategories").Where(condition => condition.MappingId == invtDeclarationComponent.MappingId).ToList();
                     empInvestmentList = context.EmpInvestments.Where(x => x.EmployeeId == employeeId).ToList();
                     investmentDeclaration.EmployeeId = employeeId;
-                    
-                    if(empInvestmentList.Count>0)
+
+                    if (empInvestmentList.Count > 0)
                     {
                         int j = 0;
-                        for(int i=0;i<investmentCategoryList.Count;i++)
+                        for (int i = 0; i < investmentCategoryList.Count; i++)
                         {
-                            if(investmentCategoryList[i].InvestmentCategoryId==empInvestmentList[j].CategoryId)
+                            if (investmentCategoryList[i].InvestmentCategoryId == empInvestmentList[j].CategoryId)
                             {
                                 List<InvestmentSubCategory> investmentSubCategory = new List<InvestmentSubCategory>();
                                 foreach (var subcat in investmentCategoryList[i].InvestmentSubCategories)
@@ -107,6 +108,24 @@ namespace Vserv.Accounting.Data
                     }
                     else
                     {
+                        var sqlQueryGetEmployeeYearlyTaxExemptions = @"EXECUTE [dbo].[GetEmployeeYearlyTaxExemptions] @EmployeeId, @FinancialYear";
+                        var yearlyTaxExemptions = context.Database.SqlQuery<TaxComputationComponent>(sqlQueryGetEmployeeYearlyTaxExemptions, new SqlParameter("EmployeeId", employeeId), new SqlParameter("FinancialYear", financialYear)).ToList();
+
+                        foreach (var category in investmentCategoryList)
+                        {
+                            foreach (var subCategory in category.InvestmentSubCategories)
+                            {
+                                if (subCategory.Code.Equals("ISCFOCOU"))
+                                {
+                                    subCategory.DefaultAmount = yearlyTaxExemptions.FirstOrDefault(condition => condition.Code.Equals("SCFCPN")).Amount;
+                                }
+                                else if (subCategory.Code.Equals("ISCMEDAL"))
+                                {
+                                    subCategory.DefaultAmount = yearlyTaxExemptions.FirstOrDefault(condition => condition.Code.Equals("SCMEDC")).Amount;
+                                }
+                            }
+                        }
+
                         return investmentCategoryList;
                     }
                 }

@@ -17,265 +17,267 @@
     <legend>Salary Structure for FY {{vm.selectedFinancialYear}} to {{vbsParseFloat(vm.selectedFinancialYear) + 1}}</legend>
     <div class="row">
         <div class="col-lg-12">
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr class="success">
-                            <th>&nbsp;</th>
-                            <th>April</th>
-                            <th>May</th>
-                            <th>June</th>
-                            <th>July</th>
-                            <th>August</th>
-                            <th>September</th>
-                            <th>October</th>
-                            <th>November</th>
-                            <th>December</th>
-                            <th>January</th>
-                            <th>February</th>
-                            <th>March</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody ng-repeat="item in vm.employeePaySheet" ng-switch="item.SCCode" ng-show="vm.isEditableSalaryBreakup()">
-                        <tr class="warning" ng-show="item.SCCode=='SCMEDC'">
-                            <td colspan="14">
-                                <strong>Reimbursments:</strong>
-                            </td>
-                        </tr>
-                        <tr class="active" ng-show="item.SCCode=='SCEPFO'">
-                            <td colspan="14">
-                                &nbsp;
-                            </td>
-                        </tr>
-                        <!-- Food Coupon fields-->
-                        <tr ng-switch-when="SCFCPN">
-                            <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
-                            <td class="text-right">
-                                <a href="#" editable-select="item.April.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
-                                    {{ item.April.Amount | currency:'&#8377;':0}}
-                                </a>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" editable-select="item.May.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
-                                    {{ item.May.Amount | currency:'&#8377;':0}}
-                                </a>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" editable-select="item.June.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
-                                    {{ item.June.Amount | currency:'&#8377;':0}}
-                                </a>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" editable-select="item.July.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
-                                    {{ item.July.Amount | currency:'&#8377;':0}}
-                                </a>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" editable-select="item.August.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
-                                    {{ item.August.Amount | currency:'&#8377;':0}}
-                                </a>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" editable-select="item.September.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
-                                    {{ item.September.Amount | currency:'&#8377;':0}}
-                                </a>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" editable-select="item.October.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
-                                    {{ item.October.Amount | currency:'&#8377;':0}}
-                                </a>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" editable-select="item.November.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
-                                    {{ item.November.Amount | currency:'&#8377;':0}}
-                                </a>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" editable-select="item.December.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
-                                    {{ item.December.Amount | currency:'&#8377;':0}}
-                                </a>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" editable-select="item.January.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
-                                    {{ item.January.Amount | currency:'&#8377;':0}}
-                                </a>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" editable-select="item.February.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
-                                    {{ item.February.Amount | currency:'&#8377;':0}}
-                                </a>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" editable-select="item.March.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
-                                    {{ item.March.Amount | currency:'&#8377;':0}}
-                                </a>
-                            </td>
-                            <td class="text-bold text-right"><span ng-bind="getCurrentComponentTotal(item) | currency:'&#8377;':0"></span></td>
-                        </tr>
-                        <!-- /Food Coupon fields-->
-                        <!-- Special Allowance fields-->
-                        <tr ng-switch-when="SCSPCL">
-                            <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
-                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'April') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'April' | currency:'&#8377;':0}}</td>
-                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'May') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'May' | currency:'&#8377;':0}}</td>
-                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'June') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'June' | currency:'&#8377;':0}}</td>
-                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'July') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'July' | currency:'&#8377;':0}}</td>
-                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'August') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'August' | currency:'&#8377;':0}}</td>
-                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'September') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'September' | currency:'&#8377;':0}}</td>
-                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'October') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'October' | currency:'&#8377;':0}}</td>
-                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'November') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'November' | currency:'&#8377;':0}}</td>
-                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'December') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'December' | currency:'&#8377;':0}}</td>
-                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'January') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'January' | currency:'&#8377;':0}}</td>
-                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'February') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'February' | currency:'&#8377;':0}}</td>
-                            <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'March') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'March' | currency:'&#8377;':0}}</td>
-                            <td class="text-bold text-right">{{getCurrentComponentTotal(item) | currency:'&#8377;':0}}</td>
-                        </tr>
-                        <!-- /Special Allowance fields-->
-                        <!-- Default fields-->
-                        <tr ng-switch-default>
-                            <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.April.Amount">{{ item.April.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.April.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.May.Amount">{{ item.May.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.May.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.June.Amount">{{ item.June.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.June.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" e-min="0" e-maxlength="18" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.July.Amount">{{ item.July.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.July.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.August.Amount">{{ item.August.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.August.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.September.Amount">{{ item.September.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.September.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.October.Amount">{{ item.October.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.October.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.November.Amount">{{ item.November.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.November.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.December.Amount">{{ item.December.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.December.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.January.Amount">{{ item.January.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.January.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.February.Amount">{{ item.February.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.February.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.March.Amount">{{ item.March.Amount | currency:'&#8377;':0}}</a>
-                                <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.March.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-bold text-right"><span ng-bind="getCurrentComponentTotal(item) | currency:'&#8377;':0"></span></td>
-                        </tr>
-                        <!-- /Default fields-->
-                    </tbody>
-                    <tbody ng-repeat="item in vm.employeePaySheet" ng-hide="vm.isEditableSalaryBreakup()">
-                        <tr class="warning" ng-show="item.SCCode=='SCMEDC'">
-                            <td colspan="14">
-                                <strong>Reimbursments:</strong>
-                            </td>
-                        </tr>
-                        <tr class="active" ng-show="item.SCCode=='SCEPFO'">
-                            <td colspan="14">
-                                &nbsp;
-                            </td>
-                        </tr>
-                        <!-- Show all fields as no editable-->
-                        <tr>
-                            <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
-                            <td class="text-right">
-                                <span ng-bind="item.April.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <span ng-bind="item.May.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <span ng-bind="item.June.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <span ng-bind="item.July.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <span ng-bind="item.August.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <span ng-bind="item.September.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <span ng-bind="item.October.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <span ng-bind="item.November.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <span ng-bind="item.December.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <span ng-bind="item.January.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <span ng-bind="item.February.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-right">
-                                <span ng-bind="item.March.Amount | currency:'&#8377;':0"></span>
-                            </td>
-                            <td class="text-bold text-right"><span ng-bind="getCurrentComponentTotal(item) | currency:'&#8377;':0"></span></td>
-                        </tr>
-                        <!-- /Show all fields as no editable-->
-                    </tbody>
-                    <tfoot>
-                        <tr class="success">
-                            <th class="text-right">Total</th>
-                            <th class="text-right">{{vm.employeePaySheet|sumByMonth:'April' | currency:'&#8377;':0}}</th>
-                            <th class="text-right">{{vm.employeePaySheet|sumByMonth:'May' | currency:'&#8377;':0}}</th>
-                            <th class="text-right">{{vm.employeePaySheet|sumByMonth:'June' | currency:'&#8377;':0}}</th>
-                            <th class="text-right">{{vm.employeePaySheet|sumByMonth:'July' | currency:'&#8377;':0}}</th>
-                            <th class="text-right">{{vm.employeePaySheet|sumByMonth:'August' | currency:'&#8377;':0}}</th>
-                            <th class="text-right">{{vm.employeePaySheet|sumByMonth:'September' | currency:'&#8377;':0}}</th>
-                            <th class="text-right">{{vm.employeePaySheet|sumByMonth:'October' | currency:'&#8377;':0}}</th>
-                            <th class="text-right">{{vm.employeePaySheet|sumByMonth:'November' | currency:'&#8377;':0}}</th>
-                            <th class="text-right">{{vm.employeePaySheet|sumByMonth:'December' | currency:'&#8377;':0}}</th>
-                            <th class="text-right">{{vm.employeePaySheet|sumByMonth:'January' | currency:'&#8377;':0}}</th>
-                            <th class="text-right">{{vm.employeePaySheet|sumByMonth:'February' | currency:'&#8377;':0}}</th>
-                            <th class="text-right">{{vm.employeePaySheet|sumByMonth:'March' | currency:'&#8377;':0}}</th>
-                            <th class="text-right">&nbsp;</th>
-                        </tr>
-                        <tr class="info">
-                            <th>Download Payslip</th>
-                            <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
-                            <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
-                            <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
-                            <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
-                            <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
-                            <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
-                            <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
-                            <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
-                            <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
-                            <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
-                            <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
-                            <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
-                            <th>&nbsp;</th>
-                        </tr>
-                    </tfoot>
-                </table>
+            <div class="form-group">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="success">
+                                <th>&nbsp;</th>
+                                <th>April</th>
+                                <th>May</th>
+                                <th>June</th>
+                                <th>July</th>
+                                <th>August</th>
+                                <th>September</th>
+                                <th>October</th>
+                                <th>November</th>
+                                <th>December</th>
+                                <th>January</th>
+                                <th>February</th>
+                                <th>March</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="item in vm.employeePaySheet" ng-switch="item.SCCode" ng-show="vm.isEditableSalaryBreakup()">
+                            <tr class="warning" ng-show="item.SCCode=='SCMEDC'">
+                                <td colspan="14">
+                                    <strong>Reimbursments:</strong>
+                                </td>
+                            </tr>
+                            <tr class="active" ng-show="item.SCCode=='SCEPFO'">
+                                <td colspan="14">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <!-- Food Coupon fields-->
+                            <tr ng-switch-when="SCFCPN">
+                                <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
+                                <td class="text-right">
+                                    <a href="#" editable-select="item.April.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
+                                        {{ item.April.Amount | currency:'&#8377;':0}}
+                                    </a>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" editable-select="item.May.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
+                                        {{ item.May.Amount | currency:'&#8377;':0}}
+                                    </a>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" editable-select="item.June.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
+                                        {{ item.June.Amount | currency:'&#8377;':0}}
+                                    </a>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" editable-select="item.July.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
+                                        {{ item.July.Amount | currency:'&#8377;':0}}
+                                    </a>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" editable-select="item.August.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
+                                        {{ item.August.Amount | currency:'&#8377;':0}}
+                                    </a>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" editable-select="item.September.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
+                                        {{ item.September.Amount | currency:'&#8377;':0}}
+                                    </a>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" editable-select="item.October.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
+                                        {{ item.October.Amount | currency:'&#8377;':0}}
+                                    </a>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" editable-select="item.November.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
+                                        {{ item.November.Amount | currency:'&#8377;':0}}
+                                    </a>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" editable-select="item.December.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
+                                        {{ item.December.Amount | currency:'&#8377;':0}}
+                                    </a>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" editable-select="item.January.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
+                                        {{ item.January.Amount | currency:'&#8377;':0}}
+                                    </a>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" editable-select="item.February.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
+                                        {{ item.February.Amount | currency:'&#8377;':0}}
+                                    </a>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" editable-select="item.March.Amount" buttons="no" blur="submit" e-ng-options="s.value as s.text for s in foodCoupons">
+                                        {{ item.March.Amount | currency:'&#8377;':0}}
+                                    </a>
+                                </td>
+                                <td class="text-bold text-right"><span ng-bind="getCurrentComponentTotal(item) | currency:'&#8377;':0"></span></td>
+                            </tr>
+                            <!-- /Food Coupon fields-->
+                            <!-- Special Allowance fields-->
+                            <tr ng-switch-when="SCSPCL">
+                                <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
+                                <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'April') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'April' | currency:'&#8377;':0}}</td>
+                                <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'May') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'May' | currency:'&#8377;':0}}</td>
+                                <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'June') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'June' | currency:'&#8377;':0}}</td>
+                                <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'July') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'July' | currency:'&#8377;':0}}</td>
+                                <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'August') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'August' | currency:'&#8377;':0}}</td>
+                                <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'September') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'September' | currency:'&#8377;':0}}</td>
+                                <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'October') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'October' | currency:'&#8377;':0}}</td>
+                                <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'November') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'November' | currency:'&#8377;':0}}</td>
+                                <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'December') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'December' | currency:'&#8377;':0}}</td>
+                                <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'January') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'January' | currency:'&#8377;':0}}</td>
+                                <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'February') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'February' | currency:'&#8377;':0}}</td>
+                                <td class="text-right" ng-class="{'bg-danger': (vm.employeePaySheet|specialAllowanceByMonth:'March') < 0}">{{vm.employeePaySheet|specialAllowanceByMonth:'March' | currency:'&#8377;':0}}</td>
+                                <td class="text-bold text-right">{{getCurrentComponentTotal(item) | currency:'&#8377;':0}}</td>
+                            </tr>
+                            <!-- /Special Allowance fields-->
+                            <!-- Default fields-->
+                            <tr ng-switch-default>
+                                <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
+                                <td class="text-right">
+                                    <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.April.Amount">{{ item.April.Amount | currency:'&#8377;':0}}</a>
+                                    <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.April.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.May.Amount">{{ item.May.Amount | currency:'&#8377;':0}}</a>
+                                    <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.May.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.June.Amount">{{ item.June.Amount | currency:'&#8377;':0}}</a>
+                                    <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.June.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" buttons="no" blur="submit" e-min="0" e-maxlength="18" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.July.Amount">{{ item.July.Amount | currency:'&#8377;':0}}</a>
+                                    <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.July.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.August.Amount">{{ item.August.Amount | currency:'&#8377;':0}}</a>
+                                    <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.August.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.September.Amount">{{ item.September.Amount | currency:'&#8377;':0}}</a>
+                                    <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.September.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.October.Amount">{{ item.October.Amount | currency:'&#8377;':0}}</a>
+                                    <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.October.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.November.Amount">{{ item.November.Amount | currency:'&#8377;':0}}</a>
+                                    <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.November.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.December.Amount">{{ item.December.Amount | currency:'&#8377;':0}}</a>
+                                    <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.December.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.January.Amount">{{ item.January.Amount | currency:'&#8377;':0}}</a>
+                                    <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.January.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.February.Amount">{{ item.February.Amount | currency:'&#8377;':0}}</a>
+                                    <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.February.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" buttons="no" blur="submit" e-min="0" ng-show="isEditableColumn(item.SCCode)" e-required editable-number="item.March.Amount">{{ item.March.Amount | currency:'&#8377;':0}}</a>
+                                    <span ng-show="isEditableColumn(item.SCCode)==false" ng-bind="item.March.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-bold text-right"><span ng-bind="getCurrentComponentTotal(item) | currency:'&#8377;':0"></span></td>
+                            </tr>
+                            <!-- /Default fields-->
+                        </tbody>
+                        <tbody ng-repeat="item in vm.employeePaySheet" ng-hide="vm.isEditableSalaryBreakup()">
+                            <tr class="warning" ng-show="item.SCCode=='SCMEDC'">
+                                <td colspan="14">
+                                    <strong>Reimbursments:</strong>
+                                </td>
+                            </tr>
+                            <tr class="active" ng-show="item.SCCode=='SCEPFO'">
+                                <td colspan="14">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <!-- Show all fields as no editable-->
+                            <tr>
+                                <td class="text-right"><strong>{{item.SCDescription}}</strong></td>
+                                <td class="text-right">
+                                    <span ng-bind="item.April.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <span ng-bind="item.May.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <span ng-bind="item.June.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <span ng-bind="item.July.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <span ng-bind="item.August.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <span ng-bind="item.September.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <span ng-bind="item.October.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <span ng-bind="item.November.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <span ng-bind="item.December.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <span ng-bind="item.January.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <span ng-bind="item.February.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-right">
+                                    <span ng-bind="item.March.Amount | currency:'&#8377;':0"></span>
+                                </td>
+                                <td class="text-bold text-right"><span ng-bind="getCurrentComponentTotal(item) | currency:'&#8377;':0"></span></td>
+                            </tr>
+                            <!-- /Show all fields as no editable-->
+                        </tbody>
+                        <tfoot>
+                            <tr class="success">
+                                <th class="text-right">Total</th>
+                                <th class="text-right">{{vm.employeePaySheet|sumByMonth:'April' | currency:'&#8377;':0}}</th>
+                                <th class="text-right">{{vm.employeePaySheet|sumByMonth:'May' | currency:'&#8377;':0}}</th>
+                                <th class="text-right">{{vm.employeePaySheet|sumByMonth:'June' | currency:'&#8377;':0}}</th>
+                                <th class="text-right">{{vm.employeePaySheet|sumByMonth:'July' | currency:'&#8377;':0}}</th>
+                                <th class="text-right">{{vm.employeePaySheet|sumByMonth:'August' | currency:'&#8377;':0}}</th>
+                                <th class="text-right">{{vm.employeePaySheet|sumByMonth:'September' | currency:'&#8377;':0}}</th>
+                                <th class="text-right">{{vm.employeePaySheet|sumByMonth:'October' | currency:'&#8377;':0}}</th>
+                                <th class="text-right">{{vm.employeePaySheet|sumByMonth:'November' | currency:'&#8377;':0}}</th>
+                                <th class="text-right">{{vm.employeePaySheet|sumByMonth:'December' | currency:'&#8377;':0}}</th>
+                                <th class="text-right">{{vm.employeePaySheet|sumByMonth:'January' | currency:'&#8377;':0}}</th>
+                                <th class="text-right">{{vm.employeePaySheet|sumByMonth:'February' | currency:'&#8377;':0}}</th>
+                                <th class="text-right">{{vm.employeePaySheet|sumByMonth:'March' | currency:'&#8377;':0}}</th>
+                                <th class="text-right">&nbsp;</th>
+                            </tr>
+                            <tr class="info">
+                                <th>Download Payslip</th>
+                                <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
+                                <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
+                                <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
+                                <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
+                                <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
+                                <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
+                                <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
+                                <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
+                                <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
+                                <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
+                                <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
+                                <th><a href="#"><i class="fa fa-file-pdf-o fa-5"></i></a></th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
         <!-- /.col-lg-12 -->

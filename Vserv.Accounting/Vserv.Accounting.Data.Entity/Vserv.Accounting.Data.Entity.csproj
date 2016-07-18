@@ -112,13 +112,25 @@
     <Compile Include="Gender.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetEmpAnnualContributionUnderChapterVIA_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetEmpAppraisalHistory_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetEmployeeMonthlyTaxDeductions_Result.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GetEmployeeSalaryDetail_Result.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetEmployeeYearlyTaxExemptions_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetEmpSalaryStructureComparisonList_Result.cs">
+      <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetMonthlyTaxDeduction_Result.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="IncomeTaxRate.cs">
@@ -147,6 +159,8 @@
     </Compile>
     <Compile Include="Models\CompareEmployeeModel.cs" />
     <Compile Include="Models\EmpInvestmentDeclarationModel.cs" />
+    <Compile Include="Models\EmployeeMonthlyTaxDeduction.cs" />
+    <Compile Include="Models\EmployeeTaxation.cs" />
     <Compile Include="Models\EmpSalaryCompareResult.cs" />
     <Compile Include="Models\EmpSalaryDetail.cs" />
     <Compile Include="Models\EmpSalaryStructure.cs" />
@@ -157,6 +171,7 @@
     <Compile Include="Models\Membership.cs" />
     <Compile Include="Models\MessageResult.cs" />
     <Compile Include="Models\SalaryComponentAmountMapper.cs" />
+    <Compile Include="Models\TaxComputationComponent.cs" />
     <Compile Include="OAuthMembership.cs">
       <DependentUpon>VservAccountingDBModel.tt</DependentUpon>
     </Compile>

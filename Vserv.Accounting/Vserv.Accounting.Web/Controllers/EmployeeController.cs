@@ -416,7 +416,6 @@ namespace Vserv.Accounting.Web.Controllers
 
         #endregion
 
-
         #region Investments
 
         public JsonResult GetInvestmentByEmployeeId(int employeeId)
@@ -556,6 +555,13 @@ namespace Vserv.Accounting.Web.Controllers
         }
 
         #endregion
+
+        //GetEmployeeIncomeTaxComputation(int employeeId, int financialYear)
+
+        public JsonResult GetEmployeeIncomeTaxComputation(int employeeId, int financialYear)
+        {
+            return CustomJson(EmployeeManager.GetEmployeeIncomeTaxComputation(employeeId, financialYear));
+        }
 
         #endregion
 
@@ -979,9 +985,9 @@ namespace Vserv.Accounting.Web.Controllers
 
             SalaryComponentDetail salaryComponentDetail = new SalaryComponentDetail
             {
-                CurrentAmount = Convert.ToInt32(currentAmount[1]),
+                CurrentAmount = Convert.ToDecimal(currentAmount[1]),
                 CurrentEmpSalaryDetailId = Convert.ToInt32(currentAmount[0]),
-                Amount = Convert.ToInt32(amount[1]),
+                Amount = Convert.ToDecimal(amount[1]),
                 EmpSalaryDetailId = Convert.ToInt32(amount[0]),
             };
 
