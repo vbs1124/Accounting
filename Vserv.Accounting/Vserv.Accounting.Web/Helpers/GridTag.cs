@@ -63,12 +63,12 @@ namespace Vserv.Accounting.Web.Helpers
 			return this;
 		}
 
-		protected override void writeHtml(HtmlTextWriter html)
+		protected override void WriteHtml(HtmlTags.HtmlTextWriter html)
 		{
 			if (_columns.Any())
 				Attr("columns", _columns.ToArray().ToJson(includeNull: false));
 
-			base.writeHtml(html);
+            base.WriteHtml(html);
 		}
 	}
 }
